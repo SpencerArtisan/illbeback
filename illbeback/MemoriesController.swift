@@ -100,7 +100,13 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             pinView = MKPinAnnotationView()
             pinView.annotation = annotation
             pinView.animatesDrop = false
-
+            pinView.enabled = true
+            pinView.canShowCallout = true
+            
+//            let view = UIView(frame: CGRectMake(0,0,60,108))
+//            view.backgroundColor = UIColor.clearColor()
+//            pinView.leftCalloutAccessoryView = view
+            
             let pinImage : UIImage = UIImage(named: annotation.title!)!
             pinView.image = pinImage
         }
