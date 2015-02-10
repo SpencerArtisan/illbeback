@@ -36,7 +36,7 @@
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rr-PK-Bmf">
                     <rect key="frame" x="0.0" y="286" width="160" height="55"/>
-                    <color key="backgroundColor" red="0.63914991258741261" green="0.92156862750000001" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.94167941433566438" green="0.96459790209790208" blue="0.934275161134965" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Shop" image="Shop">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -67,7 +67,7 @@
                     </state>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.66666666666666663" alpha="0.25" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="jTq-yu-by9" secondAttribute="leading" id="5Vv-1x-8AS"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="csP-yr-z0N" secondAttribute="leading" id="6Qd-gx-Bfo"/>
@@ -85,12 +85,12 @@
         </view>
     </objects>
     <resources>
-        <image name="Cafe" width="16" height="16"/>
+        <image name="Cafe" width="24" height="24"/>
         <image name="Church" width="24" height="24"/>
-        <image name="Gallery" width="16" height="16"/>
+        <image name="Gallery" width="24" height="24"/>
         <image name="Other" width="24" height="24"/>
-        <image name="Pub" width="16" height="16"/>
+        <image name="Pub" width="24" height="24"/>
         <image name="Restaurant" width="24" height="24"/>
-        <image name="Shop" width="16" height="16"/>
+        <image name="Shop" width="24" height="24"/>
     </resources>
 </document>

@@ -45,9 +45,23 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
     func takePhoto(sender : UIButton!) {
         println("Button Clicked")
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
+            
             println("Image captured")
-            var categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
+            let categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
             self.view.addSubview(categoryView!)
+            categoryView?.frame.origin.x = -160
+
+            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                var sliderFrame = categoryView?.frame
+                sliderFrame?.origin.x = 0
+                categoryView?.frame = sliderFrame!
+                }, completion: {_ in })
+            
+            
+//            UIView.animateWithDuration(0.7 as Double, animations: {() -> Void in
+//                categoryView?.frame.origin.x = 100                
+//            })
+            
             
 //            var tabBarController = self.parentViewController as UITabBarController
 //            var memories = tabBarController.childViewControllers[0] as MemoriesController

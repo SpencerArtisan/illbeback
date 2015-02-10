@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/RememberController.swift"
-            timestampString = "445293632.3615"
+            timestampString = "445296098.204212"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "takePhoto(_:)"
             landmarkType = "5">
          </BreakpointContent>
