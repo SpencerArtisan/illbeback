@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class MemoriesController: UIViewController, CLLocationManagerDelegate {
+class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var map: MKMapView!
     var locationManager = CLLocationManager()
@@ -27,9 +27,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
         
-        map.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true);
+        map.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
+        map.delegate = self
     }
-
+    
     override func viewDidAppear(animated: Bool) {
         for memory in memories {
             addPin(memory)
@@ -91,5 +92,25 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
     }
 
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        if (annotation is MKUserLocation) {
+            return nil
+        }
+        
+        // create pin annotation view
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as MKPinAnnotationView!
+        
+        if (pinView == nil) {
+            pinView = MKPinAnnotationView()
+            pinView.annotation = annotation
+            pinView.animatesDrop = false
+
+            let pinImage : UIImage = UIImage(named: "Pub")!
+            pinView.image = pinImage
+        }
+        
+        
+        return pinView
+    }
 }
 
