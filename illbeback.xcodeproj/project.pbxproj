@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9759BF6B1A802AD300B945CB /* illbebackinfo.plist */; };
+		9759BF6E1A802C4100B945CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759BF6D1A802C4100B945CB /* CoreLocation.framework */; };
+		9759BF701A80318300B945CB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759BF6F1A80318300B945CB /* ImageIO.framework */; };
+		9772846C1A8A818B00CE628D /* Data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9772846B1A8A818B00CE628D /* Data.plist */; };
+		9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */; };
+		9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */; };
+		9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */; };
+		9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */; };
+		97A353491A800B9500973CAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A353481A800B9500973CAC /* AppDelegate.swift */; };
+		97A3534B1A800B9500973CAC /* RememberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3534A1A800B9500973CAC /* RememberController.swift */; };
+		97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3534C1A800B9500973CAC /* MemoriesController.swift */; };
+		97A353501A800B9500973CAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97A3534E1A800B9500973CAC /* Main.storyboard */; };
+		97A353551A800B9500973CAC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A353531A800B9500973CAC /* LaunchScreen.xib */; };
+		97A353611A800B9500973CAC /* illbebackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A353601A800B9500973CAC /* illbebackTests.swift */; };
+		97A3536B1A800EF500973CAC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97A3536A1A800EF500973CAC /* Media.xcassets */; };
+		97A3536D1A801CFA00973CAC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3536C1A801CFA00973CAC /* MapKit.framework */; };
+		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		97A3535B1A800B9500973CAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97A3533B1A800B9500973CAC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97A353421A800B9500973CAC;
+			remoteInfo = illbeback;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9759BF6B1A802AD300B945CB /* illbebackinfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = illbebackinfo.plist; sourceTree = "<group>"; };
+		9759BF6D1A802C4100B945CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		9759BF6F1A80318300B945CB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		9772846B1A8A818B00CE628D /* Data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Data.plist; sourceTree = "<group>"; };
+		9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "illbeback-Bridging-Header.h"; sourceTree = "<group>"; };
+		97A353431A800B9500973CAC /* I'll Be Back.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I'll Be Back.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		97A353471A800B9500973CAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97A353481A800B9500973CAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		97A3534A1A800B9500973CAC /* RememberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberController.swift; sourceTree = "<group>"; };
+		97A3534C1A800B9500973CAC /* MemoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesController.swift; sourceTree = "<group>"; };
+		97A3534F1A800B9500973CAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		97A353541A800B9500973CAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		97A3535A1A800B9500973CAC /* illbebackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = illbebackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97A3535F1A800B9500973CAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97A353601A800B9500973CAC /* illbebackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = illbebackTests.swift; sourceTree = "<group>"; };
+		97A3536A1A800EF500973CAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		97A3536C1A801CFA00973CAC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
+		97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
+		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
+		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
+		97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		97A353401A800B9500973CAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9759BF701A80318300B945CB /* ImageIO.framework in Frameworks */,
+				9759BF6E1A802C4100B945CB /* CoreLocation.framework in Frameworks */,
+				97A3536D1A801CFA00973CAC /* MapKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97A353571A800B9500973CAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		97A3533A1A800B9500973CAC = {
+			isa = PBXGroup;
+			children = (
+				97FC73291A840B8D00676F16 /* LLSimpleCamera */,
+				9759BF6F1A80318300B945CB /* ImageIO.framework */,
+				9759BF6D1A802C4100B945CB /* CoreLocation.framework */,
+				97A3536C1A801CFA00973CAC /* MapKit.framework */,
+				97A353451A800B9500973CAC /* illbeback */,
+				97A3535D1A800B9500973CAC /* illbebackTests */,
+				97A353441A800B9500973CAC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		97A353441A800B9500973CAC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				97A353431A800B9500973CAC /* I'll Be Back.app */,
+				97A3535A1A800B9500973CAC /* illbebackTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		97A353451A800B9500973CAC /* illbeback */ = {
+			isa = PBXGroup;
+			children = (
+				9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */,
+				97A353481A800B9500973CAC /* AppDelegate.swift */,
+				97A3534A1A800B9500973CAC /* RememberController.swift */,
+				97A3534C1A800B9500973CAC /* MemoriesController.swift */,
+				97A3534E1A800B9500973CAC /* Main.storyboard */,
+				97A353531A800B9500973CAC /* LaunchScreen.xib */,
+				97A353461A800B9500973CAC /* Supporting Files */,
+				97A3536A1A800EF500973CAC /* Media.xcassets */,
+				97E3B9171A857A00007DB06E /* MapPin.swift */,
+			);
+			path = illbeback;
+			sourceTree = "<group>";
+		};
+		97A353461A800B9500973CAC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9759BF6B1A802AD300B945CB /* illbebackinfo.plist */,
+				97A353471A800B9500973CAC /* Info.plist */,
+				9772846B1A8A818B00CE628D /* Data.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97A3535D1A800B9500973CAC /* illbebackTests */ = {
+			isa = PBXGroup;
+			children = (
+				97A353601A800B9500973CAC /* illbebackTests.swift */,
+				97A3535E1A800B9500973CAC /* Supporting Files */,
+			);
+			path = illbebackTests;
+			sourceTree = "<group>";
+		};
+		97A3535E1A800B9500973CAC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				97A3535F1A800B9500973CAC /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97FC73291A840B8D00676F16 /* LLSimpleCamera */ = {
+			isa = PBXGroup;
+			children = (
+				97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */,
+				97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */,
+				97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */,
+				97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */,
+			);
+			path = LLSimpleCamera;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		97A353421A800B9500973CAC /* illbeback */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97A353641A800B9500973CAC /* Build configuration list for PBXNativeTarget "illbeback" */;
+			buildPhases = (
+				97A3533F1A800B9500973CAC /* Sources */,
+				97A353401A800B9500973CAC /* Frameworks */,
+				97A353411A800B9500973CAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = illbeback;
+			productName = illbeback;
+			productReference = 97A353431A800B9500973CAC /* I'll Be Back.app */;
+			productType = "com.apple.product-type.application";
+		};
+		97A353591A800B9500973CAC /* illbebackTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97A353671A800B9500973CAC /* Build configuration list for PBXNativeTarget "illbebackTests" */;
+			buildPhases = (
+				97A353561A800B9500973CAC /* Sources */,
+				97A353571A800B9500973CAC /* Frameworks */,
+				97A353581A800B9500973CAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				97A3535C1A800B9500973CAC /* PBXTargetDependency */,
+			);
+			name = illbebackTests;
+			productName = illbebackTests;
+			productReference = 97A3535A1A800B9500973CAC /* illbebackTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		97A3533B1A800B9500973CAC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Spencer Ward";
+				TargetAttributes = {
+					97A353421A800B9500973CAC = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					97A353591A800B9500973CAC = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 97A353421A800B9500973CAC;
+					};
+				};
+			};
+			buildConfigurationList = 97A3533E1A800B9500973CAC /* Build configuration list for PBXProject "illbeback" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 97A3533A1A800B9500973CAC;
+			productRefGroup = 97A353441A800B9500973CAC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				97A353421A800B9500973CAC /* illbeback */,
+				97A353591A800B9500973CAC /* illbebackTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		97A353411A800B9500973CAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */,
+				9772846C1A8A818B00CE628D /* Data.plist in Resources */,
+				97A353501A800B9500973CAC /* Main.storyboard in Resources */,
+				97A3536B1A800EF500973CAC /* Media.xcassets in Resources */,
+				97A353551A800B9500973CAC /* LaunchScreen.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97A353581A800B9500973CAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		97A3533F1A800B9500973CAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */,
+				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
+				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
+				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
+				97E3B9181A857A00007DB06E /* MapPin.swift in Sources */,
+				97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */,
+				97A353491A800B9500973CAC /* AppDelegate.swift in Sources */,
+				97A3534B1A800B9500973CAC /* RememberController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97A353561A800B9500973CAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97A353611A800B9500973CAC /* illbebackTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		97A3535C1A800B9500973CAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97A353421A800B9500973CAC /* illbeback */;
+			targetProxy = 97A3535B1A800B9500973CAC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		97A3534E1A800B9500973CAC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97A3534F1A800B9500973CAC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		97A353531A800B9500973CAC /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97A353541A800B9500973CAC /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		97A353621A800B9500973CAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "illbeback/illbeback-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		97A353631A800B9500973CAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEFINES_MODULE = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "illbeback/illbeback-Bridging-Header.h";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		97A353651A800B9500973CAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = illbeback/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "I'll Be Back";
+				SWIFT_OBJC_BRIDGING_HEADER = "illbeback/illbeback-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		97A353661A800B9500973CAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = illbeback/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "I'll Be Back";
+				SWIFT_OBJC_BRIDGING_HEADER = "illbeback/illbeback-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		97A353681A800B9500973CAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = illbebackTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/illbeback.app/illbeback";
+			};
+			name = Debug;
+		};
+		97A353691A800B9500973CAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = illbebackTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/illbeback.app/illbeback";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		97A3533E1A800B9500973CAC /* Build configuration list for PBXProject "illbeback" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97A353621A800B9500973CAC /* Debug */,
+				97A353631A800B9500973CAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97A353641A800B9500973CAC /* Build configuration list for PBXNativeTarget "illbeback" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97A353651A800B9500973CAC /* Debug */,
+				97A353661A800B9500973CAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97A353671A800B9500973CAC /* Build configuration list for PBXNativeTarget "illbebackTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97A353681A800B9500973CAC /* Debug */,
+				97A353691A800B9500973CAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 97A3533B1A800B9500973CAC /* Project object */;
+}

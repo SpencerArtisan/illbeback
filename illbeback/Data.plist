@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Memories</key>
+	<array>
+		<string>Cafe:51.5338,-0.1012</string>
+		<string>Pub:51.5403,-0.0884</string>
+	</array>
+</dict>
+</plist>
