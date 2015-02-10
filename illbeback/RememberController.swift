@@ -46,10 +46,13 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
         println("Button Clicked")
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
             println("Image captured")
-            var tabBarController = self.parentViewController as UITabBarController
-            var memories = tabBarController.childViewControllers[0] as MemoriesController
-            memories.addMemoryHere()
-            tabBarController.selectedIndex = 0
+            var categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
+            self.view.addSubview(categoryView!)
+            
+//            var tabBarController = self.parentViewController as UITabBarController
+//            var memories = tabBarController.childViewControllers[0] as MemoriesController
+//            memories.addMemoryHere()
+//            tabBarController.selectedIndex = 0
         }, exactSeenImage: true)
     }
     

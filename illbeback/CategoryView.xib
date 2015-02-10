@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="44" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1L-X8-nGW">
+                    <rect key="frame" x="0.0" y="394" width="160" height="55"/>
+                    <color key="backgroundColor" red="0.92135598776223782" green="0.89247662575174813" blue="0.9184043132328672" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Church" image="Church">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FMX-RE-75q">
+                    <rect key="frame" x="0.0" y="176" width="160" height="55"/>
+                    <color key="backgroundColor" red="0.91568359646013986" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Restaurant" image="Restaurant">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEk-T8-Qv1">
+                    <rect key="frame" x="0.0" y="231" width="160" height="55"/>
+                    <color key="backgroundColor" red="0.91568359646013986" green="0.92156862750000001" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Pub" image="Pub">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rr-PK-Bmf">
+                    <rect key="frame" x="0.0" y="286" width="160" height="55"/>
+                    <color key="backgroundColor" red="0.63914991258741261" green="0.92156862750000001" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Shop" image="Shop">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTq-yu-by9">
+                    <rect key="frame" x="0.0" y="340" width="160" height="55"/>
+                    <color key="backgroundColor" red="0.63914991258741261" green="0.76124847889860148" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Gallery" image="Gallery">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csP-yr-z0N">
+                    <rect key="frame" x="0.0" y="121" width="160" height="55"/>
+                    <color key="backgroundColor" red="0.74066720659999996" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Cafe" image="Cafe">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgz-lx-Twq">
+                    <rect key="frame" x="0.0" y="449" width="160" height="55"/>
+                    <color key="backgroundColor" red="0.93151770104895104" green="0.93519952784965021" blue="0.99855072931678324" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Other" image="Other">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="0.25" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="jTq-yu-by9" secondAttribute="leading" id="5Vv-1x-8AS"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="csP-yr-z0N" secondAttribute="leading" id="6Qd-gx-Bfo"/>
+                <constraint firstItem="FMX-RE-75q" firstAttribute="trailing" secondItem="h1L-X8-nGW" secondAttribute="trailing" id="CQb-HM-E0D"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="FMX-RE-75q" secondAttribute="leading" id="I8G-Lj-242"/>
+                <constraint firstItem="FMX-RE-75q" firstAttribute="leading" secondItem="h1L-X8-nGW" secondAttribute="leading" id="Nba-SR-wn8"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="h1L-X8-nGW" secondAttribute="leading" id="bWt-qP-FVG"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="9rr-PK-Bmf" secondAttribute="leading" id="vQ0-mA-Zff"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="vgz-lx-Twq" secondAttribute="leading" id="wzC-lY-IQ4"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="414.5" y="344.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Cafe" width="16" height="16"/>
+        <image name="Church" width="24" height="24"/>
+        <image name="Gallery" width="16" height="16"/>
+        <image name="Other" width="24" height="24"/>
+        <image name="Pub" width="16" height="16"/>
+        <image name="Restaurant" width="24" height="24"/>
+        <image name="Shop" width="16" height="16"/>
+    </resources>
+</document>
