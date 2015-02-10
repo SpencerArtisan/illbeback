@@ -13,6 +13,34 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
     var camera: LLSimpleCamera!
     var snapButton: UIButton!
     
+    @IBAction func addCafe(sender: AnyObject) {
+        addMemory("Cafe")
+    }
+
+    @IBAction func addRestaurant(sender: AnyObject) {
+        addMemory("Restaurant")
+    }
+    
+    @IBAction func addPub(sender: AnyObject) {
+        addMemory("Pub")
+    }
+    
+    @IBAction func addShop(sender: AnyObject) {
+        addMemory("Shop")
+    }
+    
+    @IBAction func addGallery(sender: AnyObject) {
+        addMemory("Gallery")
+    }
+    
+    @IBAction func addChurch(sender: AnyObject) {
+        addMemory("Church")
+    }
+    
+    @IBAction func addOther(sender: AnyObject) {
+        addMemory("Other")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,10 +72,11 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func takePhoto(sender : UIButton!) {
         println("Button Clicked")
+        let controller = self
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
             
             println("Image captured")
-            let categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
+            let categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: controller, options: nil)[0] as? UIView
             self.view.addSubview(categoryView!)
             categoryView?.frame.origin.x = -160
 
@@ -57,16 +86,6 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
                 categoryView?.frame = sliderFrame!
                 }, completion: {_ in })
             
-            
-//            UIView.animateWithDuration(0.7 as Double, animations: {() -> Void in
-//                categoryView?.frame.origin.x = 100                
-//            })
-            
-            
-//            var tabBarController = self.parentViewController as UITabBarController
-//            var memories = tabBarController.childViewControllers[0] as MemoriesController
-//            memories.addMemoryHere()
-//            tabBarController.selectedIndex = 0
         }, exactSeenImage: true)
     }
     
@@ -75,6 +94,12 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
         // Dispose of any resources that can be recreated.
     }
 
+    func addMemory(image: String) {
+        var tabBarController = self.parentViewController as UITabBarController
+        var memories = tabBarController.childViewControllers[0] as MemoriesController
+        memories.addMemoryHere(image)
+        tabBarController.selectedIndex = 0
+    }
 
 }
 

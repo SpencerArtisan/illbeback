@@ -42,8 +42,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         // Dispose of any resources that can be recreated.
     }
     
-    func addMemoryHere() {
-        var memoryString = "Undefined:\(here!.coordinate.latitude),\(here!.coordinate.longitude)"
+    func addMemoryHere(image: String) {
+        var memoryString = image + ":\(here!.coordinate.latitude),\(here!.coordinate.longitude)"
         memories.append(memoryString)
         saveMemories()
         addPin(memoryString)
@@ -61,7 +61,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         var poi = MapPin(coordinate: coord, title: name, subtitle: "")
         
         map.addAnnotation(poi)
-        
     }
     
     func readMemories() {
@@ -88,9 +87,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         here = locations[0] as CLLocation
     }
-    
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-    }
 
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if (annotation is MKUserLocation) {
@@ -105,7 +101,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             pinView.annotation = annotation
             pinView.animatesDrop = false
 
-            let pinImage : UIImage = UIImage(named: "Church")!
+            let pinImage : UIImage = UIImage(named: annotation.title!)!
             pinView.image = pinImage
         }
         

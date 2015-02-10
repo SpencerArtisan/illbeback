@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "I_ll_Be_Back.MemoriesController.mapView (I_ll_Be_Back.MemoriesController)(Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.MKMapView&gt;, viewForAnnotation : Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.MKAnnotation&gt;) -&gt; Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.MKAnnotationView&gt;:MemoriesController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "annotation.title">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

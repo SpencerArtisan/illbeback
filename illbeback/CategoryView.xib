@@ -4,9 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RememberController" customModule="I_ll_Be_Back" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" restorationIdentifier="CategoryView" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="44" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -17,6 +17,9 @@
                     <state key="normal" title=" Church" image="Church">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="addChurch:" destination="-1" eventType="touchUpInside" id="5Bh-18-UoE"/>
+                    </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FMX-RE-75q">
                     <rect key="frame" x="0.0" y="176" width="160" height="55"/>
@@ -25,6 +28,9 @@
                     <state key="normal" title=" Restaurant" image="Restaurant">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="addRestaurant:" destination="-1" eventType="touchUpInside" id="JHx-Tb-lzg"/>
+                    </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEk-T8-Qv1">
                     <rect key="frame" x="0.0" y="231" width="160" height="55"/>
@@ -33,6 +39,9 @@
                     <state key="normal" title=" Pub" image="Pub">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="addPub:" destination="-1" eventType="touchUpInside" id="wNN-h7-791"/>
+                    </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rr-PK-Bmf">
                     <rect key="frame" x="0.0" y="286" width="160" height="55"/>
@@ -41,6 +50,9 @@
                     <state key="normal" title=" Shop" image="Shop">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="addShop:" destination="-1" eventType="touchUpInside" id="MI3-K7-uAu"/>
+                    </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTq-yu-by9">
                     <rect key="frame" x="0.0" y="340" width="160" height="55"/>
@@ -49,14 +61,20 @@
                     <state key="normal" title=" Gallery" image="Gallery">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="addGallery:" destination="-1" eventType="touchUpInside" id="1Gw-PA-W7m"/>
+                    </connections>
                 </button>
-                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csP-yr-z0N">
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="cafeButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csP-yr-z0N">
                     <rect key="frame" x="0.0" y="121" width="160" height="55"/>
                     <color key="backgroundColor" red="0.74066720659999996" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Cafe" image="Cafe">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="addCafe:" destination="-1" eventType="touchUpInside" id="xJg-wn-SLI"/>
+                    </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgz-lx-Twq">
                     <rect key="frame" x="0.0" y="449" width="160" height="55"/>
@@ -65,6 +83,9 @@
                     <state key="normal" title=" Other" image="Other">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="addOther:" destination="-1" eventType="touchUpInside" id="8xt-bm-4PW"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
