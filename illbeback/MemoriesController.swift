@@ -105,7 +105,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             pinView.annotation = annotation
             pinView.animatesDrop = false
 
-            let pinImage : UIImage = UIImage(named: "Pub")!
+            let pinImage : UIImage = UIImage(named: "Church")!
             pinView.image = pinImage
         }
         
