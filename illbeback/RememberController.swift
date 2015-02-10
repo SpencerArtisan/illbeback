@@ -12,6 +12,7 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
 
     var camera: LLSimpleCamera!
     var snapButton: UIButton!
+    var categoryView: UIView!
     
     @IBAction func addCafe(sender: AnyObject) {
         addMemory("Cafe")
@@ -43,10 +44,10 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         var screenRect = UIScreen.mainScreen().bounds
         
         self.camera = LLSimpleCamera(quality: CameraQualityPhoto, andPosition: CameraPositionBack)
@@ -70,20 +71,23 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
         camera.start()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.categoryView.removeFromSuperview()
+    }
+    
     func takePhoto(sender : UIButton!) {
-        println("Button Clicked")
         let controller = self
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
             
-            println("Image captured")
-            let categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: controller, options: nil)[0] as? UIView
-            self.view.addSubview(categoryView!)
-            categoryView?.frame.origin.x = -160
+            self.snapButton.removeFromSuperview()
+            
+            self.view.addSubview(self.categoryView)
+            self.categoryView?.frame.origin.x = -160
 
             UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                var sliderFrame = categoryView?.frame
+                var sliderFrame = self.categoryView?.frame
                 sliderFrame?.origin.x = 0
-                categoryView?.frame = sliderFrame!
+                self.categoryView?.frame = sliderFrame!
                 }, completion: {_ in })
             
         }, exactSeenImage: true)
@@ -100,6 +104,5 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
         memories.addMemoryHere(image)
         tabBarController.selectedIndex = 0
     }
-
 }
 
