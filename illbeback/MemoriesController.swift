@@ -69,7 +69,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     func addMemoryHere(type: String, id: String) {
-        var memoryString = "\(type):some description:\(here!.coordinate.latitude):\(here!.coordinate.longitude):\(id)"
+        var memoryString = "\(type):No comments provided:\(here!.coordinate.latitude):\(here!.coordinate.longitude):\(id)"
         memories.append(memoryString)
         saveMemories()
         addPin(memoryString)
@@ -84,7 +84,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         let id = parts[4]
         
         var coord = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
-        var poi = MapPin(coordinate: coord, title: name, subtitle: description + "hhh\n\n\nghghj", id: id)
+        var poi = MapPin(coordinate: coord, title: name, subtitle: description, id: id)
         
         map.addAnnotation(poi)
     }
@@ -97,7 +97,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
             if (pinView == nil) {
                 var photo = photoAlbum.getMemoryImage(pinData.id)
-                pinView = MapPinView(photo: photo!)
+                pinView = MapPinView(photo: photo!, title: pinData.title, subtitle: pinData.subtitle)
                 pinView.annotation = annotation
                 pinView.enabled = true
             

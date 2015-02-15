@@ -12,48 +12,67 @@ import MapKit
 class MapPinView: MKAnnotationView {
     let WIDTH: CGFloat = 300.0
     let HEIGHT: CGFloat = 200.0
-    var calloutView: UIView?
-    var photoView: UIImageView?
-    var label: UILabel?
-    private var hitOutside:Bool = true
     
-    init(photo: UIImage) {
+    var calloutView: UIView!
+    var hitOutside: Bool = true
+    
+    init(photo: UIImage, title: String, subtitle: String) {
         super.init()
+        
         canShowCallout = false
-        createPhoto(photo)
-        createLabel()
-        self.calloutView = UIView()
-        photoView?.layer.cornerRadius = 10
-        self.calloutView?.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
-        self.calloutView?.backgroundColor = UIColor.whiteColor()
-        self.calloutView?.layer.cornerRadius = 10
-        self.calloutView?.addSubview(self.photoView!)
-        self.calloutView?.addSubview(self.label!)
-    }
-    
-    func createPhoto(photo: UIImage) {
-        photoView = UIImageView(frame: CGRectMake(0, 0, WIDTH/2 + 10, HEIGHT))
-        photoView?.layer.cornerRadius = 0
-        photoView?.clipsToBounds = true
-        photoView?.image = photo
-    }
-    
-    func createLabel() {
-        label = UILabel(frame: CGRectMake(WIDTH/2, 0, WIDTH/2 - 10, HEIGHT))
-        label?.backgroundColor = UIColor.whiteColor()
-        label?.layer.cornerRadius = 0
-        label?.clipsToBounds = true
-        label?.numberOfLines = 0
-        label?.textAlignment = NSTextAlignment.Center
-        label?.text = "hello\nthere"
+        let photoView = createPhotoView(photo)
+        let subtitleLabel = createSubtitleLabel(subtitle)
+        let titleLabel = createTitleLabel(title)
+        createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
-
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func createCalloutView(photo: UIView, title: UIView, subtitle: UIView) {
+        self.calloutView = UIView()
+        self.calloutView.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
+        self.calloutView.backgroundColor = UIColor.whiteColor()
+        self.calloutView.layer.cornerRadius = 10
+        self.calloutView.addSubview(photo)
+        self.calloutView.addSubview(title)
+        self.calloutView.addSubview(subtitle)
+        self.calloutView.clipsToBounds = true
+    }
+    
+    func createPhotoView(photo: UIImage) -> UIView {
+        let photoView = UIImageView(frame: CGRectMake(0, 0, WIDTH/2 + 10, HEIGHT))
+        photoView.layer.cornerRadius = 10
+        photoView.clipsToBounds = true
+        photoView.image = photo
+        return photoView
+    }
+    
+    func createTitleLabel(title: String) -> UIView {
+        let label = UILabel(frame: CGRectMake(WIDTH/2, 0, WIDTH/2 - 10, 40))
+        label.backgroundColor = UIColor.whiteColor()
+        label.layer.cornerRadius = 0
+        label.clipsToBounds = true
+        label.numberOfLines = 0
+        label.textAlignment = NSTextAlignment.Center
+        label.text = title
+        return label
+    }
+    
+    func createSubtitleLabel(subtitle: String) -> UIView {
+        let label = UILabel(frame: CGRectMake(WIDTH/2, 40, WIDTH/2 - 10, HEIGHT - 40))
+        label.backgroundColor = UIColor.whiteColor()
+        label.layer.cornerRadius = 0
+        label.clipsToBounds = true
+        label.numberOfLines = 0
+        label.textAlignment = NSTextAlignment.Center
+        label.text = subtitle
+        return label
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -79,7 +98,6 @@ class MapPinView: MKAnnotationView {
         }
         
         hitOutside = hitView == nil
-        
         return hitView;
     }
 
