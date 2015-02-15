@@ -42,27 +42,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         // Dispose of any resources that can be recreated.
     }
     
-    func addMemoryHere(image: String, id: String) {
-        var memoryString = image + ":\(here!.coordinate.latitude),\(here!.coordinate.longitude)"
-        memories.append(memoryString)
-        saveMemories()
-        addPin(memoryString)
-    }
-    
-    func addPin(memory: String) {
-        let split = memory.rangeOfString(":")!.startIndex
-        let name: String = memory.substringWithRange(Range<String.Index>(start: memory.startIndex, end: split))
-        let location = memory.substringWithRange(Range<String.Index>(start: split.successor(), end: memory.endIndex))
-        let split2 = location.rangeOfString(",")!.startIndex
-        let lat = location.substringWithRange(Range<String.Index>(start: location.startIndex, end: split2))
-        let long = location.substringWithRange(Range<String.Index>(start: split2.successor(), end: location.endIndex))
-
-        var coord = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
-        var poi = MapPin(coordinate: coord, title: name, subtitle: "")
-        
-        map.addAnnotation(poi)
-    }
-    
     func readMemories() {
         var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         var path = paths.stringByAppendingPathComponent("memories.plist")
@@ -88,6 +67,27 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         here = locations[0] as CLLocation
     }
 
+    func addMemoryHere(type: String, id: String) {
+        var memoryString = "\(type):some description:\(here!.coordinate.latitude):\(here!.coordinate.longitude):\(id)"
+        memories.append(memoryString)
+        saveMemories()
+        addPin(memoryString)
+    }
+
+    func addPin(memory: String) {
+        var parts = memory.componentsSeparatedByString(":")
+        let name = parts[0]
+        let description = parts[1]
+        let lat = parts[2]
+        let long = parts[3]
+        let imagePath = parts[4]
+        
+        var coord = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
+        var poi = MapPin(coordinate: coord, title: name, subtitle: description, imagePath: imagePath)
+        
+        map.addAnnotation(poi)
+    }
+    
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if (annotation is MKUserLocation) {
             return nil
@@ -103,9 +103,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             pinView.enabled = true
             pinView.canShowCallout = true
             
-//            let view = UIView(frame: CGRectMake(0,0,60,108))
-//            view.backgroundColor = UIColor.clearColor()
-//            pinView.leftCalloutAccessoryView = view
+            let view = UIView(frame: CGRectMake(0,0,60,108))
+            
+            view.backgroundColor = UIColor.clearColor()
+            pinView.leftCalloutAccessoryView = view
             
             let pinImage : UIImage = UIImage(named: annotation.title!)!
             pinView.image = pinImage
