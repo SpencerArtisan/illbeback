@@ -43,6 +43,8 @@ class MapPinView: MKAnnotationView {
         self.calloutView.addSubview(title)
         self.calloutView.addSubview(subtitle)
         self.calloutView.clipsToBounds = true
+        self.calloutView.layer.borderWidth = 1.0
+        self.calloutView.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     func createPhotoView(photo: UIImage) -> UIView {
@@ -72,6 +74,7 @@ class MapPinView: MKAnnotationView {
         label.numberOfLines = 0
         label.textAlignment = NSTextAlignment.Center
         label.text = subtitle
+        
         return label
     }
     

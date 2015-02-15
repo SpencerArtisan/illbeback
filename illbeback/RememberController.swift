@@ -8,12 +8,16 @@
 
 import UIKit
 
-class RememberController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class RememberController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
+
+    @IBOutlet weak var desciptionTextArea: UITextView!
 
     var camera: LLSimpleCamera!
     var snapButton: UIButton!
     var categoryView: UIView!
+    var descriptionView: UIView!
     var memoryId: String?
+    var memoryImage: String?
     let photoAlbum = PhotoAlbum()
     
     @IBAction func addCafe(sender: AnyObject) {
@@ -57,6 +61,8 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
         createSnapButton()
         createCamera()
         categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
+        descriptionView = NSBundle.mainBundle().loadNibNamed("DescriptionView", owner: self, options: nil)[0] as? UIView
+        desciptionTextArea.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -67,6 +73,8 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
     override func viewWillDisappear(animated: Bool) {
         camera.stop()
         self.categoryView.removeFromSuperview()
+        self.descriptionView.removeFromSuperview()
+        self.desciptionTextArea.text = ""
     }
     
     func createCamera() {
@@ -101,7 +109,7 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func showCategorySelector() {
         self.view.addSubview(self.categoryView)
-        self.categoryView?.frame.origin.x = -160
+        self.categoryView?.frame.origin.x = -190
         
         UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             var sliderFrame = self.categoryView?.frame
@@ -109,17 +117,52 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
             self.categoryView?.frame = sliderFrame!
             }, completion: {_ in })
     }
+
+    func hideCategorySelector() {
+        self.view.addSubview(self.categoryView)
+        self.categoryView?.frame.origin.x = 0
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            var sliderFrame = self.categoryView?.frame
+            sliderFrame?.origin.x = -190
+            self.categoryView?.frame = sliderFrame!
+            }, completion: {_ in })
+    }
+    
+    
+    func showDescriptionEntry() {
+        self.view.addSubview(self.descriptionView)
+        self.descriptionView?.frame.origin.x = 500
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            var sliderFrame = self.descriptionView?.frame
+            sliderFrame?.origin.x = 190
+            self.descriptionView?.frame = sliderFrame!
+            }, completion: {_ in })
+        self.desciptionTextArea.becomeFirstResponder()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            textView.resignFirstResponder()
+            var tabBarController = self.parentViewController as UITabBarController
+            var memories = tabBarController.childViewControllers[0] as MemoriesController
+            memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text)
+            tabBarController.selectedIndex = 0
+            return false
+        }
+        return true
+    }
 
     func addMemory(image: String) {
-        var tabBarController = self.parentViewController as UITabBarController
-        var memories = tabBarController.childViewControllers[0] as MemoriesController
-        memories.addMemoryHere(image, id: memoryId!)
-        tabBarController.selectedIndex = 0
+        memoryImage = image
+        showDescriptionEntry()
+        hideCategorySelector()
     }
 }
 

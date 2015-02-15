@@ -16,7 +16,6 @@ class CategoryController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        println("Showing category")
     }
     
     class func getColorForCategory(category: String) -> UIColor {
@@ -24,7 +23,6 @@ class CategoryController: UIViewController {
         let buttons = categoryView?.subviews
         
         for button in buttons! {
-            println(button.currentTitle!)
             var buttonTitle = button.currentTitle!!.uppercaseString as NSString
             if (buttonTitle.containsString(category.uppercaseString)) {
                 return button.backgroundColor!!

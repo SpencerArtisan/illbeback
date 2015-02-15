@@ -68,8 +68,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         here = locations[0] as CLLocation
     }
 
-    func addMemoryHere(type: String, id: String) {
-        var memoryString = "\(type):No comments provided:\(here!.coordinate.latitude):\(here!.coordinate.longitude):\(id)"
+    func addMemoryHere(type: String, id: String, description: String) {
+        var subtitle = "No description provided"
+        if (description != "") {
+            subtitle = description
+        }
+        var memoryString = "\(type):\(subtitle):\(here!.coordinate.latitude):\(here!.coordinate.longitude):\(id)"
         memories.append(memoryString)
         saveMemories()
         addPin(memoryString)

@@ -10,6 +10,7 @@
 		972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A01A90ECC100B5E74C /* MapPinView.swift */; };
 		972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A21A90ED2B00B5E74C /* MapPinCallout.swift */; };
 		972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A41A910E7500B5E74C /* PhotoAlbum.swift */; };
+		972006A71A9140FB00B5E74C /* DescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 972006A61A9140FB00B5E74C /* DescriptionView.xib */; };
 		9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9759BF6B1A802AD300B945CB /* illbebackinfo.plist */; };
 		9759BF6E1A802C4100B945CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759BF6D1A802C4100B945CB /* CoreLocation.framework */; };
 		9759BF701A80318300B945CB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759BF6F1A80318300B945CB /* ImageIO.framework */; };
@@ -46,6 +47,7 @@
 		972006A01A90ECC100B5E74C /* MapPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
 		972006A21A90ED2B00B5E74C /* MapPinCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinCallout.swift; sourceTree = "<group>"; };
 		972006A41A910E7500B5E74C /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
+		972006A61A9140FB00B5E74C /* DescriptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DescriptionView.xib; sourceTree = "<group>"; };
 		9759BF6B1A802AD300B945CB /* illbebackinfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = illbebackinfo.plist; sourceTree = "<group>"; };
 		9759BF6D1A802C4100B945CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9759BF6F1A80318300B945CB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -135,6 +137,7 @@
 				972006A01A90ECC100B5E74C /* MapPinView.swift */,
 				972006A21A90ED2B00B5E74C /* MapPinCallout.swift */,
 				972006A41A910E7500B5E74C /* PhotoAlbum.swift */,
+				972006A61A9140FB00B5E74C /* DescriptionView.xib */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */,
+				972006A71A9140FB00B5E74C /* DescriptionView.xib in Resources */,
 				9772846C1A8A818B00CE628D /* Data.plist in Resources */,
 				97A353501A800B9500973CAC /* Main.storyboard in Resources */,
 				97A3536B1A800EF500973CAC /* Media.xcassets in Resources */,

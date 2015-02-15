@@ -80,7 +80,7 @@
                     <rect key="frame" x="0.0" y="399" width="190" height="55"/>
                     <color key="backgroundColor" red="0.74066720659999996" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Green Space" image="GreenSpace">
+                    <state key="normal" title=" Green Space" image="Green Space">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -91,7 +91,7 @@
                     <rect key="frame" x="0.0" y="454" width="190" height="55"/>
                     <color key="backgroundColor" red="0.90934618387272725" green="1" blue="0.68386541463146855" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Place to Stay" image="PlaceToStay">
+                    <state key="normal" title=" Place to Stay" image="Place to Stay">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -139,9 +139,9 @@
         <image name="Cafe" width="24" height="24"/>
         <image name="Church" width="24" height="24"/>
         <image name="Gallery" width="24" height="24"/>
-        <image name="GreenSpace" width="24" height="24"/>
+        <image name="Green Space" width="24" height="24"/>
         <image name="Other" width="24" height="24"/>
-        <image name="PlaceToStay" width="24" height="24"/>
+        <image name="Place to Stay" width="24" height="24"/>
         <image name="Pub" width="24" height="24"/>
         <image name="Restaurant" width="24" height="24"/>
         <image name="Shop" width="24" height="24"/>
