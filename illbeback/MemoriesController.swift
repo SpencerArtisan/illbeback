@@ -17,6 +17,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var here: CLLocation!
     var props: NSDictionary?
     var memories: [String] = []
+    let photoAlbum = PhotoAlbum()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,40 +81,35 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         let description = parts[1]
         let lat = parts[2]
         let long = parts[3]
-        let imagePath = parts[4]
+        let id = parts[4]
         
         var coord = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
-        var poi = MapPin(coordinate: coord, title: name, subtitle: description, imagePath: imagePath)
+        var poi = MapPin(coordinate: coord, title: name, subtitle: description + "hhh\n\n\nghghj", id: id)
         
         map.addAnnotation(poi)
     }
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
-        if (annotation is MKUserLocation) {
-            return nil
+        if (annotation is MapPin) {
+            let pinData = annotation as MapPin
+            
+            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as MapPinView!
+        
+            if (pinView == nil) {
+                var photo = photoAlbum.getMemoryImage(pinData.id)
+                pinView = MapPinView(photo: photo!)
+                pinView.annotation = annotation
+                pinView.enabled = true
+            
+                let pinImage : UIImage = UIImage(named: pinData.title)!
+                pinView.image = pinImage
+            }
+        
+        
+            return pinView
         }
-        
-        // create pin annotation view
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as MKPinAnnotationView!
-        
-        if (pinView == nil) {
-            pinView = MKPinAnnotationView()
-            pinView.annotation = annotation
-            pinView.animatesDrop = false
-            pinView.enabled = true
-            pinView.canShowCallout = true
-            
-            let view = UIView(frame: CGRectMake(0,0,60,108))
-            
-            view.backgroundColor = UIColor.clearColor()
-            pinView.leftCalloutAccessoryView = view
-            
-            let pinImage : UIImage = UIImage(named: annotation.title!)!
-            pinView.image = pinImage
-        }
-        
-        
-        return pinView
+        return nil
     }
+
 }
 

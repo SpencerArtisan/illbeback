@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A01A90ECC100B5E74C /* MapPinView.swift */; };
+		972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A21A90ED2B00B5E74C /* MapPinCallout.swift */; };
+		972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A41A910E7500B5E74C /* PhotoAlbum.swift */; };
 		9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9759BF6B1A802AD300B945CB /* illbebackinfo.plist */; };
 		9759BF6E1A802C4100B945CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759BF6D1A802C4100B945CB /* CoreLocation.framework */; };
 		9759BF701A80318300B945CB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759BF6F1A80318300B945CB /* ImageIO.framework */; };
@@ -40,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		972006A01A90ECC100B5E74C /* MapPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
+		972006A21A90ED2B00B5E74C /* MapPinCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinCallout.swift; sourceTree = "<group>"; };
+		972006A41A910E7500B5E74C /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
 		9759BF6B1A802AD300B945CB /* illbebackinfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = illbebackinfo.plist; sourceTree = "<group>"; };
 		9759BF6D1A802C4100B945CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9759BF6F1A80318300B945CB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -126,6 +132,9 @@
 				97E3B9171A857A00007DB06E /* MapPin.swift */,
 				976696EC1A8A9EF4004CB60D /* CategoryController.swift */,
 				976696EE1A8AA317004CB60D /* CategoryView.xib */,
+				972006A01A90ECC100B5E74C /* MapPinView.swift */,
+				972006A21A90ED2B00B5E74C /* MapPinCallout.swift */,
+				972006A41A910E7500B5E74C /* PhotoAlbum.swift */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -272,6 +281,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */,
+				972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */,
+				972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
 				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
@@ -280,6 +291,7 @@
 				97A353491A800B9500973CAC /* AppDelegate.swift in Sources */,
 				97A3534B1A800B9500973CAC /* RememberController.swift in Sources */,
 				976696ED1A8A9EF4004CB60D /* CategoryController.swift in Sources */,
+				972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

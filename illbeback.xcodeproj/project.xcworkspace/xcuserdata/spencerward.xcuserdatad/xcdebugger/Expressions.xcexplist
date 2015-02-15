@@ -3,12 +3,29 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "I_ll_Be_Back.MemoriesController.addPin (I_ll_Be_Back.MemoriesController)(Swift.String) -&gt; ():MemoriesController.swift">
+      </ContextState>
+      <ContextState
          contextName = "I_ll_Be_Back.MemoriesController.mapView (I_ll_Be_Back.MemoriesController)(Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.MKMapView&gt;, viewForAnnotation : Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.MKAnnotation&gt;) -&gt; Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.MKAnnotationView&gt;:MemoriesController.swift">
          <PersistentStrings>
             <PersistentString
                value = "annotation.title">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.RememberController.addMemory (I_ll_Be_Back.RememberController)(Swift.String) -&gt; ():RememberController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.RememberController.saveImage (I_ll_Be_Back.RememberController)(Swift.Optional&lt;ObjectiveC.UIImage&gt;) -&gt; ():RememberController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "&quot;.png&quot;">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.MemoriesController.getMemoryImage (I_ll_Be_Back.MemoriesController)(Swift.String) -&gt; Swift.Optional&lt;ObjectiveC.UIImage&gt;:MemoriesController.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

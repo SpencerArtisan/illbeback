@@ -11,12 +11,12 @@ class MapPin : NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String
     var subtitle: String
-    var imagePath: String
+    var id: String
     
-    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, imagePath: String) {
+    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, id: String) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
-        self.imagePath =  imagePath
+        self.id = id
     }
 }

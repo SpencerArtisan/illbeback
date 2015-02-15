@@ -14,6 +14,7 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
     var snapButton: UIButton!
     var categoryView: UIView!
     var memoryId: String?
+    let photoAlbum = PhotoAlbum()
     
     @IBAction func addCafe(sender: AnyObject) {
         addMemory("Cafe")
@@ -84,37 +85,12 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
         let controller = self
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
             self.memoryId = NSUUID().UUIDString
-            self.saveImage(image)
+            self.photoAlbum.saveMemoryImage(image, memoryId: self.memoryId!)
             self.snapButton.removeFromSuperview()
             self.showCategorySelector()
         }, exactSeenImage: true)
     }
     
-    func saveImage(image: UIImage?) {
-        let fileManager = NSFileManager.defaultManager()
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        var filePathToWrite = "\(paths)/Memory\(memoryId).png"
-        var imageData: NSData = UIImagePNGRepresentation(image?)
-        fileManager.createFileAtPath(filePathToWrite, contents: imageData, attributes: nil)
-    }
-        
-//    var getImagePath = paths.stringByAppendingPathComponent("SaveFile.png")
-//        if (fileManager.fileExistsAtPath(getImagePath))
-//        {
-//            println("FILE AVAILABLE");
-//            
-//            //Pick Image and Use accordingly
-//            var imageis: UIImage = UIImage(contentsOfFile: getImagePath)!
-//            
-//            let data: NSData = UIImagePNGRepresentation(imageis)
-//            
-//        }
-//        else
-//        {
-//            println("FILE NOT AVAILABLE");
-//            
-//        }
-        
     func showCategorySelector() {
         self.view.addSubview(self.categoryView)
         self.categoryView?.frame.origin.x = -160
