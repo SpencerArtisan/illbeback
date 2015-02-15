@@ -42,7 +42,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         // Dispose of any resources that can be recreated.
     }
     
-    func addMemoryHere(image: String) {
+    func addMemoryHere(image: String, id: String) {
         var memoryString = image + ":\(here!.coordinate.latitude),\(here!.coordinate.longitude)"
         memories.append(memoryString)
         saveMemories()

@@ -13,6 +13,7 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
     var camera: LLSimpleCamera!
     var snapButton: UIButton!
     var categoryView: UIView!
+    var memoryId: String?
     
     @IBAction func addCafe(sender: AnyObject) {
         addMemory("Cafe")
@@ -53,7 +54,12 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.camera = LLSimpleCamera(quality: CameraQualityPhoto, andPosition: CameraPositionBack)
         self.camera.attachToViewController(self, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
         
-        // snap button to capture image
+        showSnapButton()
+        
+        camera.start()
+    }
+
+    func showSnapButton() {
         self.snapButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
         self.snapButton.frame = CGRectMake(0, 0, 70.0, 70.0)
         self.snapButton.clipsToBounds = true
@@ -67,8 +73,6 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.snapButton.center = CGPoint(x: self.view.center.x, y: self.view.bounds.height - 100)
         
         self.view.addSubview(self.snapButton)
-        
-        camera.start()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -78,19 +82,47 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
     func takePhoto(sender : UIButton!) {
         let controller = self
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
-            
+            self.memoryId = NSUUID().UUIDString
+            self.saveImage(image)
             self.snapButton.removeFromSuperview()
-            
-            self.view.addSubview(self.categoryView)
-            self.categoryView?.frame.origin.x = -160
-
-            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                var sliderFrame = self.categoryView?.frame
-                sliderFrame?.origin.x = 0
-                self.categoryView?.frame = sliderFrame!
-                }, completion: {_ in })
-            
+            self.showCategorySelector()
         }, exactSeenImage: true)
+    }
+    
+    func saveImage(image: UIImage?) {
+        let fileManager = NSFileManager.defaultManager()
+        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        var filePathToWrite = "\(paths)/Memory\(memoryId).png"
+        var imageData: NSData = UIImagePNGRepresentation(image?)
+        fileManager.createFileAtPath(filePathToWrite, contents: imageData, attributes: nil)
+    }
+        
+//    var getImagePath = paths.stringByAppendingPathComponent("SaveFile.png")
+//        if (fileManager.fileExistsAtPath(getImagePath))
+//        {
+//            println("FILE AVAILABLE");
+//            
+//            //Pick Image and Use accordingly
+//            var imageis: UIImage = UIImage(contentsOfFile: getImagePath)!
+//            
+//            let data: NSData = UIImagePNGRepresentation(imageis)
+//            
+//        }
+//        else
+//        {
+//            println("FILE NOT AVAILABLE");
+//            
+//        }
+        
+    func showCategorySelector() {
+        self.view.addSubview(self.categoryView)
+        self.categoryView?.frame.origin.x = -160
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            var sliderFrame = self.categoryView?.frame
+            sliderFrame?.origin.x = 0
+            self.categoryView?.frame = sliderFrame!
+            }, completion: {_ in })
     }
     
     override func didReceiveMemoryWarning() {
@@ -101,7 +133,7 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
     func addMemory(image: String) {
         var tabBarController = self.parentViewController as UITabBarController
         var memories = tabBarController.childViewControllers[0] as MemoriesController
-        memories.addMemoryHere(image)
+        memories.addMemoryHere(image, id: memoryId!)
         tabBarController.selectedIndex = 0
     }
 }
