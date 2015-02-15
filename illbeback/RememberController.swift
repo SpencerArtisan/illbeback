@@ -44,6 +44,14 @@ class RememberController: UIViewController, UIImagePickerControllerDelegate, UIN
         addMemory("Other")
     }
 
+    @IBAction func addGreenSpace(sender: AnyObject) {
+        addMemory("Green Space")
+    }
+    
+    @IBAction func addPlaceToStay(sender: AnyObject) {
+        addMemory("Place to Stay")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createSnapButton()

@@ -11,7 +11,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1L-X8-nGW" userLabel="church">
-                    <rect key="frame" x="0.0" y="394" width="160" height="55"/>
+                    <rect key="frame" x="0.0" y="344" width="190" height="55"/>
                     <color key="backgroundColor" red="0.92135598776223782" green="0.89247662575174813" blue="0.9184043132328672" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Church" image="Church">
@@ -22,8 +22,8 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FMX-RE-75q">
-                    <rect key="frame" x="0.0" y="176" width="160" height="55"/>
-                    <color key="backgroundColor" red="0.91568359646013986" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="0.0" y="126" width="190" height="55"/>
+                    <color key="backgroundColor" red="0.94185273981678208" green="1" blue="0.34112612267342662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Restaurant" image="Restaurant">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -33,7 +33,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEk-T8-Qv1">
-                    <rect key="frame" x="0.0" y="231" width="160" height="55"/>
+                    <rect key="frame" x="0.0" y="181" width="190" height="55"/>
                     <color key="backgroundColor" red="0.91568359646013986" green="0.92156862750000001" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Pub" image="Pub">
@@ -44,7 +44,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rr-PK-Bmf">
-                    <rect key="frame" x="0.0" y="286" width="160" height="55"/>
+                    <rect key="frame" x="0.0" y="236" width="190" height="55"/>
                     <color key="backgroundColor" red="0.94167941433566438" green="0.96459790209790208" blue="0.934275161134965" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Shop" image="Shop">
@@ -55,7 +55,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTq-yu-by9">
-                    <rect key="frame" x="0.0" y="340" width="160" height="55"/>
+                    <rect key="frame" x="0.0" y="290" width="190" height="55"/>
                     <color key="backgroundColor" red="0.63914991258741261" green="0.76124847889860148" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Gallery" image="Gallery">
@@ -65,9 +65,9 @@
                         <action selector="addGallery:" destination="-1" eventType="touchUpInside" id="1Gw-PA-W7m"/>
                     </connections>
                 </button>
-                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="cafeButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csP-yr-z0N">
-                    <rect key="frame" x="0.0" y="121" width="160" height="55"/>
-                    <color key="backgroundColor" red="0.74066720659999996" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csP-yr-z0N">
+                    <rect key="frame" x="0.0" y="71" width="190" height="55"/>
+                    <color key="backgroundColor" red="0.74066720659999996" green="0.58560970279720281" blue="0.28788639365244756" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Cafe" image="Cafe">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,8 +76,30 @@
                         <action selector="addCafe:" destination="-1" eventType="touchUpInside" id="xJg-wn-SLI"/>
                     </connections>
                 </button>
+                <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deg-wH-DNs">
+                    <rect key="frame" x="0.0" y="399" width="190" height="55"/>
+                    <color key="backgroundColor" red="0.74066720659999996" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Green Space" image="GreenSpace">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="addGreenSpace:" destination="-1" eventType="touchUpInside" id="aZr-Dz-4nv"/>
+                    </connections>
+                </button>
+                <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bjw-PU-4Mq">
+                    <rect key="frame" x="0.0" y="454" width="190" height="55"/>
+                    <color key="backgroundColor" red="0.90934618387272725" green="1" blue="0.68386541463146855" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Place to Stay" image="PlaceToStay">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="addPlaceToStay:" destination="-1" eventType="touchUpInside" id="OPX-ih-VBF"/>
+                    </connections>
+                </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgz-lx-Twq">
-                    <rect key="frame" x="0.0" y="449" width="160" height="55"/>
+                    <rect key="frame" x="0.0" y="509" width="190" height="55"/>
                     <color key="backgroundColor" red="0.93151770104895104" green="0.93519952784965021" blue="0.99855072931678324" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Other" image="Other">
@@ -90,12 +112,20 @@
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="vgz-lx-Twq" secondAttribute="leading" id="2Zr-Wc-ohy"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="jTq-yu-by9" secondAttribute="leading" id="5Vv-1x-8AS"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="csP-yr-z0N" secondAttribute="leading" id="6Qd-gx-Bfo"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="h1L-X8-nGW" secondAttribute="leading" id="8NE-os-ZRH"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="FMX-RE-75q" secondAttribute="leading" id="9ce-UQ-7Km"/>
                 <constraint firstItem="FMX-RE-75q" firstAttribute="trailing" secondItem="h1L-X8-nGW" secondAttribute="trailing" id="CQb-HM-E0D"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="9rr-PK-Bmf" secondAttribute="leading" id="Grd-xr-Z8L"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="FMX-RE-75q" secondAttribute="leading" id="I8G-Lj-242"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="jTq-yu-by9" secondAttribute="leading" id="IKK-cl-XrA"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="deg-wH-DNs" secondAttribute="leading" id="LNN-bR-q3F"/>
                 <constraint firstItem="FMX-RE-75q" firstAttribute="leading" secondItem="h1L-X8-nGW" secondAttribute="leading" id="Nba-SR-wn8"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="csP-yr-z0N" secondAttribute="leading" id="Qap-Xc-efA"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="h1L-X8-nGW" secondAttribute="leading" id="bWt-qP-FVG"/>
+                <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="Bjw-PU-4Mq" secondAttribute="leading" id="oBQ-ut-Emi"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="9rr-PK-Bmf" secondAttribute="leading" id="vQ0-mA-Zff"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="vgz-lx-Twq" secondAttribute="leading" id="wzC-lY-IQ4"/>
             </constraints>
@@ -109,7 +139,9 @@
         <image name="Cafe" width="24" height="24"/>
         <image name="Church" width="24" height="24"/>
         <image name="Gallery" width="24" height="24"/>
+        <image name="GreenSpace" width="24" height="24"/>
         <image name="Other" width="24" height="24"/>
+        <image name="PlaceToStay" width="24" height="24"/>
         <image name="Pub" width="24" height="24"/>
         <image name="Restaurant" width="24" height="24"/>
         <image name="Shop" width="24" height="24"/>
