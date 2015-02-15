@@ -11,15 +11,26 @@ import CoreLocation
 import MapKit
 
 class CategoryController: UIViewController {
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        println("Loading category")
     }
     
     override func viewDidAppear(animated: Bool) {
         println("Showing category")
+    }
+    
+    class func getColorForCategory(category: String) -> UIColor {
+        let categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
+        let buttons = categoryView?.subviews
+        
+        for button in buttons! {
+            println(button.currentTitle!)
+            var buttonTitle = button.currentTitle!!.uppercaseString as NSString
+            if (buttonTitle.containsString(category.uppercaseString)) {
+                return button.backgroundColor!!
+            }
+        }
+        return UIColor.grayColor()
     }
 }
 

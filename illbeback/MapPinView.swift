@@ -54,13 +54,13 @@ class MapPinView: MKAnnotationView {
     }
     
     func createTitleLabel(title: String) -> UIView {
-        let label = UILabel(frame: CGRectMake(WIDTH/2, 0, WIDTH/2 - 10, 40))
-        label.backgroundColor = UIColor.whiteColor()
+        let label = UILabel(frame: CGRectMake(WIDTH/2, 0, WIDTH/2, 40))
         label.layer.cornerRadius = 0
         label.clipsToBounds = true
         label.numberOfLines = 0
         label.textAlignment = NSTextAlignment.Center
         label.text = title
+        label.backgroundColor = CategoryController.getColorForCategory(title)
         return label
     }
     
