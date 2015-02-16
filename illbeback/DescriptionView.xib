@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RememberController" customModule="I_ll_Be_Back" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddMemoryController" customModule="I_ll_Be_Back" customModuleProvider="target">
             <connections>
                 <outlet property="desciptionTextArea" destination="R7H-Px-uXL" id="nU7-S2-TdA"/>
             </connections>

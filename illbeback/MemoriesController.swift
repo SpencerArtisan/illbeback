@@ -99,7 +99,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         var id = "1234"
         var memoryString = "\(type):\(subtitle):\(there.latitude):\(there.longitude):\(id)"
         memories.append(memoryString)
-//        saveMemories()
+        saveMemories()
         addPin(memoryString)
     }
     
@@ -113,6 +113,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         var coord = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
         var poi = MapPin(coordinate: coord, title: name, subtitle: description, id: id)
+        
         
         map.addAnnotation(poi)
     }
@@ -128,6 +129,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 pinView = MapPinView(photo: photo, title: pinData.title, subtitle: pinData.subtitle)
                 pinView.annotation = annotation
                 pinView.enabled = true
+                
             
                 let pinImage : UIImage = UIImage(named: pinData.title)!
                 pinView.image = pinImage
