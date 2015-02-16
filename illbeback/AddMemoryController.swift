@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 class AddMemoryController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var desciptionTextArea: UITextView!
@@ -14,6 +15,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var descriptionView: UIView!
     var memoryId: String?
     var memoryImage: String?
+    var memoryLocation: CLLocationCoordinate2D?
     var callingViewController: UIViewController?
     let photoAlbum = PhotoAlbum()
 
@@ -54,12 +56,20 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
     
     func add(controller: UIViewController, image: UIImage) {
+        self.memoryLocation = nil
         self.callingViewController = controller
         self.memoryId = NSUUID().UUIDString
         self.photoAlbum.saveMemoryImage(image, memoryId: self.memoryId!)
         self.showCategorySelector()
     }
    
+    func add(controller: UIViewController, location: CLLocationCoordinate2D) {
+        self.memoryLocation = location
+        self.callingViewController = controller
+        self.memoryId = NSUUID().UUIDString
+        self.showCategorySelector()
+    }
+    
     override init() {
         super.init()
         categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
@@ -115,7 +125,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
             textView.resignFirstResponder()
             var tabBarController = self.callingViewController!.parentViewController as UITabBarController
             var memories = tabBarController.childViewControllers[0] as MemoriesController
-            memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text)
+            memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation)
             tabBarController.selectedIndex = 0
             self.categoryView.removeFromSuperview()
             self.descriptionView.removeFromSuperview()

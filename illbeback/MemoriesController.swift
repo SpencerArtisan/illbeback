@@ -18,9 +18,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var props: NSDictionary?
     var memories: [String] = []
     let photoAlbum = PhotoAlbum()
-    
-    
-    
+    let addMemory = AddMemoryController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +40,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         if (recognizer.state == UIGestureRecognizerState.Began) {
             var point = recognizer.locationInView(self.map)
             var tapPoint = self.map.convertPoint(point, toCoordinateFromView: self.view)
-            addMemoryThere(tapPoint)
+            self.addMemory.add(self, location: tapPoint)
         }
     }
 
@@ -82,27 +80,21 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         here = locations[0] as CLLocation
     }
 
-    func addMemoryHere(type: String, id: String, description: String) {
+    func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?) {
         var subtitle = "No description provided"
         if (description != "") {
             subtitle = description
         }
-        var memoryString = "\(type):\(subtitle):\(here!.coordinate.latitude):\(here!.coordinate.longitude):\(id)"
+        var locationHere = here!.coordinate
+        if (location != nil) {
+            locationHere = location!
+        }
+        var memoryString = "\(type):\(subtitle):\(locationHere.latitude):\(locationHere.longitude):\(id)"
         memories.append(memoryString)
         saveMemories()
         addPin(memoryString)
     }
 
-    func addMemoryThere(there: CLLocationCoordinate2D) {
-        var subtitle = "No description provided"
-        var type = "Cafe"
-        var id = "1234"
-        var memoryString = "\(type):\(subtitle):\(there.latitude):\(there.longitude):\(id)"
-        memories.append(memoryString)
-        saveMemories()
-        addPin(memoryString)
-    }
-    
     func addPin(memory: String) {
         var parts = memory.componentsSeparatedByString(":")
         let name = parts[0]
