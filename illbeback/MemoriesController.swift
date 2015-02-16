@@ -19,6 +19,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var memories: [String] = []
     let photoAlbum = PhotoAlbum()
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,8 +33,19 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         map.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         map.delegate = self
+
+        var tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
+        self.map.addGestureRecognizer(tapRecognizer)
     }
     
+    func foundTap(recognizer: UITapGestureRecognizer) {
+        if (recognizer.state == UIGestureRecognizerState.Began) {
+            var point = recognizer.locationInView(self.map)
+            var tapPoint = self.map.convertPoint(point, toCoordinateFromView: self.view)
+            addMemoryThere(tapPoint)
+        }
+    }
+
     override func viewDidAppear(animated: Bool) {
         for memory in memories {
             addPin(memory)
@@ -79,6 +93,16 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         addPin(memoryString)
     }
 
+    func addMemoryThere(there: CLLocationCoordinate2D) {
+        var subtitle = "No description provided"
+        var type = "Cafe"
+        var id = "1234"
+        var memoryString = "\(type):\(subtitle):\(there.latitude):\(there.longitude):\(id)"
+        memories.append(memoryString)
+//        saveMemories()
+        addPin(memoryString)
+    }
+    
     func addPin(memory: String) {
         var parts = memory.componentsSeparatedByString(":")
         let name = parts[0]
@@ -101,7 +125,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
             if (pinView == nil) {
                 var photo = photoAlbum.getMemoryImage(pinData.id)
-                pinView = MapPinView(photo: photo!, title: pinData.title, subtitle: pinData.subtitle)
+                pinView = MapPinView(photo: photo, title: pinData.title, subtitle: pinData.subtitle)
                 pinView.annotation = annotation
                 pinView.enabled = true
             

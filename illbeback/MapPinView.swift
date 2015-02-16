@@ -10,13 +10,15 @@ import MapKit
 
 
 class MapPinView: MKAnnotationView {
-    let WIDTH: CGFloat = 300.0
-    let HEIGHT: CGFloat = 200.0
+    let WIDTH: CGFloat = 260.0
+    let HEIGHT: CGFloat = 220.0
+    let WIDTH_WITHOUT_PHOTO: CGFloat = 130.0
+    let HEIGHT_WITHOUT_PHOTO: CGFloat = 160.0
     
     var calloutView: UIView!
     var hitOutside: Bool = true
     
-    init(photo: UIImage, title: String, subtitle: String) {
+    init(photo: UIImage?, title: String, subtitle: String) {
         super.init()
         
         canShowCallout = false
@@ -34,12 +36,21 @@ class MapPinView: MKAnnotationView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createCalloutView(photo: UIView, title: UIView, subtitle: UIView) {
+    func createCalloutView(photo: UIView?, title: UIView, subtitle: UIView) {
         self.calloutView = UIView()
-        self.calloutView.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
-        self.calloutView.backgroundColor = UIColor.whiteColor()
-        self.calloutView.layer.cornerRadius = 10
-        self.calloutView.addSubview(photo)
+        if (photo == nil) {
+            self.calloutView.frame = CGRectMake(-WIDTH_WITHOUT_PHOTO/2, -HEIGHT_WITHOUT_PHOTO - 10, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO)
+            self.calloutView.backgroundColor = UIColor.whiteColor()
+            self.calloutView.layer.cornerRadius = 10
+            title.frame = CGRectMake(0, 0, WIDTH_WITHOUT_PHOTO, 40)
+            subtitle.frame = CGRectMake(0, 40, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO - 40)
+        } else {
+            self.calloutView.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
+            self.calloutView.backgroundColor = UIColor.whiteColor()
+            self.calloutView.layer.cornerRadius = 10
+            self.calloutView.addSubview(photo!)
+            self.calloutView.addSubview(createBlankLabel())
+        }
         self.calloutView.addSubview(title)
         self.calloutView.addSubview(subtitle)
         self.calloutView.clipsToBounds = true
@@ -47,10 +58,9 @@ class MapPinView: MKAnnotationView {
         self.calloutView.layer.borderColor = UIColor.grayColor().CGColor
     }
     
-    func createPhotoView(photo: UIImage) -> UIView {
+    func createPhotoView(photo: UIImage?) -> UIView? {
+        if (photo == nil) { return nil }
         let photoView = UIImageView(frame: CGRectMake(0, 0, WIDTH/2 + 10, HEIGHT))
-        photoView.layer.cornerRadius = 10
-        photoView.clipsToBounds = true
         photoView.image = photo
         return photoView
     }
@@ -67,7 +77,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createSubtitleLabel(subtitle: String) -> UIView {
-        let label = UILabel(frame: CGRectMake(WIDTH/2, 40, WIDTH/2 - 10, HEIGHT - 40))
+        let label = UILabel(frame: CGRectMake(WIDTH/2 + 15, 40, WIDTH/2 - 30, HEIGHT - 40))
         label.backgroundColor = UIColor.whiteColor()
         label.layer.cornerRadius = 0
         label.clipsToBounds = true
@@ -77,6 +87,17 @@ class MapPinView: MKAnnotationView {
         
         return label
     }
+
+    func createBlankLabel() -> UIView {
+        let label = UILabel(frame: CGRectMake(WIDTH/2, 40, WIDTH/2, HEIGHT - 40))
+        label.backgroundColor = UIColor.whiteColor()
+        label.layer.cornerRadius = 0
+        label.clipsToBounds = true
+        label.numberOfLines = 0
+        
+        return label
+    }
+    
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
