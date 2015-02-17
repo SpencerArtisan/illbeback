@@ -94,6 +94,18 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         saveMemories()
         addPin(memoryString)
     }
+    
+    func deleteMemory(pin: MapPinView) {
+        for i in 0...memories.count - 1 {
+            var memoryString = memories[i] as NSString
+            if (memoryString.containsString(pin.memoryId!)) {
+                memories.removeAtIndex(i)
+                saveMemories()
+                break
+            }
+        }
+        map.removeAnnotation(pin.annotation)
+    }
 
     func addPin(memory: String) {
         var parts = memory.componentsSeparatedByString(":")
@@ -118,7 +130,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
             if (pinView == nil) {
                 var photo = photoAlbum.getMemoryImage(pinData.id)
-                pinView = MapPinView(photo: photo, title: pinData.title, subtitle: pinData.subtitle)
+                pinView = MapPinView(memoriesController: self, memoryId: pinData.id, photo: photo, title: pinData.title, subtitle: pinData.subtitle)
                 pinView.annotation = annotation
                 pinView.enabled = true
                 

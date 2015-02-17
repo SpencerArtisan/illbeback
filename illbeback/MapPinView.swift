@@ -10,22 +10,29 @@ import MapKit
 
 
 class MapPinView: MKAnnotationView {
-    let WIDTH: CGFloat = 260.0
-    let HEIGHT: CGFloat = 220.0
+    let WIDTH: CGFloat = 320.0
+    let HEIGHT: CGFloat = 280.0
     let WIDTH_WITHOUT_PHOTO: CGFloat = 130.0
     let HEIGHT_WITHOUT_PHOTO: CGFloat = 160.0
     
     var calloutView: UIView!
+    var btn: UIButton?
     var hitOutside: Bool = true
+    var memoriesController:MemoriesController?
+    var memoryId: String?
     
-    init(photo: UIImage?, title: String, subtitle: String) {
+    init(memoriesController: MemoriesController, memoryId: String, photo: UIImage?, title: String, subtitle: String) {
         super.init()
-        
+
+        self.memoryId = memoryId
+        self.memoriesController = memoriesController
         canShowCallout = false
         let photoView = createPhotoView(photo)
         let subtitleLabel = createSubtitleLabel(subtitle)
         let titleLabel = createTitleLabel(title)
-        createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel)
+        let deleteButton = createDeleteButton()
+        createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel, deleteButton: deleteButton)
+
     }
     
     override init(frame: CGRect) {
@@ -36,7 +43,7 @@ class MapPinView: MKAnnotationView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createCalloutView(photo: UIView?, title: UIView, subtitle: UIView) {
+    func createCalloutView(photo: UIView?, title: UIView, subtitle: UIView, deleteButton: UIButton) {
         self.calloutView = UIView()
         if (photo == nil) {
             self.calloutView.frame = CGRectMake(-WIDTH_WITHOUT_PHOTO/2, -HEIGHT_WITHOUT_PHOTO - 10, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO)
@@ -44,6 +51,7 @@ class MapPinView: MKAnnotationView {
             self.calloutView.layer.cornerRadius = 10
             title.frame = CGRectMake(0, 0, WIDTH_WITHOUT_PHOTO, 40)
             subtitle.frame = CGRectMake(0, 40, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO - 40)
+            deleteButton.frame = CGRectMake(WIDTH_WITHOUT_PHOTO-30,HEIGHT_WITHOUT_PHOTO-40,40,40)
         } else {
             self.calloutView.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
             self.calloutView.backgroundColor = UIColor.whiteColor()
@@ -53,9 +61,19 @@ class MapPinView: MKAnnotationView {
         }
         self.calloutView.addSubview(title)
         self.calloutView.addSubview(subtitle)
+        self.calloutView.addSubview(deleteButton)
         self.calloutView.clipsToBounds = true
         self.calloutView.layer.borderWidth = 1.0
         self.calloutView.layer.borderColor = UIColor.grayColor().CGColor
+    }
+    
+    func createDeleteButton() -> UIButton {
+        var button = UIButton(frame: CGRectMake(WIDTH-30,HEIGHT-40,40,40))
+        var image = UIImage(named: "trash")
+
+        button.setImage(image, forState: UIControlState.Normal)
+        self.btn = button
+        return button
     }
     
     func createPhotoView(photo: UIImage?) -> UIView? {
@@ -111,18 +129,24 @@ class MapPinView: MKAnnotationView {
             calloutView!.removeFromSuperview()
         }
     }
-    
+
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         var hitView = super.hitTest(point, withEvent: event)
         
         if let callout = calloutView {
             if (hitView == nil && self.selected) {
                 hitView = callout.hitTest(point, withEvent: event)
+                if (self.btn != nil) {
+                    var pt3 = self.convertPoint(point, toView: callout)
+                    if (event!.type == UIEventType.Touches && self.btn!.frame.contains(pt3)) {
+                        memoriesController?.deleteMemory(self)
+                    }
+                }
             }
         }
         
         hitOutside = hitView == nil
-        return hitView;
+        return hitView
     }
 
 }
