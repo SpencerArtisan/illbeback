@@ -40,6 +40,7 @@
 		97A3536B1A800EF500973CAC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97A3536A1A800EF500973CAC /* Media.xcassets */; };
 		97A3536D1A801CFA00973CAC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3536C1A801CFA00973CAC /* MapKit.framework */; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
+		97F438171A991CEC00A33FD2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F438161A991CEC00A33FD2 /* Memory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		97A3536A1A800EF500973CAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		97A3536C1A801CFA00973CAC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
+		97F438161A991CEC00A33FD2 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
 		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
 		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				972006A61A9140FB00B5E74C /* DescriptionView.xib */,
 				97420BBD1A92A0320076E561 /* AddMemoryController.swift */,
 				9725CD431A98D58B0081C1B3 /* Sharer.swift */,
+				97F438161A991CEC00A33FD2 /* Memory.swift */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				9725CD441A98D58B0081C1B3 /* Sharer.swift in Sources */,
 				9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */,
 				972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */,
+				97F438171A991CEC00A33FD2 /* Memory.swift in Sources */,
 				97420BBE1A92A0320076E561 /* AddMemoryController.swift in Sources */,
 				972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
