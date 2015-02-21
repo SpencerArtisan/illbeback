@@ -15,16 +15,15 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     @IBOutlet weak var map: MKMapView!
     var locationManager = CLLocationManager()
     var here: CLLocation!
-    var props: NSDictionary?
-    var memories: [String] = []
+
+    let memoryAlbum = MemoryAlbum()
     let photoAlbum = PhotoAlbum()
     let addMemory = AddMemoryController()
     let sharer = Sharer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        readMemories()
+
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
@@ -39,9 +38,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         downloadNewShares()
 
         println("Adding all pins to the map")
-        for memory in memories {
-            addPin(memory)
-        }
+        memoryAlbum.addToMap(map)
     }
     
     func downloadNewShares() {
@@ -67,27 +64,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         // Dispose of any resources that can be recreated.
     }
     
-    func readMemories() {
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        var path = paths.stringByAppendingPathComponent("memories.plist")
-        var fileManager = NSFileManager.defaultManager()
-        if (!(fileManager.fileExistsAtPath(path))) {
-            var bundle : NSString = NSBundle.mainBundle().pathForResource("Data", ofType: "plist")!
-            fileManager.copyItemAtPath(bundle, toPath: path, error:nil)
-        }
-        
-        props = NSDictionary(contentsOfFile: path)?.mutableCopy() as? NSDictionary
-        
-        memories = props?.valueForKey("Memories") as [String]
-    }
-
-    func saveMemories() {
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        var path = paths.stringByAppendingPathComponent("memories.plist")
-        props?.setValue(memories, forKey: "Memories")
-        props?.writeToFile(path, atomically: true)
-    }
-
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         here = locations[0] as CLLocation
     }
@@ -95,38 +71,17 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?) {
         var actualLocation = location == nil ? here.coordinate : location!
         var memory = Memory(id: id, type: type, description: description, location: actualLocation)
-        addMemoryHere(memory)
+        memoryAlbum.add(memory, map: map)
 
         // temp test
 //        let imageUrl: NSURL? = photoAlbum.getMemoryImageUrl(id)
 //        sharer.share("madeleine", to: "spencer", memory: memoryString, imageUrl: imageUrl)
     }
     
-    
-    func addMemoryHere(memory: Memory) {
-        let memoryString = memory.asString()
-        memories.append(memoryString)
-        saveMemories()
-        addPin(memoryString)
-    }
-    
     func deleteMemory(pin: MapPinView) {
-        for i in 0...memories.count - 1 {
-            var memoryString = memories[i] as NSString
-            if (memoryString.containsString(pin.memoryId!)) {
-                memories.removeAtIndex(i)
-                saveMemories()
-                break
-            }
-        }
-        map.removeAnnotation(pin.annotation)
+        memoryAlbum.delete(pin, map: map)
     }
 
-    func addPin(memoryString: String) {
-        let pin = Memory(memoryString: memoryString).asMapPin()
-        map.addAnnotation(pin)
-    }
-    
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if (annotation is MapPin) {
             let pinData = annotation as MapPin
@@ -149,6 +104,5 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
         return nil
     }
-
 }
 
