@@ -36,8 +36,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         var tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
         self.map.addGestureRecognizer(tapRecognizer)
         
-        sharer.retrieve({memory in
-            println("Retrieved shared memory: " + memory)
+        sharer.retrieve("spencer", {sender, memory in
+            println("Retrieved shared memory from " + sender + ": " + memory)
         })
     }
     

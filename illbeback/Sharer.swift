@@ -16,18 +16,23 @@ public class Sharer {
     }
     
     func share(from: String, to: String, memory: String) {
-        var givenMemories = root.childByAppendingPath("users/" + to + "/given")
+        var givenMemoriesRoot = root.childByAppendingPath("users/" + to + "/given")
         var given = ["from": from, "memory": memory]
-        var newNode = givenMemories.childByAutoId()
+        var newNode = givenMemoriesRoot.childByAutoId()
         newNode.setValue(given)
     }
     
-    func retrieve(callback: (String) -> ()) {
-//        root.observeEventType(.Value, withBlock: {
-//            snapshot in
-//                var data = snapshot.value as String
-//                callback(data)
-//        })
+    func retrieve(to: String, callback: (from: String, memory: String) -> ()) {
+        var givenMemoriesRoot = root.childByAppendingPath("users/" + to + "/given")
+        givenMemoriesRoot.observeSingleEventOfType(.Value, withBlock: {
+            snapshot in
+                var givenMemories = snapshot.children
+                while let given: FDataSnapshot = givenMemories.nextObject() as? FDataSnapshot {
+                    var from = given.value["from"] as String
+                    var memory = given.value["memory"] as String
+                    callback(from: from, memory: memory)
+                }
+        })
     }
 }
 
