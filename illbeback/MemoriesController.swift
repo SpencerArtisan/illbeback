@@ -19,10 +19,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var memories: [String] = []
     let photoAlbum = PhotoAlbum()
     let addMemory = AddMemoryController()
+    let sharer = Sharer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         readMemories()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -34,6 +35,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
         var tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
         self.map.addGestureRecognizer(tapRecognizer)
+        
+        sharer.retrieve({memory in
+            println("Retrieved shared memory: " + memory)
+        })
     }
     
     func foundTap(recognizer: UITapGestureRecognizer) {
@@ -93,6 +98,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         memories.append(memoryString)
         saveMemories()
         addPin(memoryString)
+        
+        sharer.share("madeleine", to: "spencer", memory: memoryString)
     }
     
     func deleteMemory(pin: MapPinView) {

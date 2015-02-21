@@ -50,8 +50,8 @@ class MapPinView: MKAnnotationView {
             self.calloutView.backgroundColor = UIColor.whiteColor()
             self.calloutView.layer.cornerRadius = 10
             title.frame = CGRectMake(0, 0, WIDTH_WITHOUT_PHOTO, 40)
-            subtitle.frame = CGRectMake(0, 40, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO - 40)
-            deleteButton.frame = CGRectMake(WIDTH_WITHOUT_PHOTO-30,HEIGHT_WITHOUT_PHOTO-40,40,40)
+            subtitle.frame = CGRectMake(0, 40, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO - 60)
+            deleteButton.frame = CGRectMake(WIDTH_WITHOUT_PHOTO-35,HEIGHT_WITHOUT_PHOTO-40,40,40)
         } else {
             self.calloutView.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
             self.calloutView.backgroundColor = UIColor.whiteColor()
@@ -68,7 +68,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeleteButton() -> UIButton {
-        var button = UIButton(frame: CGRectMake(WIDTH-30,HEIGHT-40,40,40))
+        var button = UIButton(frame: CGRectMake(WIDTH-35,HEIGHT-40,40,40))
         var image = UIImage(named: "trash")
 
         button.setImage(image, forState: UIControlState.Normal)
@@ -89,13 +89,14 @@ class MapPinView: MKAnnotationView {
         label.clipsToBounds = true
         label.numberOfLines = 0
         label.textAlignment = NSTextAlignment.Center
+        label.font = label.font.fontWithSize(20)
         label.text = title
         label.backgroundColor = CategoryController.getColorForCategory(title)
         return label
     }
     
     func createSubtitleLabel(subtitle: String) -> UIView {
-        let label = UILabel(frame: CGRectMake(WIDTH/2 + 15, 40, WIDTH/2 - 30, HEIGHT - 40))
+        let label = UILabel(frame: CGRectMake(WIDTH/2 + 15, 40, WIDTH/2 - 30, HEIGHT - 60))
         label.backgroundColor = UIColor.whiteColor()
         label.layer.cornerRadius = 0
         label.clipsToBounds = true

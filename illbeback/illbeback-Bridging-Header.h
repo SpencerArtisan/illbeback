@@ -7,3 +7,4 @@
 //
 
 #import "../LLSimpleCamera/LLSimpleCamera.h"
+#import <Firebase/Firebase.h>
