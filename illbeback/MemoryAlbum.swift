@@ -10,32 +10,42 @@ import Foundation
 import MapKit
 
 public class MemoryAlbum {
+    private let sharer = Sharer()
     private var memories: [String] = []
-    var props: NSDictionary?
+    private var props: NSDictionary?
+    private var map: MKMapView
     
-    init() {
+    init(map: MKMapView) {
+        self.map = map
         read()
     }
     
     func addToMap(map: MKMapView) {
         for memory in memories {
-            addPin(memory, map: map)
+            addPin(memory)
         }
     }
 
-    func addPin(memoryString: String, map: MKMapView) {
+    func downloadNewShares() {
+        sharer.retrieve("spencer", {sender, memory in
+            println("Retrieved shared memory from " + sender + ": " + memory)
+            self.add(Memory(memoryString: memory))
+        })
+    }
+    
+    func addPin(memoryString: String) {
         let pin = Memory(memoryString: memoryString).asMapPin()
         map.addAnnotation(pin)
     }
     
-    func add(memory: Memory, map: MKMapView) {
+    func add(memory: Memory) {
         let memoryString = memory.asString()
         memories.append(memoryString)
         save()
-        addPin(memoryString, map: map)
+        addPin(memoryString)
     }
     
-    func delete(pin: MapPinView, map: MKMapView) {
+    func delete(pin: MapPinView) {
         for i in 0...memories.count - 1 {
             var memoryString = memories[i] as NSString
             if (memoryString.containsString(pin.memoryId!)) {

@@ -15,17 +15,22 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     @IBOutlet weak var map: MKMapView!
     var locationManager = CLLocationManager()
     var here: CLLocation!
-
-    let memoryAlbum = MemoryAlbum()
+    var memoryAlbum: MemoryAlbum!
     let photoAlbum = PhotoAlbum()
     let addMemory = AddMemoryController()
-    let sharer = Sharer()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initLocationManager()
         initMap()
-        downloadNewShares()
+        initMemories()
+    }
+    
+    func initMemories() {
+        memoryAlbum = MemoryAlbum(map: map)
+        memoryAlbum.downloadNewShares()
+        memoryAlbum.addToMap(map)
     }
     
     func initLocationManager() {
@@ -40,14 +45,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         map.delegate = self
         var tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
         self.map.addGestureRecognizer(tapRecognizer)
-        memoryAlbum.addToMap(map)
-    }
-    
-    func downloadNewShares() {
-        sharer.retrieve("spencer", {sender, memory in
-            println("Retrieved shared memory from " + sender + ": " + memory)
-//            self.addMemoryHere(memory)
-        })
     }
     
     // User clicked on map - Add a memory there
@@ -68,12 +65,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?) {
         var actualLocation = location == nil ? here.coordinate : location!
         var memory = Memory(id: id, type: type, description: description, location: actualLocation)
-        memoryAlbum.add(memory, map: map)
+        memoryAlbum.add(memory)
     }
     
     // Callback for button on the UI
     func deleteMemory(pin: MapPinView) {
-        memoryAlbum.delete(pin, map: map)
+        memoryAlbum.delete(pin)
     }
 
     // Callback for display pins on map
