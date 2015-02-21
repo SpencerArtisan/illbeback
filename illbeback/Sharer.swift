@@ -1,13 +1,3 @@
-//
-//  Sharer.swift
-//  illbeback
-//
-//  Created by Spencer Ward on 21/02/2015.
-//  Copyright (c) 2015 Spencer Ward. All rights reserved.
-//
-
-
-
 public class Sharer {
     private var root: Firebase
     
@@ -15,7 +5,9 @@ public class Sharer {
         root = Firebase(url:"https://illbeback.firebaseio.com/")
     }
     
-    func share(from: String, to: String, memory: String) {
+    func share(from: String, to: String, memory: String, imageUrl: NSURL?) {
+        storeImage(imageUrl)
+        
         var givenMemoriesRoot = root.childByAppendingPath("users/" + to + "/given")
         var given = ["from": from, "memory": memory]
         var newNode = givenMemoriesRoot.childByAutoId()
@@ -33,6 +25,29 @@ public class Sharer {
                     callback(from: from, memory: memory)
                 }
         })
+    }
+    
+    
+    private func storeImage(imageUrl: NSURL?) {
+        if (imageUrl != nil) {
+            let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+            let uploadRequest1 : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
+        
+            uploadRequest1.bucket = "illbebackapp"
+            uploadRequest1.key =  "my-image"
+            uploadRequest1.body = imageUrl
+            
+        
+            let task = transferManager.upload(uploadRequest1)
+            task.continueWithBlock { (task) -> AnyObject! in
+                if task.error != nil {
+                    println("Error: \(task.error)")
+                } else {
+                    println("Upload successful")
+                }
+                return nil
+            }
+        }
     }
 }
 

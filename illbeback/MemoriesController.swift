@@ -99,7 +99,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         saveMemories()
         addPin(memoryString)
         
-        sharer.share("madeleine", to: "spencer", memory: memoryString)
+        let imageUrl: NSURL? = photoAlbum.getMemoryImageUrl(id)
+        sharer.share("madeleine", to: "spencer", memory: memoryString, imageUrl: imageUrl)
     }
     
     func deleteMemory(pin: MapPinView) {
