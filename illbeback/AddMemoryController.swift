@@ -125,7 +125,9 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
             textView.resignFirstResponder()
             var tabBarController = self.callingViewController!.parentViewController as UITabBarController
             var memories = tabBarController.childViewControllers[0] as MemoriesController
+            
             memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation)
+            
             tabBarController.selectedIndex = 0
             self.categoryView.removeFromSuperview()
             self.descriptionView.removeFromSuperview()

@@ -36,8 +36,13 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         var tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
         self.map.addGestureRecognizer(tapRecognizer)
         
+        downloadNewShares()
+    }
+    
+    func downloadNewShares() {
         sharer.retrieve("spencer", {sender, memory in
             println("Retrieved shared memory from " + sender + ": " + memory)
+            self.addMemoryHere(memory)
         })
     }
     
@@ -86,6 +91,15 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?) {
+        var memoryString = encodeMemoryString(type, id: id, description: description, location: location)
+        addMemoryHere(memoryString)
+
+        // temp test
+//        let imageUrl: NSURL? = photoAlbum.getMemoryImageUrl(id)
+//        sharer.share("madeleine", to: "spencer", memory: memoryString, imageUrl: imageUrl)
+    }
+    
+    func encodeMemoryString(type: String, id: String, description: String, location: CLLocationCoordinate2D?) -> String {
         var subtitle = "No description provided"
         if (description != "") {
             subtitle = description
@@ -94,13 +108,25 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         if (location != nil) {
             locationHere = location!
         }
-        var memoryString = "\(type):\(subtitle):\(locationHere.latitude):\(locationHere.longitude):\(id)"
+        return "\(type):\(subtitle):\(locationHere.latitude):\(locationHere.longitude):\(id)"
+    }
+    
+    func decodeMemoryString(memoryString: String) -> (type: String, id: String, description: String, location: CLLocationCoordinate2D) {
+        var parts = memoryString.componentsSeparatedByString(":")
+        let type = parts[0]
+        let description = parts[1]
+        let lat = parts[2]
+        let long = parts[3]
+        let id = parts[4]
+        
+        let location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
+        return (type, id, description, location)
+    }
+    
+    func addMemoryHere(memoryString: String) {
         memories.append(memoryString)
         saveMemories()
         addPin(memoryString)
-        
-        let imageUrl: NSURL? = photoAlbum.getMemoryImageUrl(id)
-        sharer.share("madeleine", to: "spencer", memory: memoryString, imageUrl: imageUrl)
     }
     
     func deleteMemory(pin: MapPinView) {
@@ -115,18 +141,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         map.removeAnnotation(pin.annotation)
     }
 
-    func addPin(memory: String) {
-        var parts = memory.componentsSeparatedByString(":")
-        let name = parts[0]
-        let description = parts[1]
-        let lat = parts[2]
-        let long = parts[3]
-        let id = parts[4]
-        
-        var coord = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
-        var poi = MapPin(coordinate: coord, title: name, subtitle: description, id: id)
-        
-        
+    func addPin(memoryString: String) {
+        let (type, id, description, location) = decodeMemoryString(memoryString)
+        var poi = MapPin(coordinate: location, title: type, subtitle: description, id: id)
         map.addAnnotation(poi)
     }
     
