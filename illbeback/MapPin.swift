@@ -16,7 +16,7 @@ class MapPin : NSObject, MKAnnotation {
     init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, id: String) {
         self.coordinate = coordinate
         self.title = title
-        self.subtitle = subtitle
+        self.subtitle = subtitle.isEmpty ? "No description provided" : subtitle
         self.id = id
     }
 }

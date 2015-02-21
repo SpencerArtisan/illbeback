@@ -23,21 +23,23 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        initLocationManager()
+        initMap()
+        downloadNewShares()
+    }
+    
+    func initLocationManager() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
-        
+    }
+
+    func initMap() {
         map.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         map.delegate = self
-
         var tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
         self.map.addGestureRecognizer(tapRecognizer)
-        
-        downloadNewShares()
-
-        println("Adding all pins to the map")
         memoryAlbum.addToMap(map)
     }
     
@@ -48,6 +50,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         })
     }
     
+    // User clicked on map - Add a memory there
     func foundTap(recognizer: UITapGestureRecognizer) {
         if (recognizer.state == UIGestureRecognizerState.Began) {
             var point = recognizer.locationInView(self.map)
@@ -56,36 +59,27 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
     }
 
-    override func viewDidAppear(animated: Bool) {
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    // Callback for location updates
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         here = locations[0] as CLLocation
     }
 
+    // Callback for button on the UI
     func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?) {
         var actualLocation = location == nil ? here.coordinate : location!
         var memory = Memory(id: id, type: type, description: description, location: actualLocation)
         memoryAlbum.add(memory, map: map)
-
-        // temp test
-//        let imageUrl: NSURL? = photoAlbum.getMemoryImageUrl(id)
-//        sharer.share("madeleine", to: "spencer", memory: memoryString, imageUrl: imageUrl)
     }
     
+    // Callback for button on the UI
     func deleteMemory(pin: MapPinView) {
         memoryAlbum.delete(pin, map: map)
     }
 
+    // Callback for display pins on map
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if (annotation is MapPin) {
             let pinData = annotation as MapPin
-            
             var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as MapPinView!
         
             if (pinView == nil) {
@@ -98,7 +92,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 let pinImage : UIImage = UIImage(named: pinData.title)!
                 pinView.image = pinImage
             }
-        
         
             return pinView
         }

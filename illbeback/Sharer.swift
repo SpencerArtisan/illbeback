@@ -1,6 +1,11 @@
 public class Sharer {
     private var root: Firebase
     
+    
+    // temp test
+    //        let imageUrl: NSURL? = photoAlbum.getMemoryImageUrl(id)
+    //        sharer.share("madeleine", to: "spencer", memory: memoryString, imageUrl: imageUrl)
+
     init() {
         root = Firebase(url:"https://illbeback.firebaseio.com/")
     }
