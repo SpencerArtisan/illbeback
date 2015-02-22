@@ -31,6 +31,10 @@ class Modal {
         view.removeFromSuperview()
     }
     
+    func findElementByTag(tag: Int) -> UIView? {
+        return view.viewWithTag(tag)
+    }
+    
     private func slide(parentView: UIView, start: CGFloat, end: CGFloat) {
         parentView.addSubview(self.view)
         self.view.frame.origin.x = start
