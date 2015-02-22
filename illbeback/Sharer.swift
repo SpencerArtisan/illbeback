@@ -9,7 +9,6 @@ public class Sharer {
     }
     
     func share(from: String, to: String, memory: String, imageUrl: NSURL?) {
-        // todo -tidy
         var memoryId = Memory(memoryString: memory).getId()
         if (PhotoAlbum().photoExists(memoryId)) {
             uploadImage(imageUrl, key: imageKey(memory))
@@ -27,6 +26,7 @@ public class Sharer {
                     self.downloadImage(memory, key: self.imageKey(memory))
                     callback(from: from, memory: memory)
                 }
+                self.shareRoot(to).removeValue()
         })
     }
     
