@@ -50,13 +50,14 @@ class MapPinView: MKAnnotationView {
             let subtitleLabel = createSubtitleLabel(subtitle!)
             let titleLabel = createTitleLabel(title!)
             let deleteButton = createDeleteButton()
-            createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel, deleteButton: deleteButton)
+            let shareButton = createShareButton()
+            createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel, deleteButton: deleteButton, shareButton: shareButton)
             
         }
         return calloutView!
     }
     
-    func createCalloutView(photo: UIView?, title: UIView, subtitle: UIView, deleteButton: UIButton) {
+    func createCalloutView(photo: UIView?, title: UIView, subtitle: UIView, deleteButton: UIButton, shareButton: UIButton) {
         self.calloutView = UIView()
         if (photo == nil) {
             self.calloutView?.frame = CGRectMake(-WIDTH_WITHOUT_PHOTO/2, -HEIGHT_WITHOUT_PHOTO - 10, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO)
@@ -75,6 +76,7 @@ class MapPinView: MKAnnotationView {
         self.calloutView?.addSubview(title)
         self.calloutView?.addSubview(subtitle)
         self.calloutView?.addSubview(deleteButton)
+        self.calloutView?.addSubview(shareButton)
         self.calloutView?.clipsToBounds = true
         self.calloutView?.layer.borderWidth = 1.0
         self.calloutView?.layer.borderColor = UIColor.grayColor().CGColor
@@ -83,7 +85,16 @@ class MapPinView: MKAnnotationView {
     func createDeleteButton() -> UIButton {
         var button = UIButton(frame: CGRectMake(WIDTH-35,HEIGHT-40,40,40))
         var image = UIImage(named: "trash")
-
+        
+        button.setImage(image, forState: UIControlState.Normal)
+        self.btn = button
+        return button
+    }
+    
+    func createShareButton() -> UIButton {
+        var button = UIButton(frame: CGRectMake(WIDTH/2 + 10,HEIGHT-40,40,40))
+        var image = UIImage(named: "share")
+        
         button.setImage(image, forState: UIControlState.Normal)
         self.btn = button
         return button
