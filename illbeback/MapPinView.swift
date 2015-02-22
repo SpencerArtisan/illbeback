@@ -15,15 +15,24 @@ class MapPinView: MKAnnotationView {
     let WIDTH_WITHOUT_PHOTO: CGFloat = 130.0
     let HEIGHT_WITHOUT_PHOTO: CGFloat = 160.0
     
+    var hitOutside: Bool = true
+    var memoriesController:MemoriesController?
     var calloutView: UIView?
     var deleteButton: UIButton?
     var shareButton: UIButton?
-    var hitOutside: Bool = true
-    var memoriesController:MemoriesController?
     var memoryId: String?
     var imageUrl: String?
     var title: String?
     var subtitle: String?
+    var photoView: UIImageView?
+    var titleView: UILabel?
+    var labelView: UIView?
+    var subtitleView: UILabel?
+    var labelAreaWidth: CGFloat?
+    var labelAreaHeight: CGFloat?
+    var labelAreaLeft: CGFloat?
+    var labelAreaTop: CGFloat?
+    var calloutWidth: CGFloat?
     
     init(memoriesController: MemoriesController, memoryId: String, imageUrl: String?, title: String, subtitle: String) {
         super.init()
@@ -34,7 +43,6 @@ class MapPinView: MKAnnotationView {
         self.title = title
         self.subtitle = subtitle
         canShowCallout = false
-
     }
     
     override init(frame: CGRect) {
@@ -47,96 +55,82 @@ class MapPinView: MKAnnotationView {
     
     func getCalloutView() -> UIView {
         if (calloutView == nil) {
-            let photoView = createPhotoView()
-            let subtitleLabel = createSubtitleLabel(subtitle!)
-            let titleLabel = createTitleLabel(title!)
+            createPhotoView()
+            labelAreaWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : WIDTH / 2
+            labelAreaHeight = photoView == nil ? HEIGHT_WITHOUT_PHOTO : HEIGHT
+            labelAreaLeft = photoView == nil ? 0 : WIDTH / 2
+            labelAreaTop = photoView == nil ? 0 : 0
+            calloutWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : WIDTH
+            
+            createSubtitleLabel()
+            createTitleLabel()
             createDeleteButton()
             createShareButton()
-            createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel)
-            
+            createLabelView()
+            createCalloutView()
         }
         return calloutView!
     }
+   
+    func createLabelView() {
+        labelView = UIView(frame: CGRectMake(labelAreaLeft!, labelAreaTop!, labelAreaWidth!, labelAreaHeight!))
+        labelView!.backgroundColor = UIColor.whiteColor()
+        labelView!.addSubview(titleView!)
+        labelView!.addSubview(subtitleView!)
+        labelView!.addSubview(deleteButton!)
+        labelView!.addSubview(shareButton!)
+    }
     
-    func createCalloutView(photo: UIView?, title: UIView, subtitle: UIView) {
+    func createCalloutView() {
         self.calloutView = UIView()
-        if (photo == nil) {
-            self.calloutView?.frame = CGRectMake(-WIDTH_WITHOUT_PHOTO/2, -HEIGHT_WITHOUT_PHOTO - 10, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO)
-            self.calloutView?.backgroundColor = UIColor.whiteColor()
-            self.calloutView?.layer.cornerRadius = 10
-            title.frame = CGRectMake(0, 0, WIDTH_WITHOUT_PHOTO, 40)
-            subtitle.frame = CGRectMake(0, 40, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO - 60)
-            deleteButton!.frame = CGRectMake(WIDTH_WITHOUT_PHOTO-35,HEIGHT_WITHOUT_PHOTO-40,40,40)
-        } else {
-            self.calloutView?.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
-            self.calloutView?.backgroundColor = UIColor.whiteColor()
-            self.calloutView?.layer.cornerRadius = 10
-            self.calloutView?.addSubview(photo!)
-            self.calloutView?.addSubview(createBlankLabel())
-        }
-        self.calloutView?.addSubview(title)
-        self.calloutView?.addSubview(subtitle)
-        self.calloutView?.addSubview(deleteButton!)
-        self.calloutView?.addSubview(shareButton!)
+        self.calloutView?.frame = CGRectMake(-calloutWidth!/2, -labelAreaHeight! - 10, calloutWidth!, labelAreaHeight!)
+        self.calloutView?.backgroundColor = UIColor.whiteColor()
+        self.calloutView?.layer.cornerRadius = 10
+        if (photoView != nil) { self.calloutView?.addSubview(photoView!) }
+        self.calloutView?.addSubview(labelView!)
         self.calloutView?.clipsToBounds = true
         self.calloutView?.layer.borderWidth = 1.0
         self.calloutView?.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     func createDeleteButton() {
-        deleteButton = UIButton(frame: CGRectMake(WIDTH-35,HEIGHT-40,40,40))
+        deleteButton = UIButton(frame: CGRectMake(labelAreaWidth! - 35, labelAreaHeight! - 40, 40, 40))
         var image = UIImage(named: "trash")
-        
         deleteButton!.setImage(image, forState: UIControlState.Normal)
     }
     
     func createShareButton() {
-        shareButton = UIButton(frame: CGRectMake(WIDTH/2,HEIGHT-40,40,40))
+        shareButton = UIButton(frame: CGRectMake(0, labelAreaHeight! - 40, 40, 40))
         var image = UIImage(named: "share")
         shareButton!.setImage(image, forState: UIControlState.Normal)
     }
     
-    func createPhotoView() -> UIView? {
-        if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return nil }
+    func createPhotoView() {
+        if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return }
         var photo = UIImage(contentsOfFile: imageUrl!)
-        let photoView = UIImageView(frame: CGRectMake(0, 0, WIDTH/2 + 10, HEIGHT))
-        photoView.image = photo
-        return photoView
+        photoView = UIImageView(frame: CGRectMake(0, 0, WIDTH/2 + 10, HEIGHT))
+        photoView!.image = photo
     }
     
-    func createTitleLabel(title: String) -> UIView {
-        let label = UILabel(frame: CGRectMake(WIDTH/2, 0, WIDTH/2, 40))
-        label.layer.cornerRadius = 0
-        label.clipsToBounds = true
-        label.numberOfLines = 0
-        label.textAlignment = NSTextAlignment.Center
-        label.font = label.font.fontWithSize(20)
-        label.text = title
-        label.backgroundColor = CategoryController.getColorForCategory(title)
-        return label
+    func createTitleLabel() {
+        titleView = UILabel(frame: CGRectMake(0, 0, labelAreaWidth!, 40))
+        titleView!.layer.cornerRadius = 0
+        titleView!.numberOfLines = 0
+        titleView!.textAlignment = NSTextAlignment.Center
+        titleView!.font = titleView!.font.fontWithSize(20)
+        titleView!.text = title
+        titleView!.backgroundColor = CategoryController.getColorForCategory(title!)
     }
     
-    func createSubtitleLabel(subtitle: String) -> UIView {
-        let label = UILabel(frame: CGRectMake(WIDTH/2 + 15, 40, WIDTH/2 - 30, HEIGHT - 60))
-        label.backgroundColor = UIColor.whiteColor()
-        label.layer.cornerRadius = 0
-        label.clipsToBounds = true
-        label.numberOfLines = 0
-        label.textAlignment = NSTextAlignment.Center
-        label.text = subtitle
-        
-        return label
+    func createSubtitleLabel() {
+        subtitleView = UILabel(frame: CGRectMake(10, 40, labelAreaWidth! - 20, labelAreaHeight! - 70))
+        subtitleView!.backgroundColor = UIColor.whiteColor()
+        subtitleView!.layer.cornerRadius = 0
+        subtitleView!.numberOfLines = 0
+        subtitleView!.textAlignment = NSTextAlignment.Center
+        subtitleView!.text = subtitle
     }
 
-    func createBlankLabel() -> UIView {
-        let label = UILabel(frame: CGRectMake(WIDTH/2, 40, WIDTH/2, HEIGHT - 40))
-        label.backgroundColor = UIColor.whiteColor()
-        label.layer.cornerRadius = 0
-        label.clipsToBounds = true
-        label.numberOfLines = 0
-        
-        return label
-    }
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -178,5 +172,4 @@ class MapPinView: MKAnnotationView {
         }
         return false
     }
-
 }
