@@ -16,12 +16,18 @@ public class PhotoAlbum {
         folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
     }
 
-    public func getMemoryImageUrl(memoryId: String) -> NSURL? {
+    public func delete(memoryId: String) {
         var imagePath = getImagePath(memoryId)
         if (fileManager.fileExistsAtPath(imagePath)) {
-            return NSURL(fileURLWithPath: imagePath)
+            println("Deleting file " + imagePath)
+            fileManager.removeItemAtPath(imagePath, error: nil)
         }
-        return nil
+        
+    }
+    
+    public func getMemoryImageUrl(memoryId: String) -> NSURL {
+        var imagePath = getImagePath(memoryId)
+        return NSURL(fileURLWithPath: imagePath)!
     }
     
     public func getMemoryImage(memoryId: String) -> UIImage? {
@@ -38,7 +44,7 @@ public class PhotoAlbum {
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     
-    private func getImagePath(memoryId: String) -> String {
+    public func getImagePath(memoryId: String) -> String {
         return "\(folder)/Memory\(memoryId).jpg"
     }
 }

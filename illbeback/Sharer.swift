@@ -1,6 +1,7 @@
 public class Sharer {
     private var root: Firebase
-    
+    private let BUCKET = "illbebackappus"
+    private var transferManager: AWSS3TransferManager
     
     // temp test
     //        let imageUrl: NSURL? = photoAlbum.getMemoryImageUrl(id)
@@ -8,51 +9,82 @@ public class Sharer {
 
     init() {
         root = Firebase(url:"https://illbeback.firebaseio.com/")
+        transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
     
     func share(from: String, to: String, memory: String, imageUrl: NSURL?) {
-        storeImage(imageUrl)
-        
-        var givenMemoriesRoot = root.childByAppendingPath("users/" + to + "/given")
-        var given = ["from": from, "memory": memory]
-        var newNode = givenMemoriesRoot.childByAutoId()
-        newNode.setValue(given)
+        uploadImage(imageUrl, key: imageKey(memory))
+        uploadMemory(from, to: to, memory: memory)
     }
     
-    func retrieve(to: String, callback: (from: String, memory: String) -> ()) {
-        var givenMemoriesRoot = root.childByAppendingPath("users/" + to + "/given")
-        givenMemoriesRoot.observeSingleEventOfType(.Value, withBlock: {
+    func retrieveShares(to: String, callback: (from: String, memory: String) -> ()) {
+        shareRoot(to).observeSingleEventOfType(.Value, withBlock: {
             snapshot in
                 var givenMemories = snapshot.children
                 while let given: FDataSnapshot = givenMemories.nextObject() as? FDataSnapshot {
                     var from = given.value["from"] as String
                     var memory = given.value["memory"] as String
+                    self.downloadImage(memory, key: self.imageKey(memory))
                     callback(from: from, memory: memory)
                 }
         })
     }
     
+    private func downloadImage(memoryString: String, key: String) {
+        // todo -tidy
+        var memoryId = Memory(memoryString: memoryString).getId()
+        let photoAlbum = PhotoAlbum()
+        var imageUrl = photoAlbum.getMemoryImageUrl(memoryId)
+        photoAlbum.delete(memoryId)
+        println("** AWS OP: Downloading image to: " + imageUrl.absoluteString!)
+        
+        let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
+        readRequest.bucket = BUCKET
+        readRequest.key =  key
+        readRequest.downloadingFileURL = imageUrl
+        
+        var task = transferManager.download(readRequest)
+        monitorAsyncTask(task, type: "Download")
+    }
     
-    private func storeImage(imageUrl: NSURL?) {
+    private func uploadImage(imageUrl: NSURL?, key: String) {
         if (imageUrl != nil) {
-            let transferManager = AWSS3TransferManager.defaultS3TransferManager()
-            let uploadRequest1 : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
-        
-            uploadRequest1.bucket = "illbebackapp"
-            uploadRequest1.key =  "my-image"
-            uploadRequest1.body = imageUrl
+            println("** AWS OP: Uploading image from: " + imageUrl!.absoluteString!)
+
+            let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
+            uploadRequest.bucket = BUCKET
+            uploadRequest.key = key
+            uploadRequest.body = imageUrl
+            uploadRequest.contentType = "image/jpeg"
+            uploadRequest.ACL = AWSS3ObjectCannedACL.AuthenticatedRead
             
-        
-            let task = transferManager.upload(uploadRequest1)
-            task.continueWithBlock { (task) -> AnyObject! in
-                if task.error != nil {
-                    println("Error: \(task.error)")
-                } else {
-                    println("Upload successful")
-                }
-                return nil
-            }
+            let task = transferManager.upload(uploadRequest)
+            monitorAsyncTask(task, type: "Upload")
         }
+    }
+    
+    private func monitorAsyncTask(task: BFTask, type: String) {
+        task.continueWithBlock { (task) -> AnyObject! in
+            if task.error != nil {
+                println("** AWS ERROR: " + type + " error: \(task.error)")
+            } else {
+                println("** AWS SUCCESS: " + type)
+            }
+            return nil
+        }
+    }
+    
+    private func uploadMemory(from: String, to: String, memory: String) {
+        var newNode = shareRoot(to).childByAutoId()
+        newNode.setValue(["from": from, "memory": memory])
+    }
+    
+    private func shareRoot(to: String) -> Firebase {
+        return root.childByAppendingPath("users/" + to + "/given")
+    }
+    
+    private func imageKey(memory: String) -> String {
+        return Memory(memoryString: memory).getId() + ".jpg"
     }
 }
 

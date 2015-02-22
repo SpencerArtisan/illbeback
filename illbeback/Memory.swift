@@ -32,6 +32,10 @@ public class Memory {
         self.location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
     }
     
+    func getId() -> String {
+        return id
+    }
+    
     func asString() -> String {
         return "\(type):\(description):\(location.latitude):\(location.longitude):\(id)"
     }

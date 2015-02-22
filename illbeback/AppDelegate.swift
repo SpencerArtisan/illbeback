@@ -18,10 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         var credentialsProvider = AWSCognitoCredentialsProvider.credentialsWithRegionType(
-            AWSRegionType.EUCentral1,
-            identityPoolId: "eu-west-1:41a9e5dd-b17c-4506-8dab-4b8877ed7128")
+//            accountId: "",
+//            unauthRoleArn: "",
+//            authRoleArn: "",
+//            
+            AWSRegionType.USEast1,
+            identityPoolId: "us-east-1:16f753ac-4d74-42c0-a10b-1fbd18692eb1")
 
-        var configuration = AWSServiceConfiguration(region: AWSRegionType.EUCentral1,
+        var configuration = AWSServiceConfiguration(region: AWSRegionType.USWest1,
             credentialsProvider:credentialsProvider)
         
         AWSServiceManager.defaultServiceManager().setDefaultServiceConfiguration(configuration)

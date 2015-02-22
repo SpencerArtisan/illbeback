@@ -15,23 +15,24 @@ class MapPinView: MKAnnotationView {
     let WIDTH_WITHOUT_PHOTO: CGFloat = 130.0
     let HEIGHT_WITHOUT_PHOTO: CGFloat = 160.0
     
-    var calloutView: UIView!
+    var calloutView: UIView?
     var btn: UIButton?
     var hitOutside: Bool = true
     var memoriesController:MemoriesController?
     var memoryId: String?
+    var imageUrl: String?
+    var title: String?
+    var subtitle: String?
     
-    init(memoriesController: MemoriesController, memoryId: String, photo: UIImage?, title: String, subtitle: String) {
+    init(memoriesController: MemoriesController, memoryId: String, imageUrl: String?, title: String, subtitle: String) {
         super.init()
 
         self.memoryId = memoryId
         self.memoriesController = memoriesController
+        self.imageUrl = imageUrl
+        self.title = title
+        self.subtitle = subtitle
         canShowCallout = false
-        let photoView = createPhotoView(photo)
-        let subtitleLabel = createSubtitleLabel(subtitle)
-        let titleLabel = createTitleLabel(title)
-        let deleteButton = createDeleteButton()
-        createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel, deleteButton: deleteButton)
 
     }
     
@@ -43,28 +44,40 @@ class MapPinView: MKAnnotationView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func getCalloutView() -> UIView {
+        if (calloutView == nil) {
+            let photoView = createPhotoView()
+            let subtitleLabel = createSubtitleLabel(subtitle!)
+            let titleLabel = createTitleLabel(title!)
+            let deleteButton = createDeleteButton()
+            createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel, deleteButton: deleteButton)
+            
+        }
+        return calloutView!
+    }
+    
     func createCalloutView(photo: UIView?, title: UIView, subtitle: UIView, deleteButton: UIButton) {
         self.calloutView = UIView()
         if (photo == nil) {
-            self.calloutView.frame = CGRectMake(-WIDTH_WITHOUT_PHOTO/2, -HEIGHT_WITHOUT_PHOTO - 10, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO)
-            self.calloutView.backgroundColor = UIColor.whiteColor()
-            self.calloutView.layer.cornerRadius = 10
+            self.calloutView?.frame = CGRectMake(-WIDTH_WITHOUT_PHOTO/2, -HEIGHT_WITHOUT_PHOTO - 10, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO)
+            self.calloutView?.backgroundColor = UIColor.whiteColor()
+            self.calloutView?.layer.cornerRadius = 10
             title.frame = CGRectMake(0, 0, WIDTH_WITHOUT_PHOTO, 40)
             subtitle.frame = CGRectMake(0, 40, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO - 60)
             deleteButton.frame = CGRectMake(WIDTH_WITHOUT_PHOTO-35,HEIGHT_WITHOUT_PHOTO-40,40,40)
         } else {
-            self.calloutView.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
-            self.calloutView.backgroundColor = UIColor.whiteColor()
-            self.calloutView.layer.cornerRadius = 10
-            self.calloutView.addSubview(photo!)
-            self.calloutView.addSubview(createBlankLabel())
+            self.calloutView?.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
+            self.calloutView?.backgroundColor = UIColor.whiteColor()
+            self.calloutView?.layer.cornerRadius = 10
+            self.calloutView?.addSubview(photo!)
+            self.calloutView?.addSubview(createBlankLabel())
         }
-        self.calloutView.addSubview(title)
-        self.calloutView.addSubview(subtitle)
-        self.calloutView.addSubview(deleteButton)
-        self.calloutView.clipsToBounds = true
-        self.calloutView.layer.borderWidth = 1.0
-        self.calloutView.layer.borderColor = UIColor.grayColor().CGColor
+        self.calloutView?.addSubview(title)
+        self.calloutView?.addSubview(subtitle)
+        self.calloutView?.addSubview(deleteButton)
+        self.calloutView?.clipsToBounds = true
+        self.calloutView?.layer.borderWidth = 1.0
+        self.calloutView?.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     func createDeleteButton() -> UIButton {
@@ -76,8 +89,9 @@ class MapPinView: MKAnnotationView {
         return button
     }
     
-    func createPhotoView(photo: UIImage?) -> UIView? {
-        if (photo == nil) { return nil }
+    func createPhotoView() -> UIView? {
+        if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return nil }
+        var photo = UIImage(contentsOfFile: imageUrl!)
         let photoView = UIImageView(frame: CGRectMake(0, 0, WIDTH/2 + 10, HEIGHT))
         photoView.image = photo
         return photoView
@@ -117,17 +131,16 @@ class MapPinView: MKAnnotationView {
         return label
     }
     
-    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         if (self.selected) {
-            addSubview(calloutView!)
-            self.superview?.bringSubviewToFront(calloutView!)
+            addSubview(getCalloutView())
+            self.superview?.bringSubviewToFront(getCalloutView())
         }
         
         if (!self.selected) {
-            calloutView!.removeFromSuperview()
+            getCalloutView().removeFromSuperview()
         }
     }
 

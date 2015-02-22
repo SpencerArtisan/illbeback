@@ -27,7 +27,7 @@ public class MemoryAlbum {
     }
 
     func downloadNewShares() {
-        sharer.retrieve("spencer", {sender, memory in
+        sharer.retrieveShares("spencer", {sender, memory in
             println("Retrieved shared memory from " + sender + ": " + memory)
             self.add(Memory(memoryString: memory))
         })
@@ -43,6 +43,7 @@ public class MemoryAlbum {
         memories.append(memoryString)
         save()
         addPin(memoryString)
+//        sharer.share("madeleine", to: "spencer", memory: memoryString, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.getId()))
     }
     
     func delete(pin: MapPinView) {
