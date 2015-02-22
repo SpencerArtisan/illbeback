@@ -27,7 +27,7 @@ public class MemoryAlbum {
     }
 
     func downloadNewShares() {
-        sharer.retrieveShares("spencer", {sender, memory in
+        sharer.retrieveShares("madeleine", {sender, memory in
             println("Retrieved shared memory from " + sender + ": " + memory)
             self.add(Memory(memoryString: memory))
         })
@@ -43,19 +43,34 @@ public class MemoryAlbum {
         memories.append(memoryString)
         save()
         addPin(memoryString)
-//        sharer.share("madeleine", to: "spencer", memory: memoryString, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.getId()))
     }
     
     func delete(pin: MapPinView) {
+        var memoryIndex = find(pin)
+        if (memoryIndex != nil) {
+            memories.removeAtIndex(memoryIndex!)
+            save()
+        }
+        map.removeAnnotation(pin.annotation)
+    }
+    
+    func share(pin: MapPinView) {
+        var memoryIndex = find(pin)
+        if (memoryIndex != nil) {
+            var memoryString = memories[memoryIndex!]
+            var memory = Memory(memoryString: memoryString)
+            sharer.share("spencer", to: "madeleine", memory: memoryString, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.getId()))
+        }
+    }
+
+    private func find(pin: MapPinView) -> Int? {
         for i in 0...memories.count - 1 {
             var memoryString = memories[i] as NSString
             if (memoryString.containsString(pin.memoryId!)) {
-                memories.removeAtIndex(i)
-                save()
-                break
+                return i
             }
         }
-        map.removeAnnotation(pin.annotation)
+        return nil
     }
     
     func save() {

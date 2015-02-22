@@ -68,11 +68,16 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         memoryAlbum.add(memory)
     }
     
-    // Callback for button on the UI
+    // Callback for button on the callout
     func deleteMemory(pin: MapPinView) {
         memoryAlbum.delete(pin)
     }
-
+    
+    // Callback for button on the callout
+    func shareMemory(pin: MapPinView) {
+        memoryAlbum.share(pin)
+    }
+    
     // Callback for display pins on map
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if (annotation is MapPin) {
