@@ -19,9 +19,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     let photoAlbum = PhotoAlbum()
     let addMemory = AddMemoryController()
     var shareModal: Modal?
-    var messageModal: Modal?
     var pinToShare: MapPinView?
     let user = User()
+    var messageModals: [Modal] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,21 +29,24 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         initMap()
         initMemories()
         self.shareModal = Modal(viewName: "ShareView", owner: self)
-        self.messageModal = Modal(viewName: "MessageView", owner: self)
     }
     
     override func viewWillAppear(animated: Bool) {
         memoryAlbum.downloadNewShares(user, {memory in
-            var message = self.messageModal?.findElementByTag(1) as UIButton
+            var messageModal = Modal(viewName: "MessageView", owner: self)
+            var message = messageModal.findElementByTag(1) as UIButton
+            message.backgroundColor = CategoryController.getColorForCategory(memory.type)
             var title = "New " + memory.type + " from " + memory.originator
             message.setTitle(title, forState: UIControlState.Normal)
-            self.messageModal?.slideDownFromTop(self.view)
+            messageModal.slideDownFromTop(self.view)
+            self.messageModals.append(messageModal)
             message.addTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
         })
     }
 
     func dismissMessage(sender: AnyObject?) {
-        messageModal?.slideUpFromTop(self.view)
+        var messageModal = messageModals.removeLast()
+        messageModal.slideUpFromTop(self.view)
         ((sender) as UIButton).removeTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
     }
 
