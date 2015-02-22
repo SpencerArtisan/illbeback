@@ -8,34 +8,35 @@ public class Sharer {
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
     
-    func share(from: String, to: String, memory: String, imageUrl: NSURL?) {
-        var memoryId = Memory(memoryString: memory).getId()
-        if (PhotoAlbum().photoExists(memoryId)) {
+    func share(from: String, to: String, memory: Memory, imageUrl: NSURL?) {
+        if (PhotoAlbum().photoExists(memory.id)) {
             uploadImage(imageUrl, key: imageKey(memory))
         }
         uploadMemory(from, to: to, memory: memory)
     }
     
-    func retrieveShares(to: String, callback: (from: String, memory: String) -> ()) {
+    func retrieveShares(to: String, callback: (from: String, memory: Memory) -> ()) {
         shareRoot(to).observeSingleEventOfType(.Value, withBlock: {
             snapshot in
                 var givenMemories = snapshot.children
                 while let given: FDataSnapshot = givenMemories.nextObject() as? FDataSnapshot {
                     var from = given.value["from"] as String
-                    var memory = given.value["memory"] as String
-                    self.downloadImage(memory, key: self.imageKey(memory))
+                    var memoryString = given.value["memory"] as String
+                    var memory = Memory(memoryString: memoryString)
+                    memory.recentShare = true
+                    var key = self.imageKey(memory)
+                    self.downloadImage(memory, key: key)
                     callback(from: from, memory: memory)
                 }
                 self.shareRoot(to).removeValue()
         })
     }
     
-    private func downloadImage(memoryString: String, key: String) {
+    private func downloadImage(memory: Memory, key: String) {
         // todo -tidy
-        var memoryId = Memory(memoryString: memoryString).getId()
         let photoAlbum = PhotoAlbum()
-        var imageUrl = photoAlbum.getMemoryImageUrl(memoryId)
-        photoAlbum.delete(memoryId)
+        var imageUrl = photoAlbum.getMemoryImageUrl(memory.id)
+        photoAlbum.delete(memory.id)
         println("** AWS OP: Downloading image to: " + imageUrl.absoluteString!)
         
         let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
@@ -71,18 +72,18 @@ public class Sharer {
         }
     }
     
-    private func uploadMemory(from: String, to: String, memory: String) {
-        println("** FIREBASE OP: Uploading memory " + memory)
+    private func uploadMemory(from: String, to: String, memory: Memory) {
+        println("** FIREBASE OP: Uploading memory " + memory.asString())
         var newNode = shareRoot(to).childByAutoId()
-        newNode.setValue(["from": from, "memory": memory])
+        newNode.setValue(["from": from, "memory": memory.asString()])
     }
     
     private func shareRoot(to: String) -> Firebase {
         return root.childByAppendingPath("users/" + to + "/given")
     }
     
-    private func imageKey(memory: String) -> String {
-        return Memory(memoryString: memory).getId()
+    private func imageKey(memory: Memory) -> String {
+        return memory.id
     }
 }
 

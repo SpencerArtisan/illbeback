@@ -10,16 +10,20 @@ import Foundation
 import CoreLocation
 
 public class Memory {
-    private var type: String
-    private var id: String
-    private var description: String
-    private var location: CLLocationCoordinate2D
+    private let DEFAULT_ORIGINATOR = "Spencer"
+    var type: String
+    var id: String
+    var description: String
+    var location: CLLocationCoordinate2D
+    var originator: String
+    var recentShare = false
     
-    init(id: String, type: String, description: String, location: CLLocationCoordinate2D) {
+    init(id: String, type: String, description: String, location: CLLocationCoordinate2D, user: User) {
         self.id = id
         self.type = type
         self.description = description
         self.location = location
+        self.originator = user.getName()
     }
     
     init(memoryString: String) {
@@ -30,17 +34,14 @@ public class Memory {
         let lat = parts[2]
         let long = parts[3]
         self.location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
-    }
-    
-    func getId() -> String {
-        return id
+        self.originator = parts.count > 5 ? parts[5] : DEFAULT_ORIGINATOR
     }
     
     func asString() -> String {
-        return "\(type):\(description):\(location.latitude):\(location.longitude):\(id)"
+        return "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator)"
     }
     
     func asMapPin() -> MapPin {
-        return MapPin(coordinate: location, title: type, subtitle: description, id: id)
+        return MapPin(memory: self)
     }
 }

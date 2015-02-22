@@ -20,7 +20,7 @@ class MapPinView: MKAnnotationView {
     var calloutView: UIView?
     var deleteButton: UIButton?
     var shareButton: UIButton?
-    var memoryId: String?
+    var memory: Memory?
     var imageUrl: String?
     var title: String?
     var subtitle: String?
@@ -33,10 +33,10 @@ class MapPinView: MKAnnotationView {
     var labelAreaLeft: CGFloat?
     var calloutWidth: CGFloat?
     
-    init(memoriesController: MemoriesController, memoryId: String, imageUrl: String?, title: String, subtitle: String) {
+    init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?, title: String, subtitle: String) {
         super.init()
 
-        self.memoryId = memoryId
+        self.memory = memory
         self.memoriesController = memoriesController
         self.imageUrl = imageUrl
         self.title = title
@@ -45,6 +45,8 @@ class MapPinView: MKAnnotationView {
         annotation = annotation
         enabled = true
         image = UIImage(named: title)!
+
+        
     }
     
     override init(frame: CGRect) {

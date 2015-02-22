@@ -67,7 +67,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the UI
     func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?) {
         var actualLocation = location == nil ? here.coordinate : location!
-        var memory = Memory(id: id, type: type, description: description, location: actualLocation)
+        var memory = Memory(id: id, type: type, description: description, location: actualLocation, user: user)
         memoryAlbum.add(memory)
     }
     
@@ -99,8 +99,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as MapPinView!
         
             if (pinView == nil) {
-                var imageUrl = photoAlbum.getImagePath(pinData.id)
-                pinView = MapPinView(memoriesController: self, memoryId: pinData.id, imageUrl: imageUrl, title: pinData.title, subtitle: pinData.subtitle)
+                var imageUrl = photoAlbum.getImagePath(pinData.memory.id)
+                pinView = MapPinView(memoriesController: self, memory: pinData.memory, imageUrl: imageUrl, title: pinData.title, subtitle: pinData.subtitle)
             }
         
             return pinView
