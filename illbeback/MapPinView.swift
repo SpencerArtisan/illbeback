@@ -16,7 +16,8 @@ class MapPinView: MKAnnotationView {
     let HEIGHT_WITHOUT_PHOTO: CGFloat = 160.0
     
     var calloutView: UIView?
-    var btn: UIButton?
+    var deleteButton: UIButton?
+    var shareButton: UIButton?
     var hitOutside: Bool = true
     var memoriesController:MemoriesController?
     var memoryId: String?
@@ -49,15 +50,15 @@ class MapPinView: MKAnnotationView {
             let photoView = createPhotoView()
             let subtitleLabel = createSubtitleLabel(subtitle!)
             let titleLabel = createTitleLabel(title!)
-            let deleteButton = createDeleteButton()
-            let shareButton = createShareButton()
-            createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel, deleteButton: deleteButton, shareButton: shareButton)
+            createDeleteButton()
+            createShareButton()
+            createCalloutView(photoView, title: titleLabel, subtitle: subtitleLabel)
             
         }
         return calloutView!
     }
     
-    func createCalloutView(photo: UIView?, title: UIView, subtitle: UIView, deleteButton: UIButton, shareButton: UIButton) {
+    func createCalloutView(photo: UIView?, title: UIView, subtitle: UIView) {
         self.calloutView = UIView()
         if (photo == nil) {
             self.calloutView?.frame = CGRectMake(-WIDTH_WITHOUT_PHOTO/2, -HEIGHT_WITHOUT_PHOTO - 10, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO)
@@ -65,7 +66,7 @@ class MapPinView: MKAnnotationView {
             self.calloutView?.layer.cornerRadius = 10
             title.frame = CGRectMake(0, 0, WIDTH_WITHOUT_PHOTO, 40)
             subtitle.frame = CGRectMake(0, 40, WIDTH_WITHOUT_PHOTO, HEIGHT_WITHOUT_PHOTO - 60)
-            deleteButton.frame = CGRectMake(WIDTH_WITHOUT_PHOTO-35,HEIGHT_WITHOUT_PHOTO-40,40,40)
+            deleteButton!.frame = CGRectMake(WIDTH_WITHOUT_PHOTO-35,HEIGHT_WITHOUT_PHOTO-40,40,40)
         } else {
             self.calloutView?.frame = CGRectMake(-WIDTH/2, -HEIGHT - 10, WIDTH, HEIGHT)
             self.calloutView?.backgroundColor = UIColor.whiteColor()
@@ -75,29 +76,24 @@ class MapPinView: MKAnnotationView {
         }
         self.calloutView?.addSubview(title)
         self.calloutView?.addSubview(subtitle)
-        self.calloutView?.addSubview(deleteButton)
-        self.calloutView?.addSubview(shareButton)
+        self.calloutView?.addSubview(deleteButton!)
+        self.calloutView?.addSubview(shareButton!)
         self.calloutView?.clipsToBounds = true
         self.calloutView?.layer.borderWidth = 1.0
         self.calloutView?.layer.borderColor = UIColor.grayColor().CGColor
     }
     
-    func createDeleteButton() -> UIButton {
-        var button = UIButton(frame: CGRectMake(WIDTH-35,HEIGHT-40,40,40))
+    func createDeleteButton() {
+        deleteButton = UIButton(frame: CGRectMake(WIDTH-35,HEIGHT-40,40,40))
         var image = UIImage(named: "trash")
         
-        button.setImage(image, forState: UIControlState.Normal)
-        self.btn = button
-        return button
+        deleteButton!.setImage(image, forState: UIControlState.Normal)
     }
     
-    func createShareButton() -> UIButton {
-        var button = UIButton(frame: CGRectMake(WIDTH/2 + 10,HEIGHT-40,40,40))
+    func createShareButton() {
+        shareButton = UIButton(frame: CGRectMake(WIDTH/2,HEIGHT-40,40,40))
         var image = UIImage(named: "share")
-        
-        button.setImage(image, forState: UIControlState.Normal)
-        self.btn = button
-        return button
+        shareButton!.setImage(image, forState: UIControlState.Normal)
     }
     
     func createPhotoView() -> UIView? {
@@ -158,20 +154,25 @@ class MapPinView: MKAnnotationView {
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         var hitView = super.hitTest(point, withEvent: event)
         
-        if let callout = calloutView {
-            if (hitView == nil && self.selected) {
-                hitView = callout.hitTest(point, withEvent: event)
-                if (self.btn != nil) {
-                    var pt3 = self.convertPoint(point, toView: callout)
-                    if (event!.type == UIEventType.Touches && self.btn!.frame.contains(pt3)) {
-                        memoriesController?.deleteMemory(self)
-                    }
-                }
+        if (calloutView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
+            hitView = calloutView!.hitTest(point, withEvent: event)
+            if (hitButton(point, button: deleteButton)) {
+                memoriesController?.deleteMemory(self)
             }
         }
         
         hitOutside = hitView == nil
         return hitView
+    }
+    
+    private func hitButton(point: CGPoint, button: UIButton?) -> Bool {
+        if (button != nil) {
+            var pt3 = self.convertPoint(point, toView: calloutView)
+            if (button!.frame.contains(pt3)) {
+                return true
+            }
+        }
+        return false
     }
 
 }

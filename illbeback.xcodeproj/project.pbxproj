@@ -42,6 +42,7 @@
 		97A3536D1A801CFA00973CAC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3536C1A801CFA00973CAC /* MapKit.framework */; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97F438171A991CEC00A33FD2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F438161A991CEC00A33FD2 /* Memory.swift */; };
+		97FE667C1A99EB1E0007FC2C /* Share.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FE667B1A99EB1E0007FC2C /* Share.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
 		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
+		97FE667B1A99EB1E0007FC2C /* Share.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Share.xib; sourceTree = "<group>"; };
 		D8214AFD7360B795E86E35A6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -183,15 +185,16 @@
 				97A3536A1A800EF500973CAC /* Media.xcassets */,
 				97E3B9171A857A00007DB06E /* MapPin.swift */,
 				972006A01A90ECC100B5E74C /* MapPinView.swift */,
+				972006A21A90ED2B00B5E74C /* MapPinCallout.swift */,
 				976696EC1A8A9EF4004CB60D /* CategoryController.swift */,
 				976696EE1A8AA317004CB60D /* CategoryView.xib */,
-				972006A21A90ED2B00B5E74C /* MapPinCallout.swift */,
 				972006A41A910E7500B5E74C /* PhotoAlbum.swift */,
 				972006A61A9140FB00B5E74C /* DescriptionView.xib */,
 				97420BBD1A92A0320076E561 /* AddMemoryController.swift */,
 				9725CD431A98D58B0081C1B3 /* Sharer.swift */,
 				97F438161A991CEC00A33FD2 /* Memory.swift */,
 				97140FD81A99282300B2F49A /* MemoryAlbum.swift */,
+				97FE667B1A99EB1E0007FC2C /* Share.xib */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				9772846C1A8A818B00CE628D /* Data.plist in Resources */,
 				97A353501A800B9500973CAC /* Main.storyboard in Resources */,
 				97A3536B1A800EF500973CAC /* Media.xcassets in Resources */,
+				97FE667C1A99EB1E0007FC2C /* Share.xib in Resources */,
 				976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */,
 				97A353551A800B9500973CAC /* LaunchScreen.xib in Resources */,
 			);
