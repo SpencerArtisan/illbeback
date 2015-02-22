@@ -27,7 +27,7 @@
 		976696EB1A8A992D004CB60D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976696EA1A8A992D004CB60D /* QuartzCore.framework */; };
 		976696ED1A8A9EF4004CB60D /* CategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976696EC1A8A9EF4004CB60D /* CategoryController.swift */; };
 		976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 976696EE1A8AA317004CB60D /* CategoryView.xib */; };
-		9772846C1A8A818B00CE628D /* Data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9772846B1A8A818B00CE628D /* Data.plist */; };
+		9772846C1A8A818B00CE628D /* user.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9772846B1A8A818B00CE628D /* user.plist */; };
 		9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */; };
 		9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */; };
 		9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */; };
@@ -44,6 +44,8 @@
 		97F438171A991CEC00A33FD2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F438161A991CEC00A33FD2 /* Memory.swift */; };
 		97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FE667B1A99EB1E0007FC2C /* ShareView.xib */; };
 		97FE667E1A99FC220007FC2C /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667D1A99FC220007FC2C /* Modal.swift */; };
+		97FE66801A9A19570007FC2C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667F1A9A19570007FC2C /* User.swift */; };
+		97FE66821A9A1A400007FC2C /* memories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97FE66811A9A1A400007FC2C /* memories.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,7 +82,7 @@
 		976696EA1A8A992D004CB60D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		976696EC1A8A9EF4004CB60D /* CategoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryController.swift; sourceTree = "<group>"; };
 		976696EE1A8AA317004CB60D /* CategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryView.xib; sourceTree = "<group>"; };
-		9772846B1A8A818B00CE628D /* Data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Data.plist; sourceTree = "<group>"; };
+		9772846B1A8A818B00CE628D /* user.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user.plist; sourceTree = "<group>"; };
 		9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "illbeback-Bridging-Header.h"; sourceTree = "<group>"; };
 		97A353431A800B9500973CAC /* I'll Be Back.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I'll Be Back.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97A353471A800B9500973CAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,6 +104,8 @@
 		97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		97FE667B1A99EB1E0007FC2C /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareView.xib; sourceTree = "<group>"; };
 		97FE667D1A99FC220007FC2C /* Modal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
+		97FE667F1A9A19570007FC2C /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		97FE66811A9A1A400007FC2C /* memories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = memories.plist; sourceTree = "<group>"; };
 		D8214AFD7360B795E86E35A6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -198,6 +202,7 @@
 				97140FD81A99282300B2F49A /* MemoryAlbum.swift */,
 				97FE667B1A99EB1E0007FC2C /* ShareView.xib */,
 				97FE667D1A99FC220007FC2C /* Modal.swift */,
+				97FE667F1A9A19570007FC2C /* User.swift */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -207,7 +212,8 @@
 			children = (
 				9759BF6B1A802AD300B945CB /* illbebackinfo.plist */,
 				97A353471A800B9500973CAC /* Info.plist */,
-				9772846B1A8A818B00CE628D /* Data.plist */,
+				9772846B1A8A818B00CE628D /* user.plist */,
+				97FE66811A9A1A400007FC2C /* memories.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -334,7 +340,8 @@
 			files = (
 				9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */,
 				972006A71A9140FB00B5E74C /* DescriptionView.xib in Resources */,
-				9772846C1A8A818B00CE628D /* Data.plist in Resources */,
+				9772846C1A8A818B00CE628D /* user.plist in Resources */,
+				97FE66821A9A1A400007FC2C /* memories.plist in Resources */,
 				97A353501A800B9500973CAC /* Main.storyboard in Resources */,
 				97A3536B1A800EF500973CAC /* Media.xcassets in Resources */,
 				97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */,
@@ -404,6 +411,7 @@
 				97E3B9181A857A00007DB06E /* MapPin.swift in Sources */,
 				97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */,
 				97A353491A800B9500973CAC /* AppDelegate.swift in Sources */,
+				97FE66801A9A19570007FC2C /* User.swift in Sources */,
 				97A3534B1A800B9500973CAC /* RememberController.swift in Sources */,
 				976696ED1A8A9EF4004CB60D /* CategoryController.swift in Sources */,
 				972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */,

@@ -20,6 +20,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     let addMemory = AddMemoryController()
     var shareModal: Modal?
     var pinToShare: MapPinView?
+    let user = User()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     func initMemories() {
         memoryAlbum = MemoryAlbum(map: map)
-        memoryAlbum.downloadNewShares()
+        memoryAlbum.downloadNewShares(user)
         memoryAlbum.addToMap(map)
     }
     
@@ -79,13 +80,13 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func shareMemory(pin: MapPinView) {
         shareModal?.slideOutFromLeft(self.view)
         var shareButton = shareModal?.findElementByTag(1) as UIButton
-        shareButton.setTitle(" Madeleine", forState: UIControlState.Normal)
+        shareButton.setTitle(" " + user.getFriend(), forState: UIControlState.Normal)
         pinToShare = pin
         shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     
     func shareMemoryConfirmed(sender: AnyObject?) {
-        memoryAlbum.share(pinToShare!)
+        memoryAlbum.share(pinToShare!, from: user.getName(), to: user.getFriend())
         pinToShare = nil
         shareModal?.slideInFromLeft(self.view)
         ((sender) as UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)

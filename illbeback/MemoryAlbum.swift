@@ -26,8 +26,8 @@ public class MemoryAlbum {
         }
     }
 
-    func downloadNewShares() {
-        sharer.retrieveShares("madeleine", {sender, memory in
+    func downloadNewShares(user: User) {
+        sharer.retrieveShares(user.getName(), {sender, memory in
             println("Retrieved shared memory from " + sender + ": " + memory)
             self.add(Memory(memoryString: memory))
         })
@@ -54,12 +54,12 @@ public class MemoryAlbum {
         map.removeAnnotation(pin.annotation)
     }
     
-    func share(pin: MapPinView) {
+    func share(pin: MapPinView, from: String, to: String) {
         var memoryIndex = find(pin)
         if (memoryIndex != nil) {
             var memoryString = memories[memoryIndex!]
             var memory = Memory(memoryString: memoryString)
-            sharer.share("spencer", to: "madeleine", memory: memoryString, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.getId()))
+            sharer.share(from, to: to, memory: memoryString, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.getId()))
         }
     }
 
@@ -85,7 +85,7 @@ public class MemoryAlbum {
         var path = paths.stringByAppendingPathComponent("memories.plist")
         var fileManager = NSFileManager.defaultManager()
         if (!(fileManager.fileExistsAtPath(path))) {
-            var bundle : NSString = NSBundle.mainBundle().pathForResource("Data", ofType: "plist")!
+            var bundle : NSString = NSBundle.mainBundle().pathForResource("memories", ofType: "plist")!
             fileManager.copyItemAtPath(bundle, toPath: path, error:nil)
         }
         
