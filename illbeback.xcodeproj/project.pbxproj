@@ -43,6 +43,7 @@
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97F438171A991CEC00A33FD2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F438161A991CEC00A33FD2 /* Memory.swift */; };
 		97FE667C1A99EB1E0007FC2C /* Share.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FE667B1A99EB1E0007FC2C /* Share.xib */; };
+		97FE667E1A99FC220007FC2C /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667D1A99FC220007FC2C /* Modal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		97FE667B1A99EB1E0007FC2C /* Share.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Share.xib; sourceTree = "<group>"; };
+		97FE667D1A99FC220007FC2C /* Modal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
 		D8214AFD7360B795E86E35A6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -195,6 +197,7 @@
 				97F438161A991CEC00A33FD2 /* Memory.swift */,
 				97140FD81A99282300B2F49A /* MemoryAlbum.swift */,
 				97FE667B1A99EB1E0007FC2C /* Share.xib */,
+				97FE667D1A99FC220007FC2C /* Modal.swift */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				97140FD91A99282300B2F49A /* MemoryAlbum.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
+				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,
 				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
 				97E3B9181A857A00007DB06E /* MapPin.swift in Sources */,
 				97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */,

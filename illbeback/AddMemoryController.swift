@@ -11,13 +11,29 @@ import MapKit
 
 class AddMemoryController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var desciptionTextArea: UITextView!
-    var categoryView: UIView!
-    var descriptionView: UIView!
+    var categoryModal: Modal!
+    var descriptionModal: Modal!
     var memoryId: String?
     var memoryImage: String?
     var memoryLocation: CLLocationCoordinate2D?
     var callingViewController: UIViewController?
     let photoAlbum = PhotoAlbum()
+
+    override init() {
+        super.init()
+        categoryModal = Modal(viewName: "CategoryView", owner: self)
+        descriptionModal = Modal(viewName: "DescriptionView", owner: self)
+        desciptionTextArea.delegate = self
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 
     @IBAction func addCafe(sender: AnyObject) {
         addMemory("Cafe")
@@ -70,53 +86,16 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         self.showCategorySelector()
     }
     
-    override init() {
-        super.init()
-        categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
-        descriptionView = NSBundle.mainBundle().loadNibNamed("DescriptionView", owner: self, options: nil)[0] as? UIView
-        desciptionTextArea.delegate = self
-    }
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     func showCategorySelector() {
-        self.callingViewController!.view.addSubview(self.categoryView)
-        self.categoryView?.frame.origin.x = -190
-        
-        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            var sliderFrame = self.categoryView?.frame
-            sliderFrame?.origin.x = 0
-            self.categoryView?.frame = sliderFrame!
-            }, completion: {_ in })
+        categoryModal.slideOutFromLeft(self.callingViewController!.view)
     }
     
     func hideCategorySelector() {
-        self.callingViewController!.view.addSubview(self.categoryView)
-        self.categoryView?.frame.origin.x = 0
-        
-        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            var sliderFrame = self.categoryView?.frame
-            sliderFrame?.origin.x = -190
-            self.categoryView?.frame = sliderFrame!
-            }, completion: {_ in })
+        categoryModal.slideInFromLeft(self.callingViewController!.view)
     }
     
-    
     func showDescriptionEntry() {
-        self.callingViewController!.view.addSubview(self.descriptionView)
-        self.descriptionView?.frame.origin.x = 500
-        
-        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            var sliderFrame = self.descriptionView?.frame
-            sliderFrame?.origin.x = 190
-            self.descriptionView?.frame = sliderFrame!
-            }, completion: {_ in })
+        descriptionModal.slideOutFromRight(self.callingViewController!.view)
         self.desciptionTextArea.becomeFirstResponder()
     }
     
@@ -128,8 +107,8 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
             
             memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation)
             tabBarController.selectedIndex = 0
-            self.categoryView.removeFromSuperview()
-            self.descriptionView.removeFromSuperview()
+            categoryModal.hide()
+            descriptionModal.hide()
             self.desciptionTextArea.text = ""
             return false
         }
