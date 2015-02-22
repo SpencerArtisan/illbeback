@@ -153,8 +153,9 @@ class MapPinView: MKAnnotationView {
 
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         var hitView = super.hitTest(point, withEvent: event)
-        
-        if (calloutView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
+        var system = NSProcessInfo.processInfo().systemUptime
+        var elapsed = system - event!.timestamp
+        if (elapsed < 0.1 && calloutView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
             hitView = calloutView!.hitTest(point, withEvent: event)
             if (hitButton(point, button: deleteButton)) {
                 memoriesController?.deleteMemory(self)

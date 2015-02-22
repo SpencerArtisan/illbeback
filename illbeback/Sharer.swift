@@ -55,7 +55,6 @@ public class Sharer {
             uploadRequest.bucket = BUCKET
             uploadRequest.key = key
             uploadRequest.body = imageUrl
-            uploadRequest.contentType = "image/jpeg"
             uploadRequest.ACL = AWSS3ObjectCannedACL.AuthenticatedRead
             
             let task = transferManager.upload(uploadRequest)
@@ -75,6 +74,7 @@ public class Sharer {
     }
     
     private func uploadMemory(from: String, to: String, memory: String) {
+        println("** FIREBASE OP: Uploading memory " + memory)
         var newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": from, "memory": memory])
     }
@@ -84,7 +84,7 @@ public class Sharer {
     }
     
     private func imageKey(memory: String) -> String {
-        return Memory(memoryString: memory).getId() + ".jpg"
+        return Memory(memoryString: memory).getId()
     }
 }
 
