@@ -101,12 +101,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             if (pinView == nil) {
                 var imageUrl = photoAlbum.getImagePath(pinData.id)
                 pinView = MapPinView(memoriesController: self, memoryId: pinData.id, imageUrl: imageUrl, title: pinData.title, subtitle: pinData.subtitle)
-                pinView.annotation = annotation
-                pinView.enabled = true
-                
-            
-                let pinImage : UIImage = UIImage(named: pinData.title)!
-                pinView.image = pinImage
             }
         
             return pinView

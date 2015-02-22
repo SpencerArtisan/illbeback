@@ -44,7 +44,7 @@ public class PhotoAlbum {
 
     public func saveMemoryImage(image: UIImage?, memoryId: String) {
         var imagePath = getImagePath(memoryId)
-        var imageData: NSData = UIImageJPEGRepresentation(image, 0.2)
+        var imageData: NSData = UIImageJPEGRepresentation(image, 0.1)
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     

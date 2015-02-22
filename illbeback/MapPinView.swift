@@ -42,6 +42,9 @@ class MapPinView: MKAnnotationView {
         self.title = title
         self.subtitle = subtitle
         canShowCallout = false
+        annotation = annotation
+        enabled = true
+        image = UIImage(named: title)!
     }
     
     override init(frame: CGRect) {
@@ -128,7 +131,6 @@ class MapPinView: MKAnnotationView {
         subtitleView!.textAlignment = NSTextAlignment.Center
         subtitleView!.text = subtitle
     }
-
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
