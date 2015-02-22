@@ -3,17 +3,17 @@ public class Sharer {
     private let BUCKET = "illbebackappus"
     private var transferManager: AWSS3TransferManager
     
-    // temp test
-    //        let imageUrl: NSURL? = photoAlbum.getMemoryImageUrl(id)
-    //        sharer.share("madeleine", to: "spencer", memory: memoryString, imageUrl: imageUrl)
-
     init() {
         root = Firebase(url:"https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
     
     func share(from: String, to: String, memory: String, imageUrl: NSURL?) {
-        uploadImage(imageUrl, key: imageKey(memory))
+        // todo -tidy
+        var memoryId = Memory(memoryString: memory).getId()
+        if (PhotoAlbum().photoExists(memoryId)) {
+            uploadImage(imageUrl, key: imageKey(memory))
+        }
         uploadMemory(from, to: to, memory: memory)
     }
     
@@ -48,18 +48,16 @@ public class Sharer {
     }
     
     private func uploadImage(imageUrl: NSURL?, key: String) {
-        if (imageUrl != nil) {
-            println("** AWS OP: Uploading image from: " + imageUrl!.absoluteString!)
+        println("** AWS OP: Uploading image from: " + imageUrl!.absoluteString!)
 
-            let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
-            uploadRequest.bucket = BUCKET
-            uploadRequest.key = key
-            uploadRequest.body = imageUrl
-            uploadRequest.ACL = AWSS3ObjectCannedACL.AuthenticatedRead
+        let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest.bucket = BUCKET
+        uploadRequest.key = key
+        uploadRequest.body = imageUrl
+        uploadRequest.ACL = AWSS3ObjectCannedACL.AuthenticatedRead
             
-            let task = transferManager.upload(uploadRequest)
-            monitorAsyncTask(task, type: "Upload")
-        }
+        let task = transferManager.upload(uploadRequest)
+        monitorAsyncTask(task, type: "Upload")
     }
     
     private func monitorAsyncTask(task: BFTask, type: String) {

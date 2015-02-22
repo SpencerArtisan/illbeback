@@ -31,7 +31,6 @@ class MapPinView: MKAnnotationView {
     var labelAreaWidth: CGFloat?
     var labelAreaHeight: CGFloat?
     var labelAreaLeft: CGFloat?
-    var labelAreaTop: CGFloat?
     var calloutWidth: CGFloat?
     
     init(memoriesController: MemoriesController, memoryId: String, imageUrl: String?, title: String, subtitle: String) {
@@ -59,7 +58,6 @@ class MapPinView: MKAnnotationView {
             labelAreaWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : WIDTH / 2
             labelAreaHeight = photoView == nil ? HEIGHT_WITHOUT_PHOTO : HEIGHT
             labelAreaLeft = photoView == nil ? 0 : WIDTH / 2
-            labelAreaTop = photoView == nil ? 0 : 0
             calloutWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : WIDTH
             
             createSubtitleLabel()
@@ -73,7 +71,7 @@ class MapPinView: MKAnnotationView {
     }
    
     func createLabelView() {
-        labelView = UIView(frame: CGRectMake(labelAreaLeft!, labelAreaTop!, labelAreaWidth!, labelAreaHeight!))
+        labelView = UIView(frame: CGRectMake(labelAreaLeft!, 0, labelAreaWidth!, labelAreaHeight!))
         labelView!.backgroundColor = UIColor.whiteColor()
         labelView!.addSubview(titleView!)
         labelView!.addSubview(subtitleView!)
@@ -83,7 +81,7 @@ class MapPinView: MKAnnotationView {
     
     func createCalloutView() {
         self.calloutView = UIView()
-        self.calloutView?.frame = CGRectMake(-calloutWidth!/2, -labelAreaHeight! - 10, calloutWidth!, labelAreaHeight!)
+        self.calloutView?.frame = CGRectMake(-calloutWidth!/2 + 15, -labelAreaHeight! - 10, calloutWidth!, labelAreaHeight!)
         self.calloutView?.backgroundColor = UIColor.whiteColor()
         self.calloutView?.layer.cornerRadius = 10
         if (photoView != nil) { self.calloutView?.addSubview(photoView!) }
@@ -149,8 +147,8 @@ class MapPinView: MKAnnotationView {
         var hitView = super.hitTest(point, withEvent: event)
         var system = NSProcessInfo.processInfo().systemUptime
         var elapsed = system - event!.timestamp
-        if (elapsed < 0.1 && calloutView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
-            hitView = calloutView!.hitTest(point, withEvent: event)
+        if (elapsed < 0.1 && labelView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
+            hitView = labelView!.hitTest(point, withEvent: event)
             if (hitButton(point, button: deleteButton)) {
                 memoriesController?.deleteMemory(self)
             }
@@ -165,7 +163,7 @@ class MapPinView: MKAnnotationView {
     
     private func hitButton(point: CGPoint, button: UIButton?) -> Bool {
         if (button != nil) {
-            var pt3 = self.convertPoint(point, toView: calloutView)
+            var pt3 = self.convertPoint(point, toView: labelView)
             if (button!.frame.contains(pt3)) {
                 return true
             }

@@ -17,12 +17,16 @@ public class PhotoAlbum {
     }
 
     public func delete(memoryId: String) {
-        var imagePath = getImagePath(memoryId)
-        if (fileManager.fileExistsAtPath(imagePath)) {
+        if (photoExists(memoryId)) {
+            var imagePath = getImagePath(memoryId)
             println("Deleting file " + imagePath)
             fileManager.removeItemAtPath(imagePath, error: nil)
         }
-        
+    }
+    
+    public func photoExists(memoryId: String) -> Bool {
+        var imagePath = getImagePath(memoryId)
+        return fileManager.fileExistsAtPath(imagePath)
     }
     
     public func getMemoryImageUrl(memoryId: String) -> NSURL {
@@ -31,8 +35,8 @@ public class PhotoAlbum {
     }
     
     public func getMemoryImage(memoryId: String) -> UIImage? {
-        var imagePath = getImagePath(memoryId)
-        if (fileManager.fileExistsAtPath(imagePath)) {
+        if (photoExists(memoryId)) {
+            var imagePath = getImagePath(memoryId)
             return UIImage(contentsOfFile: imagePath)!
         }
         return nil
