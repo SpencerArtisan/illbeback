@@ -15,16 +15,24 @@ class Modal {
         self.view = NSBundle.mainBundle().loadNibNamed(viewName, owner: owner, options: nil)[0] as? UIView
     }
     
+    func slideDownFromTop(parentView: UIView) {
+        slideVertically(parentView, start: -60, end: 20, hide: false)
+    }
+    
+    func slideUpFromTop(parentView: UIView) {
+        slideVertically(parentView, start: 20, end: -60, hide: true)
+    }
+    
     func slideOutFromLeft(parentView: UIView) {
-        slide(parentView, start: -190, end: 0)
+        slideHorizontally(parentView, start: -190, end: 0, hide: false)
     }
 
     func slideInFromLeft(parentView: UIView) {
-        slide(parentView, start: 0, end: -190)
+        slideHorizontally(parentView, start: 0, end: -190, hide: true)
     }
     
     func slideOutFromRight(parentView: UIView) {
-        slide(parentView, start: 500, end: 190)
+        slideHorizontally(parentView, start: 500, end: 190, hide: false)
     }
     
     func hide() {
@@ -35,14 +43,25 @@ class Modal {
         return view.viewWithTag(tag)
     }
     
-    private func slide(parentView: UIView, start: CGFloat, end: CGFloat) {
+    private func slideHorizontally(parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
         parentView.addSubview(self.view)
         self.view.frame.origin.x = start
         
-        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             var sliderFrame = self.view.frame
             sliderFrame.origin.x = end
             self.view.frame = sliderFrame
-            }, completion: {_ in })
+            }, completion: {_ in if hide { self.hide() } })
+    }
+    
+    private func slideVertically(parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
+        parentView.addSubview(self.view)
+        self.view.frame.origin.y = start
+        
+        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            var sliderFrame = self.view.frame
+            sliderFrame.origin.y = end
+            self.view.frame = sliderFrame
+            }, completion: {_ in if hide { self.hide() } })
     }
 }

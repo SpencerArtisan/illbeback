@@ -26,11 +26,13 @@ public class MemoryAlbum {
         }
     }
 
-    func downloadNewShares(user: User) {
+    func downloadNewShares(user: User, callback: (memory: Memory) -> Void) {
+        println("Checking for new shared memories")
         sharer.retrieveShares(user.getName(), {sender, memory in
             println("Retrieved shared memory from " + sender + ": " + memory.asString())
             self.add(memory)
             self.addPin(memory)
+            callback(memory: memory)
         })
     }
     

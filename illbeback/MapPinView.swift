@@ -165,7 +165,7 @@ class MapPinView: MKAnnotationView {
         var system = NSProcessInfo.processInfo().systemUptime
         var elapsed = system - event!.timestamp
         if (elapsed < 0.1 && labelView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
-            hitView = labelView!.hitTest(point, withEvent: event)
+            hitView = calloutView!.hitTest(point, withEvent: event)
             if (hitButton(point, button: deleteButton)) {
                 memoriesController?.deleteMemory(self)
             }
