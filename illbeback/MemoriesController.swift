@@ -30,10 +30,13 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.shareModal = Modal(viewName: "ShareView", owner: self)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        memoryAlbum.downloadNewShares(user)
+    }
+    
     func initMemories() {
         memoryAlbum = MemoryAlbum(map: map)
-        memoryAlbum.downloadNewShares(user)
-        memoryAlbum.addToMap(map)
+        memoryAlbum.addToMap()
     }
     
     func initLocationManager() {

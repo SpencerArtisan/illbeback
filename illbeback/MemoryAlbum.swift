@@ -20,7 +20,7 @@ public class MemoryAlbum {
         read()
     }
     
-    func addToMap(map: MKMapView) {
+    func addToMap() {
         for memory in memories {
             addPin(memory)
         }
@@ -30,6 +30,7 @@ public class MemoryAlbum {
         sharer.retrieveShares(user.getName(), {sender, memory in
             println("Retrieved shared memory from " + sender + ": " + memory.asString())
             self.add(memory)
+            self.addPin(memory)
         })
     }
     
