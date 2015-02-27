@@ -124,9 +124,15 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func rephotoMemoryConfirmed(photo: UIImage) {
         camera!.stop()
         photoAlbum.saveMemoryImage(photo, memoryId: pinToRephoto!.memory!.id)
-        pinToRephoto!.refresh()
+        pinToRephoto!.refreshAndReopen()
     }
     
+    // Callback for button on the callout
+    func rewordMemory(pin: MapPinView) {
+        map.deselectAnnotation(pin.annotation, animated: false)
+        pin.refresh()
+        addMemory.reword(self, memory: pin.memory!)
+    }
 
     // Callback for display pins on map
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
@@ -136,7 +142,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
             if (pinView == nil) {
                 var imageUrl = photoAlbum.getImagePath(pinData.memory.id)
-                pinView = MapPinView(memoriesController: self, memory: pinData.memory, imageUrl: imageUrl, title: pinData.title, subtitle: pinData.subtitle)
+                pinView = MapPinView(memoriesController: self, memory: pinData.memory, imageUrl: imageUrl)
             }
         
             return pinView

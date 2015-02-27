@@ -18,6 +18,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var memoryLocation: CLLocationCoordinate2D?
     var callingViewController: UIViewController?
     let photoAlbum = PhotoAlbum()
+    var rewordingMemory: Memory?
 
     override init() {
         super.init()
@@ -72,6 +73,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
     
     func add(controller: UIViewController, image: UIImage) {
+        rewordingMemory = nil
         self.memoryLocation = nil
         self.callingViewController = controller
         self.memoryId = NSUUID().UUIDString
@@ -80,10 +82,18 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
    
     func add(controller: UIViewController, location: CLLocationCoordinate2D) {
+        rewordingMemory = nil
         self.memoryLocation = location
         self.callingViewController = controller
         self.memoryId = NSUUID().UUIDString
         self.showCategorySelector()
+    }
+    
+    func reword(controller: UIViewController, memory: Memory) {
+        self.callingViewController = controller
+        rewordingMemory = memory
+        self.showDescriptionEntry()
+        desciptionTextArea.text = memory.description
     }
     
     func showCategorySelector() {
@@ -105,9 +115,13 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
             var tabBarController = self.callingViewController!.parentViewController as UITabBarController
             var memories = tabBarController.childViewControllers[0] as MemoriesController
             
-            memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation)
-            tabBarController.selectedIndex = 0
-            categoryModal.hide()
+            if (rewordingMemory != nil) {
+                rewordingMemory?.description = textView.text
+                memories.memoryAlbum.save()
+            } else {
+                memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation)
+                tabBarController.selectedIndex = 0
+            }
             descriptionModal.hide()
             self.desciptionTextArea.text = ""
             return false

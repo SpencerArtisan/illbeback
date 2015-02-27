@@ -23,8 +23,6 @@ class MapPinView: MKAnnotationView {
     var shareButton: UIButton?
     var memory: Memory?
     var imageUrl: String?
-    var title: String?
-    var subtitle: String?
     var photoView: UIImageView?
     var titleView: UILabel?
     var labelView: UIView?
@@ -34,14 +32,13 @@ class MapPinView: MKAnnotationView {
     var labelAreaLeft: CGFloat?
     var calloutWidth: CGFloat?
     
-    init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?, title: String, subtitle: String) {
+    init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
         super.init()
 
         self.memory = memory
         self.memoriesController = memoriesController
         self.imageUrl = imageUrl
-        self.title = title
-        self.subtitle = subtitle
+
         canShowCallout = false
         annotation = annotation
         enabled = true
@@ -49,14 +46,18 @@ class MapPinView: MKAnnotationView {
         initImage()
     }
     
-    func refresh() {
+    func refreshAndReopen() {
         setSelected(false, animated: false)
         calloutView = nil
         setSelected(true, animated: false)
     }
     
+    func refresh() {
+        calloutView = nil
+    }
+    
     private func initImage() {
-        var imageIcon = UIImage(named: title!)!
+        var imageIcon = UIImage(named: memory!.type)!
         if (memory!.recentShare) {
             var imageHighlight = UIImage(named: "recent")!
             var finalSize = CGSizeMake(imageIcon.size.width * 3, imageIcon.size.height * 3)
@@ -120,7 +121,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeleteButton() {
-        deleteButton = UIButton(frame: CGRectMake(labelAreaWidth! - 35, labelAreaHeight! - 40, 40, 40))
+        deleteButton = UIButton(frame: CGRectMake(labelAreaWidth! - 35, labelAreaHeight! - 39, 40, 40))
         var image = UIImage(named: "trash")
         deleteButton!.setImage(image, forState: UIControlState.Normal)
     }
@@ -151,8 +152,8 @@ class MapPinView: MKAnnotationView {
         titleView!.numberOfLines = 0
         titleView!.textAlignment = NSTextAlignment.Center
         titleView!.font = titleView!.font.fontWithSize(20)
-        titleView!.text = title
-        titleView!.backgroundColor = CategoryController.getColorForCategory(title!)
+        titleView!.text = memory!.type
+        titleView!.backgroundColor = CategoryController.getColorForCategory(memory!.type)
     }
     
     func createSubtitleLabel() {
@@ -161,7 +162,7 @@ class MapPinView: MKAnnotationView {
         subtitleView!.layer.cornerRadius = 0
         subtitleView!.numberOfLines = 0
         subtitleView!.textAlignment = NSTextAlignment.Center
-        subtitleView!.text = subtitle
+        subtitleView!.text = memory!.description
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -185,12 +186,12 @@ class MapPinView: MKAnnotationView {
             hitView = calloutView!.hitTest(point, withEvent: event)
             if (hitButton(point, button: deleteButton)) {
                 memoriesController?.deleteMemory(self)
-            }
-            if (hitButton(point, button: shareButton)) {
+            } else if (hitButton(point, button: shareButton)) {
                 memoriesController?.shareMemory(self)
-            }
-            if (hitButton(point, button: photoButton)) {
+            } else if (hitButton(point, button: photoButton)) {
                 memoriesController?.rephotoMemory(self)
+            } else if (hitButton(point, button: subtitleView)) {
+                memoriesController?.rewordMemory(self)
             }
         }
         
@@ -198,7 +199,7 @@ class MapPinView: MKAnnotationView {
         return hitView
     }
     
-    private func hitButton(point: CGPoint, button: UIButton?) -> Bool {
+    private func hitButton(point: CGPoint, button: UIView?) -> Bool {
         if (button != nil) {
             var pt3 = self.convertPoint(point, toView: labelView)
             if (button!.frame.contains(pt3)) {
