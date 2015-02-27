@@ -20,14 +20,17 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     let addMemory = AddMemoryController()
     var shareModal: Modal?
     var pinToShare: MapPinView?
+    var pinToRephoto: MapPinView?
     let user = User()
     var messageModals: [Modal] = []
+    var camera: Camera?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initLocationManager()
         initMap()
         initMemories()
+        camera = Camera(parentController: self, {image in self.rephotoMemoryConfirmed(image)})
         self.shareModal = Modal(viewName: "ShareView", owner: self)
     }
     
@@ -105,13 +108,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     
-    // Callback for button on the callout
-    func rephotoMemory(pin: MapPinView) {
-        var tabBarController = self.parentViewController as UITabBarController
-        var memories = tabBarController.childViewControllers[1] as RememberController
-        tabBarController.selectedIndex = 1
-    }
-
     func shareMemoryConfirmed(sender: AnyObject?) {
         memoryAlbum.share(pinToShare!, from: user.getName(), to: user.getFriend())
         pinToShare = nil
@@ -119,6 +115,19 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         ((sender) as UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     
+    // Callback for button on the callout
+    func rephotoMemory(pin: MapPinView) {
+        pinToRephoto = pin
+        camera!.start()
+    }
+
+    func rephotoMemoryConfirmed(photo: UIImage) {
+        camera!.stop()
+        photoAlbum.saveMemoryImage(photo, memoryId: pinToRephoto!.memory!.id)
+        pinToRephoto!.refresh()
+    }
+    
+
     // Callback for display pins on map
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if (annotation is MapPin) {

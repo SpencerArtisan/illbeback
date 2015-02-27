@@ -24,17 +24,21 @@ class Camera : NSObject {
     
     func start() {
         parentController.view.addSubview(self.snapButton)
+        var screenRect = UIScreen.mainScreen().bounds
+        self.camera.attachToViewController(parentController, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
+        self.parentController.view.addSubview(self.snapButton)
         camera.start()
     }
     
     func stop() {
+        snapButton.removeFromSuperview()
+        camera.removeFromParentViewController()
+        camera.view.removeFromSuperview()
         camera.stop()
     }
     
     func createCamera() {
-        var screenRect = UIScreen.mainScreen().bounds
         self.camera = LLSimpleCamera(quality: CameraQualityPhoto, andPosition: CameraPositionBack)
-        self.camera.attachToViewController(parentController, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
     }
     
     func createSnapButton() {
@@ -55,7 +59,6 @@ class Camera : NSObject {
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
             
             self.callback(image!)
-            self.snapButton.removeFromSuperview()
             }, exactSeenImage: true)
     }
 }

@@ -49,6 +49,12 @@ class MapPinView: MKAnnotationView {
         initImage()
     }
     
+    func refresh() {
+        setSelected(false, animated: false)
+        calloutView = nil
+        setSelected(true, animated: false)
+    }
+    
     private func initImage() {
         var imageIcon = UIImage(named: title!)!
         if (memory!.recentShare) {
