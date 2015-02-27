@@ -1,0 +1,61 @@
+//
+//  Camera.swift
+//  illbeback
+//
+//  Created by Spencer Ward on 27/02/2015.
+//  Copyright (c) 2015 Spencer Ward. All rights reserved.
+//
+
+import Foundation
+
+class Camera : NSObject {
+    var camera: LLSimpleCamera!
+    var snapButton: UIButton!
+    var parentController: UIViewController!
+    var callback: (UIImage -> Void)
+    
+    init(parentController: UIViewController, callback: (UIImage -> Void)) {
+        self.parentController = parentController
+        self.callback = callback
+        super.init()
+        createCamera()
+        createSnapButton()
+    }
+    
+    func start() {
+        parentController.view.addSubview(self.snapButton)
+        camera.start()
+    }
+    
+    func stop() {
+        camera.stop()
+    }
+    
+    func createCamera() {
+        var screenRect = UIScreen.mainScreen().bounds
+        self.camera = LLSimpleCamera(quality: CameraQualityPhoto, andPosition: CameraPositionBack)
+        self.camera.attachToViewController(parentController, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
+    }
+    
+    func createSnapButton() {
+        self.snapButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        self.snapButton.frame = CGRectMake(0, 0, 70.0, 70.0)
+        self.snapButton.clipsToBounds = true
+        self.snapButton.layer.cornerRadius = 35.0
+        self.snapButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.snapButton.layer.borderWidth = 2.0
+        self.snapButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+        self.snapButton.layer.rasterizationScale = UIScreen.mainScreen().scale
+        self.snapButton.layer.shouldRasterize = true
+        self.snapButton.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 100)
+    }
+    
+    func takePhoto(sender : UIButton!) {
+        self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
+            
+            self.callback(image!)
+            self.snapButton.removeFromSuperview()
+            }, exactSeenImage: true)
+    }
+}

@@ -105,6 +105,13 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     
+    // Callback for button on the callout
+    func rephotoMemory(pin: MapPinView) {
+        var tabBarController = self.parentViewController as UITabBarController
+        var memories = tabBarController.childViewControllers[1] as RememberController
+        tabBarController.selectedIndex = 1
+    }
+
     func shareMemoryConfirmed(sender: AnyObject?) {
         memoryAlbum.share(pinToShare!, from: user.getName(), to: user.getFriend())
         pinToShare = nil

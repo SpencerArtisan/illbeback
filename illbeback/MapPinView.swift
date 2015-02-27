@@ -183,6 +183,9 @@ class MapPinView: MKAnnotationView {
             if (hitButton(point, button: shareButton)) {
                 memoriesController?.shareMemory(self)
             }
+            if (hitButton(point, button: photoButton)) {
+                memoriesController?.rephotoMemory(self)
+            }
         }
         
         hitOutside = hitView == nil

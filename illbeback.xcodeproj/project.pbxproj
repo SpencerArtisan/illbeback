@@ -32,6 +32,7 @@
 		9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */; };
 		9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */; };
 		9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */; };
+		979F850B1AA11B8600A11F7F /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979F850A1AA11B8600A11F7F /* Camera.swift */; };
 		97A353491A800B9500973CAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A353481A800B9500973CAC /* AppDelegate.swift */; };
 		97A3534B1A800B9500973CAC /* RememberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3534A1A800B9500973CAC /* RememberController.swift */; };
 		97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3534C1A800B9500973CAC /* MemoriesController.swift */; };
@@ -85,6 +86,7 @@
 		976696EE1A8AA317004CB60D /* CategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryView.xib; sourceTree = "<group>"; };
 		9772846B1A8A818B00CE628D /* user.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user.plist; sourceTree = "<group>"; };
 		9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "illbeback-Bridging-Header.h"; sourceTree = "<group>"; };
+		979F850A1AA11B8600A11F7F /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		97A353431A800B9500973CAC /* I'll Be Back.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I'll Be Back.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97A353471A800B9500973CAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97A353481A800B9500973CAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				976696EE1A8AA317004CB60D /* CategoryView.xib */,
 				97FE667B1A99EB1E0007FC2C /* ShareView.xib */,
 				97FE66831A9A50C60007FC2C /* MessageView.xib */,
+				979F850A1AA11B8600A11F7F /* Camera.swift */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,
 				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
 				97E3B9181A857A00007DB06E /* MapPin.swift in Sources */,
+				979F850B1AA11B8600A11F7F /* Camera.swift in Sources */,
 				97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */,
 				97A353491A800B9500973CAC /* AppDelegate.swift in Sources */,
 				97FE66801A9A19570007FC2C /* User.swift in Sources */,
