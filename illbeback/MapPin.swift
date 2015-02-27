@@ -19,4 +19,9 @@ class MapPin : NSObject, MKAnnotation {
         self.subtitle = memory.description.isEmpty ? "No description provided" : memory.description
         self.memory = memory
     }
+    
+    func setCoordinate(newCoordinate: CLLocationCoordinate2D) {
+        coordinate = newCoordinate
+        memory.location = newCoordinate
+    }
 }

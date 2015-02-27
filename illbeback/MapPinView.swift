@@ -44,6 +44,7 @@ class MapPinView: MKAnnotationView {
         canShowCallout = false
         annotation = annotation
         enabled = true
+        draggable = true
         initImage()
     }
     

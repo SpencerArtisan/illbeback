@@ -127,5 +127,21 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
         return nil
     }
+    
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+        if newState == MKAnnotationViewDragState.Starting
+        {
+            view.dragState = MKAnnotationViewDragState.Dragging
+        }
+        else if newState == MKAnnotationViewDragState.Ending || newState == MKAnnotationViewDragState.Canceling
+        {
+            view.dragState = MKAnnotationViewDragState.None;
+            if (view.annotation is MapPin) {
+                let pinData = view.annotation as MapPin
+                pinData.setCoordinate(pinData.coordinate)
+                self.memoryAlbum.save()
+            }
+        }
+    }
 }
 
