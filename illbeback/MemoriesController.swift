@@ -63,10 +63,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     func initMap() {
-        map.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         map.delegate = self
         var tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
-        self.map.addGestureRecognizer(tapRecognizer)
+        map.addGestureRecognizer(tapRecognizer)
+        map.showsPointsOfInterest = false
+        map.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
     }
     
     // User clicked on map - Add a memory there
