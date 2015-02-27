@@ -19,6 +19,7 @@ class MapPinView: MKAnnotationView {
     var memoriesController:MemoriesController?
     var calloutView: UIView?
     var deleteButton: UIButton?
+    var photoButton: UIButton?
     var shareButton: UIButton?
     var memory: Memory?
     var imageUrl: String?
@@ -82,6 +83,7 @@ class MapPinView: MKAnnotationView {
             createSubtitleLabel()
             createTitleLabel()
             createDeleteButton()
+            createPhotoButton()
             createShareButton()
             createLabelView()
             createCalloutView()
@@ -95,6 +97,7 @@ class MapPinView: MKAnnotationView {
         labelView!.addSubview(titleView!)
         labelView!.addSubview(subtitleView!)
         labelView!.addSubview(deleteButton!)
+        labelView!.addSubview(photoButton!)
         labelView!.addSubview(shareButton!)
     }
     
@@ -114,6 +117,13 @@ class MapPinView: MKAnnotationView {
         deleteButton = UIButton(frame: CGRectMake(labelAreaWidth! - 35, labelAreaHeight! - 40, 40, 40))
         var image = UIImage(named: "trash")
         deleteButton!.setImage(image, forState: UIControlState.Normal)
+    }
+    
+    func createPhotoButton() {
+        photoButton = UIButton(frame: CGRectMake(labelAreaWidth! / 2 - 17, labelAreaHeight! - 38, 40, 40))
+        var image = UIImage(named: "camera")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        photoButton!.setImage(image, forState: UIControlState.Normal)
+        photoButton?.tintColor = UIColor.blueColor()
     }
     
     func createShareButton() {
