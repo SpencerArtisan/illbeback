@@ -152,7 +152,7 @@ class MapPinView: MKAnnotationView {
         titleView!.numberOfLines = 0
         titleView!.textAlignment = NSTextAlignment.Center
         titleView!.font = titleView!.font.fontWithSize(20)
-        titleView!.text = memory!.type
+        titleView!.text = annotation.title
         titleView!.backgroundColor = CategoryController.getColorForCategory(memory!.type)
     }
     
@@ -162,7 +162,7 @@ class MapPinView: MKAnnotationView {
         subtitleView!.layer.cornerRadius = 0
         subtitleView!.numberOfLines = 0
         subtitleView!.textAlignment = NSTextAlignment.Center
-        subtitleView!.text = memory!.description
+        subtitleView!.text = memory!.description.isEmpty ? "No description provided" : memory!.description
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
