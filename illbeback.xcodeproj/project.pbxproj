@@ -27,6 +27,9 @@
 		976696EB1A8A992D004CB60D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976696EA1A8A992D004CB60D /* QuartzCore.framework */; };
 		976696ED1A8A9EF4004CB60D /* CategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976696EC1A8A9EF4004CB60D /* CategoryController.swift */; };
 		976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 976696EE1A8AA317004CB60D /* CategoryView.xib */; };
+		977222201AA2597C00D8C92A /* user.spencer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9772221F1AA2597C00D8C92A /* user.spencer.plist */; };
+		977222221AA2599B00D8C92A /* user.madeleine.plist in Resources */ = {isa = PBXBuildFile; fileRef = 977222211AA2599B00D8C92A /* user.madeleine.plist */; };
+		977222241AA259BA00D8C92A /* user.test.plist in Resources */ = {isa = PBXBuildFile; fileRef = 977222231AA259BA00D8C92A /* user.test.plist */; };
 		9772846C1A8A818B00CE628D /* user.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9772846B1A8A818B00CE628D /* user.plist */; };
 		9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */; };
 		9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */; };
@@ -84,6 +87,9 @@
 		976696EA1A8A992D004CB60D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		976696EC1A8A9EF4004CB60D /* CategoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryController.swift; sourceTree = "<group>"; };
 		976696EE1A8AA317004CB60D /* CategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryView.xib; sourceTree = "<group>"; };
+		9772221F1AA2597C00D8C92A /* user.spencer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user.spencer.plist; sourceTree = "<group>"; };
+		977222211AA2599B00D8C92A /* user.madeleine.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user.madeleine.plist; sourceTree = "<group>"; };
+		977222231AA259BA00D8C92A /* user.test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user.test.plist; sourceTree = "<group>"; };
 		9772846B1A8A818B00CE628D /* user.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user.plist; sourceTree = "<group>"; };
 		9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "illbeback-Bridging-Header.h"; sourceTree = "<group>"; };
 		979F850A1AA11B8600A11F7F /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
@@ -217,7 +223,10 @@
 			isa = PBXGroup;
 			children = (
 				9759BF6B1A802AD300B945CB /* illbebackinfo.plist */,
+				977222211AA2599B00D8C92A /* user.madeleine.plist */,
 				97A353471A800B9500973CAC /* Info.plist */,
+				977222231AA259BA00D8C92A /* user.test.plist */,
+				9772221F1AA2597C00D8C92A /* user.spencer.plist */,
 				9772846B1A8A818B00CE628D /* user.plist */,
 				97FE66811A9A1A400007FC2C /* memories.plist */,
 			);
@@ -347,9 +356,12 @@
 				9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */,
 				972006A71A9140FB00B5E74C /* DescriptionView.xib in Resources */,
 				97FE66841A9A50C60007FC2C /* MessageView.xib in Resources */,
+				977222221AA2599B00D8C92A /* user.madeleine.plist in Resources */,
+				977222241AA259BA00D8C92A /* user.test.plist in Resources */,
 				9772846C1A8A818B00CE628D /* user.plist in Resources */,
 				97FE66821A9A1A400007FC2C /* memories.plist in Resources */,
 				97A353501A800B9500973CAC /* Main.storyboard in Resources */,
+				977222201AA2597C00D8C92A /* user.spencer.plist in Resources */,
 				97A3536B1A800EF500973CAC /* Media.xcassets in Resources */,
 				97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */,
 				976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */,
