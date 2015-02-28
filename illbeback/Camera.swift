@@ -31,7 +31,6 @@ class Camera : NSObject {
     }
     
     func stop() {
-        snapButton.removeFromSuperview()
         camera.removeFromParentViewController()
         camera.view.removeFromSuperview()
         camera.stop()
@@ -58,6 +57,7 @@ class Camera : NSObject {
     func takePhoto(sender : UIButton!) {
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
             
+            self.snapButton.removeFromSuperview()
             self.callback(image!)
             }, exactSeenImage: true)
     }
