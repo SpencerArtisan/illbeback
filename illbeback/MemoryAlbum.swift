@@ -31,7 +31,6 @@ public class MemoryAlbum {
         sharer.retrieveShares(user.getName(), {sender, memory in
             println("Retrieved shared memory from " + sender + ": " + memory.asString())
             self.add(memory)
-            self.addPin(memory)
             callback(memory: memory)
         })
     }
