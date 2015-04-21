@@ -20,8 +20,8 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     let photoAlbum = PhotoAlbum()
     var rewordingMemory: Memory?
 
-    override init() {
-        super.init()
+    init() {
+        super.init(nibName: nil, bundle: nil)
         categoryModal = Modal(viewName: "CategoryView", owner: self)
         descriptionModal = Modal(viewName: "DescriptionView", owner: self)
         desciptionTextArea.delegate = self
@@ -56,12 +56,20 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         addMemory("Gallery")
     }
     
-    @IBAction func addChurch(sender: AnyObject) {
-        addMemory("Church")
+    @IBAction func addMuseum(sender: AnyObject) {
+        addMemory("Museum")
     }
     
-    @IBAction func addOther(sender: AnyObject) {
-        addMemory("Other")
+    @IBAction func addLavatory(sender: AnyObject) {
+        addMemory("Lavatory")
+    }
+    
+    @IBAction func addBuilding(sender: AnyObject) {
+        addMemory("Building")
+    }
+    
+    @IBAction func addSpecial(sender: AnyObject) {
+        addMemory("Special")
     }
     
     @IBAction func addGreenSpace(sender: AnyObject) {
@@ -112,8 +120,8 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
-            var tabBarController = self.callingViewController!.parentViewController as UITabBarController
-            var memories = tabBarController.childViewControllers[0] as MemoriesController
+            var tabBarController = self.callingViewController!.parentViewController as! UITabBarController
+            var memories = tabBarController.childViewControllers[0] as! MemoriesController
             
             if (rewordingMemory != nil) {
                 rewordingMemory?.description = textView.text

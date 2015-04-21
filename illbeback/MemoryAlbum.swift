@@ -28,7 +28,7 @@ public class MemoryAlbum {
 
     func downloadNewShares(user: User, callback: (memory: Memory) -> Void) {
         println("Checking for new shared memories")
-        sharer.retrieveShares(user.getName(), {sender, memory in
+        sharer.retrieveShares(user.getName(), callback: {sender, memory in
             println("Retrieved shared memory from " + sender + ": " + memory.asString())
             self.add(memory)
             callback(memory: memory)
@@ -74,7 +74,7 @@ public class MemoryAlbum {
     }
     
     func save() {
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
         var path = paths.stringByAppendingPathComponent("memories.plist")
         var memoryStrings = memories.map {memory in memory.asString()}
         props?.setValue(memoryStrings, forKey: "Memories")
@@ -82,17 +82,17 @@ public class MemoryAlbum {
     }
 
     func read() {
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
         var path = paths.stringByAppendingPathComponent("memories.plist")
         var fileManager = NSFileManager.defaultManager()
         if (!(fileManager.fileExistsAtPath(path))) {
             var bundle : NSString = NSBundle.mainBundle().pathForResource("memories", ofType: "plist")!
-            fileManager.copyItemAtPath(bundle, toPath: path, error:nil)
+            fileManager.copyItemAtPath(bundle as String, toPath: path, error:nil)
         }
         
         props = NSDictionary(contentsOfFile: path)?.mutableCopy() as? NSDictionary
         
-        var memoryStrings = props?.valueForKey("Memories") as [String]
+        var memoryStrings = (props?.valueForKey("Memories") ?? []) as! [String]
         memories = memoryStrings.map {memoryString in Memory(memoryString: memoryString)}
     }
 }

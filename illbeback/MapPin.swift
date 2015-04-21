@@ -20,7 +20,7 @@ class MapPin : NSObject, MKAnnotation {
         self.memory = memory
     }
     
-    func setCoordinate(newCoordinate: CLLocationCoordinate2D) {
+    func setCoordinate2(newCoordinate: CLLocationCoordinate2D) {
         coordinate = newCoordinate
         memory.location = newCoordinate
     }

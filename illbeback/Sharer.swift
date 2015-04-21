@@ -20,8 +20,8 @@ public class Sharer {
             snapshot in
                 var givenMemories = snapshot.children
                 while let given: FDataSnapshot = givenMemories.nextObject() as? FDataSnapshot {
-                    var from = given.value["from"] as String
-                    var memoryString = given.value["memory"] as String
+                    var from = given.value["from"] as! String
+                    var memoryString = given.value["memory"] as! String
                     var memory = Memory(memoryString: memoryString)
                     memory.recentShare = true
                     var key = self.imageKey(memory)

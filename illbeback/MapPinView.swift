@@ -33,7 +33,7 @@ class MapPinView: MKAnnotationView {
     var calloutWidth: CGFloat?
     
     init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
-        super.init()
+        super.init(annotation: nil, reuseIdentifier: nil)
 
         self.memory = memory
         self.memoriesController = memoriesController

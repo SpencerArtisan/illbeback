@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/AddMemoryController.swift"
-            timestampString = "446770584.712942"
+            timestampString = "451340511.990758"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "add(_:location:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/AddMemoryController.swift"
-            timestampString = "446770584.712942"
+            timestampString = "451340511.990758"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "add(_:image:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -248,6 +248,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "I_ll_Be_Back.Sharer.retrieveShares (I_ll_Be_Back.Sharer)(Swift.String, callback : (from : Swift.String, memory : Swift.String) -&gt; ()) -&gt; ()"
                   moduleName = "I&apos;ll Be Back"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/spencerward/dev/code/madeleine/illbeback/illbeback/Sharer.swift"
                   timestampString = "446308241.932887"
                   startingColumnNumber = "9223372036854775807"
@@ -262,6 +263,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "reabstraction thunk helper from @callee_owned (@owned Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.FDataSnapshot&gt;) -&gt; (@unowned ()) to @callee_owned (@in Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.FDataSnapshot&gt;) -&gt; (@out ())"
                   moduleName = "I&apos;ll Be Back"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/spencerward/dev/code/madeleine/illbeback/illbeback/Sharer.swift"
                   timestampString = "446308241.933054"
                   startingColumnNumber = "9223372036854775807"
@@ -276,6 +278,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "reabstraction thunk helper from @callee_owned (@in Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.FDataSnapshot&gt;) -&gt; (@out ()) to @callee_owned (@owned Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.FDataSnapshot&gt;) -&gt; (@unowned ())"
                   moduleName = "I&apos;ll Be Back"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/spencerward/dev/code/madeleine/illbeback/illbeback/Sharer.swift"
                   timestampString = "446308241.933182"
                   startingColumnNumber = "9223372036854775807"
@@ -290,6 +293,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "reabstraction thunk helper from @callee_owned (@owned Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.FDataSnapshot&gt;) -&gt; (@unowned ()) to @callee_unowned @objc_block (@unowned Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.FDataSnapshot&gt;) -&gt; (@unowned ())"
                   moduleName = "I&apos;ll Be Back"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/spencerward/dev/code/madeleine/illbeback/illbeback/Sharer.swift"
                   timestampString = "446308241.933308"
                   startingColumnNumber = "9223372036854775807"
@@ -484,12 +488,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/AddMemoryController.swift"
-            timestampString = "446771223.182037"
+            timestampString = "451343803.039266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
             landmarkName = "textView(_:shouldChangeTextInRange:replacementText:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbeback/MemoryAlbum.swift"
+            timestampString = "451242585.723185"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "read()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbeback/MemoryAlbum.swift"
+            timestampString = "451242773.914791"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "read()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

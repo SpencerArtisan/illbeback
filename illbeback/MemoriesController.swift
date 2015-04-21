@@ -30,14 +30,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         initLocationManager()
         initMap()
         initMemories()
-        camera = Camera(parentController: self, {image in self.rephotoMemoryConfirmed(image)})
+        camera = Camera(parentController: self, callback: {image in self.rephotoMemoryConfirmed(image)})
         self.shareModal = Modal(viewName: "ShareView", owner: self)
     }
     
     override func viewWillAppear(animated: Bool) {
-        memoryAlbum.downloadNewShares(user, {memory in
+        memoryAlbum.downloadNewShares(user, callback: {memory in
             var messageModal = Modal(viewName: "MessageView", owner: self)
-            var message = messageModal.findElementByTag(1) as UIButton
+            var message = messageModal.findElementByTag(1) as! UIButton
             message.backgroundColor = CategoryController.getColorForCategory(memory.type)
             var title = "New " + memory.type + " from " + memory.originator
             message.setTitle(title, forState: UIControlState.Normal)
@@ -50,7 +50,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func dismissMessage(sender: AnyObject?) {
         var messageModal = messageModals.removeLast()
         messageModal.slideUpFromTop(self.view)
-        ((sender) as UIButton).removeTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
+        ((sender) as! UIButton).removeTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
     }
 
     func initMemories() {
@@ -84,7 +84,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     // Callback for location updates
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        here = locations[0] as CLLocation
+        here = locations[0] as! CLLocation
     }
 
     // Callback for button on the UI
@@ -102,7 +102,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the callout
     func shareMemory(pin: MapPinView) {
         shareModal?.slideOutFromLeft(self.view)
-        var shareButton = shareModal?.findElementByTag(1) as UIButton
+        var shareButton = shareModal?.findElementByTag(1) as! UIButton
         shareButton.setTitle(" " + user.getFriend(), forState: UIControlState.Normal)
         pinToShare = pin
         shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
@@ -112,7 +112,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         memoryAlbum.share(pinToShare!, from: user.getName(), to: user.getFriend())
         pinToShare = nil
         shareModal?.slideInFromLeft(self.view)
-        ((sender) as UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
+        ((sender) as! UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     
     // Callback for button on the callout
@@ -137,8 +137,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for display pins on map
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if (annotation is MapPin) {
-            let pinData = annotation as MapPin
-            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as MapPinView!
+            let pinData = annotation as! MapPin
+            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
         
             if (pinView == nil) {
                 var imageUrl = photoAlbum.getImagePath(pinData.memory.id)
@@ -159,8 +159,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         {
             view.dragState = MKAnnotationViewDragState.None;
             if (view.annotation is MapPin) {
-                let pinData = view.annotation as MapPin
-                pinData.setCoordinate(pinData.coordinate)
+                let pinData = view.annotation as! MapPin
+                pinData.setCoordinate2(pinData.coordinate)
                 self.memoryAlbum.save()
             }
         }

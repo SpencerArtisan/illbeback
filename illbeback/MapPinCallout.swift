@@ -7,7 +7,7 @@
 //
 
 class MapPinCallout: UIView {
-    override init() {
+    init() {
         super.init(frame: CGRectMake(0,0,150,200))
     }
 

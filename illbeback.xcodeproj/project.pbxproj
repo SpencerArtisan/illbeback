@@ -194,6 +194,7 @@
 				9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */,
 				97A353481A800B9500973CAC /* AppDelegate.swift */,
 				97A3534A1A800B9500973CAC /* RememberController.swift */,
+				97420BBD1A92A0320076E561 /* AddMemoryController.swift */,
 				97A3534C1A800B9500973CAC /* MemoriesController.swift */,
 				97A3534E1A800B9500973CAC /* Main.storyboard */,
 				97A353461A800B9500973CAC /* Supporting Files */,
@@ -203,7 +204,6 @@
 				972006A21A90ED2B00B5E74C /* MapPinCallout.swift */,
 				976696EC1A8A9EF4004CB60D /* CategoryController.swift */,
 				972006A41A910E7500B5E74C /* PhotoAlbum.swift */,
-				97420BBD1A92A0320076E561 /* AddMemoryController.swift */,
 				9725CD431A98D58B0081C1B3 /* Sharer.swift */,
 				97F438161A991CEC00A33FD2 /* Memory.swift */,
 				97140FD81A99282300B2F49A /* MemoryAlbum.swift */,
@@ -322,6 +322,7 @@
 				TargetAttributes = {
 					97A353421A800B9500973CAC = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = YWXKS4E5M8;
 					};
 					97A353591A800B9500973CAC = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -564,6 +565,8 @@
 			baseConfigurationReference = 3395B5D75F7716A51B4FAC20 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -576,6 +579,7 @@
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "I'll Be Back";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "illbeback/illbeback-Bridging-Header.h";
 			};
 			name = Debug;
@@ -585,6 +589,8 @@
 			baseConfigurationReference = 8D2932CC8DC9A55330BCF225 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -597,6 +603,7 @@
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "I'll Be Back";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "illbeback/illbeback-Bridging-Header.h";
 			};
 			name = Release;

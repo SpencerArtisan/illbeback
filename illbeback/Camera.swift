@@ -41,7 +41,7 @@ class Camera : NSObject {
     }
     
     func createSnapButton() {
-        self.snapButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        self.snapButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         self.snapButton.frame = CGRectMake(0, 0, 70.0, 70.0)
         self.snapButton.clipsToBounds = true
         self.snapButton.layer.cornerRadius = 35.0

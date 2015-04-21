@@ -13,7 +13,7 @@ public class PhotoAlbum {
     var folder: String
     
     public init() {
-        folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
     }
 
     public func delete(memoryId: String) {

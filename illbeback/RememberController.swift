@@ -15,7 +15,7 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        camera = Camera(parentController: self, {image in self.addMemory.add(self, image: image)})
+        camera = Camera(parentController: self, callback: {image in self.addMemory.add(self, image: image)})
     }
     
     override func viewWillAppear(animated: Bool) {

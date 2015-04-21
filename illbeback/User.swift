@@ -25,7 +25,7 @@ class User {
     }
     
     private func read() {
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
         var path = paths.stringByAppendingPathComponent("user.plist")
         var fileManager = NSFileManager.defaultManager()
         if (fileManager.fileExistsAtPath(path)) {
@@ -33,7 +33,7 @@ class User {
         }
         if (!(fileManager.fileExistsAtPath(path))) {
             var bundle : NSString = NSBundle.mainBundle().pathForResource("user", ofType: "plist")!
-            fileManager.copyItemAtPath(bundle, toPath: path, error:nil)
+            fileManager.copyItemAtPath(bundle as String, toPath: path, error:nil)
         }
     
         var props = NSDictionary(contentsOfFile: path)?.mutableCopy() as? NSDictionary
