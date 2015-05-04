@@ -19,11 +19,11 @@
                         <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Qvg-Is-aZb"/>
                     </connections>
                 </button>
-                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1L-X8-nGW" userLabel="church">
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1L-X8-nGW" userLabel="Building">
                     <rect key="frame" x="0.0" y="244" width="190" height="52"/>
-                    <color key="backgroundColor" red="0.92135298776223784" green="0.89247662575174813" blue="0.9184043132328672" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="1" green="0.38890279526450566" blue="0.18216047122284396" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Building" image="Church">
+                    <state key="normal" title=" Building" image="Building">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -43,7 +43,7 @@
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEk-T8-Qv1">
                     <rect key="frame" x="0.0" y="36" width="190" height="52"/>
-                    <color key="backgroundColor" red="0.91568359646013986" green="0.92156862750000001" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.92824264747684659" green="0.94255050505050508" blue="0.61861419747540469" alpha="0.64000000000000001" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Pub" image="Pub">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -54,7 +54,7 @@
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rr-PK-Bmf">
                     <rect key="frame" x="0.0" y="192" width="190" height="52"/>
-                    <color key="backgroundColor" red="0.94167941433566438" green="0.96459790209790208" blue="0.934275161134965" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.73972559142961158" green="0.87369687084578995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Shop" image="Shop">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -98,7 +98,7 @@
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bjw-PU-4Mq">
                     <rect key="frame" x="0.0" y="452" width="190" height="52"/>
-                    <color key="backgroundColor" red="0.90934618387272725" green="1" blue="0.68386541463146855" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.8904869002525253" green="0.85335239158089438" blue="0.62687988151936602" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Place to Stay" image="Place to Stay">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -109,7 +109,7 @@
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgz-lx-Twq">
                     <rect key="frame" x="0.0" y="556" width="190" height="52"/>
-                    <color key="backgroundColor" red="0.93151770104895104" green="0.93519952784965021" blue="0.99852072931678326" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.76113546304516555" green="1" blue="0.63466213477096978" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Special" image="Other">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -120,9 +120,9 @@
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGc-28-hqA">
                     <rect key="frame" x="0.0" y="348" width="190" height="52"/>
-                    <color key="backgroundColor" red="0.74066720659999996" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.83549939966722453" green="0.8904869002525253" blue="0.7817007205342148" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Museum" image="Green Space">
+                    <state key="normal" title=" Museum" image="Museum">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -131,9 +131,9 @@
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uzj-Gy-OPg">
                     <rect key="frame" x="0.0" y="504" width="190" height="52"/>
-                    <color key="backgroundColor" red="0.92266583442687988" green="0.43820093056788983" blue="0.15803131569782669" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.98581518310000005" green="0.60815038480000005" blue="0.71095249419999995" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Lavatory" image="Green Space">
+                    <state key="normal" title=" Lavatory" image="Lavatory">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -167,10 +167,12 @@
         </view>
     </objects>
     <resources>
+        <image name="Building" width="24" height="24"/>
         <image name="Cafe" width="24" height="24"/>
-        <image name="Church" width="24" height="24"/>
         <image name="Gallery" width="24" height="24"/>
         <image name="Green Space" width="24" height="24"/>
+        <image name="Lavatory" width="24" height="24"/>
+        <image name="Museum" width="24" height="24"/>
         <image name="Other" width="24" height="24"/>
         <image name="Place to Stay" width="24" height="24"/>
         <image name="Pub" width="24" height="24"/>
