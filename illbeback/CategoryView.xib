@@ -10,8 +10,17 @@
             <rect key="frame" x="0.0" y="44" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fH0-yM-HH7" userLabel="CancelButton">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Qvg-Is-aZb"/>
+                    </connections>
+                </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1L-X8-nGW" userLabel="church">
-                    <rect key="frame" x="0.0" y="256" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="244" width="190" height="52"/>
                     <color key="backgroundColor" red="0.92135298776223784" green="0.89247662575174813" blue="0.9184043132328672" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Building" image="Church">
@@ -22,7 +31,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FMX-RE-75q">
-                    <rect key="frame" x="0.0" y="100" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="88" width="190" height="52"/>
                     <color key="backgroundColor" red="0.94185273981678208" green="1" blue="0.34112612267342662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Restaurant" image="Restaurant">
@@ -33,7 +42,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEk-T8-Qv1">
-                    <rect key="frame" x="0.0" y="48" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="36" width="190" height="52"/>
                     <color key="backgroundColor" red="0.91568359646013986" green="0.92156862750000001" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Pub" image="Pub">
@@ -44,7 +53,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rr-PK-Bmf">
-                    <rect key="frame" x="0.0" y="204" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="192" width="190" height="52"/>
                     <color key="backgroundColor" red="0.94167941433566438" green="0.96459790209790208" blue="0.934275161134965" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Shop" image="Shop">
@@ -55,7 +64,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTq-yu-by9">
-                    <rect key="frame" x="0.0" y="308" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="296" width="190" height="52"/>
                     <color key="backgroundColor" red="0.63914991258741261" green="0.76124847889860148" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Gallery" image="Gallery">
@@ -66,7 +75,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csP-yr-z0N">
-                    <rect key="frame" x="0.0" y="152" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="140" width="190" height="52"/>
                     <color key="backgroundColor" red="0.74066720659999996" green="0.58560970279720281" blue="0.28788639365244756" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Cafe" image="Cafe">
@@ -77,7 +86,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deg-wH-DNs">
-                    <rect key="frame" x="0.0" y="412" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="400" width="190" height="52"/>
                     <color key="backgroundColor" red="0.74066720659999996" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Green Space" image="Green Space">
@@ -88,7 +97,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bjw-PU-4Mq">
-                    <rect key="frame" x="0.0" y="464" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="452" width="190" height="52"/>
                     <color key="backgroundColor" red="0.90934618387272725" green="1" blue="0.68386541463146855" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Place to Stay" image="Place to Stay">
@@ -99,7 +108,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgz-lx-Twq">
-                    <rect key="frame" x="0.0" y="568" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="556" width="190" height="52"/>
                     <color key="backgroundColor" red="0.93151770104895104" green="0.93519952784965021" blue="0.99852072931678326" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Special" image="Other">
@@ -110,7 +119,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGc-28-hqA">
-                    <rect key="frame" x="0.0" y="360" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="348" width="190" height="52"/>
                     <color key="backgroundColor" red="0.74066720659999996" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Museum" image="Green Space">
@@ -121,7 +130,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uzj-Gy-OPg">
-                    <rect key="frame" x="0.0" y="516" width="190" height="52"/>
+                    <rect key="frame" x="0.0" y="504" width="190" height="52"/>
                     <color key="backgroundColor" red="0.92266583442687988" green="0.43820093056788983" blue="0.15803131569782669" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Lavatory" image="Green Space">

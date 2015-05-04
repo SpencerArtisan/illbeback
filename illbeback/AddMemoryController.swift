@@ -80,6 +80,12 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         addMemory("Place to Stay")
     }
     
+    @IBAction func cancel(sender: AnyObject) {
+        hideCategorySelector()
+        var tabBarController = self.callingViewController!.parentViewController as! UITabBarController
+        tabBarController.selectedIndex = 0
+    }
+    
     func add(controller: UIViewController, image: UIImage) {
         rewordingMemory = nil
         self.memoryLocation = nil

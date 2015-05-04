@@ -113,6 +113,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func shareMemoryConfirmed(sender: AnyObject?) {
         memoryAlbum.share(pinToShare!, from: user.getName(), to: user.getFriend())
         pinToShare = nil
+        shareModal?.slideInFromLeft(self.view)
         ((sender) as! UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     

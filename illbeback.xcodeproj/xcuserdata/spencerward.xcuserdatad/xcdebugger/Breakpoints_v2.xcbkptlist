@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "452466158.825225"
+            timestampString = "452466850.456254"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177">
+            startingLineNumber = "183"
+            endingLineNumber = "183">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -50,61 +50,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/CategoryController.swift"
-            timestampString = "445727912.927283"
+            timestampString = "452467929.995304"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
             landmarkName = "getColorForCategory(_:)"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "illbeback/CategoryController.swift"
-            timestampString = "445727912.927283"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "getColorForCategory(_:)"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "I_ll_Be_Back.CategoryController.getColorForCategory (I_ll_Be_Back.CategoryController.Type)(Swift.String) -&gt; ObjectiveC.UIColor"
-                  moduleName = "I&apos;ll Be Back"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/spencerward/dev/code/madeleine/illbeback/illbeback/CategoryController.swift"
-                  timestampString = "445724135.30724"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
-                  offsetFromSymbolStart = "4852">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "reabstraction thunk helper from @callee_owned () -&gt; (@autoreleased Swift.Optional&lt;ObjectiveC.UIColor&gt;) to @callee_owned () -&gt; (@owned Swift.Optional&lt;ObjectiveC.UIColor&gt;)"
-                  moduleName = "I&apos;ll Be Back"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/spencerward/dev/code/madeleine/illbeback/illbeback/CategoryController.swift"
-                  timestampString = "445724135.307394"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
-                  offsetFromSymbolStart = "0">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -130,11 +82,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/AddMemoryController.swift"
-            timestampString = "451340511.990758"
+            timestampString = "452467711.917238"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "add(_:image:)"
             landmarkType = "5">
          </BreakpointContent>
