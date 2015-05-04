@@ -100,7 +100,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     func reword(controller: UIViewController, memory: Memory) {
         self.callingViewController = controller
         rewordingMemory = memory
-        self.showDescriptionEntry()
+        self.showDescriptionEntry(memory.type)
         desciptionTextArea.text = memory.description
     }
     
@@ -112,7 +112,10 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         categoryModal.slideInFromLeft(self.callingViewController!.view)
     }
     
-    func showDescriptionEntry() {
+    func showDescriptionEntry(type: String) {
+        var message = descriptionModal.findElementByTag(1) as! UILabel
+        message.backgroundColor = CategoryController.getColorForCategory(type)
+        message.text = type
         descriptionModal.slideOutFromRight(self.callingViewController!.view)
         self.desciptionTextArea.becomeFirstResponder()
     }
@@ -137,9 +140,9 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         return true
     }
     
-    func addMemory(image: String) {
-        memoryImage = image
-        showDescriptionEntry()
+    func addMemory(type: String) {
+        memoryImage = type
+        showDescriptionEntry(type)
         hideCategorySelector()
     }
 
