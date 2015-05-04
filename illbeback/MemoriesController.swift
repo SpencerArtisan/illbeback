@@ -102,17 +102,24 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the callout
     func shareMemory(pin: MapPinView) {
         shareModal?.slideOutFromLeft(self.view)
+        var cancelButton = shareModal?.findElementByTag(2) as! UIButton
         var shareButton = shareModal?.findElementByTag(1) as! UIButton
         shareButton.setTitle(" " + user.getFriend(), forState: UIControlState.Normal)
         pinToShare = pin
         shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
+        cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
     }
     
     func shareMemoryConfirmed(sender: AnyObject?) {
         memoryAlbum.share(pinToShare!, from: user.getName(), to: user.getFriend())
         pinToShare = nil
-        shareModal?.slideInFromLeft(self.view)
         ((sender) as! UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
+    }
+    
+    func shareMemoryCancelled(sender: AnyObject?) {
+        pinToShare = nil
+        shareModal?.slideInFromLeft(self.view)
+        ((sender) as! UIButton).removeTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
     }
     
     // Callback for button on the callout
