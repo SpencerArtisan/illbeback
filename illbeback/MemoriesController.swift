@@ -18,6 +18,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var memoryAlbum: MemoryAlbum!
     let photoAlbum = PhotoAlbum()
     let addMemory = AddMemoryController()
+    let rememberController = RememberController()
     var shareModal: Modal?
     var pinToShare: MapPinView?
     var pinToRephoto: MapPinView?
@@ -32,6 +33,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         initMemories()
         camera = Camera(parentController: self, callback: {image in self.rephotoMemoryConfirmed(image)})
         self.shareModal = Modal(viewName: "ShareView", owner: self)
+    }
+    
+    @IBAction func takePhoto(sender: AnyObject) {
+        self.navigationController?.pushViewController(rememberController, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {

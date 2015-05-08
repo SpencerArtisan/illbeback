@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mDu-Dq-cTC">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Remember-->
@@ -41,14 +42,33 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="map" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-Di-Pbv">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SbP-CO-Ehi">
+                                <rect key="frame" x="531" y="526" width="53" height="54"/>
+                                <state key="normal" image="camera">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="takePhoto:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="tPm-NB-b6S"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="dG8-Di-Pbv" secondAttribute="bottom" id="1eN-H7-kJ3"/>
                             <constraint firstAttribute="trailing" secondItem="dG8-Di-Pbv" secondAttribute="trailing" id="9OA-Rd-N8G"/>
+                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="SbP-CO-Ehi" secondAttribute="bottom" constant="25" id="G3X-4G-uoo"/>
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="OYa-GC-pvf"/>
+                            <constraint firstItem="SbP-CO-Ehi" firstAttribute="trailing" secondItem="QS5-Rx-YEW" secondAttribute="trailingMargin" constant="80" id="Qdu-Nz-aXq"/>
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" id="Wok-zH-KRA"/>
+                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="SbP-CO-Ehi" secondAttribute="bottom" constant="20" id="hDa-Ye-eUe"/>
+                            <constraint firstItem="SbP-CO-Ehi" firstAttribute="trailing" secondItem="QS5-Rx-YEW" secondAttribute="trailingMargin" constant="-10" id="nZj-HI-kur"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="hDa-Ye-eUe"/>
+                                <exclude reference="Qdu-Nz-aXq"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Memories" image="globe" id="cPa-gy-q4n"/>
                     <navigationItem key="navigationItem" id="oTP-Ge-dDQ"/>
@@ -60,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="724" y="353"/>
+            <point key="canvasLocation" x="48" y="-613"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pAw-K4-xXf">
@@ -78,32 +98,9 @@
             </objects>
             <point key="canvasLocation" x="-792" y="-712"/>
         </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="yl2-sM-qoP">
-            <objects>
-                <tabBarController hidesBottomBarWhenPushed="YES" id="49e-Tb-3d3" sceneMemberID="viewController">
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
-                        <rect key="frame" x="0.0" y="975" width="768" height="49"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="mrh-ne-DSu"/>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="k9B-qa-AyC"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="20" y="-8"/>
-        </scene>
     </scenes>
     <resources>
         <image name="camera" width="26" height="26"/>
         <image name="globe" width="26" height="26"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="mJI-Om-CB3"/>
-    </inferredMetricsTieBreakers>
 </document>
