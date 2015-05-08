@@ -167,16 +167,16 @@
         </view>
     </objects>
     <resources>
-        <image name="Building" width="32" height="32"/>
+        <image name="Building" width="36" height="36"/>
         <image name="Cafe" width="36" height="36"/>
         <image name="Gallery" width="36" height="36"/>
-        <image name="Green Space" width="32" height="32"/>
-        <image name="Lavatory" width="36" height="36"/>
-        <image name="Museum" width="32" height="32"/>
+        <image name="Green Space" width="36" height="36"/>
+        <image name="Lavatory" width="80" height="76"/>
+        <image name="Museum" width="36" height="36"/>
         <image name="Other" width="24" height="24"/>
         <image name="Place to Stay" width="36" height="36"/>
-        <image name="Pub" width="32" height="32"/>
-        <image name="Restaurant" width="24" height="24"/>
-        <image name="Shop" width="48" height="48"/>
+        <image name="Pub" width="36" height="36"/>
+        <image name="Restaurant" width="36" height="36"/>
+        <image name="Shop" width="36" height="36"/>
     </resources>
 </document>

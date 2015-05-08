@@ -129,15 +129,15 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
-            var tabBarController = self.callingViewController!.parentViewController as! UITabBarController
-            var memories = tabBarController.childViewControllers[0] as! MemoriesController
+            var tabBarController = self.callingViewController!.navigationController
+            var memories = tabBarController!.childViewControllers[0] as! MemoriesController
             
             if (rewordingMemory != nil) {
                 rewordingMemory?.description = textView.text
                 memories.memoryAlbum.save()
             } else {
                 memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation)
-                tabBarController.selectedIndex = 0
+                tabBarController?.popToRootViewControllerAnimated(true)
             }
             descriptionModal.hide()
             self.desciptionTextArea.text = ""
