@@ -365,7 +365,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
             endingLineNumber = "24"
-            landmarkName = "setCoordinate(_:)"
+            landmarkName = "setCoordinate2(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -527,6 +527,20 @@
             endingLineNumber = "95"
             landmarkName = "read()"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbeback/MapPinView.swift"
+            timestampString = "452800698.717073"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

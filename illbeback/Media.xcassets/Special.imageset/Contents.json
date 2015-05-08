@@ -5,9 +5,15 @@
       "scale" : "1x"
     },
     {
+      "alignment-insets" : {
+        "top" : 150,
+        "left" : 0,
+        "bottom" : 0,
+        "right" : 0
+      },
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "FAQ-icon.png"
+      "filename" : "solid_color_white_flag.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",

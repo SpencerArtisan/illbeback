@@ -58,17 +58,17 @@ class MapPinView: MKAnnotationView {
     
     private func initImage() {
         var imageIcon = UIImage(named: memory!.type)!
+
+        var finalSize = CGSizeMake(imageIcon.size.width * 2, imageIcon.size.height * 2)
+        UIGraphicsBeginImageContext(finalSize)
+        imageIcon.drawInRect(CGRectMake(imageIcon.size.width, 10, imageIcon.size.width, imageIcon.size.height))
+        
         if (memory!.recentShare) {
             var imageHighlight = UIImage(named: "recent")!
-            var finalSize = CGSizeMake(imageIcon.size.width * 3, imageIcon.size.height * 3)
-            UIGraphicsBeginImageContext(finalSize)
-            imageIcon.drawInRect(CGRectMake(imageIcon.size.width, imageIcon.size.height, imageIcon.size.width, imageIcon.size.height))
             imageHighlight.drawInRect(CGRectMake(11, 11, imageHighlight.size.width, imageHighlight.size.height))
-            image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()            
-        } else {
-            image = imageIcon
         }
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
     }
     
     override init(frame: CGRect) {
