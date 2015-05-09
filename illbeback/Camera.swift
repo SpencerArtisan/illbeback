@@ -55,8 +55,23 @@ class Camera : NSObject {
     }
     
     func takePhoto(sender : UIButton!) {
+        let blackView = NSBundle.mainBundle().loadNibNamed("Black", owner: self, options: nil)[0] as? UIView
+        var screenRect = UIScreen.mainScreen().bounds
+        blackView!.frame = CGRectMake(0, 0, screenRect.size.width, screenRect.size.height)
+        self.parentController.view.addSubview(blackView!)
+        blackView!.layer.opacity = 0
+        
+        UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            blackView!.layer.opacity = 1
+            }, completion: {_ in
+                UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                    blackView!.layer.opacity = 0
+                    }, completion: {_ in
+                        blackView?.removeFromSuperview()
+                })
+        })
+
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
-            
             self.snapButton.removeFromSuperview()
             self.callback(image!)
             }, exactSeenImage: true)
