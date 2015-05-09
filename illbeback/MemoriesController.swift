@@ -18,7 +18,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var memoryAlbum: MemoryAlbum!
     let photoAlbum = PhotoAlbum()
     
-    let addMemory = AddMemoryController()
+    var addMemory: AddMemoryController!
     var rephotoController: RephotoController!
     var rememberController: RememberController!
     var shareModal: Modal?
@@ -32,6 +32,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         initMap()
         initMemories()
         self.shareModal = Modal(viewName: "ShareView", owner: self)
+        self.addMemory = AddMemoryController(album: photoAlbum)
         self.rephotoController = RephotoController(album: photoAlbum)
         self.rememberController = RememberController(album: photoAlbum)
     }
