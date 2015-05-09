@@ -17,14 +17,15 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var memoryImage: String?
     var memoryLocation: CLLocationCoordinate2D?
     var callingViewController: UIViewController?
-    let photoAlbum = PhotoAlbum()
+    var photoAlbum: PhotoAlbum?
     var rewordingMemory: Memory?
 
-    init() {
+    init(album: PhotoAlbum) {
         super.init(nibName: nil, bundle: nil)
         categoryModal = Modal(viewName: "CategoryView", owner: self)
         descriptionModal = Modal(viewName: "DescriptionView", owner: self)
         desciptionTextArea.delegate = self
+        photoAlbum = album
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -91,7 +92,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         self.memoryLocation = nil
         self.callingViewController = controller
         self.memoryId = NSUUID().UUIDString
-        self.photoAlbum.saveMemoryImage(image, memoryId: self.memoryId!)
+        self.photoAlbum!.saveMemoryImage(image, memoryId: self.memoryId!)
         self.showCategorySelector()
     }
    

@@ -45,6 +45,7 @@
 		97A3536B1A800EF500973CAC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97A3536A1A800EF500973CAC /* Media.xcassets */; };
 		97A3536D1A801CFA00973CAC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3536C1A801CFA00973CAC /* MapKit.framework */; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
+		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97F438171A991CEC00A33FD2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F438161A991CEC00A33FD2 /* Memory.swift */; };
 		97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FE667B1A99EB1E0007FC2C /* ShareView.xib */; };
 		97FE667E1A99FC220007FC2C /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667D1A99FC220007FC2C /* Modal.swift */; };
@@ -106,6 +107,7 @@
 		97A3536A1A800EF500973CAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		97A3536C1A801CFA00973CAC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
+		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97F438161A991CEC00A33FD2 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
 		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				97FE667B1A99EB1E0007FC2C /* ShareView.xib */,
 				97FE66831A9A50C60007FC2C /* MessageView.xib */,
 				979F850A1AA11B8600A11F7F /* Camera.swift */,
+				97EA3FFC1AFE078D005507BF /* RephotoController.swift */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				979F850B1AA11B8600A11F7F /* Camera.swift in Sources */,
 				97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */,
 				97A353491A800B9500973CAC /* AppDelegate.swift in Sources */,
+				97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */,
 				97FE66801A9A19570007FC2C /* User.swift in Sources */,
 				97A3534B1A800B9500973CAC /* RememberController.swift in Sources */,
 				976696ED1A8A9EF4004CB60D /* CategoryController.swift in Sources */,

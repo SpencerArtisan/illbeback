@@ -17,29 +17,42 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var here: CLLocation!
     var memoryAlbum: MemoryAlbum!
     let photoAlbum = PhotoAlbum()
+    
     let addMemory = AddMemoryController()
-    let rememberController = RememberController()
+    var rephotoController: RephotoController!
+    var rememberController: RememberController!
     var shareModal: Modal?
     var pinToShare: MapPinView?
-    var pinToRephoto: MapPinView?
     let user = User()
     var messageModals: [Modal] = []
-    var camera: Camera?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initLocationManager()
         initMap()
         initMemories()
-        camera = Camera(parentController: self, callback: {image in self.rephotoMemoryConfirmed(image)})
         self.shareModal = Modal(viewName: "ShareView", owner: self)
+        self.rephotoController = RephotoController(album: photoAlbum)
+        self.rememberController = RememberController(album: photoAlbum)
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
+        self.navigationController?.navigationBarHidden = false
         self.navigationController?.pushViewController(rememberController, animated: true)
     }
     
+    // Callback for button on the callout
+    func rephotoMemory(pin: MapPinView) {
+        if (self.navigationController?.topViewController != rephotoController) {
+            rephotoController.pinToRephoto = pin
+            self.navigationController?.navigationBarHidden = false
+            self.navigationController?.pushViewController(rephotoController!, animated: true)
+        }
+    }
+    
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+        
         memoryAlbum.downloadNewShares(user, callback: {memory in
             var messageModal = Modal(viewName: "MessageView", owner: self)
             var message = messageModal.findElementByTag(1) as! UIButton
@@ -126,18 +139,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         pinToShare = nil
         shareModal?.slideInFromLeft(self.view)
         ((sender) as! UIButton).removeTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
-    }
-    
-    // Callback for button on the callout
-    func rephotoMemory(pin: MapPinView) {
-        pinToRephoto = pin
-        camera!.start()
-    }
-
-    func rephotoMemoryConfirmed(photo: UIImage) {
-        camera!.stop()
-        photoAlbum.saveMemoryImage(photo, memoryId: pinToRephoto!.memory!.id)
-        pinToRephoto!.refreshAndReopen()
     }
     
     // Callback for button on the callout
