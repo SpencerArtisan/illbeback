@@ -57,7 +57,7 @@ class MapPinView: MKAnnotationView {
     }
     
     private func initImage() {
-        var imageIcon = UIImage(named: memory!.type)!
+        var imageIcon = UIImage(named: memory!.type + " Flag")!
 
         var finalSize = CGSizeMake(imageIcon.size.width + 10, imageIcon.size.height + 10)
         UIGraphicsBeginImageContext(finalSize)
