@@ -10,5 +10,35 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.MapPinView.hitTest (I_ll_Be_Back.MapPinView)(C.CGPoint, withEvent : Swift.Optional&lt;ObjectiveC.UIEvent&gt;) -&gt; Swift.Optional&lt;ObjectiveC.UIView&gt;:MapPinView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.selected">
+            </PersistentString>
+            <PersistentString
+               value = "elapsed">
+            </PersistentString>
+            <PersistentString
+               value = "event!.type">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.MemoriesController.zoomPicture (I_ll_Be_Back.MemoriesController)(I_ll_Be_Back.MapPinView) -&gt; ():MemoriesController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "zoomController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.MapPinView.(hitButton in _120B66E1E93D0B724A79960A6F797684) (I_ll_Be_Back.MapPinView)(C.CGPoint, button : Swift.Optional&lt;ObjectiveC.UIView&gt;) -&gt; Swift.Bool:MapPinView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "button!.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -5,6 +5,50 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Zoom Controller-->
+        <scene sceneID="QA9-eT-P6h">
+            <objects>
+                <viewController storyboardIdentifier="ZoomController" id="Gaz-V1-mFp" customClass="ZoomController" customModule="I_ll_Be_Back" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yGq-JV-ATp"/>
+                        <viewControllerLayoutGuide type="bottom" id="TGX-M0-3LJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="REs-7Y-bDO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pigeon" translatesAutoresizingMaskIntoConstraints="NO" id="egM-WL-ln4">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TGX-M0-3LJ" firstAttribute="top" secondItem="egM-WL-ln4" secondAttribute="bottom" id="9tN-mh-QIC"/>
+                            <constraint firstItem="TGX-M0-3LJ" firstAttribute="top" secondItem="egM-WL-ln4" secondAttribute="bottom" id="9ve-WM-DtS"/>
+                            <constraint firstAttribute="trailing" secondItem="egM-WL-ln4" secondAttribute="trailing" id="CHO-gS-7hu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="egM-WL-ln4" secondAttribute="trailing" id="JeF-Xo-TiJ"/>
+                            <constraint firstItem="egM-WL-ln4" firstAttribute="leading" secondItem="REs-7Y-bDO" secondAttribute="leadingMargin" id="ept-XE-2bT"/>
+                            <constraint firstItem="egM-WL-ln4" firstAttribute="leading" secondItem="REs-7Y-bDO" secondAttribute="leading" id="fdg-Z8-yon"/>
+                            <constraint firstItem="egM-WL-ln4" firstAttribute="top" secondItem="REs-7Y-bDO" secondAttribute="top" id="lyq-aa-Dgk"/>
+                            <constraint firstItem="egM-WL-ln4" firstAttribute="top" secondItem="REs-7Y-bDO" secondAttribute="topMargin" id="qsh-A6-FTJ"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="JeF-Xo-TiJ"/>
+                                <exclude reference="ept-XE-2bT"/>
+                                <exclude reference="qsh-A6-FTJ"/>
+                                <exclude reference="9tN-mh-QIC"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="photo" destination="egM-WL-ln4" id="jnj-bs-NBL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UK8-Jy-YeX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="776" y="-956"/>
+        </scene>
         <!--Remember-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
@@ -102,6 +146,7 @@
     </scenes>
     <resources>
         <image name="Circle" width="100" height="100"/>
+        <image name="Pigeon" width="800" height="613"/>
         <image name="camera" width="26" height="26"/>
         <image name="camerablue" width="52" height="52"/>
         <image name="globe" width="26" height="26"/>

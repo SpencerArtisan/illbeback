@@ -21,6 +21,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var addMemory: AddMemoryController!
     var rephotoController: RephotoController!
     var rememberController: RememberController!
+    var zoomController: ZoomController!
     var shareModal: Modal?
     var pinToShare: MapPinView?
     let user = User()
@@ -35,6 +36,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.addMemory = AddMemoryController(album: photoAlbum)
         self.rephotoController = RephotoController(album: photoAlbum)
         self.rememberController = RememberController(album: photoAlbum)
+        self.zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
@@ -48,6 +50,16 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             rephotoController.pinToRephoto = pin
             self.navigationController?.navigationBarHidden = false
             self.navigationController?.pushViewController(rephotoController!, animated: true)
+        }
+    }
+    
+    // Callback for button on the callout
+    func zoomPicture(pin: MapPinView) {
+        if (self.navigationController?.topViewController != zoomController) {
+            self.navigationController?.navigationBarHidden = false
+            let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
+            photoView.image = pin.photoView?.image
+            self.navigationController?.pushViewController(zoomController, animated: true)
         }
     }
     
@@ -150,7 +162,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         shareModal?.slideInFromLeft(self.view)
         ((sender) as! UIButton).removeTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
     }
-    
+
     // Callback for button on the callout
     func rewordMemory(pin: MapPinView) {
         map.deselectAnnotation(pin.annotation, animated: false)

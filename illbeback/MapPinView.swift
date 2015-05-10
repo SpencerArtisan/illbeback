@@ -193,6 +193,8 @@ class MapPinView: MKAnnotationView {
                 memoriesController?.rephotoMemory(self)
             } else if (hitButton(point, button: subtitleView)) {
                 memoriesController?.rewordMemory(self)
+            } else if (photoView != nil && hitPicture(point)) {
+                memoriesController?.zoomPicture(self)
             }
         }
         
@@ -208,5 +210,10 @@ class MapPinView: MKAnnotationView {
             }
         }
         return false
+    }
+
+    private func hitPicture(point: CGPoint) -> Bool {
+        var pt3 = self.convertPoint(point, toView: photoView)
+        return photoView!.frame.contains(pt3)
     }
 }
