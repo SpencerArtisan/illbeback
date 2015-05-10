@@ -20,8 +20,8 @@ class User {
         return name!
     }
     
-    func getFriend() -> String {
-        return friends![0]
+    func getFriends() -> [String] {
+        return friends!
     }
     
     private func read() {

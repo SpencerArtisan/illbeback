@@ -133,12 +133,27 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the callout
     func shareMemory(pin: MapPinView) {
         shareModal?.slideOutFromLeft(self.view)
-        var cancelButton = shareModal?.findElementByTag(2) as! UIButton
-        var shareButton = shareModal?.findElementByTag(1) as! UIButton
-        shareButton.setTitle(" " + user.getFriend(), forState: UIControlState.Normal)
-        pinToShare = pin
-        shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
+        var cancelButton = shareModal?.findElementByTag(1) as! UIButton
+        let friends: [String] = user.getFriends()
+        
+        var tag = 2
+        for friend in friends {
+            var shareButton = shareModal?.findElementByTag(tag++) as! UIButton
+            shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
+            shareButton.hidden = false
+            pinToShare = pin
+            shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
+        }
+        
         delay(1) { cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside) }
+    }
+    
+    func shareMemoryConfirmed(sender: AnyObject?) {
+        var friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        memoryAlbum.share(pinToShare!, from: user.getName(), to: friend!)
+        pinToShare = nil
+        shareModal?.slideInFromLeft(self.view)
+        ((sender) as! UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     
     func delay(delay:Double, closure:()->()) {
@@ -148,13 +163,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 Int64(delay * Double(NSEC_PER_SEC))
             ),
             dispatch_get_main_queue(), closure)
-    }
-    
-    func shareMemoryConfirmed(sender: AnyObject?) {
-        memoryAlbum.share(pinToShare!, from: user.getName(), to: user.getFriend())
-        pinToShare = nil
-        shareModal?.slideInFromLeft(self.view)
-        ((sender) as! UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     
     func shareMemoryCancelled(sender: AnyObject?) {
