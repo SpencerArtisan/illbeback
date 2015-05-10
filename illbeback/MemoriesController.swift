@@ -126,7 +126,16 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         shareButton.setTitle(" " + user.getFriend(), forState: UIControlState.Normal)
         pinToShare = pin
         shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
-        cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
+        delay(1) { cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside) }
+    }
+    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
     }
     
     func shareMemoryConfirmed(sender: AnyObject?) {
