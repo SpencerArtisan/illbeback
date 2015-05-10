@@ -47,6 +47,8 @@
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
+		97EA40011AFEA36B005507BF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97EA40001AFEA36B005507BF /* AVFoundation.framework */; };
+		97EA40031AFEB74C005507BF /* shutter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 97EA40021AFEB74C005507BF /* shutter.mp3 */; };
 		97F438171A991CEC00A33FD2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F438161A991CEC00A33FD2 /* Memory.swift */; };
 		97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FE667B1A99EB1E0007FC2C /* ShareView.xib */; };
 		97FE667E1A99FC220007FC2C /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667D1A99FC220007FC2C /* Modal.swift */; };
@@ -110,6 +112,8 @@
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
+		97EA40001AFEA36B005507BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		97EA40021AFEB74C005507BF /* shutter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shutter.mp3; sourceTree = "<group>"; };
 		97F438161A991CEC00A33FD2 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
 		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97EA40011AFEA36B005507BF /* AVFoundation.framework in Frameworks */,
 				9725CD421A98D2C60081C1B3 /* SystemConfiguration.framework in Frameworks */,
 				9725CD401A98D2BE0081C1B3 /* Security.framework in Frameworks */,
 				9725CD3E1A98D2AA0081C1B3 /* CFNetwork.framework in Frameworks */,
@@ -195,6 +200,7 @@
 		97A353451A800B9500973CAC /* illbeback */ = {
 			isa = PBXGroup;
 			children = (
+				97EA40021AFEB74C005507BF /* shutter.mp3 */,
 				9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */,
 				97A353481A800B9500973CAC /* AppDelegate.swift */,
 				97A3534A1A800B9500973CAC /* RememberController.swift */,
@@ -270,6 +276,7 @@
 		EECFAABBC43934F677B29798 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				97EA40001AFEA36B005507BF /* AVFoundation.framework */,
 				973ABB2A1A99048300564820 /* libPods-AWSCognitoSync.a */,
 				973ABB2B1A99048300564820 /* libPods-AWSiOSSDKv2.a */,
 				D8214AFD7360B795E86E35A6 /* libPods.a */,
@@ -363,6 +370,7 @@
 				9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */,
 				97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */,
 				972006A71A9140FB00B5E74C /* DescriptionView.xib in Resources */,
+				97EA40031AFEB74C005507BF /* shutter.mp3 in Resources */,
 				97FE66841A9A50C60007FC2C /* MessageView.xib in Resources */,
 				977222221AA2599B00D8C92A /* user.madeleine.plist in Resources */,
 				977222241AA259BA00D8C92A /* user.test.plist in Resources */,

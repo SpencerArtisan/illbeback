@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import AVFoundation
 
 class Camera : NSObject {
     var camera: LLSimpleCamera!
     var snapButton: UIButton!
     var parentController: UIViewController!
     var callback: (UIImage -> Void)
+    var snapPlayer: AVAudioPlayer!
     
     init(parentController: UIViewController, callback: (UIImage -> Void)) {
         self.parentController = parentController
@@ -20,6 +22,14 @@ class Camera : NSObject {
         super.init()
         createCamera()
         createSnapButton()
+        createSound()
+    }
+    
+    func createSound() {
+        let snapPath = NSBundle.mainBundle().pathForResource("shutter", ofType: "mp3")
+        let snapURL = NSURL(fileURLWithPath: snapPath!)
+        snapPlayer = AVAudioPlayer(contentsOfURL: snapURL, error: nil)
+        snapPlayer.prepareToPlay()
     }
     
     func start() {
@@ -55,16 +65,18 @@ class Camera : NSObject {
     }
     
     func takePhoto(sender : UIButton!) {
+        snapPlayer.play()
+        
         let blackView = NSBundle.mainBundle().loadNibNamed("Black", owner: self, options: nil)[0] as? UIView
         var screenRect = UIScreen.mainScreen().bounds
         blackView!.frame = CGRectMake(0, 0, screenRect.size.width, screenRect.size.height)
         self.parentController.view.addSubview(blackView!)
         blackView!.layer.opacity = 0
         
-        UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             blackView!.layer.opacity = 1
             }, completion: {_ in
-                UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                     blackView!.layer.opacity = 0
                     }, completion: {_ in
                         blackView?.removeFromSuperview()
