@@ -81,14 +81,25 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         var delaySeconds = 0.0
         
+        ensureUserKnown()
+        
         memoryAlbum.downloadNewShares(user, callback: {memory in
             var color = CategoryController.getColorForCategory(memory.type)
             var title = "New " + memory.type + " from " + memory.originator
             self.delay(delaySeconds) {
-                self.showMessage(title, color: color, time: 0.5)
+                self.showMessage(title, color: color, time: 3)
             }
-            delaySeconds += 0.6
+            delaySeconds += 4
         })
+    }
+    
+    private func ensureUserKnown() {
+        if (!user.hasName()) {
+            newUserLabel.text = "Your sharing name"
+            newUserText.becomeFirstResponder()
+            newUserText.text = ""
+            newUserModal?.slideOutFromRight(self.view)
+        }
     }
     
     private func showMessage(text: String, color: UIColor, time: Double) {
@@ -200,11 +211,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     func shareWithNewFriend(sender: AnyObject?) {
         hideShareModal(sender)
-        if (!user.hasName()) {
-            newUserLabel.text = "Your sharing name"
-        } else {
-            newUserLabel.text = "Your friend's name"
-        }
+        newUserLabel.text = "Your friend's name"
         newUserText.becomeFirstResponder()
         newUserText.text = ""
         newUserModal?.slideOutFromRight(self.view)
@@ -218,11 +225,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
             if (!user.hasName()) {
                 user.setName(textView.text)
-                delay(0.5) {
-                    self.newUserLabel.text = "Your friend's name"
-                    self.newUserText.text = ""
-                    self.newUserModal?.slideOutFromRight(self.view)
-                }
+                newUserText.resignFirstResponder()
             } else {
                 user.addFriend(textView.text)
                 newUserText.resignFirstResponder()
