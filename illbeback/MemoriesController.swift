@@ -179,18 +179,21 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             shareButton.hidden = false
             shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
             shareButton.enabled = false
-            delay(1) { shareButton.enabled = true }
+            delay(0.5) { shareButton.enabled = true }
         }
         
-        var shareButton = shareModal?.findElementByTag(2) as! UIButton
-        shareButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
-        shareButton.enabled = false
-        delay(1) { shareButton.enabled = true }
-        
+        var newFriendButton = shareModal?.findElementByTag(2) as! UIButton
+        if (friends.count > 7) {
+            newFriendButton.hidden = true
+        } else {
+            newFriendButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
+            newFriendButton.enabled = false
+            delay(0.5) { newFriendButton.enabled = true }
+        }
         var cancelButton = shareModal?.findElementByTag(1) as! UIButton
         cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
         cancelButton.enabled = false
-        delay(1) { cancelButton.enabled = true }
+        delay(0.5) { cancelButton.enabled = true }
     }
 
     func shareMemoryConfirmed(sender: AnyObject?) {
@@ -219,7 +222,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         newUserText.becomeFirstResponder()
         newUserText.text = ""
         newUserModal?.slideOutFromRight(self.view)
-        
+        var cancelButton2 = newUserModal?.findElementByTag(4) as! UIButton
+        cancelButton2.addTarget(self, action: "shareNewFriendCancelled:", forControlEvents: .TouchUpInside)
+        cancelButton2.enabled = false
+        delay(0.5) { cancelButton2.enabled = true }
     }
 
     // Callback for new friend dialogs
@@ -256,7 +262,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         shareModal?.slideInFromLeft(self.view)
         ((sender) as! UIButton).removeTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
     }
-
+    
+    func shareNewFriendCancelled(sender: AnyObject?) {
+        newUserText.resignFirstResponder()
+        pinToShare = nil
+        newUserModal?.slideInFromRight(self.view)
+        ((sender) as! UIButton).removeTarget(self, action: "shareNewFriendCancelled:", forControlEvents: .TouchUpInside)
+    }
+    
     // Callback for button on the callout
     func rewordMemory(pin: MapPinView) {
         map.deselectAnnotation(pin.annotation, animated: false)

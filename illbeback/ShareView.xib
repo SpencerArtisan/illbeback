@@ -10,12 +10,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IhT-Li-daa" userLabel="cancelButton">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <state key="normal">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
                 <button opaque="NO" alpha="0.80000001192092896" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2zN-RR-x0a" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="488" width="190" height="55"/>
                     <color key="backgroundColor" red="1" green="0.78074387577941451" blue="0.39200582806891271" alpha="1" colorSpace="calibratedRGB"/>
@@ -64,11 +58,47 @@
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bco-l7-O1z" userLabel="shareButton">
+                    <rect key="frame" x="0.0" y="160" width="190" height="55"/>
+                    <color key="backgroundColor" red="0.76231174997255213" green="0.82236426768282833" blue="0.225570150463833" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Someone" image="share">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eng-6d-bqH" userLabel="shareButton">
+                    <rect key="frame" x="0.0" y="105" width="190" height="55"/>
+                    <color key="backgroundColor" red="0.73552001420579372" green="0.79346196338989905" blue="0.21764240191697856" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Someone" image="share">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="10" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uar-4m-mfD" userLabel="shareButton">
+                    <rect key="frame" x="0.0" y="50" width="190" height="55"/>
+                    <color key="backgroundColor" red="0.6830338151268881" green="0.73684106692525253" blue="0.20211159077058113" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Someone" image="share">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IhT-Li-daa" userLabel="cancelButton">
+                    <rect key="frame" x="191" y="0.0" width="184" height="667"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <accessibility key="accessibilityConfiguration">
                 <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
             </accessibility>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="IhT-Li-daa" secondAttribute="trailing" id="1tR-7B-2Js"/>
+                <constraint firstAttribute="bottom" secondItem="IhT-Li-daa" secondAttribute="bottom" id="KLl-g6-7cz"/>
+                <constraint firstItem="IhT-Li-daa" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="trailing" constant="1" id="XZP-JH-I8N"/>
+                <constraint firstItem="IhT-Li-daa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lGq-a7-5Mh"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
         <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share With" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xaw-WS-bfR">
