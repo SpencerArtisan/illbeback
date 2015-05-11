@@ -79,22 +79,36 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
         
+        var delaySeconds = 0.0
+        
         memoryAlbum.downloadNewShares(user, callback: {memory in
-            var messageModal = Modal(viewName: "MessageView", owner: self)
-            var message = messageModal.findElementByTag(1) as! UIButton
-            message.backgroundColor = CategoryController.getColorForCategory(memory.type)
+            var color = CategoryController.getColorForCategory(memory.type)
             var title = "New " + memory.type + " from " + memory.originator
-            message.setTitle(title, forState: UIControlState.Normal)
-            messageModal.slideDownFromTop(self.view)
-            self.messageModals.append(messageModal)
-            message.addTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
+            self.delay(delaySeconds) {
+                self.showMessage(title, color: color, time: 0.5)
+            }
+            delaySeconds += 0.6
         })
+    }
+    
+    private func showMessage(text: String, color: UIColor, time: Double) {
+        var messageModal = Modal(viewName: "MessageView", owner: self)
+        var message = messageModal.findElementByTag(1) as! UIButton
+        message.backgroundColor = color
+        message.setTitle(text, forState: UIControlState.Normal)
+        messageModal.slideDownFromTop(self.view)
+        
+        delay(time) {
+            messageModal.slideUpFromTop(self.view)
+        }
+//        self.messageModals.append(messageModal)
+        //message.addTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
     }
 
     func dismissMessage(sender: AnyObject?) {
         var messageModal = messageModals.removeLast()
         messageModal.slideUpFromTop(self.view)
-        ((sender) as! UIButton).removeTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
+   //     ((sender) as! UIButton).removeTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
     }
 
     func initMemories() {
@@ -170,6 +184,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     func shareWith(friend: String) {
+        var memory = pinToShare?.memory
+        var color = CategoryController.getColorForCategory(memory!.type)
+        var title = "Shared " + memory!.type + " with " + friend
+        self.showMessage(title, color: color, time: 1.6)
+
         memoryAlbum.share(pinToShare!, from: user.getName(), to: friend)
         pinToShare = nil
     }
