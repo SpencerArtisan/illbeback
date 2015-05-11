@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextViewDelegate {
     
     @IBOutlet weak var map: MKMapView!
     var locationManager = CLLocationManager()
@@ -23,9 +23,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var rememberController: RememberController!
     var zoomController: ZoomController!
     var shareModal: Modal?
+    var newUserModal: Modal?
     var pinToShare: MapPinView?
     let user = User()
     var messageModals: [Modal] = []
+    var newUserLabel: UILabel!
+    var newUserText: UITextView!
+    
+    @IBOutlet weak var sharingName: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +38,18 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         initMap()
         initMemories()
         self.shareModal = Modal(viewName: "ShareView", owner: self)
+        self.newUserModal = Modal(viewName: "NewUser", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum)
         self.rephotoController = RephotoController(album: photoAlbum)
         self.rememberController = RememberController(album: photoAlbum)
         self.zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
+
+        self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
+        self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
+        self.newUserText.delegate = self
+        var shareButton = shareModal?.findElementByTag(2) as! UIButton
+        shareButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
+
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
@@ -136,7 +149,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         var cancelButton = shareModal?.findElementByTag(1) as! UIButton
         let friends: [String] = user.getFriends()
         
-        var tag = 2
+        var tag = 3
         for friend in friends {
             var shareButton = shareModal?.findElementByTag(tag++) as! UIButton
             shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
@@ -145,17 +158,63 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
         }
         
+        pinToShare = pin
+        
         delay(1) { cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside) }
     }
-    
+
     func shareMemoryConfirmed(sender: AnyObject?) {
         var friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        memoryAlbum.share(pinToShare!, from: user.getName(), to: friend!)
+        shareWith(friend!)
+        hideShareModal(sender)
+    }
+    
+    func shareWith(friend: String) {
+        memoryAlbum.share(pinToShare!, from: user.getName(), to: friend)
         pinToShare = nil
+    }
+
+    func hideShareModal(sender: AnyObject?) {
         shareModal?.slideInFromLeft(self.view)
         ((sender) as! UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     
+    func shareWithNewFriend(sender: AnyObject?) {
+        hideShareModal(sender)
+        if (!user.hasName()) {
+            newUserLabel.text = "Your sharing name"
+        } else {
+            newUserLabel.text = "Your friend's name"
+        }
+        newUserText.becomeFirstResponder()
+        newUserText.text = ""
+        newUserModal?.slideOutFromRight(self.view)
+        
+    }
+
+    // Callback for new friend dialogs
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            newUserModal?.slideInFromRight(self.view)
+
+            if (!user.hasName()) {
+                user.setName(textView.text)
+                delay(0.5) {
+                    self.newUserLabel.text = "Your friend's name"
+                    self.newUserText.text = ""
+                    self.newUserModal?.slideOutFromRight(self.view)
+                }
+            } else {
+                user.addFriend(textView.text)
+                newUserText.resignFirstResponder()
+                shareWith(textView.text)
+            }
+            
+            return false
+        }
+        return true
+    }
+
     func delay(delay:Double, closure:()->()) {
         dispatch_after(
             dispatch_time(

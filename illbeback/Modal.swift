@@ -32,7 +32,11 @@ class Modal {
     }
     
     func slideOutFromRight(parentView: UIView) {
-        slideHorizontally(parentView, start: 500, end: 190, hide: false)
+        slideHorizontally(parentView, start: 350, end: 0, hide: false)
+    }
+    
+    func slideInFromRight(parentView: UIView) {
+        slideHorizontally(parentView, start: 0, end: 350, hide: false)
     }
     
     func hide() {
