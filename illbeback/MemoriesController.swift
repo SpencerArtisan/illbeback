@@ -47,8 +47,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
         self.newUserText.delegate = self
-        var shareButton = shareModal?.findElementByTag(2) as! UIButton
-        shareButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
 
     }
     
@@ -171,21 +169,28 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the callout
     func shareMemory(pin: MapPinView) {
         shareModal?.slideOutFromLeft(self.view)
-        var cancelButton = shareModal?.findElementByTag(1) as! UIButton
-        let friends: [String] = user.getFriends()
-        
+        pinToShare = pin
+
         var tag = 3
+        let friends: [String] = user.getFriends()
         for friend in friends {
             var shareButton = shareModal?.findElementByTag(tag++) as! UIButton
             shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
             shareButton.hidden = false
-            pinToShare = pin
             shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
+            shareButton.enabled = false
+            delay(1) { shareButton.enabled = true }
         }
         
-        pinToShare = pin
+        var shareButton = shareModal?.findElementByTag(2) as! UIButton
+        shareButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
+        shareButton.enabled = false
+        delay(1) { shareButton.enabled = true }
         
-        delay(1) { cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside) }
+        var cancelButton = shareModal?.findElementByTag(1) as! UIButton
+        cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
+        cancelButton.enabled = false
+        delay(1) { cancelButton.enabled = true }
     }
 
     func shareMemoryConfirmed(sender: AnyObject?) {
@@ -206,7 +211,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     func hideShareModal(sender: AnyObject?) {
         shareModal?.slideInFromLeft(self.view)
-        ((sender) as! UIButton).removeTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
     }
     
     func shareWithNewFriend(sender: AnyObject?) {
@@ -220,7 +224,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     // Callback for new friend dialogs
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if (text == "\n") {
+        textView.text = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        if (text == "\n" && !textView.text.isEmpty) {
             newUserModal?.slideInFromRight(self.view)
 
             if (!user.hasName()) {
