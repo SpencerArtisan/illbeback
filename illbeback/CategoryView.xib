@@ -10,15 +10,6 @@
             <rect key="frame" x="0.0" y="44" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fH0-yM-HH7" userLabel="CancelButton">
-                    <rect key="frame" x="8" y="-482" width="375" height="667"/>
-                    <state key="normal">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Qvg-Is-aZb"/>
-                    </connections>
-                </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1L-X8-nGW" userLabel="Building">
                     <rect key="frame" x="0.0" y="279" width="200" height="52"/>
                     <color key="backgroundColor" red="1" green="0.38890279526450566" blue="0.18216047122284396" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
@@ -140,11 +131,21 @@
                         <action selector="addLavatory:" destination="-1" eventType="touchUpInside" id="Qhr-Po-FBf"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fH0-yM-HH7" userLabel="CancelButton">
+                    <rect key="frame" x="196" y="0.0" width="375" height="667"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Qvg-Is-aZb"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="vgz-lx-Twq" secondAttribute="leading" id="2Zr-Wc-ohy"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="jTq-yu-by9" secondAttribute="leading" id="5Vv-1x-8AS"/>
+                <constraint firstItem="fH0-yM-HH7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="200" id="5oS-j7-WKH"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="csP-yr-z0N" secondAttribute="leading" id="6Qd-gx-Bfo"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="h1L-X8-nGW" secondAttribute="leading" id="8NE-os-ZRH"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="FMX-RE-75q" secondAttribute="leading" id="9ce-UQ-7Km"/>
@@ -154,9 +155,12 @@
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="jTq-yu-by9" secondAttribute="leading" id="IKK-cl-XrA"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="deg-wH-DNs" secondAttribute="leading" id="LNN-bR-q3F"/>
                 <constraint firstItem="FMX-RE-75q" firstAttribute="leading" secondItem="h1L-X8-nGW" secondAttribute="leading" id="Nba-SR-wn8"/>
+                <constraint firstItem="fH0-yM-HH7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="PYO-NS-WPI"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="csP-yr-z0N" secondAttribute="leading" id="Qap-Xc-efA"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="h1L-X8-nGW" secondAttribute="leading" id="bWt-qP-FVG"/>
+                <constraint firstAttribute="bottom" secondItem="fH0-yM-HH7" secondAttribute="bottom" id="fpZ-t4-X4L"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="Bjw-PU-4Mq" secondAttribute="leading" id="oBQ-ut-Emi"/>
+                <constraint firstAttribute="trailing" secondItem="fH0-yM-HH7" secondAttribute="trailing" constant="-196" id="rhY-wO-4W8"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="9rr-PK-Bmf" secondAttribute="leading" id="vQ0-mA-Zff"/>
                 <constraint firstItem="WEk-T8-Qv1" firstAttribute="leading" secondItem="vgz-lx-Twq" secondAttribute="leading" id="wzC-lY-IQ4"/>
             </constraints>

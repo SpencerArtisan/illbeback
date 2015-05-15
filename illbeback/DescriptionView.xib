@@ -15,11 +15,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.84999999999999998" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="R7H-Px-uXL">
-                    <rect key="frame" x="115" y="117" width="260" height="126"/>
+                    <rect key="frame" x="115" y="117" width="260" height="241"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="190" id="E4g-bw-7Qk"/>
-                        <constraint firstAttribute="height" constant="126" id="xHY-vd-IjM"/>
+                        <constraint firstAttribute="width" constant="260" id="E4g-bw-7Qk"/>
+                        <constraint firstAttribute="height" constant="200" id="xHY-vd-IjM"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
@@ -29,7 +29,7 @@
                     <color key="backgroundColor" red="0.75695591575960042" green="0.83684790859501379" blue="0.90092378854751587" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="F2f-5n-xow"/>
-                        <constraint firstAttribute="width" constant="190" id="gjx-Pm-nv3"/>
+                        <constraint firstAttribute="width" constant="260" id="gjx-Pm-nv3"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

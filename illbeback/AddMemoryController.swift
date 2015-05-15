@@ -83,8 +83,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     
     @IBAction func cancel(sender: AnyObject) {
         hideCategorySelector()
-        var tabBarController = self.callingViewController!.parentViewController as! UITabBarController
-        tabBarController.selectedIndex = 0
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func add(controller: UIViewController, image: UIImage) {
