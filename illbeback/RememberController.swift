@@ -33,6 +33,7 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         camera!.stop()
+        addMemory?.viewWillDisappear(animated)
     }
 }
 

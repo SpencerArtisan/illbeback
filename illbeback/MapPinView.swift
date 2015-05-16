@@ -65,7 +65,7 @@ class MapPinView: MKAnnotationView {
         
         if (memory!.recentShare) {
             var imageHighlight = UIImage(named: "recent")!
-            imageHighlight.drawInRect(CGRectMake(22, 0, imageHighlight.size.width, imageHighlight.size.height))
+            imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
         }
         image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

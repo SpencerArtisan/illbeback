@@ -36,6 +36,9 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.desciptionTextArea.resignFirstResponder()
+    }
 
     @IBAction func addCafe(sender: AnyObject) {
         addMemory("Cafe")
