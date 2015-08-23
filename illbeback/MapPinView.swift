@@ -12,8 +12,8 @@ import MapKit
 class MapPinView: MKAnnotationView {
     let WIDTH: CGFloat = 320.0
     let HEIGHT: CGFloat = 280.0
-    let WIDTH_WITHOUT_PHOTO: CGFloat = 130.0
-    let HEIGHT_WITHOUT_PHOTO: CGFloat = 160.0
+    let WIDTH_WITHOUT_PHOTO: CGFloat = 170.0
+    let HEIGHT_WITHOUT_PHOTO: CGFloat = 220.0
     
     var hitOutside: Bool = true
     var memoriesController:MemoriesController?
@@ -25,6 +25,7 @@ class MapPinView: MKAnnotationView {
     var imageUrl: String?
     var photoView: UIImageView?
     var titleView: UILabel?
+    var originatorView: UILabel?
     var labelView: UIView?
     var subtitleView: UILabel?
     var labelAreaWidth: CGFloat?
@@ -90,6 +91,7 @@ class MapPinView: MKAnnotationView {
             
             createSubtitleLabel()
             createTitleLabel()
+            createOriginatorLabel()
             createDeleteButton()
             createPhotoButton()
             createShareButton()
@@ -103,6 +105,7 @@ class MapPinView: MKAnnotationView {
         labelView = UIView(frame: CGRectMake(labelAreaLeft!, 0, labelAreaWidth!, labelAreaHeight!))
         labelView!.backgroundColor = UIColor.whiteColor()
         labelView!.addSubview(titleView!)
+        labelView!.addSubview(originatorView!)
         labelView!.addSubview(subtitleView!)
         labelView!.addSubview(deleteButton!)
         labelView!.addSubview(photoButton!)
@@ -114,8 +117,8 @@ class MapPinView: MKAnnotationView {
         self.calloutView?.frame = CGRectMake(-calloutWidth!/2 + 15, -labelAreaHeight! - 10, calloutWidth!, labelAreaHeight!)
         self.calloutView?.backgroundColor = UIColor.whiteColor()
         self.calloutView?.layer.cornerRadius = 10
-        if (photoView != nil) { self.calloutView?.addSubview(photoView!) }
         self.calloutView?.addSubview(labelView!)
+        if (photoView != nil) { self.calloutView?.addSubview(photoView!) }
         self.calloutView?.clipsToBounds = true
         self.calloutView?.layer.borderWidth = 1.0
         self.calloutView?.layer.borderColor = UIColor.grayColor().CGColor
@@ -143,7 +146,7 @@ class MapPinView: MKAnnotationView {
     func createPhotoView() {
         if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return }
         var photo = UIImage(contentsOfFile: imageUrl!)
-        photoView = UIImageView(frame: CGRectMake(0, 0, WIDTH/2 + 10, HEIGHT))
+        photoView = UIImageView(frame: CGRectMake(0, 0, WIDTH/2 + 1, HEIGHT))
         photoView!.image = photo
     }
     
@@ -157,8 +160,20 @@ class MapPinView: MKAnnotationView {
         titleView!.backgroundColor = CategoryController.getColorForCategory(memory!.type)
     }
     
+    func createOriginatorLabel() {
+        originatorView = UILabel(frame: CGRectMake(0, 40, labelAreaWidth!, 25))
+        originatorView!.layer.cornerRadius = 0
+        originatorView!.numberOfLines = 0
+        originatorView!.textAlignment = NSTextAlignment.Center
+        originatorView!.font = UIFont.italicSystemFontOfSize(14)
+        originatorView!.text = "from " + memory!.originator
+        originatorView!.backgroundColor = CategoryController.getColorForCategory(memory!.type).colorWithAlphaComponent(0.3)
+        originatorView!.layer.borderWidth = 0.5
+        originatorView!.layer.borderColor = UIColor.lightGrayColor().CGColor
+    }
+    
     func createSubtitleLabel() {
-        subtitleView = UILabel(frame: CGRectMake(10, 40, labelAreaWidth! - 20, labelAreaHeight! - 70))
+        subtitleView = UILabel(frame: CGRectMake(10, 65, labelAreaWidth! - 20, labelAreaHeight! - 90))
         subtitleView!.backgroundColor = UIColor.whiteColor()
         subtitleView!.layer.cornerRadius = 0
         subtitleView!.numberOfLines = 0

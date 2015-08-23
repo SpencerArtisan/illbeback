@@ -35,5 +35,6 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
         camera!.stop()
         addMemory?.viewWillDisappear(animated)
     }
+    
 }
 
