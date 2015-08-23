@@ -10,13 +10,12 @@ import Foundation
 import CoreLocation
 
 public class Memory {
-    private let DEFAULT_ORIGINATOR = "Spencer"
     var type: String
     var id: String
     var description: String
     var location: CLLocationCoordinate2D
     var originator: String
-    var recentShare = false
+    var recentShare: Bool
     
     init(id: String, type: String, description: String, location: CLLocationCoordinate2D, user: User) {
         self.id = id
@@ -24,6 +23,7 @@ public class Memory {
         self.description = description
         self.location = location
         self.originator = user.getName()
+        self.recentShare = false
     }
     
     init(memoryString: String) {
@@ -34,11 +34,13 @@ public class Memory {
         let lat = parts[2]
         let long = parts[3]
         self.location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
-        self.originator = parts.count > 5 ? parts[5] : DEFAULT_ORIGINATOR
+        self.originator = parts[5]
+        self.recentShare = parts.count > 6 ? (parts[6] == "T") : false
     }
     
     func asString() -> String {
-        return "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator)"
+        var recentShareChar = recentShare ? "T" : "F"
+        return "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(recentShareChar)"
     }
     
     func asMapPin() -> MapPin {

@@ -164,9 +164,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     // Callback for button on the callout
-    func updatePin(pin: MapPinView) {
+    func updateMemory(pin: MapPinView) {
         map!.removeAnnotation(pin.annotation)
         map!.addAnnotation(pin.memory?.asMapPin())
+        memoryAlbum.save()
     }
     
     // Callback for button on the callout
