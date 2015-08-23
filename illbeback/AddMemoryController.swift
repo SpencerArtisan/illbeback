@@ -84,6 +84,10 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         addMemory("Place to Stay")
     }
     
+    @IBAction func addRemembrance(sender: AnyObject) {
+        addMemory("Memory")
+    }
+    
     @IBAction func cancel(sender: AnyObject) {
         hideCategorySelector()
         self.navigationController?.popToRootViewControllerAnimated(true)
