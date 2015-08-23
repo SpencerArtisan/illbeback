@@ -55,6 +55,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.navigationController?.pushViewController(rememberController, animated: true)
     }
     
+    
+    @IBAction func currentLocation(sender: AnyObject) {
+        self.map.setCenterCoordinate(here.coordinate, animated: true)
+    }
+    
+    
     // Callback for button on the callout
     func rephotoMemory(pin: MapPinView) {
         if (self.navigationController?.topViewController != rephotoController) {

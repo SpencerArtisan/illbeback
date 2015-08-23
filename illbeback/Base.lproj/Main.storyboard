@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mDu-Dq-cTC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mDu-Dq-cTC">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -87,13 +87,22 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
                             <button contentMode="scaleToFill" misplaced="YES" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SbP-CO-Ehi">
-                                <rect key="frame" x="531" y="526" width="53" height="54"/>
+                                <rect key="frame" x="531" y="526" width="54" height="54"/>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="camerablue" backgroundImage="Circle">
                                     <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="takePhoto:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="tPm-NB-b6S"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HH0-zd-1ZB">
+                                <rect key="frame" x="57" y="526" width="54" height="54"/>
+                                <state key="normal" image="here" backgroundImage="Circle">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="currentLocation:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Qhp-Vk-Qfc"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -105,7 +114,9 @@
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="OYa-GC-pvf"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="trailing" secondItem="QS5-Rx-YEW" secondAttribute="trailingMargin" constant="80" id="Qdu-Nz-aXq"/>
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" id="Wok-zH-KRA"/>
+                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="HH0-zd-1ZB" secondAttribute="bottom" constant="10" id="XQX-kq-D2j"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="SbP-CO-Ehi" secondAttribute="bottom" constant="20" id="hDa-Ye-eUe"/>
+                            <constraint firstItem="HH0-zd-1ZB" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="5" id="m0Q-f7-ydZ"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="trailing" secondItem="QS5-Rx-YEW" secondAttribute="trailingMargin" id="nZj-HI-kur"/>
                         </constraints>
                         <variation key="default">
@@ -145,10 +156,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Circle" width="100" height="100"/>
+        <image name="Circle" width="50" height="50"/>
         <image name="Pigeon" width="800" height="613"/>
         <image name="camera" width="26" height="26"/>
-        <image name="camerablue" width="52" height="52"/>
+        <image name="camerablue" width="26" height="26"/>
         <image name="globe" width="26" height="26"/>
+        <image name="here" width="29" height="29"/>
     </resources>
 </document>
