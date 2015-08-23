@@ -58,7 +58,7 @@
                     <rect key="frame" x="0.0" y="283" width="200" height="52"/>
                     <color key="backgroundColor" red="0.63914991258741261" green="0.76124847889860148" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Gallery" image="Gallery">
+                    <state key="normal" title=" Music Venue" image="Music Venue">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -113,7 +113,7 @@
                     <rect key="frame" x="0.0" y="335" width="200" height="52"/>
                     <color key="backgroundColor" red="0.83549939966722453" green="0.8904869002525253" blue="0.7817007205342148" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Museum" image="Museum">
+                    <state key="normal" title=" Arts Venue" image="Arts Venue">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -182,13 +182,13 @@
         </view>
     </objects>
     <resources>
+        <image name="Arts Venue" width="32" height="32"/>
         <image name="Building" width="32" height="32"/>
-        <image name="Cafe" width="32" height="32"/>
-        <image name="Gallery" width="32" height="32"/>
+        <image name="Cafe" width="33" height="33"/>
         <image name="Green Space" width="32" height="32"/>
         <image name="Lavatory" width="32" height="32"/>
         <image name="Memory" width="33" height="33"/>
-        <image name="Museum" width="32" height="32"/>
+        <image name="Music Venue" width="33" height="33"/>
         <image name="Place to Stay" width="32" height="32"/>
         <image name="Pub" width="32" height="32"/>
         <image name="Restaurant" width="32" height="32"/>

@@ -36,6 +36,11 @@ public class Memory {
         self.location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
         self.originator = parts[5]
         self.recentShare = parts.count > 6 ? (parts[6] == "T") : false
+        
+        if (type == "Museum" || type == "Gallery") {
+            type = "Arts Venue"
+        }
+        
     }
     
     func asString() -> String {

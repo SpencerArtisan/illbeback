@@ -59,7 +59,7 @@ class MapPinView: MKAnnotationView {
         calloutView = nil
     }
     
-    private func initImage() {
+    private func initImage() {   
         var imageIcon = UIImage(named: memory!.type + " Flag")!
 
         var finalSize = CGSizeMake(imageIcon.size.width + 10, imageIcon.size.height + 10)
@@ -199,8 +199,8 @@ class MapPinView: MKAnnotationView {
         acceptButton!.font = acceptButton!.font.fontWithSize(20)
         acceptButton!.text = "Accept"
         acceptButton!.backgroundColor = UIColor.greenColor()
-        acceptButton!.layer.borderWidth = 0.5
-        acceptButton!.layer.borderColor = UIColor.lightGrayColor().CGColor
+        acceptButton!.layer.borderWidth = 1
+        acceptButton!.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     func createDeclineButton() {
@@ -211,8 +211,8 @@ class MapPinView: MKAnnotationView {
         declineButton!.font = declineButton!.font.fontWithSize(20)
         declineButton!.text = "Decline"
         declineButton!.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
-        declineButton!.layer.borderWidth = 0.5
-        declineButton!.layer.borderColor = UIColor.lightGrayColor().CGColor
+        declineButton!.layer.borderWidth = 1
+        declineButton!.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
