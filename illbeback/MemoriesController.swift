@@ -110,14 +110,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         delay(time) {
             messageModal.slideUpFromTop(self.view)
         }
-//        self.messageModals.append(messageModal)
-        //message.addTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
     }
 
     func dismissMessage(sender: AnyObject?) {
         var messageModal = messageModals.removeLast()
         messageModal.slideUpFromTop(self.view)
-   //     ((sender) as! UIButton).removeTarget(self, action: "dismissMessage:", forControlEvents: .TouchUpInside)
     }
 
     func initMemories() {
@@ -164,6 +161,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the callout
     func deleteMemory(pin: MapPinView) {
         memoryAlbum.delete(pin)
+    }
+
+    // Callback for button on the callout
+    func updatePin(pin: MapPinView) {
+        map!.removeAnnotation(pin.annotation)
+        map!.addAnnotation(pin.memory?.asMapPin())
     }
     
     // Callback for button on the callout

@@ -26,6 +26,8 @@ class MapPinView: MKAnnotationView {
     var photoView: UIImageView?
     var titleView: UILabel?
     var originatorView: UILabel?
+    var acceptButton: UILabel?
+    var declineButton: UILabel?
     var labelView: UIView?
     var subtitleView: UILabel?
     var labelAreaWidth: CGFloat?
@@ -95,6 +97,8 @@ class MapPinView: MKAnnotationView {
             createDeleteButton()
             createPhotoButton()
             createShareButton()
+            createAcceptButton()
+            createDeclineButton()
             createLabelView()
             createCalloutView()
         }
@@ -107,9 +111,15 @@ class MapPinView: MKAnnotationView {
         labelView!.addSubview(titleView!)
         labelView!.addSubview(originatorView!)
         labelView!.addSubview(subtitleView!)
-        labelView!.addSubview(deleteButton!)
-        labelView!.addSubview(photoButton!)
-        labelView!.addSubview(shareButton!)
+        
+        if (memory!.recentShare) {
+            labelView?.addSubview(acceptButton!)
+            labelView?.addSubview(declineButton!)
+        } else {
+            labelView!.addSubview(deleteButton!)
+            labelView!.addSubview(photoButton!)
+            labelView!.addSubview(shareButton!)
+        }
     }
     
     func createCalloutView() {
@@ -173,12 +183,36 @@ class MapPinView: MKAnnotationView {
     }
     
     func createSubtitleLabel() {
-        subtitleView = UILabel(frame: CGRectMake(10, 65, labelAreaWidth! - 20, labelAreaHeight! - 90))
+        subtitleView = UILabel(frame: CGRectMake(10, 65, labelAreaWidth! - 20, labelAreaHeight! - 100))
         subtitleView!.backgroundColor = UIColor.whiteColor()
         subtitleView!.layer.cornerRadius = 0
         subtitleView!.numberOfLines = 0
         subtitleView!.textAlignment = NSTextAlignment.Center
         subtitleView!.text = memory!.description.isEmpty ? "No description provided" : memory!.description
+    }
+    
+    func createAcceptButton() {
+        acceptButton = UILabel(frame: CGRectMake(0, labelAreaHeight! - 40, labelAreaWidth! / 2, 40))
+        acceptButton!.layer.cornerRadius = 0
+        acceptButton!.numberOfLines = 0
+        acceptButton!.textAlignment = NSTextAlignment.Center
+        acceptButton!.font = acceptButton!.font.fontWithSize(20)
+        acceptButton!.text = "Accept"
+        acceptButton!.backgroundColor = UIColor.greenColor()
+        acceptButton!.layer.borderWidth = 0.5
+        acceptButton!.layer.borderColor = UIColor.lightGrayColor().CGColor
+    }
+    
+    func createDeclineButton() {
+        declineButton = UILabel(frame: CGRectMake(labelAreaWidth! / 2, labelAreaHeight! - 40, labelAreaWidth! / 2, 40))
+        declineButton!.layer.cornerRadius = 0
+        declineButton!.numberOfLines = 0
+        declineButton!.textAlignment = NSTextAlignment.Center
+        declineButton!.font = declineButton!.font.fontWithSize(20)
+        declineButton!.text = "Decline"
+        declineButton!.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
+        declineButton!.layer.borderWidth = 0.5
+        declineButton!.layer.borderColor = UIColor.lightGrayColor().CGColor
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -200,7 +234,12 @@ class MapPinView: MKAnnotationView {
         var elapsed = system - event!.timestamp
         if (elapsed < 0.1 && labelView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
             hitView = calloutView!.hitTest(point, withEvent: event)
-            if (hitButton(point, button: deleteButton)) {
+            if (memory!.recentShare && hitButton(point, button: acceptButton)) {
+                memory!.recentShare = false;
+                memoriesController?.updatePin(self)
+            } else if (memory!.recentShare && hitButton(point, button: declineButton)) {
+                memoriesController?.deleteMemory(self)
+            } else if (hitButton(point, button: deleteButton)) {
                 memoriesController?.deleteMemory(self)
             } else if (hitButton(point, button: shareButton)) {
                 memoriesController?.shareMemory(self)
