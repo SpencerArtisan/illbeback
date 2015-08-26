@@ -11,7 +11,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1L-X8-nGW" userLabel="Building">
-                    <rect key="frame" x="0.0" y="231" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="253" width="200" height="46"/>
                     <color key="backgroundColor" red="1" green="0.38890279526450566" blue="0.18216047122284396" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Building" image="Building">
@@ -22,7 +22,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FMX-RE-75q">
-                    <rect key="frame" x="0.0" y="75" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="115" width="200" height="46"/>
                     <color key="backgroundColor" red="0.94185273981678208" green="1" blue="0.34112612267342662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Restaurant" image="Restaurant">
@@ -33,10 +33,10 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEk-T8-Qv1">
-                    <rect key="frame" x="0.0" y="23" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="69" width="200" height="46"/>
                     <color key="backgroundColor" red="0.92824264747684659" green="0.94255050505050508" blue="0.61861419747540469" alpha="0.64000000000000001" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Pub" image="Pub">
+                    <state key="normal" title=" Bar" image="Pub">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -44,7 +44,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rr-PK-Bmf">
-                    <rect key="frame" x="0.0" y="179" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="207" width="200" height="46"/>
                     <color key="backgroundColor" red="0.73972559142961158" green="0.87369687084578995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Shop" image="Shop">
@@ -55,18 +55,18 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTq-yu-by9">
-                    <rect key="frame" x="0.0" y="283" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="299" width="200" height="46"/>
                     <color key="backgroundColor" red="0.63914991258741261" green="0.76124847889860148" blue="0.66111082547062938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Music Venue" image="Music Venue">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
-                        <action selector="addGallery:" destination="-1" eventType="touchUpInside" id="1Gw-PA-W7m"/>
+                        <action selector="addMusicVenue:" destination="-1" eventType="touchUpInside" id="eB1-ZL-HsK"/>
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csP-yr-z0N">
-                    <rect key="frame" x="0.0" y="127" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="161" width="200" height="46"/>
                     <color key="backgroundColor" red="0.74066720659999996" green="0.58560970279720281" blue="0.28788639365244756" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Cafe" image="Cafe">
@@ -77,7 +77,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deg-wH-DNs">
-                    <rect key="frame" x="0.0" y="387" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="436" width="200" height="46"/>
                     <color key="backgroundColor" red="0.74066720659999996" green="0.92156862750000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Green Space" image="Green Space">
@@ -88,7 +88,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bjw-PU-4Mq">
-                    <rect key="frame" x="0.0" y="439" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="482" width="200" height="46"/>
                     <color key="backgroundColor" red="0.8904869002525253" green="0.85335239158089438" blue="0.62687988151936602" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Place to Stay" image="Place to Stay">
@@ -98,30 +98,19 @@
                         <action selector="addPlaceToStay:" destination="-1" eventType="touchUpInside" id="OPX-ih-VBF"/>
                     </connections>
                 </button>
-                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgz-lx-Twq">
-                    <rect key="frame" x="0.0" y="595" width="200" height="52"/>
-                    <color key="backgroundColor" red="0.76113546304516555" green="1" blue="0.63466213477096978" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Special" image="Special">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="addSpecial:" destination="-1" eventType="touchUpInside" id="7i3-wS-Rjo"/>
-                    </connections>
-                </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGc-28-hqA">
-                    <rect key="frame" x="0.0" y="335" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="345" width="200" height="46"/>
                     <color key="backgroundColor" red="0.83549939966722453" green="0.8904869002525253" blue="0.7817007205342148" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Arts Venue" image="Arts Venue">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
-                        <action selector="addMuseum:" destination="-1" eventType="touchUpInside" id="KN0-zd-gFz"/>
+                        <action selector="addArtsVenue:" destination="-1" eventType="touchUpInside" id="4GK-md-2bB"/>
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uzj-Gy-OPg">
-                    <rect key="frame" x="0.0" y="491" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="528" width="200" height="46"/>
                     <color key="backgroundColor" red="0.98581518310000005" green="0.60815038480000005" blue="0.71095249419999995" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Lavatory" image="Lavatory">
@@ -131,8 +120,8 @@
                         <action selector="addLavatory:" destination="-1" eventType="touchUpInside" id="Qhr-Po-FBf"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fH0-yM-HH7" userLabel="CancelButton">
-                    <rect key="frame" x="170" y="0.0" width="304" height="742"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fH0-yM-HH7" userLabel="CancelButton">
+                    <rect key="frame" x="199" y="0.0" width="304" height="742"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -140,8 +129,19 @@
                         <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Qvg-Is-aZb"/>
                     </connections>
                 </button>
+                <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n2n-pM-wkL">
+                    <rect key="frame" x="0.0" y="620" width="200" height="46"/>
+                    <color key="backgroundColor" red="0.76113546300000001" green="1" blue="0.6346621348" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Special" image="Special">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="addSpecial:" destination="-1" eventType="touchUpInside" id="94g-ns-Vdh"/>
+                    </connections>
+                </button>
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fM2-tK-eUr">
-                    <rect key="frame" x="0.0" y="543" width="200" height="52"/>
+                    <rect key="frame" x="0.0" y="574" width="200" height="46"/>
                     <color key="backgroundColor" red="0.84503235479797978" green="0.80571995031342347" blue="0.78475396663397656" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Memory" image="Memory">
@@ -149,6 +149,17 @@
                     </state>
                     <connections>
                         <action selector="addRemembrance:" destination="-1" eventType="touchUpInside" id="Vwe-t1-sx9"/>
+                    </connections>
+                </button>
+                <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgz-lx-Twq">
+                    <rect key="frame" x="0.0" y="390" width="200" height="46"/>
+                    <color key="backgroundColor" red="1" green="0.64427973172539699" blue="0.26487610913178083" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <state key="normal" title=" Museum" image="Museum">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="addMuseum:" destination="-1" eventType="touchUpInside" id="nxf-Ll-MwD"/>
                     </connections>
                 </button>
             </subviews>
@@ -182,12 +193,13 @@
         </view>
     </objects>
     <resources>
-        <image name="Arts Venue" width="32" height="32"/>
+        <image name="Arts Venue" width="33" height="33"/>
         <image name="Building" width="32" height="32"/>
         <image name="Cafe" width="33" height="33"/>
         <image name="Green Space" width="32" height="32"/>
         <image name="Lavatory" width="32" height="32"/>
         <image name="Memory" width="33" height="33"/>
+        <image name="Museum" width="32" height="32"/>
         <image name="Music Venue" width="33" height="33"/>
         <image name="Place to Stay" width="32" height="32"/>
         <image name="Pub" width="32" height="32"/>

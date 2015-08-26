@@ -10,10 +10,10 @@ import MapKit
 
 
 class MapPinView: MKAnnotationView {
-    let WIDTH: CGFloat = 320.0
+    let WIDTH: CGFloat = 330.0
     let HEIGHT: CGFloat = 280.0
-    let WIDTH_WITHOUT_PHOTO: CGFloat = 170.0
-    let HEIGHT_WITHOUT_PHOTO: CGFloat = 220.0
+    let WIDTH_WITHOUT_PHOTO: CGFloat = 220.0
+    let HEIGHT_WITHOUT_PHOTO: CGFloat = 250.0
     
     var hitOutside: Bool = true
     var memoriesController:MemoriesController?
@@ -109,7 +109,9 @@ class MapPinView: MKAnnotationView {
         labelView = UIView(frame: CGRectMake(labelAreaLeft!, 0, labelAreaWidth!, labelAreaHeight!))
         labelView!.backgroundColor = UIColor.whiteColor()
         labelView!.addSubview(titleView!)
-        labelView!.addSubview(originatorView!)
+        if (memoriesController?.user.getName() != memory?.originator) {
+         labelView!.addSubview(originatorView!)
+        }
         labelView!.addSubview(subtitleView!)
         
         if (memory!.recentShare) {
@@ -183,7 +185,8 @@ class MapPinView: MKAnnotationView {
     }
     
     func createSubtitleLabel() {
-        subtitleView = UILabel(frame: CGRectMake(10, 65, labelAreaWidth! - 20, labelAreaHeight! - 100))
+        
+        subtitleView = UILabel(frame: CGRectMake(10, 65, labelAreaWidth! - 20, labelAreaHeight! - 110))
         subtitleView!.backgroundColor = UIColor.whiteColor()
         subtitleView!.layer.cornerRadius = 0
         subtitleView!.numberOfLines = 0

@@ -37,8 +37,11 @@ public class Memory {
         self.originator = parts[5]
         self.recentShare = parts.count > 6 ? (parts[6] == "T") : false
         
-        if (type == "Museum" || type == "Gallery") {
+        if (type == "Gallery") {
             type = "Arts Venue"
+        }
+        if (type == "Pub") {
+            type = "Bar"
         }
         
     }

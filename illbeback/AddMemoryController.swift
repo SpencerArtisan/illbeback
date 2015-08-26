@@ -56,11 +56,15 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         addMemory("Shop")
     }
     
-    @IBAction func addGallery(sender: AnyObject) {
+    @IBAction func addMuseum(sender: AnyObject) {
+        addMemory("Museum")
+    }
+
+    @IBAction func addMusicVenue(sender: AnyObject) {
         addMemory("Music Venue")
     }
     
-    @IBAction func addMuseum(sender: AnyObject) {
+    @IBAction func addArtsVenue(sender: AnyObject) {
         addMemory("Arts Venue")
     }
     

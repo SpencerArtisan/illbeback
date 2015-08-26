@@ -98,7 +98,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HH0-zd-1ZB">
                                 <rect key="frame" x="57" y="526" width="54" height="54"/>
-                                <state key="normal" image="here" backgroundImage="Circle">
+                                <state key="normal" image="here" backgroundImage="Circle Small">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -156,10 +156,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Circle" width="50" height="50"/>
+        <image name="Circle" width="100" height="100"/>
+        <image name="Circle Small" width="50" height="50"/>
         <image name="Pigeon" width="800" height="613"/>
         <image name="camera" width="26" height="26"/>
-        <image name="camerablue" width="26" height="26"/>
+        <image name="camerablue" width="52" height="52"/>
         <image name="globe" width="26" height="26"/>
         <image name="here" width="29" height="29"/>
     </resources>
