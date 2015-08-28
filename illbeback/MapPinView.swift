@@ -291,6 +291,9 @@ class MapPinView: MKAnnotationView {
 
     private func hitPicture(point: CGPoint) -> Bool {
         var pt3 = self.convertPoint(point, toView: photoView)
-        return photoView!.frame.contains(pt3)
+        println("Clicked \(pt3.x),\(pt3.y)")
+        println("Picture frame is \(photoView!.bounds)")
+        println("Hit test result: \(photoView!.bounds.contains(pt3))")
+        return photoView!.bounds.contains(pt3)
     }
 }
