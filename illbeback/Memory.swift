@@ -38,6 +38,7 @@ public class Memory {
         self.location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
         self.originator = parts[5]
         self.recentShare = parts.count > 6 ? (parts[6] == "T") : false
+        self.orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
         
         if (type == "Gallery") {
             type = "Arts Venue"
@@ -45,12 +46,12 @@ public class Memory {
         if (type == "Pub") {
             type = "Bar"
         }
-        self.orientation = UIDeviceOrientation.Portrait
+
     }
     
     func asString() -> String {
         var recentShareChar = recentShare ? "T" : "F"
-        return "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(recentShareChar)"
+        return "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(recentShareChar):\(orientation.rawValue)"
     }
     
     func asMapPin() -> MapPin {
