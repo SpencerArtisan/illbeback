@@ -38,8 +38,10 @@ public class MemoryAlbum {
     }
     
     func addPin(memory: Memory) {
-        let pin = memory.asMapPin()
-        map.addAnnotation(pin)
+        dispatch_async(dispatch_get_main_queue(), {
+            let pin = memory.asMapPin()
+            self.map.addAnnotation(pin)
+        })
     }
     
     func add(memory: Memory) {

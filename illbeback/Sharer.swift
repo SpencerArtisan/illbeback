@@ -10,9 +10,11 @@ public class Sharer {
     
     func share(from: String, to: String, memory: Memory, imageUrl: NSURL?) {
         if (PhotoAlbum().photoExists(memory.id)) {
-            uploadImage(imageUrl, key: imageKey(memory))
+            uploadImage(imageUrl, key: imageKey(memory), onComplete: {
+                println("Shared photo uploaded.  Uploading memory details...")
+                self.uploadMemory(from, to: to, memory: memory)
+            })
         }
-        uploadMemory(from, to: to, memory: memory)
     }
     
     func retrieveShares(to: String, callback: (from: String, memory: Memory) -> ()) {
@@ -25,14 +27,16 @@ public class Sharer {
                     var memory = Memory(memoryString: memoryString)
                     memory.recentShare = true
                     var key = self.imageKey(memory)
-                    self.downloadImage(memory, key: key)
-                    callback(from: from, memory: memory)
+                    self.downloadImage(memory, key: key, onComplete: {
+                        println("Shared photo downloaded.  Notifying observers...")
+                        callback(from: from, memory: memory)
+                    })
                 }
                 self.shareRoot(to).removeValue()
         })
     }
     
-    private func downloadImage(memory: Memory, key: String) {
+    private func downloadImage(memory: Memory, key: String, onComplete: () -> Void) {
         // todo -tidy
         let photoAlbum = PhotoAlbum()
         var imageUrl = photoAlbum.getMemoryImageUrl(memory.id)
@@ -45,10 +49,14 @@ public class Sharer {
         readRequest.downloadingFileURL = imageUrl
         
         var task = transferManager.download(readRequest)
+        task.continueWithBlock { (task) -> AnyObject! in
+            onComplete()
+            return nil
+        }
         monitorAsyncTask(task, type: "Download")
     }
     
-    private func uploadImage(imageUrl: NSURL?, key: String) {
+    private func uploadImage(imageUrl: NSURL?, key: String, onComplete: () -> Void) {
         println("** AWS OP: Uploading image from: " + imageUrl!.absoluteString!)
 
         let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
@@ -58,6 +66,10 @@ public class Sharer {
         uploadRequest.ACL = AWSS3ObjectCannedACL.AuthenticatedRead
             
         let task = transferManager.upload(uploadRequest)
+        task.continueWithBlock { (task) -> AnyObject! in
+            onComplete()
+            return nil
+        }
         monitorAsyncTask(task, type: "Upload")
     }
     

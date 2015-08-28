@@ -93,6 +93,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             self.delay(delaySeconds) {
                 self.showMessage(title, color: color, time: 3)
             }
+            
+//            dispatch_async(dispatch_get_main_queue(), {
+//                self.map!.addAnnotation(memory.asMapPin())
+//            })
+        
+         //   self.map!.addAnnotation(memory.asMapPin())
             delaySeconds += 4
         })
     }
