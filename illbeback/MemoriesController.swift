@@ -24,6 +24,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var zoomController: ZoomController!
     var shareModal: Modal?
     var newUserModal: Modal?
+    var searchModal: Modal?
     var pinToShare: MapPinView?
     let user = User()
     var messageModals: [Modal] = []
@@ -32,6 +33,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     @IBOutlet weak var sharingName: UITextView!
     
+    @IBOutlet weak var searchText: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initLocationManager()
@@ -39,6 +42,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         initMemories()
         self.shareModal = Modal(viewName: "ShareView", owner: self)
         self.newUserModal = Modal(viewName: "NewUser", owner: self)
+        self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum)
         self.rephotoController = RephotoController(album: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum)
@@ -60,6 +64,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.map.setCenterCoordinate(here.coordinate, animated: true)
     }
     
+    @IBAction func search(sender: AnyObject) {
+        searchText.becomeFirstResponder()
+        searchText.text = ""
+        searchModal?.slideOutFromLeft(self.view)
+    }
     
     // Callback for button on the callout
     func rephotoMemory(pin: MapPinView) {

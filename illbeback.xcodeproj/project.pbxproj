@@ -29,6 +29,7 @@
 		976696ED1A8A9EF4004CB60D /* CategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976696EC1A8A9EF4004CB60D /* CategoryController.swift */; };
 		976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 976696EE1A8AA317004CB60D /* CategoryView.xib */; };
 		9772846C1A8A818B00CE628D /* user.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9772846B1A8A818B00CE628D /* user.plist */; };
+		97767D521B9088F300B6A827 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97767D511B9088F300B6A827 /* SearchView.xib */; };
 		9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */; };
 		9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */; };
 		9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */; };
@@ -92,6 +93,7 @@
 		976696EC1A8A9EF4004CB60D /* CategoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryController.swift; sourceTree = "<group>"; };
 		976696EE1A8AA317004CB60D /* CategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryView.xib; sourceTree = "<group>"; };
 		9772846B1A8A818B00CE628D /* user.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user.plist; sourceTree = "<group>"; };
+		97767D511B9088F300B6A827 /* SearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
 		9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "illbeback-Bridging-Header.h"; sourceTree = "<group>"; };
 		979F850A1AA11B8600A11F7F /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		97A353431A800B9500973CAC /* I'll Be Back.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I'll Be Back.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,14 +221,15 @@
 				97FE667F1A9A19570007FC2C /* User.swift */,
 				97A353531A800B9500973CAC /* LaunchScreen.xib */,
 				972006A61A9140FB00B5E74C /* DescriptionView.xib */,
+				97767D511B9088F300B6A827 /* SearchView.xib */,
 				976696EE1A8AA317004CB60D /* CategoryView.xib */,
 				97FE667B1A99EB1E0007FC2C /* ShareView.xib */,
 				97FE66831A9A50C60007FC2C /* MessageView.xib */,
+				97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */,
+				97EA3FFE1AFE9A1C005507BF /* Black.xib */,
 				979F850A1AA11B8600A11F7F /* Camera.swift */,
 				97EA3FFC1AFE078D005507BF /* RephotoController.swift */,
-				97EA3FFE1AFE9A1C005507BF /* Black.xib */,
 				975CD7431AFFD6E800662BFC /* ZoomController.swift */,
-				97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */,
 				9772846C1A8A818B00CE628D /* user.plist in Resources */,
 				97FE66821A9A1A400007FC2C /* memories.plist in Resources */,
+				97767D521B9088F300B6A827 /* SearchView.xib in Resources */,
 				97A353501A800B9500973CAC /* Main.storyboard in Resources */,
 				97A3536B1A800EF500973CAC /* Media.xcassets in Resources */,
 				97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */,

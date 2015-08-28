@@ -25,10 +25,10 @@
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RrK-Gk-QJN">
-                    <rect key="frame" x="115" y="62" width="260" height="55"/>
+                    <rect key="frame" x="115" y="77" width="260" height="40"/>
                     <color key="backgroundColor" red="0.75695591575960042" green="0.83684790859501379" blue="0.90092378854751587" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="55" id="F2f-5n-xow"/>
+                        <constraint firstAttribute="height" constant="40" id="F2f-5n-xow"/>
                         <constraint firstAttribute="width" constant="260" id="gjx-Pm-nv3"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -38,6 +38,7 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="R7H-Px-uXL" secondAttribute="trailing" id="Zzc-uk-uT3"/>
+                <constraint firstItem="R7H-Px-uXL" firstAttribute="top" secondItem="RrK-Gk-QJN" secondAttribute="bottom" id="aOl-3m-btm"/>
                 <constraint firstAttribute="trailing" secondItem="RrK-Gk-QJN" secondAttribute="trailing" id="mnQ-UZ-g2p"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
