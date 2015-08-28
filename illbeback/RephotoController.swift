@@ -15,11 +15,13 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     let addMemory = AddMemoryController()
     var camera: Camera?
     var photoAlbum: PhotoAlbum?
+    var memoryAlbum: MemoryAlbum?
     var pinToRephoto: MapPinView?
     
-    init(album: PhotoAlbum) {
+    init(album: PhotoAlbum, memoryAlbum: MemoryAlbum) {
         super.init(nibName: nil, bundle: nil)
         photoAlbum = album
+        self.memoryAlbum = memoryAlbum
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -40,6 +42,8 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     }
     
     func replacePhoto(image: UIImage, orientation: UIDeviceOrientation) {
+        pinToRephoto!.memory!.orientation = orientation
+        self.memoryAlbum!.save()
         self.photoAlbum!.saveMemoryImage(image, memoryId: pinToRephoto!.memory!.id)
         self.navigationController?.popToRootViewControllerAnimated(true)
         pinToRephoto!.refreshAndReopen()

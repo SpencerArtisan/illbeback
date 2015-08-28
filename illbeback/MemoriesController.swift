@@ -40,7 +40,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.shareModal = Modal(viewName: "ShareView", owner: self)
         self.newUserModal = Modal(viewName: "NewUser", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum)
-        self.rephotoController = RephotoController(album: photoAlbum)
+        self.rephotoController = RephotoController(album: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum)
         self.zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
 
