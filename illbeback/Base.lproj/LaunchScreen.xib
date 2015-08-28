@@ -15,25 +15,26 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="4FY-g8-qFd">
                     <rect key="frame" x="0.0" y="0.0" width="380" height="680"/>
                 </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Backmap" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="20" y="200" width="336" height="43"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Pigeon" translatesAutoresizingMaskIntoConstraints="NO" id="ruf-ms-MX0">
                     <rect key="frame" x="-349" y="288" width="602" height="490"/>
                 </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Backmap" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
+                    <rect key="frame" x="44" y="511" width="336" height="148"/>
+                    <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="86"/>
+                    <color key="textColor" red="0.2040451831085385" green="0.21965751262626265" blue="0.05833953699860546" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="170" id="1mA-Mf-5yf"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.5" constant="1" id="5cJ-9S-tgC"/>
-                <constraint firstAttribute="bottomMargin" secondItem="4FY-g8-qFd" secondAttribute="bottom" id="BeF-Zx-fgJ"/>
-                <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Koa-jz-hwk"/>
+                <constraint firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="10" id="7OO-mT-gDn"/>
+                <constraint firstAttribute="bottomMargin" secondItem="4FY-g8-qFd" secondAttribute="bottom" constant="-10" id="BeF-Zx-fgJ"/>
                 <constraint firstAttribute="trailingMargin" secondItem="4FY-g8-qFd" secondAttribute="trailing" constant="-10" id="P95-OW-KFY"/>
-                <constraint firstItem="4FY-g8-qFd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="aOo-ks-FE0"/>
+                <constraint firstItem="4FY-g8-qFd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="-10" id="aOo-ks-FE0"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
+                <constraint firstAttribute="bottom" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="8" id="us4-7a-VLH"/>
                 <constraint firstItem="4FY-g8-qFd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" constant="-10" id="val-Ls-fWH"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
