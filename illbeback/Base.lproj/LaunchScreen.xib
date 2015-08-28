@@ -13,7 +13,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="4FY-g8-qFd">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="380" height="680"/>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Backmap" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
                     <rect key="frame" x="20" y="200" width="336" height="43"/>
@@ -31,10 +31,10 @@
                 <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.5" constant="1" id="5cJ-9S-tgC"/>
                 <constraint firstAttribute="bottomMargin" secondItem="4FY-g8-qFd" secondAttribute="bottom" id="BeF-Zx-fgJ"/>
                 <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Koa-jz-hwk"/>
-                <constraint firstAttribute="trailingMargin" secondItem="4FY-g8-qFd" secondAttribute="trailing" id="P95-OW-KFY"/>
+                <constraint firstAttribute="trailingMargin" secondItem="4FY-g8-qFd" secondAttribute="trailing" constant="-10" id="P95-OW-KFY"/>
                 <constraint firstItem="4FY-g8-qFd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="aOo-ks-FE0"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
-                <constraint firstItem="4FY-g8-qFd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="val-Ls-fWH"/>
+                <constraint firstItem="4FY-g8-qFd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" constant="-10" id="val-Ls-fWH"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -49,6 +49,6 @@
     </objects>
     <resources>
         <image name="Pigeon" width="800" height="613"/>
-        <image name="map" width="215" height="345"/>
+        <image name="map" width="250" height="444"/>
     </resources>
 </document>
