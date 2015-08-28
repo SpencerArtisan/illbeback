@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
+
 class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextViewDelegate {
     
     @IBOutlet weak var map: MKMapView!
@@ -51,7 +52,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
         self.newUserText.delegate = self
-
+        self.searchText.delegate = self
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
@@ -103,11 +104,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 self.showMessage(title, color: color, time: 3)
             }
             
-//            dispatch_async(dispatch_get_main_queue(), {
-//                self.map!.addAnnotation(memory.asMapPin())
-//            })
-        
-         //   self.map!.addAnnotation(memory.asMapPin())
             delaySeconds += 4
         })
     }
@@ -257,20 +253,36 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         textView.text = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
         if (text == "\n" && !textView.text.isEmpty) {
-            newUserModal?.slideInFromRight(self.view)
-
-            if (!user.hasName()) {
-                user.setName(textView.text)
-                newUserText.resignFirstResponder()
+            if (textView == self.searchText) {
+                println("SEARCH TEXT \(textView.text)")
+                searchModal?.slideInFromLeft(self.view)
+                searchText.resignFirstResponder()
+                
+                var geocoder = CLGeocoder()
+                geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+                    if let placemark = placemarks?[0] as? CLPlacemark {
+                        self.map.setCenterCoordinate(placemark.location.coordinate, animated: true)
+                    }
+                })
             } else {
-                user.addFriend(textView.text)
-                newUserText.resignFirstResponder()
-                shareWith(textView.text)
+                println("NEW USER TEXT \(textView.text)")
+        
+                newUserModal?.slideInFromRight(self.view)
+
+                if (!user.hasName()) {
+                    user.setName(textView.text)
+                    newUserText.resignFirstResponder()
+                } else {
+                    user.addFriend(textView.text)
+                    newUserText.resignFirstResponder()
+                    shareWith(textView.text)
+                }
             }
             
             return false
         }
         return true
+        
     }
 
     func delay(delay:Double, closure:()->()) {
