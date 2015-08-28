@@ -158,9 +158,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     // Callback for button on the UI
-    func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?) {
+    func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation) {
         var actualLocation = location == nil ? here.coordinate : location!
-        var memory = Memory(id: id, type: type, description: description, location: actualLocation, user: user)
+        var memory = Memory(id: id, type: type, description: description, location: actualLocation, user: user, orientation: orientation)
         memoryAlbum.add(memory)
     }
     

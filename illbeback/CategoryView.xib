@@ -36,7 +36,7 @@
                     <rect key="frame" x="0.0" y="69" width="200" height="46"/>
                     <color key="backgroundColor" red="0.92824264747684659" green="0.94255050505050508" blue="0.61861419747540469" alpha="0.64000000000000001" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Bar" image="Pub">
+                    <state key="normal" title=" Bar" image="Bar">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -194,6 +194,7 @@
     </objects>
     <resources>
         <image name="Arts Venue" width="33" height="33"/>
+        <image name="Bar" width="32" height="32"/>
         <image name="Building" width="32" height="32"/>
         <image name="Cafe" width="33" height="33"/>
         <image name="Green Space" width="32" height="32"/>
@@ -202,7 +203,6 @@
         <image name="Museum" width="32" height="32"/>
         <image name="Music Venue" width="33" height="33"/>
         <image name="Place to Stay" width="32" height="32"/>
-        <image name="Pub" width="32" height="32"/>
         <image name="Restaurant" width="32" height="32"/>
         <image name="Shop" width="33" height="33"/>
         <image name="Special" width="32" height="32"/>

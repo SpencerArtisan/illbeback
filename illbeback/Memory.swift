@@ -16,14 +16,16 @@ public class Memory {
     var location: CLLocationCoordinate2D
     var originator: String
     var recentShare: Bool
+    var orientation: UIDeviceOrientation
     
-    init(id: String, type: String, description: String, location: CLLocationCoordinate2D, user: User) {
+    init(id: String, type: String, description: String, location: CLLocationCoordinate2D, user: User, orientation: UIDeviceOrientation) {
         self.id = id
         self.type = type
         self.description = description
         self.location = location
         self.originator = user.getName()
         self.recentShare = false
+        self.orientation = orientation
     }
     
     init(memoryString: String) {
@@ -43,7 +45,7 @@ public class Memory {
         if (type == "Pub") {
             type = "Bar"
         }
-        
+        self.orientation = UIDeviceOrientation.Portrait
     }
     
     func asString() -> String {

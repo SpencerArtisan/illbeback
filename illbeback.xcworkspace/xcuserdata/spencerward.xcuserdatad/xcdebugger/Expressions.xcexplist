@@ -11,16 +11,27 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "I_ll_Be_Back.MapPinView.hitTest (I_ll_Be_Back.MapPinView)(C.CGPoint, withEvent : Swift.Optional&lt;ObjectiveC.UIEvent&gt;) -&gt; Swift.Optional&lt;ObjectiveC.UIView&gt;:MapPinView.swift">
+         contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
+      </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.Camera.(takePhoto (I_ll_Be_Back.Camera) -&gt; (Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UIButton&gt;) -&gt; ()).(closure #3):Camera.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.selected">
+               value = "(UIImage?)image">
             </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.MapPinView.hitTest (I_ll_Be_Back.MapPinView)(C.CGPoint, withEvent : Swift.Optional&lt;ObjectiveC.UIEvent&gt;) -&gt; Swift.Optional&lt;ObjectiveC.UIView&gt;:MapPinView.swift">
+         <PersistentStrings>
             <PersistentString
                value = "elapsed">
             </PersistentString>
             <PersistentString
                value = "event!.type">
+            </PersistentString>
+            <PersistentString
+               value = "self.selected">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

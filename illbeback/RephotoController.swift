@@ -28,7 +28,7 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        camera = Camera(parentController: self, callback: { image in self.replacePhoto(image) })
+        camera = Camera(parentController: self, callback: { (image, orientation) in self.replacePhoto(image, orientation: orientation) })
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -39,7 +39,7 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
         camera!.stop()
     }
     
-    func replacePhoto(image: UIImage) {
+    func replacePhoto(image: UIImage, orientation: UIDeviceOrientation) {
         self.photoAlbum!.saveMemoryImage(image, memoryId: pinToRephoto!.memory!.id)
         self.navigationController?.popToRootViewControllerAnimated(true)
         pinToRephoto!.refreshAndReopen()

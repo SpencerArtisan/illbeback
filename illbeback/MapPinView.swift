@@ -14,6 +14,8 @@ class MapPinView: MKAnnotationView {
     let HEIGHT: CGFloat = 280.0
     let WIDTH_WITHOUT_PHOTO: CGFloat = 220.0
     let HEIGHT_WITHOUT_PHOTO: CGFloat = 250.0
+    let WIDTH_WITH_LANDSCAPE_PHOTO: CGFloat = 230.0
+    let HEIGHT_WITH_LANDSCAPE_PHOTO: CGFloat = 310.0
     
     var hitOutside: Bool = true
     var memoriesController:MemoriesController?
@@ -33,7 +35,9 @@ class MapPinView: MKAnnotationView {
     var labelAreaWidth: CGFloat?
     var labelAreaHeight: CGFloat?
     var labelAreaLeft: CGFloat?
+    var labelAreaTop: CGFloat?
     var calloutWidth: CGFloat?
+    var calloutHeight: CGFloat?
     
     init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
         super.init(annotation: nil, reuseIdentifier: nil)
@@ -86,10 +90,13 @@ class MapPinView: MKAnnotationView {
     func getCalloutView() -> UIView {
         if (calloutView == nil) {
             createPhotoView()
-            labelAreaWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : WIDTH / 2
-            labelAreaHeight = photoView == nil ? HEIGHT_WITHOUT_PHOTO : HEIGHT
-            labelAreaLeft = photoView == nil ? 0 : WIDTH / 2
-            calloutWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : WIDTH
+            
+            labelAreaWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : (isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO : (WIDTH / 2))
+            labelAreaHeight = photoView == nil ? HEIGHT_WITHOUT_PHOTO : (isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO / 2 + 20: HEIGHT)
+            labelAreaLeft = photoView == nil ? 0 : (isLandscape() ? 0 : WIDTH / 2)
+            labelAreaTop = 0
+            calloutWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : (isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO : WIDTH)
+            calloutHeight = photoView == nil ? HEIGHT_WITHOUT_PHOTO : (isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO : HEIGHT)
             
             createSubtitleLabel()
             createTitleLabel()
@@ -104,9 +111,14 @@ class MapPinView: MKAnnotationView {
         }
         return calloutView!
     }
+    
+    func isLandscape() -> Bool {
+        return memory?.orientation == UIDeviceOrientation.LandscapeLeft ||
+               memory?.orientation == UIDeviceOrientation.LandscapeRight
+    }
    
     func createLabelView() {
-        labelView = UIView(frame: CGRectMake(labelAreaLeft!, 0, labelAreaWidth!, labelAreaHeight!))
+        labelView = UIView(frame: CGRectMake(labelAreaLeft!, labelAreaTop!, labelAreaWidth!, labelAreaHeight!))
         labelView!.backgroundColor = UIColor.whiteColor()
         labelView!.addSubview(titleView!)
         if (memoriesController?.user.getName() != memory?.originator) {
@@ -126,7 +138,7 @@ class MapPinView: MKAnnotationView {
     
     func createCalloutView() {
         self.calloutView = UIView()
-        self.calloutView?.frame = CGRectMake(-calloutWidth!/2 + 15, -labelAreaHeight! - 10, calloutWidth!, labelAreaHeight!)
+        self.calloutView?.frame = CGRectMake(-calloutWidth!/2 + 15, -calloutHeight! - 10, calloutWidth!, calloutHeight!)
         self.calloutView?.backgroundColor = UIColor.whiteColor()
         self.calloutView?.layer.cornerRadius = 10
         self.calloutView?.addSubview(labelView!)
@@ -158,8 +170,17 @@ class MapPinView: MKAnnotationView {
     func createPhotoView() {
         if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return }
         var photo = UIImage(contentsOfFile: imageUrl!)
-        photoView = UIImageView(frame: CGRectMake(0, 0, WIDTH/2 + 1, HEIGHT))
+        println("Loading image with orientation " + memory!.orientation.rawValue.description)
+        photoView = UIImageView(frame: CGRectMake(
+            isLandscape() ? 46 : 0,
+            isLandscape() ? 129 : 0,
+            isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO / 2 - 17 : WIDTH/2 + 1,
+            isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO - 2 : HEIGHT))
         photoView!.image = photo
+        if (isLandscape()) {
+            var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
+            photoView?.transform = CGAffineTransformMakeRotation(CGFloat(angle))
+        }
     }
     
     func createTitleLabel() {
@@ -185,7 +206,6 @@ class MapPinView: MKAnnotationView {
     }
     
     func createSubtitleLabel() {
-        
         subtitleView = UILabel(frame: CGRectMake(10, 65, labelAreaWidth! - 20, labelAreaHeight! - 110))
         subtitleView!.backgroundColor = UIColor.whiteColor()
         subtitleView!.layer.cornerRadius = 0

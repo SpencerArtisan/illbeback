@@ -13,6 +13,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var desciptionTextArea: UITextView!
     var categoryModal: Modal!
     var descriptionModal: Modal!
+    var orientation: UIDeviceOrientation?
     var memoryId: String?
     var memoryImage: String?
     var memoryLocation: CLLocationCoordinate2D?
@@ -49,7 +50,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func addPub(sender: AnyObject) {
-        addMemory("Pub")
+        addMemory("Bar")
     }
     
     @IBAction func addShop(sender: AnyObject) {
@@ -97,11 +98,12 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
-    func add(controller: UIViewController, image: UIImage) {
+    func add(controller: UIViewController, image: UIImage, orientation: UIDeviceOrientation) {
         rewordingMemory = nil
         self.memoryLocation = nil
         self.callingViewController = controller
         self.memoryId = NSUUID().UUIDString
+        self.orientation = orientation
         self.photoAlbum!.saveMemoryImage(image, memoryId: self.memoryId!)
         self.showCategorySelector()
     }
@@ -147,7 +149,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
                 rewordingMemory?.description = textView.text
                 memories.memoryAlbum.save()
             } else {
-                memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation)
+                memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation!)
                 tabBarController?.popToRootViewControllerAnimated(true)
             }
             descriptionModal.hide()

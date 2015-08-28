@@ -108,13 +108,13 @@ typedef enum : NSUInteger {
  * @param onCapture a block triggered after the capturing the photo.
  * @param exactSeenImage If set YES, then the image is cropped to the exact size as the preview. So you get exactly what you see.
  */
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage;
+-(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error, UIDeviceOrientation orientation))onCapture exactSeenImage:(BOOL)exactSeenImage;
 
 /**
  * Capture the image.
  * @param onCapture a block triggered after the capturing the photo.
  */
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture;
+-(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error, UIDeviceOrientation orientation))onCapture;
 
 
 @end

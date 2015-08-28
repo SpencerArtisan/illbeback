@@ -198,11 +198,12 @@
 }
 
 
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage {
+-(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error, UIDeviceOrientation orientation))onCapture exactSeenImage:(BOOL)exactSeenImage {
     
     // get connection and set orientation
     AVCaptureConnection *videoConnection = [self captureConnection];
-    videoConnection.videoOrientation = [self orientationForConnection];
+//    videoConnection.videoOrientation = [self orientationForConnection];
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     
     [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
@@ -233,12 +234,12 @@
          
          // trigger the block
          if(onCapture) {
-             onCapture(self, image, metadata, error);
+             onCapture(self, image, metadata, error, orientation);
          }
      }];
 }
 
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture {
+-(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error, UIDeviceOrientation orientation))onCapture {
     [self capture:onCapture exactSeenImage:NO];
 }
 
@@ -531,26 +532,29 @@
     self.captureVideoPreviewLayer.bounds = bounds;
     self.captureVideoPreviewLayer.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
     
-    self.captureVideoPreviewLayer.connection.videoOrientation = [self orientationForConnection];
+//    self.captureVideoPreviewLayer.connection.videoOrientation = [self orientationForConnection];
 }
 
 - (AVCaptureVideoOrientation)orientationForConnection
 {
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
     AVCaptureVideoOrientation videoOrientation = AVCaptureVideoOrientationPortrait;
-    switch (self.interfaceOrientation) {
-        case UIInterfaceOrientationLandscapeLeft:
+    switch (orientation) {
+        case UIDeviceOrientationLandscapeRight:
             videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
             break;
-        case UIInterfaceOrientationLandscapeRight:
+        case UIDeviceOrientationLandscapeLeft:
             videoOrientation = AVCaptureVideoOrientationLandscapeRight;
             break;
-        case UIInterfaceOrientationPortraitUpsideDown:
+        case UIDeviceOrientationPortraitUpsideDown:
             videoOrientation = AVCaptureVideoOrientationPortraitUpsideDown;
             break;
         default:
             videoOrientation = AVCaptureVideoOrientationPortrait;
             break;
     }
+
     return videoOrientation;
 }
 

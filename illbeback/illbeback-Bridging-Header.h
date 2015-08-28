@@ -7,6 +7,7 @@
 //
 
 #import "../LLSimpleCamera/LLSimpleCamera.h"
+#import "../LLSimpleCamera/UIImage+FixOrientation.h"
 #import <Firebase/Firebase.h>
 //#import "AWSCore.h"
 //#import "Cognito.h"

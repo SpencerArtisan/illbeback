@@ -13,10 +13,10 @@ class Camera : NSObject {
     var camera: LLSimpleCamera!
     var snapButton: UIButton!
     var parentController: UIViewController!
-    var callback: (UIImage -> Void)
+    var callback: ((UIImage, UIDeviceOrientation) -> Void)
     var snapPlayer: AVAudioPlayer!
     
-    init(parentController: UIViewController, callback: (UIImage -> Void)) {
+    init(parentController: UIViewController, callback: ((UIImage, UIDeviceOrientation) -> Void)) {
         self.parentController = parentController
         self.callback = callback
         super.init()
@@ -48,6 +48,7 @@ class Camera : NSObject {
     
     func createCamera() {
         self.camera = LLSimpleCamera(quality: CameraQualityPhoto, andPosition: CameraPositionBack)
+        self.camera.fixOrientationAfterCapture = false
     }
     
     func createSnapButton() {
@@ -83,9 +84,10 @@ class Camera : NSObject {
                 })
         })
 
-        self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?) -> Void in
+        self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?, orientation: UIDeviceOrientation) -> Void in
             self.snapButton.removeFromSuperview()
-            self.callback(image!)
+            println("Picture taken with orientation " + orientation.rawValue.description)
+            self.callback(image!, orientation)
             }, exactSeenImage: true)
     }
 }
