@@ -2,8 +2,10 @@ public class Sharer {
     private var root: Firebase
     private let BUCKET = "illbebackappus"
     private var transferManager: AWSS3TransferManager
+    private var memoryAlbum: MemoryAlbum
     
-    init() {
+    init(memoryAlbum: MemoryAlbum) {
+        self.memoryAlbum = memoryAlbum
         root = Firebase(url:"https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
@@ -21,16 +23,24 @@ public class Sharer {
         shareRoot(to).observeSingleEventOfType(.Value, withBlock: {
             snapshot in
                 var givenMemories = snapshot.children
+                var receivedIds:[String] = []
+            
                 while let given: FDataSnapshot = givenMemories.nextObject() as? FDataSnapshot {
                     var from = given.value["from"] as! String
                     var memoryString = given.value["memory"] as! String
                     var memory = Memory(memoryString: memoryString)
-                    memory.recentShare = true
-                    var key = self.imageKey(memory)
-                    self.downloadImage(memory, key: key, onComplete: {
-                        println("Shared photo downloaded.  Notifying observers...")
-                        callback(from: from, memory: memory)
-                    })
+                    if (self.memoryAlbum.contains(memory) || receivedIds.filter({$0 == memory.id}).count > 0) {
+                        println("Already have memory /(memory.type). Ignoring share")
+                    } else {
+                        receivedIds.append(memory.id)
+                        memory.recentShare = true
+                        println("Received memory /(memoryString)")
+                        var key = self.imageKey(memory)
+                        self.downloadImage(memory, key: key, onComplete: {
+                            println("Shared photo downloaded.  Notifying observers...")
+                            callback(from: from, memory: memory)
+                        })
+                    }
                 }
                 self.shareRoot(to).removeValue()
         })

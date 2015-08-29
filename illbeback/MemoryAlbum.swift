@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 public class MemoryAlbum {
-    private let sharer = Sharer()
+    private var _sharer: Sharer?
     private var memories: [Memory] = []
     private var props: NSDictionary?
     private var map: MKMapView
@@ -20,16 +20,27 @@ public class MemoryAlbum {
         read()
     }
     
+    func sharer() -> Sharer {
+        if self._sharer == nil {
+            self._sharer = Sharer(memoryAlbum: self)
+        }
+        return _sharer!
+    }
+    
     func addToMap() {
         for memory in memories {
             addPin(memory)
         }
     }
+    
+    func contains(memory: Memory) -> Bool {
+        return memories.filter({$0.id == memory.id}).count > 0
+    }
 
     func downloadNewShares(user: User, callback: (memory: Memory) -> Void) {
         println("Checking for new shared memories")
         if (user.hasName()) {
-            sharer.retrieveShares(user.getName(), callback: {sender, memory in
+            sharer().retrieveShares(user.getName(), callback: {sender, memory in
                 println("Retrieved shared memory from " + sender + ": " + memory.asString())
                 self.add(memory)
                 callback(memory: memory)
@@ -64,7 +75,7 @@ public class MemoryAlbum {
         if (memoryIndex != nil) {
             var memory = memories[memoryIndex!]
             println("Sharing \(memory.type)")
-            sharer.share(from, to: to, memory: memory, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.id))
+            sharer().share(from, to: to, memory: memory, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.id))
         } else {
             println("WARN: Failed to share unknown memory")
         }

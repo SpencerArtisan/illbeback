@@ -147,7 +147,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 self.showMessage(title, color: color, time: 3)
             }
             
-            delaySeconds += 3
+            delaySeconds += 2
         })
     }
     
