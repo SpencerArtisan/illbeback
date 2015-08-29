@@ -27,7 +27,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var shareModal: Modal?
     var newUserModal: Modal?
     var searchModal: Modal?
-    var pinToShare: MapPinView?
+    var shapeModal: Modal?
+    var pinsToShare: [MapPinView] = []
     let user = User()
     var messageModals: [Modal] = []
     var newUserLabel: UILabel!
@@ -37,6 +38,34 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     @IBOutlet weak var searchText: UITextView!
     
+    func getView() -> UIView {
+        return self.view
+    }
+    
+    @IBAction func cancel(sender: AnyObject) {
+        shapeController.clear()
+        showPinsInShape()
+        shapeModal?.slideUpFromTop(view)
+    }
+    
+    @IBAction func share(sender: AnyObject) {
+        var sharing:[MapPinView] = []
+        
+        var allPins = map.annotations
+        for pin in allPins {
+            if (pin is MapPin) {
+                let mapPin = pin as! MapPin
+                if shapeController.shapeContains(mapPin.memory.location) {
+                    var pinView = map.viewForAnnotation(mapPin) as! MapPinView
+                    sharing.append(pinView)
+                }
+            }
+        }
+
+        shareMemory(sharing)
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initLocationManager()
@@ -45,6 +74,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.shareModal = Modal(viewName: "ShareView", owner: self)
         self.newUserModal = Modal(viewName: "NewUser", owner: self)
         self.searchModal = Modal(viewName: "SearchView", owner: self)
+        self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum)
         self.rephotoController = RephotoController(album: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum)
@@ -81,6 +111,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     @IBAction func shape(sender: AnyObject) {
         shapeController.beginShape()
         showPinsInShape()
+        shapeModal?.slideDownFromTop(self.view)
     }
     
     // Callback for button on the callout
@@ -116,7 +147,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 self.showMessage(title, color: color, time: 3)
             }
             
-            delaySeconds += 4
+            delaySeconds += 3
         })
     }
     
@@ -200,9 +231,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     // Callback for button on the callout
-    func shareMemory(pin: MapPinView) {
+    func shareMemory(pins: [MapPinView]) {
         shareModal?.slideOutFromLeft(self.view)
-        pinToShare = pin
+        pinsToShare = pins
 
         var tag = 3
         let friends: [String] = user.getFriends()
@@ -233,16 +264,27 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         var friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         shareWith(friend!)
         hideShareModal(sender)
+        shapeModal?.slideUpFromTop(view)
+        shapeController.clear()
+        showPinsInShape()
     }
     
     func shareWith(friend: String) {
-        var memory = pinToShare?.memory
-        var color = CategoryController.getColorForCategory(memory!.type)
-        var title = "Shared " + memory!.type + " with " + friend
-        self.showMessage(title, color: color, time: 1.6)
+        for pin in pinsToShare {
+            memoryAlbum.share(pin, from: user.getName(), to: friend)
+        }
 
-        memoryAlbum.share(pinToShare!, from: user.getName(), to: friend)
-        pinToShare = nil
+        if pinsToShare.count == 1 {
+            var memory = pinsToShare[0].memory
+            var title = "Shared \(memory!.type) with \(friend)"
+            var color = CategoryController.getColorForCategory(memory!.type)
+            self.showMessage(title, color: color, time: 1.6)
+        } else {
+            var title = "Shared \(pinsToShare.count) flags with \(friend)"
+            self.showMessage(title, color: CategoryController.getColorForCategory("Memory"), time: 1.6)
+        }
+        
+        pinsToShare = []
     }
 
     func hideShareModal(sender: AnyObject?) {
@@ -307,14 +349,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     func shareMemoryCancelled(sender: AnyObject?) {
-        pinToShare = nil
+        pinsToShare = []
         shareModal?.slideInFromLeft(self.view)
         ((sender) as! UIButton).removeTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
     }
     
     func shareNewFriendCancelled(sender: AnyObject?) {
         newUserText.resignFirstResponder()
-        pinToShare = nil
+        pinsToShare = []
         newUserModal?.slideInFromRight(self.view)
         ((sender) as! UIButton).removeTarget(self, action: "shareNewFriendCancelled:", forControlEvents: .TouchUpInside)
     }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShapeController" customModule="I_ll_Be_Back" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="62"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ald-al-na5" userLabel="share">
+                    <rect key="frame" x="114" y="8" width="54" height="54"/>
+                    <state key="normal" image="share" backgroundImage="Circle Small">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="share:" destination="-1" eventType="touchUpInside" id="KpU-xH-Bor"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GoS-LC-HLe" userLabel="cancel">
+                    <rect key="frame" x="189" y="8" width="54" height="54"/>
+                    <state key="normal" image="Cancel" backgroundImage="Circle Small">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cancel:" destination="-1" eventType="touchUpInside" id="ZXK-HM-Ofw"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="ald-al-na5" secondAttribute="centerY" id="KE2-e1-013"/>
+                <constraint firstItem="GoS-LC-HLe" firstAttribute="leading" secondItem="ald-al-na5" secondAttribute="trailing" constant="20" id="N4M-dy-9QP"/>
+                <constraint firstItem="ald-al-na5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="bhg-8g-eoD"/>
+                <constraint firstAttribute="centerY" secondItem="GoS-LC-HLe" secondAttribute="centerY" id="mcm-Xa-2Xu"/>
+                <constraint firstItem="ald-al-na5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="130" id="tqz-8u-cuw"/>
+                <constraint firstItem="GoS-LC-HLe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="xG2-Gz-Qhf"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="KE2-e1-013"/>
+                    <exclude reference="mcm-Xa-2Xu"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="297.5" y="83"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Cancel" width="25" height="25"/>
+        <image name="Circle Small" width="50" height="50"/>
+        <image name="share" width="24" height="24"/>
+    </resources>
+</document>

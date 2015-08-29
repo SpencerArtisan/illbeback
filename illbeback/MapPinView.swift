@@ -276,7 +276,7 @@ class MapPinView: MKAnnotationView {
             } else if (hitButton(point, button: deleteButton)) {
                 memoriesController?.deleteMemory(self)
             } else if (hitButton(point, button: shareButton)) {
-                memoriesController?.shareMemory(self)
+                memoriesController?.shareMemory([self])
             } else if (hitButton(point, button: photoButton)) {
                 memoriesController?.rephotoMemory(self)
             } else if (hitButton(point, button: subtitleView)) {

@@ -9,15 +9,30 @@
 import Foundation
 import MapKit
 
-class ShapeController {
+class ShapeController : UIViewController {
     var map: MKMapView!
     var corners: [ShapeCorner] = []
     var polyline: MKPolyline?
     var memories: MemoriesController!
     
     init(map: MKMapView, memories: MemoriesController) {
+        super.init(nibName: nil, bundle: nil)
         self.map = map
         self.memories = memories
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func clear() {
+        if polyline != nil {
+            self.map.removeOverlay(polyline)
+        }
+        for corner in corners {
+            map!.removeAnnotation(corner)
+        }
+        corners.removeAll(keepCapacity: true)
     }
     
     func move(corner: ShapeCorner) {
@@ -26,6 +41,8 @@ class ShapeController {
     }
     
     func beginShape() {
+        clear()
+        
         var mRect = self.map.visibleMapRect
         
         var maxX = MKMapRectGetMaxX(mRect)
@@ -42,7 +59,6 @@ class ShapeController {
         var p5 = pointAt(minX + width * 0.3, y: minY + height / 5)
         var p6 = pointAt(minX + width * 0.1, y: maxY - height / 2)
         
-        corners.removeAll(keepCapacity: true)
         corners.append(ShapeCorner(coord: p1))
         corners.append(ShapeCorner(coord: p2))
         corners.append(ShapeCorner(coord: p3))

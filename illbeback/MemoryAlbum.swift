@@ -63,7 +63,10 @@ public class MemoryAlbum {
         var memoryIndex = find(pin)
         if (memoryIndex != nil) {
             var memory = memories[memoryIndex!]
+            println("Sharing \(memory.type)")
             sharer.share(from, to: to, memory: memory, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.id))
+        } else {
+            println("WARN: Failed to share unknown memory")
         }
     }
 

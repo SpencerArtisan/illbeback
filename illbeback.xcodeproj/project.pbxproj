@@ -31,9 +31,9 @@
 		9772846C1A8A818B00CE628D /* user.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9772846B1A8A818B00CE628D /* user.plist */; };
 		97767D521B9088F300B6A827 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97767D511B9088F300B6A827 /* SearchView.xib */; };
 		97767D541B91901600B6A827 /* ShapeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97767D531B91901600B6A827 /* ShapeController.swift */; };
-		97767D561B91913B00B6A827 /* ShapePolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97767D551B91913B00B6A827 /* ShapePolyline.swift */; };
 		97767D581B91B2BD00B6A827 /* ShapeCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97767D571B91B2BD00B6A827 /* ShapeCorner.swift */; };
 		97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97767D591B91B3D800B6A827 /* ShapeCornerView.swift */; };
+		97767D5C1B91DE2200B6A827 /* ShapeOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */; };
 		9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */; };
 		9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */; };
 		9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */; };
@@ -99,9 +99,9 @@
 		9772846B1A8A818B00CE628D /* user.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user.plist; sourceTree = "<group>"; };
 		97767D511B9088F300B6A827 /* SearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
 		97767D531B91901600B6A827 /* ShapeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeController.swift; sourceTree = "<group>"; };
-		97767D551B91913B00B6A827 /* ShapePolyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapePolyline.swift; sourceTree = "<group>"; };
 		97767D571B91B2BD00B6A827 /* ShapeCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeCorner.swift; sourceTree = "<group>"; };
 		97767D591B91B3D800B6A827 /* ShapeCornerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeCornerView.swift; sourceTree = "<group>"; };
+		97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShapeOptions.xib; sourceTree = "<group>"; };
 		9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "illbeback-Bridging-Header.h"; sourceTree = "<group>"; };
 		979F850A1AA11B8600A11F7F /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		97A353431A800B9500973CAC /* I'll Be Back.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I'll Be Back.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +232,7 @@
 				97767D511B9088F300B6A827 /* SearchView.xib */,
 				976696EE1A8AA317004CB60D /* CategoryView.xib */,
 				97FE667B1A99EB1E0007FC2C /* ShareView.xib */,
+				97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */,
 				97FE66831A9A50C60007FC2C /* MessageView.xib */,
 				97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */,
 				97EA3FFE1AFE9A1C005507BF /* Black.xib */,
@@ -239,7 +240,6 @@
 				97EA3FFC1AFE078D005507BF /* RephotoController.swift */,
 				975CD7431AFFD6E800662BFC /* ZoomController.swift */,
 				97767D531B91901600B6A827 /* ShapeController.swift */,
-				97767D551B91913B00B6A827 /* ShapePolyline.swift */,
 				97767D571B91B2BD00B6A827 /* ShapeCorner.swift */,
 				97767D591B91B3D800B6A827 /* ShapeCornerView.swift */,
 			);
@@ -384,6 +384,7 @@
 				972006A71A9140FB00B5E74C /* DescriptionView.xib in Resources */,
 				97EA40031AFEB74C005507BF /* shutter.mp3 in Resources */,
 				97FE66841A9A50C60007FC2C /* MessageView.xib in Resources */,
+				97767D5C1B91DE2200B6A827 /* ShapeOptions.xib in Resources */,
 				97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */,
 				9772846C1A8A818B00CE628D /* user.plist in Resources */,
 				97FE66821A9A1A400007FC2C /* memories.plist in Resources */,
@@ -455,7 +456,6 @@
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
 				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,
-				97767D561B91913B00B6A827 /* ShapePolyline.swift in Sources */,
 				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
 				97E3B9181A857A00007DB06E /* MapPin.swift in Sources */,
 				979F850B1AA11B8600A11F7F /* Camera.swift in Sources */,
