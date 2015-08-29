@@ -345,6 +345,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 pinView = ShapeCornerView(memoriesController: self)
             }
             
+            pinView.setSelected(true, animated: true)
+            
             return pinView
             
         }
@@ -360,6 +362,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 let pinData = view.annotation as! MapPin
                 pinData.setCoordinate2(pinData.coordinate)
                 self.memoryAlbum.save()
+            } else if (view.annotation is ShapeCorner) {
+                let pinData = view.annotation as! ShapeCorner
+                shapeController.move(pinData)
             }
         }
     }
