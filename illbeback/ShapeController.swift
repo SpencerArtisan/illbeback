@@ -42,6 +42,7 @@ class ShapeController {
         var p5 = pointAt(minX + width * 0.3, y: minY + height / 5)
         var p6 = pointAt(minX + width * 0.1, y: maxY - height / 2)
         
+        corners.removeAll(keepCapacity: true)
         corners.append(ShapeCorner(coord: p1))
         corners.append(ShapeCorner(coord: p2))
         corners.append(ShapeCorner(coord: p3))
@@ -81,11 +82,12 @@ class ShapeController {
     
     
     func shapeContains(test: CLLocationCoordinate2D) -> Bool {
-        var polygon = shape()
-        
-        if polygon.count <= 1 {
+        if corners.count <= 1 {
             return false //or if first point = test -> return true
         }
+
+        var polygon = shape()
+        
         
         var p = UIBezierPath()
         let firstPoint = toPoint(polygon[0]) as CGPoint

@@ -80,6 +80,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     @IBAction func shape(sender: AnyObject) {
         shapeController.beginShape()
+        showPinsInShape()
     }
     
     // Callback for button on the callout
@@ -365,6 +366,20 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             } else if (view.annotation is ShapeCorner) {
                 let pinData = view.annotation as! ShapeCorner
                 shapeController.move(pinData)
+                showPinsInShape()
+            }
+        }
+    }
+    
+    func showPinsInShape() {
+        var allPins = map.annotations
+        for pin in allPins {
+            if (pin is MapPin) {
+                let mapPin = pin as! MapPin
+                let pinView = map.viewForAnnotation(mapPin) as? MapPinView
+                if (pinView != nil) {
+                    pinView!.refreshImage()
+                }
             }
         }
     }

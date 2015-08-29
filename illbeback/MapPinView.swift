@@ -63,14 +63,23 @@ class MapPinView: MKAnnotationView {
         calloutView = nil
     }
     
-    private func initImage() {   
+    func refreshImage() {
+        initImage()
+    }
+    
+    func initImage() {
         var imageIcon = UIImage(named: memory!.type + " Flag")!
 
         var finalSize = CGSizeMake(imageIcon.size.width + 10, imageIcon.size.height + 10)
         UIGraphicsBeginImageContext(finalSize)
         imageIcon.drawInRect(CGRectMake(0, 10, imageIcon.size.width, imageIcon.size.height))
         
-        if (memory!.recentShare) {
+        let inShape: Bool = memoriesController!.shapeController.shapeContains(memory!.location)
+        
+        if (inShape) {
+            var imageHighlight = UIImage(named: "share flag")!
+            imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
+        } else if (memory!.recentShare) {
             var imageHighlight = UIImage(named: "recent")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
         }
