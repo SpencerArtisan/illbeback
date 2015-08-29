@@ -181,6 +181,8 @@ class MapPinView: MKAnnotationView {
             var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
             photoView?.transform = CGAffineTransformMakeRotation(CGFloat(angle))
         }
+        photoView!.layer.borderWidth = 1
+        photoView!.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     func createTitleLabel() {

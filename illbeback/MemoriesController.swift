@@ -19,6 +19,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var memoryAlbum: MemoryAlbum!
     let photoAlbum = PhotoAlbum()
     
+    var shapeController: ShapeController!
     var addMemory: AddMemoryController!
     var rephotoController: RephotoController!
     var rememberController: RememberController!
@@ -48,6 +49,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.rephotoController = RephotoController(album: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum)
         self.zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
+        self.shapeController = ShapeController(map: map)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
@@ -69,6 +71,15 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         searchText.becomeFirstResponder()
         searchText.text = ""
         searchModal?.slideOutFromLeft(self.view)
+    }
+    
+    @IBAction func cancelSearch(sender: AnyObject) {
+        searchModal?.slideInFromLeft(self.view)
+        searchText.resignFirstResponder()
+    }
+    
+    @IBAction func shape(sender: AnyObject) {
+        shapeController.beginShape()
     }
     
     // Callback for button on the callout
@@ -169,7 +180,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     // Callback for button on the UI
-    func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation) {
+    func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation?) {
         var actualLocation = location == nil ? here.coordinate : location!
         var memory = Memory(id: id, type: type, description: description, location: actualLocation, user: user, orientation: orientation)
         memoryAlbum.add(memory)
@@ -326,17 +337,24 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             }
         
             return pinView
+        } else if (annotation is ShapeCorner) {
+            let pinData = annotation as! ShapeCorner
+            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("corner") as! ShapeCornerView!
+            
+            if (pinView == nil) {
+                pinView = ShapeCornerView(memoriesController: self)
+            }
+            
+            return pinView
+            
         }
         return nil
     }
     
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-        if newState == MKAnnotationViewDragState.Starting
-        {
+        if newState == MKAnnotationViewDragState.Starting {
             view.dragState = MKAnnotationViewDragState.Dragging
-        }
-        else if newState == MKAnnotationViewDragState.Ending || newState == MKAnnotationViewDragState.Canceling
-        {
+        } else if newState == MKAnnotationViewDragState.Ending || newState == MKAnnotationViewDragState.Canceling {
             view.dragState = MKAnnotationViewDragState.None;
             if (view.annotation is MapPin) {
                 let pinData = view.annotation as! MapPin
@@ -344,6 +362,16 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 self.memoryAlbum.save()
             }
         }
+    }
+    
+    func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
+        if overlay is MKPolyline {
+            var polylineRenderer = MKPolylineRenderer(overlay: overlay)
+            polylineRenderer.strokeColor = UIColor(red: 0, green: 0, blue: 1, alpha: 0.2)
+            polylineRenderer.lineWidth = 4
+            return polylineRenderer
+        }
+        return nil
     }
 }
 

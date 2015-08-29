@@ -149,7 +149,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
                 rewordingMemory?.description = textView.text
                 memories.memoryAlbum.save()
             } else {
-                memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation!)
+                memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation)
                 tabBarController?.popToRootViewControllerAnimated(true)
             }
             descriptionModal.hide()

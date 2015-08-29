@@ -14,8 +14,18 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.85000002384185791" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="F7u-nF-eJV">
+                    <rect key="frame" x="0.0" y="57" width="260" height="48"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="8E4-6q-ajX"/>
+                        <constraint firstAttribute="width" constant="300" id="T5E-kF-1AI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
+                </textView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kW-pT-0VD">
-                    <rect key="frame" x="0.0" y="133" width="260" height="40"/>
+                    <rect key="frame" x="0.0" y="17" width="260" height="40"/>
                     <color key="backgroundColor" red="0.387117722" green="0.41761363639999999" blue="0.11454920220000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="REc-yv-gfg"/>
@@ -25,23 +35,26 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.85000002384185791" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="F7u-nF-eJV">
-                    <rect key="frame" x="0.0" y="173" width="260" height="48"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="48" id="8E4-6q-ajX"/>
-                        <constraint firstAttribute="width" constant="300" id="T5E-kF-1AI"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                </textView>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2in-bI-i8l" userLabel="cancel">
+                    <rect key="frame" x="8" y="107" width="367" height="560"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelSearch:" destination="-1" eventType="touchUpInside" id="hbg-ZN-wMa"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="2in-bI-i8l" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="DGr-2m-hJb"/>
                 <constraint firstItem="F7u-nF-eJV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="QVN-Qe-Hzl"/>
                 <constraint firstItem="F7u-nF-eJV" firstAttribute="top" secondItem="9kW-pT-0VD" secondAttribute="bottom" id="SGA-5b-Of6"/>
+                <constraint firstAttribute="bottom" secondItem="2in-bI-i8l" secondAttribute="bottom" id="ZPG-dU-EuU"/>
                 <constraint firstItem="9kW-pT-0VD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="b0q-OX-P7z"/>
+                <constraint firstItem="2in-bI-i8l" firstAttribute="top" secondItem="F7u-nF-eJV" secondAttribute="bottom" constant="2" id="ihR-i1-Bq5"/>
                 <constraint firstItem="9kW-pT-0VD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="60" id="jBk-O7-Psn"/>
+                <constraint firstAttribute="trailing" secondItem="2in-bI-i8l" secondAttribute="trailing" id="vvA-6Q-V6W"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
