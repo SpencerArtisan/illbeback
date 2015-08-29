@@ -264,9 +264,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         var friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         shareWith(friend!)
         hideShareModal(sender)
-        shapeModal?.slideUpFromTop(view)
-        shapeController.clear()
-        showPinsInShape()
     }
     
     func shareWith(friend: String) {
@@ -285,6 +282,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
         
         pinsToShare = []
+        shapeModal?.slideUpFromTop(view)
+        shapeController.clear()
+        showPinsInShape()
     }
 
     func hideShareModal(sender: AnyObject?) {

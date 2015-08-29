@@ -30,11 +30,11 @@ public class Sharer {
                     var memoryString = given.value["memory"] as! String
                     var memory = Memory(memoryString: memoryString)
                     if (self.memoryAlbum.contains(memory) || receivedIds.filter({$0 == memory.id}).count > 0) {
-                        println("Already have memory /(memory.type). Ignoring share")
+                        println("Already have memory \(memory.type). Ignoring share")
                     } else {
                         receivedIds.append(memory.id)
                         memory.recentShare = true
-                        println("Received memory /(memoryString)")
+                        println("Received memory \(memoryString)")
                         var key = self.imageKey(memory)
                         self.downloadImage(memory, key: key, onComplete: {
                             println("Shared photo downloaded.  Notifying observers...")
