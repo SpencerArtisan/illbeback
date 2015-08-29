@@ -24,11 +24,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var rephotoController: RephotoController!
     var rememberController: RememberController!
     var zoomController: ZoomController!
-    var shareModal: Modal?
+    var shareController: ShareController!
+
     var newUserModal: Modal?
     var searchModal: Modal?
     var shapeModal: Modal?
-    var pinsToShare: [MapPinView] = []
+
     let user = User()
     var messageModals: [Modal] = []
     var newUserLabel: UILabel!
@@ -62,7 +63,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             }
         }
 
-        shareMemory(sharing)
+        shareController.shareMemory(sharing)
     }
 
 
@@ -71,7 +72,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         initLocationManager()
         initMap()
         initMemories()
-        self.shareModal = Modal(viewName: "ShareView", owner: self)
         self.newUserModal = Modal(viewName: "NewUser", owner: self)
         self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
@@ -80,6 +80,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.rememberController = RememberController(album: photoAlbum)
         self.zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
         self.shapeController = ShapeController(map: map, memories: self)
+        self.shareController = ShareController(user: user, memories: self)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
@@ -151,6 +152,15 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         })
     }
     
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+    
     private func ensureUserKnown() {
         if (!user.hasName()) {
             newUserLabel.text = "Your sharing name"
@@ -160,7 +170,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
     }
     
-    private func showMessage(text: String, color: UIColor, time: Double) {
+    func showMessage(text: String, color: UIColor, time: Double) {
         var messageModal = Modal(viewName: "MessageView", owner: self)
         var message = messageModal.findElementByTag(1) as! UIButton
         message.backgroundColor = color
@@ -228,137 +238,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         map!.removeAnnotation(pin.annotation)
         map!.addAnnotation(pin.memory?.asMapPin())
         memoryAlbum.save()
-    }
-    
-    // Callback for button on the callout
-    func shareMemory(pins: [MapPinView]) {
-        shareModal?.slideOutFromLeft(self.view)
-        pinsToShare = pins
-
-        var tag = 3
-        let friends: [String] = user.getFriends()
-        for friend in friends {
-            var shareButton = shareModal?.findElementByTag(tag++) as! UIButton
-            shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
-            shareButton.hidden = false
-            shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
-            shareButton.enabled = false
-            delay(0.5) { shareButton.enabled = true }
-        }
-        
-        var newFriendButton = shareModal?.findElementByTag(2) as! UIButton
-        if (friends.count > 7) {
-            newFriendButton.hidden = true
-        } else {
-            newFriendButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
-            newFriendButton.enabled = false
-            delay(0.5) { newFriendButton.enabled = true }
-        }
-        var cancelButton = shareModal?.findElementByTag(1) as! UIButton
-        cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
-        cancelButton.enabled = false
-        delay(0.5) { cancelButton.enabled = true }
-    }
-
-    func shareMemoryConfirmed(sender: AnyObject?) {
-        var friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        shareWith(friend!)
-        hideShareModal(sender)
-    }
-    
-    func shareWith(friend: String) {
-        for pin in pinsToShare {
-            memoryAlbum.share(pin, from: user.getName(), to: friend)
-        }
-
-        if pinsToShare.count == 1 {
-            var memory = pinsToShare[0].memory
-            var title = "Shared \(memory!.type) with \(friend)"
-            var color = CategoryController.getColorForCategory(memory!.type)
-            self.showMessage(title, color: color, time: 1.6)
-        } else {
-            var title = "Shared \(pinsToShare.count) flags with \(friend)"
-            self.showMessage(title, color: CategoryController.getColorForCategory("Memory"), time: 1.6)
-        }
-        
-        pinsToShare = []
-        shapeModal?.slideUpFromTop(view)
-        shapeController.clear()
-        showPinsInShape()
-    }
-
-    func hideShareModal(sender: AnyObject?) {
-        shareModal?.slideInFromLeft(self.view)
-    }
-    
-    func shareWithNewFriend(sender: AnyObject?) {
-        hideShareModal(sender)
-        newUserLabel.text = "Your friend's name"
-        newUserText.becomeFirstResponder()
-        newUserText.text = ""
-        newUserModal?.slideOutFromRight(self.view)
-        var cancelButton2 = newUserModal?.findElementByTag(4) as! UIButton
-        cancelButton2.addTarget(self, action: "shareNewFriendCancelled:", forControlEvents: .TouchUpInside)
-        cancelButton2.enabled = false
-        delay(0.5) { cancelButton2.enabled = true }
-    }
-
-    // Callback for new friend dialogs
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        textView.text = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
-        if (text == "\n" && !textView.text.isEmpty) {
-            if (textView == self.searchText) {
-                println("SEARCH TEXT \(textView.text)")
-                searchModal?.slideInFromLeft(self.view)
-                searchText.resignFirstResponder()
-                
-                var geocoder = CLGeocoder()
-                geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-                    if let placemark = placemarks?[0] as? CLPlacemark {
-                        self.map.setCenterCoordinate(placemark.location.coordinate, animated: true)
-                    }
-                })
-            } else {
-                println("NEW USER TEXT \(textView.text)")
-        
-                newUserModal?.slideInFromRight(self.view)
-
-                if (!user.hasName()) {
-                    user.setName(textView.text)
-                    newUserText.resignFirstResponder()
-                } else {
-                    user.addFriend(textView.text)
-                    newUserText.resignFirstResponder()
-                    shareWith(textView.text)
-                }
-            }
-            
-            return false
-        }
-        return true
-        
-    }
-
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
-    }
-    
-    func shareMemoryCancelled(sender: AnyObject?) {
-        pinsToShare = []
-        shareModal?.slideInFromLeft(self.view)
-        ((sender) as! UIButton).removeTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
-    }
-    
-    func shareNewFriendCancelled(sender: AnyObject?) {
-        newUserText.resignFirstResponder()
-        pinsToShare = []
-        newUserModal?.slideInFromRight(self.view)
-        ((sender) as! UIButton).removeTarget(self, action: "shareNewFriendCancelled:", forControlEvents: .TouchUpInside)
     }
     
     // Callback for button on the callout
@@ -434,6 +313,42 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             return polylineRenderer
         }
         return nil
+    }
+    
+    // Callback for new friend dialogs
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        textView.text = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        if (text == "\n" && !textView.text.isEmpty) {
+            if (textView == self.searchText) {
+                println("SEARCH TEXT \(textView.text)")
+                searchModal?.slideInFromLeft(self.view)
+                searchText.resignFirstResponder()
+                
+                var geocoder = CLGeocoder()
+                geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+                    if let placemark = placemarks?[0] as? CLPlacemark {
+                        self.map.setCenterCoordinate(placemark.location.coordinate, animated: true)
+                    }
+                })
+            } else {
+                println("NEW USER TEXT \(textView.text)")
+                
+                newUserModal?.slideInFromRight(self.view)
+                
+                if (!user.hasName()) {
+                    user.setName(textView.text)
+                    newUserText.resignFirstResponder()
+                } else {
+                    user.addFriend(textView.text)
+                    newUserText.resignFirstResponder()
+                    shareController.shareWith(textView.text)
+                }
+            }
+            
+            return false
+        }
+        return true
+        
     }
 }
 

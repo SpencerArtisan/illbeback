@@ -86,7 +86,6 @@ class Camera : NSObject {
 
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?, orientation: UIDeviceOrientation) -> Void in
             self.snapButton.removeFromSuperview()
-            println("Picture taken with orientation " + orientation.rawValue.description)
             self.callback(image!, orientation)
             }, exactSeenImage: true)
     }

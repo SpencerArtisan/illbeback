@@ -86,16 +86,6 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="map" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-Di-Pbv">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
-                            <button contentMode="scaleToFill" misplaced="YES" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SbP-CO-Ehi" userLabel="photo">
-                                <rect key="frame" x="531" y="526" width="50" height="50"/>
-                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="camerablue" backgroundImage="Circle">
-                                    <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="takePhoto:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="tPm-NB-b6S"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNr-gZ-dda" userLabel="search">
                                 <rect key="frame" x="119" y="526" width="54" height="54"/>
                                 <state key="normal" image="Search blue" backgroundImage="Circle Small">
@@ -123,6 +113,22 @@
                                     <action selector="shape:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="8rc-sv-cU3"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OyB-ot-KZY">
+                                <rect key="frame" x="243" y="524" width="54" height="54"/>
+                                <state key="normal" image="Friend" backgroundImage="Circle Small">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button contentMode="scaleToFill" misplaced="YES" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SbP-CO-Ehi" userLabel="photo">
+                                <rect key="frame" x="504" y="511" width="80" height="80"/>
+                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="camerablue" backgroundImage="Circle">
+                                    <color key="titleShadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="takePhoto:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="tPm-NB-b6S"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -131,14 +137,16 @@
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="SbP-CO-Ehi" secondAttribute="bottom" constant="10" id="G3X-4G-uoo"/>
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="OYa-GC-pvf"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="trailing" secondItem="QS5-Rx-YEW" secondAttribute="trailingMargin" constant="80" id="Qdu-Nz-aXq"/>
-                            <constraint firstItem="ZNr-gZ-dda" firstAttribute="leading" secondItem="HH0-zd-1ZB" secondAttribute="trailing" constant="20" id="UDJ-0a-Tvp"/>
+                            <constraint firstItem="ZNr-gZ-dda" firstAttribute="leading" secondItem="HH0-zd-1ZB" secondAttribute="trailing" constant="10" id="UDJ-0a-Tvp"/>
+                            <constraint firstItem="OyB-ot-KZY" firstAttribute="leading" secondItem="DtY-Nv-kkq" secondAttribute="trailing" constant="10" id="WHi-6s-Fhe"/>
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" id="Wok-zH-KRA"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="HH0-zd-1ZB" secondAttribute="bottom" constant="10" id="XQX-kq-D2j"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="ZNr-gZ-dda" secondAttribute="bottom" constant="10" id="cTm-LS-EHc"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="SbP-CO-Ehi" secondAttribute="bottom" constant="20" id="hDa-Ye-eUe"/>
-                            <constraint firstItem="HH0-zd-1ZB" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="10" id="m0Q-f7-ydZ"/>
+                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="OyB-ot-KZY" secondAttribute="bottom" constant="10" id="hOw-ZH-8Cg"/>
+                            <constraint firstItem="HH0-zd-1ZB" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="5" id="m0Q-f7-ydZ"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="trailing" secondItem="QS5-Rx-YEW" secondAttribute="trailingMargin" id="nZj-HI-kur"/>
-                            <constraint firstItem="DtY-Nv-kkq" firstAttribute="leading" secondItem="ZNr-gZ-dda" secondAttribute="trailing" constant="20" id="qI7-dj-CkZ"/>
+                            <constraint firstItem="DtY-Nv-kkq" firstAttribute="leading" secondItem="ZNr-gZ-dda" secondAttribute="trailing" constant="10" id="qI7-dj-CkZ"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="DtY-Nv-kkq" secondAttribute="bottom" constant="10" id="ya8-9D-VvO"/>
                         </constraints>
                         <variation key="default">
@@ -180,6 +188,7 @@
     <resources>
         <image name="Circle" width="100" height="100"/>
         <image name="Circle Small" width="50" height="50"/>
+        <image name="Friend" width="32" height="32"/>
         <image name="Pigeon" width="800" height="613"/>
         <image name="Search blue" width="32" height="32"/>
         <image name="Shape" width="32" height="32"/>

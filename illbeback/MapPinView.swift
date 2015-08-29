@@ -179,7 +179,6 @@ class MapPinView: MKAnnotationView {
     func createPhotoView() {
         if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return }
         var photo = UIImage(contentsOfFile: imageUrl!)
-        println("Loading image with orientation " + memory!.orientation.rawValue.description)
         photoView = UIImageView(frame: CGRectMake(
             isLandscape() ? 46 : 0,
             isLandscape() ? 129 : 0,
@@ -276,7 +275,7 @@ class MapPinView: MKAnnotationView {
             } else if (hitButton(point, button: deleteButton)) {
                 memoriesController?.deleteMemory(self)
             } else if (hitButton(point, button: shareButton)) {
-                memoriesController?.shareMemory([self])
+                memoriesController?.shareController.shareMemory([self])
             } else if (hitButton(point, button: photoButton)) {
                 memoriesController?.rephotoMemory(self)
             } else if (hitButton(point, button: subtitleView)) {
