@@ -49,7 +49,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.rephotoController = RephotoController(album: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum)
         self.zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
-        self.shapeController = ShapeController(map: map)
+        self.shapeController = ShapeController(map: map, memories: self)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!

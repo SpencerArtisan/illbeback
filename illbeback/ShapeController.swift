@@ -13,13 +13,16 @@ class ShapeController {
     var map: MKMapView!
     var corners: [ShapeCorner] = []
     var polyline: MKPolyline?
+    var memories: MemoriesController!
     
-    init(map: MKMapView) {
+    init(map: MKMapView, memories: MemoriesController) {
         self.map = map
+        self.memories = memories
     }
     
     func move(corner: ShapeCorner) {
         drawShape()
+        println(shapeContains(memories.here.coordinate))
     }
     
     func beginShape() {
@@ -58,8 +61,7 @@ class ShapeController {
     }
 
     func drawShape() {
-        var points = corners.map({(var corner) -> CLLocationCoordinate2D in corner.coordinate})
-        points.append(points[0])
+        var points = shape()
         if (polyline != nil) {
             self.map.removeOverlay(polyline)
         }
@@ -69,5 +71,37 @@ class ShapeController {
     
     func pointAt(x: Double, y: Double) -> CLLocationCoordinate2D {
         return MKCoordinateForMapPoint(MKMapPointMake(x, y))
+    }
+    
+    func shape() -> [CLLocationCoordinate2D] {
+        var points = corners.map({(var corner) -> CLLocationCoordinate2D in corner.coordinate})
+        points.append(points[0])
+        return points
+    }
+    
+    
+    func shapeContains(test: CLLocationCoordinate2D) -> Bool {
+        var polygon = shape()
+        
+        if polygon.count <= 1 {
+            return false //or if first point = test -> return true
+        }
+        
+        var p = UIBezierPath()
+        let firstPoint = toPoint(polygon[0]) as CGPoint
+        
+        p.moveToPoint(firstPoint)
+        
+        for index in 1...polygon.count-1 {
+            p.addLineToPoint(toPoint(polygon[index]))
+        }
+        
+        p.closePath()
+        
+        return p.containsPoint(toPoint(test))
+    }
+    
+    func toPoint(coordinate: CLLocationCoordinate2D) -> CGPoint {
+        return CGPointMake(CGFloat(coordinate.longitude), CGFloat(coordinate.latitude))
     }
 }
