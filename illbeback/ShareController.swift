@@ -25,10 +25,13 @@ class ShareController : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // Callback for button on the callout
-    func shareMemory(pins: [MapPinView]) {
+    func editFriends() {
         shareModal?.slideOutFromLeft(memories.view)
-        pinsToShare = pins
+        showEditFriends()
+    }
+ 
+    func showEditFriends() {
+        var deleteImage = UIImage(named: "trash")!
         
         var tag = 3
         let friends: [String] = user.getFriends()
@@ -36,8 +39,50 @@ class ShareController : UIViewController {
             var shareButton = shareModal?.findElementByTag(tag++) as! UIButton
             shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
             shareButton.hidden = false
+            shareButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
+            shareButton.addTarget(self, action: "deleteFriendConfirmed:", forControlEvents: .TouchUpInside)
+            shareButton.enabled = true
+            shareButton.setImage(deleteImage, forState: UIControlState.Normal)
+        }
+        while (tag <= 10) {
+            var shareButton = shareModal?.findElementByTag(tag++) as! UIButton
+            shareButton.hidden = true
+        }
+        
+        var newFriendButton = shareModal?.findElementByTag(2) as! UIButton
+        if (friends.count > 7) {
+            newFriendButton.hidden = true
+        } else {
+            newFriendButton.hidden = false
+            newFriendButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
+            newFriendButton.addTarget(self, action: "createNewFriend:", forControlEvents: .TouchUpInside)
+            newFriendButton.enabled = true
+            newFriendButton.setImage(nil, forState: UIControlState.Normal)
+        }
+        var cancelButton = shareModal?.findElementByTag(1) as! UIButton
+        cancelButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
+        cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
+        cancelButton.enabled = false
+        delay(0.5) { cancelButton.enabled = true }
+    }
+    
+    // Callback for button on the callout
+    func shareMemory(pins: [MapPinView]) {
+        pinsToShare = pins
+
+        shareModal?.slideOutFromLeft(memories.view)
+        var shareImage = UIImage(named: "share")!
+       
+        var tag = 3
+        let friends: [String] = user.getFriends()
+        for friend in friends {
+            var shareButton = shareModal?.findElementByTag(tag++) as! UIButton
+            shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
+            shareButton.hidden = false
+            shareButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
             shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
             shareButton.enabled = false
+            shareButton.setImage(shareImage, forState: UIControlState.Normal)
             delay(0.5) { shareButton.enabled = true }
         }
         
@@ -45,11 +90,14 @@ class ShareController : UIViewController {
         if (friends.count > 7) {
             newFriendButton.hidden = true
         } else {
+            newFriendButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
             newFriendButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
             newFriendButton.enabled = false
+            newFriendButton.setImage(shareImage, forState: UIControlState.Normal)
             delay(0.5) { newFriendButton.enabled = true }
         }
         var cancelButton = shareModal?.findElementByTag(1) as! UIButton
+        cancelButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
         cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
         cancelButton.enabled = false
         delay(0.5) { cancelButton.enabled = true }
@@ -62,6 +110,11 @@ class ShareController : UIViewController {
     }
     
     func shareWith(friend: String) {
+        if (pinsToShare.count == 0) {
+            editFriends()
+            return
+        }
+        
         for pin in pinsToShare {
             memories.memoryAlbum.share(pin, from: user.getName(), to: friend)
         }
@@ -98,6 +151,18 @@ class ShareController : UIViewController {
         delay(0.5) { cancelButton2.enabled = true }
     }
     
+    func createNewFriend(sender: AnyObject?) {
+        hideShareModal(sender)
+        memories.newUserLabel.text = "Your friend's name"
+        memories.newUserText.becomeFirstResponder()
+        memories.newUserText.text = ""
+        memories.newUserModal?.slideOutFromRight(memories.view)
+        var cancelButton2 = memories.newUserModal?.findElementByTag(4) as! UIButton
+        cancelButton2.addTarget(self, action: "createNewFriendCancelled:", forControlEvents: .TouchUpInside)
+        cancelButton2.enabled = false
+        delay(0.5) { cancelButton2.enabled = true }
+    }
+    
     func delay(delay:Double, closure:()->()) {
         dispatch_after(
             dispatch_time(
@@ -119,5 +184,17 @@ class ShareController : UIViewController {
         memories.newUserModal?.slideInFromRight(memories.view)
         ((sender) as! UIButton).removeTarget(self, action: "shareNewFriendCancelled:", forControlEvents: .TouchUpInside)
     }
-
+    
+    func deleteFriendConfirmed(sender: AnyObject?) {
+        var friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        user.removeFriend(friend!)
+        showEditFriends()
+    }
+    
+    func createNewFriendCancelled(sender: AnyObject?) {
+        memories.newUserText.resignFirstResponder()
+        pinsToShare = []
+        memories.newUserModal?.slideInFromRight(memories.view)
+        showEditFriends()
+    }
 }

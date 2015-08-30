@@ -16,6 +16,8 @@ public class Sharer {
                 println("Shared photo uploaded.  Uploading memory details...")
                 self.uploadMemory(from, to: to, memory: memory)
             })
+        } else {
+            self.uploadMemory(from, to: to, memory: memory)            
         }
     }
     

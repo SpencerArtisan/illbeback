@@ -39,6 +39,12 @@ class User {
         write()
     }
     
+    func removeFriend(friend: String) {
+        var index = find(friends!, friend)
+        friends?.removeAtIndex(index!)
+        write()
+    }
+    
     private func write() {
         var path = getPath()
         props?.setValue(friends!, forKey: "Friends")

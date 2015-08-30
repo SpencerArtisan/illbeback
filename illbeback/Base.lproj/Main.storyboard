@@ -118,6 +118,9 @@
                                 <state key="normal" image="Friend" backgroundImage="Circle Small">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="friends:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="r3f-G8-alf"/>
+                                </connections>
                             </button>
                             <button contentMode="scaleToFill" misplaced="YES" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SbP-CO-Ehi" userLabel="photo">
                                 <rect key="frame" x="504" y="511" width="80" height="80"/>

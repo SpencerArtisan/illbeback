@@ -115,6 +115,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         shapeModal?.slideDownFromTop(self.view)
     }
     
+    @IBAction func friends(sender: AnyObject) {
+        shareController.editFriends()
+    }
+    
     // Callback for button on the callout
     func rephotoMemory(pin: MapPinView) {
         if (self.navigationController?.topViewController != rephotoController) {
