@@ -10,31 +10,30 @@ import MapKit
 
 
 class MapPinView: MKAnnotationView {
-    let WIDTH_WITHOUT_PHOTO: CGFloat = 220.0
-    let HEIGHT_WITHOUT_PHOTO: CGFloat = 250.0
-    let WIDTH_WITH_PORTRAIT_PHOTO: CGFloat = 330.0
-    let HEIGHT_WITH_PORTRAIT_PHOTO: CGFloat = 280.0
-    let WIDTH_WITH_LANDSCAPE_PHOTO: CGFloat = 230.0
-    let HEIGHT_WITH_LANDSCAPE_PHOTO: CGFloat = 310.0
+    let WITHOUT_PHOTO = CGSize(width: 220.0, height: 250.0)
+    let WITH_PORTRAIT_PHOTO = CGSize(width: 330.0, height: 280.0)
+    let WITH_LANDSCAPE_PHOTO = CGSize(width: 230.0, height: 310.0)
     
-    var memoriesController:MemoriesController?
-    var memory: Memory?
-    var hitOutside: Bool = true
     var calloutView: UIView?
+    var photoView: UIImageView?
+    var labelView: UIView?
+    
     var deleteButton: UIButton?
     var photoButton: UIButton?
     var shareButton: UIButton?
-    var imageUrl: String?
-    var photoView: UIImageView?
+
     var titleView: UILabel?
     var originatorView: UILabel?
     var acceptButton: UILabel?
     var declineButton: UILabel?
-    var labelView: UIView?
     var subtitleView: UILabel?
+
+    var memoriesController:MemoriesController?
+    var memory: Memory?
+    var hitOutside: Bool = true
+    var imageUrl: String?
     var labelArea: CGRect?
-    var calloutWidth: CGFloat?
-    var calloutHeight: CGFloat?
+    var calloutSize: CGSize?
     
     
     init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
@@ -99,15 +98,18 @@ class MapPinView: MKAnnotationView {
             createPhotoView()
             
             labelArea = CGRect(
-                x: photoView == nil ? 0 : (isLandscape() ? 0 : WIDTH_WITH_PORTRAIT_PHOTO / 2),
+                x: photoView == nil ? 0 : (isLandscape() ? 0 : WITH_PORTRAIT_PHOTO.width / 2),
                 y: 0,
-                width: photoView == nil ? WIDTH_WITHOUT_PHOTO :
-                    (isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO : (WIDTH_WITH_PORTRAIT_PHOTO / 2)),
-                height: photoView == nil ? HEIGHT_WITHOUT_PHOTO :
-                    (isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO / 2 + 20: HEIGHT_WITH_PORTRAIT_PHOTO))
+                width: photoView == nil ? WITHOUT_PHOTO.width :
+                    (isLandscape() ? WITH_LANDSCAPE_PHOTO.width : WITH_PORTRAIT_PHOTO.width / 2),
+                height: photoView == nil ? WITHOUT_PHOTO.height :
+                    (isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 + 20: WITH_PORTRAIT_PHOTO.height))
 
-            calloutWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : (isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO : WIDTH_WITH_PORTRAIT_PHOTO)
-            calloutHeight = photoView == nil ? HEIGHT_WITHOUT_PHOTO : (isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO : HEIGHT_WITH_PORTRAIT_PHOTO)
+            calloutSize = CGSize(
+                width: photoView == nil ? WITHOUT_PHOTO.width :
+                    (isLandscape() ? WITH_LANDSCAPE_PHOTO.width : WITH_PORTRAIT_PHOTO.width),
+                height: photoView == nil ? WITHOUT_PHOTO.height :
+                    (isLandscape() ? WITH_LANDSCAPE_PHOTO.height : WITH_PORTRAIT_PHOTO.height))
             
             createSubtitleLabel()
             createTitleLabel()
@@ -149,7 +151,11 @@ class MapPinView: MKAnnotationView {
     
     func createCalloutView() {
         self.calloutView = UIView()
-        self.calloutView?.frame = CGRectMake(-calloutWidth!/2 + 15, -calloutHeight! - 10, calloutWidth!, calloutHeight!)
+        self.calloutView?.frame = CGRect(
+            x: -calloutSize!.width/2 + 15,
+            y: -calloutSize!.height - 10,
+            width: calloutSize!.width,
+            height: calloutSize!.height)
         self.calloutView?.backgroundColor = UIColor.whiteColor()
         self.calloutView?.layer.cornerRadius = 10
         self.calloutView?.addSubview(labelView!)
@@ -184,8 +190,8 @@ class MapPinView: MKAnnotationView {
         photoView = UIImageView(frame: CGRectMake(
             isLandscape() ? 46 : 0,
             isLandscape() ? 129 : 0,
-            isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO / 2 - 17 : WIDTH_WITH_PORTRAIT_PHOTO/2 + 1,
-            isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO - 2 : HEIGHT_WITH_PORTRAIT_PHOTO))
+            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 17 : WITH_PORTRAIT_PHOTO.width/2 + 1,
+            isLandscape() ? WITH_LANDSCAPE_PHOTO.width - 2 : WITH_PORTRAIT_PHOTO.height))
         photoView!.image = photo
         if (isLandscape()) {
             var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
