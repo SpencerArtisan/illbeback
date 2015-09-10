@@ -176,7 +176,86 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		97A3533A1A800B9500973CAC = {
+		97662C8E1BA2218E00ACFF3A /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				97FE667F1A9A19570007FC2C /* User.swift */,
+				97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */,
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
+		97662C901BA2228800ACFF3A /* Pins */ = {
+			isa = PBXGroup;
+			children = (
+				97E3B9171A857A00007DB06E /* MapPin.swift */,
+				972006A01A90ECC100B5E74C /* MapPinView.swift */,
+				972006A21A90ED2B00B5E74C /* MapPinCallout.swift */,
+			);
+			name = Pins;
+			sourceTree = "<group>";
+		};
+		97662C911BA222B100ACFF3A /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				97767D531B91901600B6A827 /* ShapeController.swift */,
+				97767D571B91B2BD00B6A827 /* ShapeCorner.swift */,
+				97767D591B91B3D800B6A827 /* ShapeCornerView.swift */,
+				97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */,
+			);
+			name = Shapes;
+			sourceTree = "<group>";
+		};
+		97662C921BA222D100ACFF3A /* Memories */ = {
+			isa = PBXGroup;
+			children = (
+				976696EC1A8A9EF4004CB60D /* CategoryController.swift */,
+				97420BBD1A92A0320076E561 /* AddMemoryController.swift */,
+				97A3534C1A800B9500973CAC /* MemoriesController.swift */,
+				97F438161A991CEC00A33FD2 /* Memory.swift */,
+				97140FD81A99282300B2F49A /* MemoryAlbum.swift */,
+				972006A61A9140FB00B5E74C /* DescriptionView.xib */,
+				97767D511B9088F300B6A827 /* SearchView.xib */,
+				976696EE1A8AA317004CB60D /* CategoryView.xib */,
+			);
+			name = Memories;
+			sourceTree = "<group>";
+		};
+		97662C931BA2230100ACFF3A /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				97A3534A1A800B9500973CAC /* RememberController.swift */,
+				97EA3FFC1AFE078D005507BF /* RephotoController.swift */,
+				975CD7431AFFD6E800662BFC /* ZoomController.swift */,
+				972006A41A910E7500B5E74C /* PhotoAlbum.swift */,
+				979F850A1AA11B8600A11F7F /* Camera.swift */,
+				97EA40021AFEB74C005507BF /* shutter.mp3 */,
+			);
+			name = Photo;
+			sourceTree = "<group>";
+		};
+		97662C941BA2231A00ACFF3A /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				9717D3EE1B9254D3006455D8 /* ShareController.swift */,
+				9725CD431A98D58B0081C1B3 /* Sharer.swift */,
+				97FE667B1A99EB1E0007FC2C /* ShareView.xib */,
+			);
+			name = Share;
+			sourceTree = "<group>";
+		};
+		97662C951BA2236100ACFF3A /* General */ = {
+			isa = PBXGroup;
+			children = (
+				97FE667D1A99FC220007FC2C /* Modal.swift */,
+				97A353531A800B9500973CAC /* LaunchScreen.xib */,
+				97FE66831A9A50C60007FC2C /* MessageView.xib */,
+				97EA3FFE1AFE9A1C005507BF /* Black.xib */,
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
+		97662C961BA2237C00ACFF3A /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
 				9725CD411A98D2C60081C1B3 /* SystemConfiguration.framework */,
@@ -190,6 +269,14 @@
 				9759BF6F1A80318300B945CB /* ImageIO.framework */,
 				9759BF6D1A802C4100B945CB /* CoreLocation.framework */,
 				97A3536C1A801CFA00973CAC /* MapKit.framework */,
+			);
+			name = Infrastructure;
+			sourceTree = "<group>";
+		};
+		97A3533A1A800B9500973CAC = {
+			isa = PBXGroup;
+			children = (
+				97662C961BA2237C00ACFF3A /* Infrastructure */,
 				97A353451A800B9500973CAC /* illbeback */,
 				97A3535D1A800B9500973CAC /* illbebackTests */,
 				97A353441A800B9500973CAC /* Products */,
@@ -210,41 +297,15 @@
 		97A353451A800B9500973CAC /* illbeback */ = {
 			isa = PBXGroup;
 			children = (
-				97EA40021AFEB74C005507BF /* shutter.mp3 */,
-				9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */,
-				97A353481A800B9500973CAC /* AppDelegate.swift */,
-				97A3534A1A800B9500973CAC /* RememberController.swift */,
-				97420BBD1A92A0320076E561 /* AddMemoryController.swift */,
-				97A3534C1A800B9500973CAC /* MemoriesController.swift */,
-				97A3534E1A800B9500973CAC /* Main.storyboard */,
 				97A353461A800B9500973CAC /* Supporting Files */,
 				97A3536A1A800EF500973CAC /* Media.xcassets */,
-				97E3B9171A857A00007DB06E /* MapPin.swift */,
-				972006A01A90ECC100B5E74C /* MapPinView.swift */,
-				972006A21A90ED2B00B5E74C /* MapPinCallout.swift */,
-				976696EC1A8A9EF4004CB60D /* CategoryController.swift */,
-				972006A41A910E7500B5E74C /* PhotoAlbum.swift */,
-				9725CD431A98D58B0081C1B3 /* Sharer.swift */,
-				97F438161A991CEC00A33FD2 /* Memory.swift */,
-				97140FD81A99282300B2F49A /* MemoryAlbum.swift */,
-				97FE667D1A99FC220007FC2C /* Modal.swift */,
-				97FE667F1A9A19570007FC2C /* User.swift */,
-				97A353531A800B9500973CAC /* LaunchScreen.xib */,
-				972006A61A9140FB00B5E74C /* DescriptionView.xib */,
-				97767D511B9088F300B6A827 /* SearchView.xib */,
-				976696EE1A8AA317004CB60D /* CategoryView.xib */,
-				97FE667B1A99EB1E0007FC2C /* ShareView.xib */,
-				97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */,
-				97FE66831A9A50C60007FC2C /* MessageView.xib */,
-				97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */,
-				97EA3FFE1AFE9A1C005507BF /* Black.xib */,
-				979F850A1AA11B8600A11F7F /* Camera.swift */,
-				97EA3FFC1AFE078D005507BF /* RephotoController.swift */,
-				975CD7431AFFD6E800662BFC /* ZoomController.swift */,
-				97767D531B91901600B6A827 /* ShapeController.swift */,
-				97767D571B91B2BD00B6A827 /* ShapeCorner.swift */,
-				97767D591B91B3D800B6A827 /* ShapeCornerView.swift */,
-				9717D3EE1B9254D3006455D8 /* ShareController.swift */,
+				97662C901BA2228800ACFF3A /* Pins */,
+				97662C931BA2230100ACFF3A /* Photo */,
+				97662C941BA2231A00ACFF3A /* Share */,
+				97662C921BA222D100ACFF3A /* Memories */,
+				97662C951BA2236100ACFF3A /* General */,
+				97662C8E1BA2218E00ACFF3A /* Users */,
+				97662C911BA222B100ACFF3A /* Shapes */,
 			);
 			path = illbeback;
 			sourceTree = "<group>";
@@ -252,6 +313,9 @@
 		97A353461A800B9500973CAC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */,
+				97A353481A800B9500973CAC /* AppDelegate.swift */,
+				97A3534E1A800B9500973CAC /* Main.storyboard */,
 				9759BF6B1A802AD300B945CB /* illbebackinfo.plist */,
 				97A353471A800B9500973CAC /* Info.plist */,
 				9772846B1A8A818B00CE628D /* user.plist */,
