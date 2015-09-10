@@ -10,20 +10,20 @@ import MapKit
 
 
 class MapPinView: MKAnnotationView {
-    let WIDTH: CGFloat = 330.0
-    let HEIGHT: CGFloat = 280.0
     let WIDTH_WITHOUT_PHOTO: CGFloat = 220.0
     let HEIGHT_WITHOUT_PHOTO: CGFloat = 250.0
+    let WIDTH_WITH_PORTRAIT_PHOTO: CGFloat = 330.0
+    let HEIGHT_WITH_PORTRAIT_PHOTO: CGFloat = 280.0
     let WIDTH_WITH_LANDSCAPE_PHOTO: CGFloat = 230.0
     let HEIGHT_WITH_LANDSCAPE_PHOTO: CGFloat = 310.0
     
-    var hitOutside: Bool = true
     var memoriesController:MemoriesController?
+    var memory: Memory?
+    var hitOutside: Bool = true
     var calloutView: UIView?
     var deleteButton: UIButton?
     var photoButton: UIButton?
     var shareButton: UIButton?
-    var memory: Memory?
     var imageUrl: String?
     var photoView: UIImageView?
     var titleView: UILabel?
@@ -32,12 +32,10 @@ class MapPinView: MKAnnotationView {
     var declineButton: UILabel?
     var labelView: UIView?
     var subtitleView: UILabel?
-    var labelAreaWidth: CGFloat?
-    var labelAreaHeight: CGFloat?
-    var labelAreaLeft: CGFloat?
-    var labelAreaTop: CGFloat?
+    var labelArea: CGRect?
     var calloutWidth: CGFloat?
     var calloutHeight: CGFloat?
+    
     
     init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
         super.init(annotation: nil, reuseIdentifier: nil)
@@ -100,12 +98,16 @@ class MapPinView: MKAnnotationView {
         if (calloutView == nil) {
             createPhotoView()
             
-            labelAreaWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : (isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO : (WIDTH / 2))
-            labelAreaHeight = photoView == nil ? HEIGHT_WITHOUT_PHOTO : (isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO / 2 + 20: HEIGHT)
-            labelAreaLeft = photoView == nil ? 0 : (isLandscape() ? 0 : WIDTH / 2)
-            labelAreaTop = 0
-            calloutWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : (isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO : WIDTH)
-            calloutHeight = photoView == nil ? HEIGHT_WITHOUT_PHOTO : (isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO : HEIGHT)
+            labelArea = CGRect(
+                x: photoView == nil ? 0 : (isLandscape() ? 0 : WIDTH_WITH_PORTRAIT_PHOTO / 2),
+                y: 0,
+                width: photoView == nil ? WIDTH_WITHOUT_PHOTO :
+                    (isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO : (WIDTH_WITH_PORTRAIT_PHOTO / 2)),
+                height: photoView == nil ? HEIGHT_WITHOUT_PHOTO :
+                    (isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO / 2 + 20: HEIGHT_WITH_PORTRAIT_PHOTO))
+
+            calloutWidth = photoView == nil ? WIDTH_WITHOUT_PHOTO : (isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO : WIDTH_WITH_PORTRAIT_PHOTO)
+            calloutHeight = photoView == nil ? HEIGHT_WITHOUT_PHOTO : (isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO : HEIGHT_WITH_PORTRAIT_PHOTO)
             
             createSubtitleLabel()
             createTitleLabel()
@@ -127,7 +129,7 @@ class MapPinView: MKAnnotationView {
     }
    
     func createLabelView() {
-        labelView = UIView(frame: CGRectMake(labelAreaLeft!, labelAreaTop!, labelAreaWidth!, labelAreaHeight!))
+        labelView = UIView(frame: labelArea!)
         labelView!.backgroundColor = UIColor.whiteColor()
         labelView!.addSubview(titleView!)
         if (memoriesController?.user.getName() != memory?.originator) {
@@ -158,20 +160,20 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeleteButton() {
-        deleteButton = UIButton(frame: CGRectMake(labelAreaWidth! - 35, labelAreaHeight! - 39, 40, 40))
+        deleteButton = UIButton(frame: CGRectMake(labelArea!.width - 35, labelArea!.height - 39, 40, 40))
         var image = UIImage(named: "trash")
         deleteButton!.setImage(image, forState: UIControlState.Normal)
     }
     
     func createPhotoButton() {
-        photoButton = UIButton(frame: CGRectMake(labelAreaWidth! / 2 - 17, labelAreaHeight! - 38, 40, 40))
+        photoButton = UIButton(frame: CGRectMake(labelArea!.width / 2 - 17, labelArea!.height - 38, 40, 40))
         var image = UIImage(named: "camera")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         photoButton!.setImage(image, forState: UIControlState.Normal)
         photoButton?.tintColor = UIColor.blueColor()
     }
     
     func createShareButton() {
-        shareButton = UIButton(frame: CGRectMake(0, labelAreaHeight! - 40, 40, 40))
+        shareButton = UIButton(frame: CGRectMake(0, labelArea!.height - 40, 40, 40))
         var image = UIImage(named: "share")
         shareButton!.setImage(image, forState: UIControlState.Normal)
     }
@@ -182,8 +184,8 @@ class MapPinView: MKAnnotationView {
         photoView = UIImageView(frame: CGRectMake(
             isLandscape() ? 46 : 0,
             isLandscape() ? 129 : 0,
-            isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO / 2 - 17 : WIDTH/2 + 1,
-            isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO - 2 : HEIGHT))
+            isLandscape() ? HEIGHT_WITH_LANDSCAPE_PHOTO / 2 - 17 : WIDTH_WITH_PORTRAIT_PHOTO/2 + 1,
+            isLandscape() ? WIDTH_WITH_LANDSCAPE_PHOTO - 2 : HEIGHT_WITH_PORTRAIT_PHOTO))
         photoView!.image = photo
         if (isLandscape()) {
             var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
@@ -194,7 +196,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createTitleLabel() {
-        titleView = UILabel(frame: CGRectMake(0, 0, labelAreaWidth!, 40))
+        titleView = UILabel(frame: CGRectMake(0, 0, labelArea!.width, 40))
         titleView!.layer.cornerRadius = 0
         titleView!.numberOfLines = 0
         titleView!.textAlignment = NSTextAlignment.Center
@@ -204,7 +206,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createOriginatorLabel() {
-        originatorView = UILabel(frame: CGRectMake(0, 40, labelAreaWidth!, 25))
+        originatorView = UILabel(frame: CGRectMake(0, 40, labelArea!.width, 25))
         originatorView!.layer.cornerRadius = 0
         originatorView!.numberOfLines = 0
         originatorView!.textAlignment = NSTextAlignment.Center
@@ -216,7 +218,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createSubtitleLabel() {
-        subtitleView = UILabel(frame: CGRectMake(10, 65, labelAreaWidth! - 20, labelAreaHeight! - 110))
+        subtitleView = UILabel(frame: CGRectMake(10, 65, labelArea!.width - 20, labelArea!.height - 110))
         subtitleView!.backgroundColor = UIColor.whiteColor()
         subtitleView!.layer.cornerRadius = 0
         subtitleView!.numberOfLines = 0
@@ -225,7 +227,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createAcceptButton() {
-        acceptButton = UILabel(frame: CGRectMake(0, labelAreaHeight! - 40, labelAreaWidth! / 2, 40))
+        acceptButton = UILabel(frame: CGRectMake(0, labelArea!.height - 40, labelArea!.width / 2, 40))
         acceptButton!.layer.cornerRadius = 0
         acceptButton!.numberOfLines = 0
         acceptButton!.textAlignment = NSTextAlignment.Center
@@ -237,7 +239,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeclineButton() {
-        declineButton = UILabel(frame: CGRectMake(labelAreaWidth! / 2, labelAreaHeight! - 40, labelAreaWidth! / 2, 40))
+        declineButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 40, labelArea!.width / 2, 40))
         declineButton!.layer.cornerRadius = 0
         declineButton!.numberOfLines = 0
         declineButton!.textAlignment = NSTextAlignment.Center
