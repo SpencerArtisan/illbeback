@@ -13,25 +13,28 @@ public class PhotoAlbum {
     var folder: String
     
     public init() {
-        folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+        folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
     }
 
     public func delete(memoryId: String) {
         if (photoExists(memoryId)) {
-            var imagePath = getImagePath(memoryId)
-            println("Deleting file " + imagePath)
-            fileManager.removeItemAtPath(imagePath, error: nil)
+            let imagePath = getImagePath(memoryId)
+            print("Deleting file " + imagePath)
+            do {
+                try self.fileManager.removeItemAtPath(imagePath)
+            } catch {
+            }
         }
     }
     
     public func photoExists(memoryId: String) -> Bool {
-        var imagePath = getImagePath(memoryId)
+        let imagePath = getImagePath(memoryId)
         return fileManager.fileExistsAtPath(imagePath)
     }
     
     public func getMemoryImageUrl(memoryId: String) -> NSURL {
         var imagePath = getImagePath(memoryId)
-        return NSURL(fileURLWithPath: imagePath)!
+        return NSURL(fileURLWithPath: imagePath)
     }
     
     public func getMemoryImage(memoryId: String) -> UIImage? {
@@ -44,7 +47,7 @@ public class PhotoAlbum {
 
     public func saveMemoryImage(image: UIImage?, memoryId: String) {
         var imagePath = getImagePath(memoryId)
-        var imageData: NSData = UIImageJPEGRepresentation(image, 0.25)
+        var imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     

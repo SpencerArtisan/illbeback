@@ -18,9 +18,9 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     var memoryAlbum: MemoryAlbum?
     var pinToRephoto: MapPinView?
     
-    init(album: PhotoAlbum, memoryAlbum: MemoryAlbum) {
+    init(photoAlbum: PhotoAlbum, memoryAlbum: MemoryAlbum) {
         super.init(nibName: nil, bundle: nil)
-        photoAlbum = album
+        self.photoAlbum = photoAlbum
         self.memoryAlbum = memoryAlbum
     }
 
@@ -30,7 +30,10 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        camera = Camera(parentController: self, callback: { (image, orientation) in self.replacePhoto(image, orientation: orientation) })
+        camera = Camera(
+            parentController: self,
+            callback: { (image, orientation) in self.replacePhoto(image, orientation: orientation) }
+        )
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -43,9 +46,9 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     
     func replacePhoto(image: UIImage, orientation: UIDeviceOrientation) {
         pinToRephoto!.memory!.orientation = orientation
-        self.memoryAlbum!.save()
-        self.photoAlbum!.saveMemoryImage(image, memoryId: pinToRephoto!.memory!.id)
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        memoryAlbum!.save()
+        photoAlbum!.saveMemoryImage(image, memoryId: pinToRephoto!.memory!.id)
+        navigationController?.popToRootViewControllerAnimated(true)
         pinToRephoto!.refreshAndReopen()
     }
 }

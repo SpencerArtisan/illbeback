@@ -22,11 +22,11 @@ class CategoryController: UIViewController {
         let categoryView = NSBundle.mainBundle().loadNibNamed("CategoryView", owner: self, options: nil)[0] as? UIView
         let buttons = categoryView?.subviews
         
-        for button in buttons! {
-            if (button.currentTitle! != nil) {
-                var buttonTitle = button.currentTitle!!.uppercaseString as NSString
-                if (buttonTitle.containsString(category.uppercaseString)) {
-                    return button.backgroundColor!!
+        for buttonx in buttons! {
+            if let button = buttonx as? UIButton {
+                var buttonTitle = button.currentTitle!.uppercaseString as NSString
+                if buttonTitle.containsString(category.uppercaseString) {
+                    return button.backgroundColor!
                 }
             }
         }

@@ -40,24 +40,27 @@ class User {
     }
     
     func removeFriend(friend: String) {
-        var index = find(friends!, friend)
+        let index = friends!.indexOf(friend)
         friends?.removeAtIndex(index!)
         write()
     }
     
     private func write() {
-        var path = getPath()
+        let path = getPath()
         props?.setValue(friends!, forKey: "Friends")
         props?.setValue(name!, forKey: "Name")
         props?.writeToFile(path, atomically: true)
     }
     
     private func read() {
-        var path = getPath()
-        var fileManager = NSFileManager.defaultManager()
+        let path = getPath()
+        let fileManager = NSFileManager.defaultManager()
         if (!(fileManager.fileExistsAtPath(path))) {
-            var bundle : NSString = NSBundle.mainBundle().pathForResource("user", ofType: "plist")!
-            fileManager.copyItemAtPath(bundle as String, toPath: path, error:nil)
+            let bundle : NSString = NSBundle.mainBundle().pathForResource("user", ofType: "plist")!
+            do {
+                try fileManager.copyItemAtPath(bundle as String, toPath: path)
+            } catch {
+            }
         }
     
         props = NSDictionary(contentsOfFile: path)?.mutableCopy() as? NSDictionary
@@ -67,7 +70,7 @@ class User {
     }
     
     private func getPath() -> String {
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         return paths.stringByAppendingPathComponent("user.plist")
     }
 }

@@ -9,8 +9,8 @@ import MapKit
 
 class MapPin : NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
-    var title: String
-    var subtitle: String
+    var title: String?
+    var subtitle: String?
     var memory: Memory
     
     init(memory: Memory) {

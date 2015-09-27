@@ -38,10 +38,10 @@ public class MemoryAlbum {
     }
 
     func downloadNewShares(user: User, callback: (memory: Memory) -> Void) {
-        println("Checking for new shared memories")
+        print("Checking for new shared memories")
         if (user.hasName()) {
             sharer().retrieveShares(user.getName(), callback: {sender, memory in
-                println("Retrieved shared memory from " + sender + ": " + memory.asString())
+                print("Retrieved shared memory from " + sender + ": " + memory.asString())
                 self.add(memory)
                 callback(memory: memory)
             })
@@ -67,17 +67,17 @@ public class MemoryAlbum {
             memories.removeAtIndex(memoryIndex!)
             save()
         }
-        map.removeAnnotation(pin.annotation)
+        map.removeAnnotation(pin.annotation!)
     }
     
     func share(pin: MapPinView, from: String, to: String) {
         var memoryIndex = find(pin)
         if (memoryIndex != nil) {
             var memory = memories[memoryIndex!]
-            println("Sharing \(memory.type)")
+            print("Sharing \(memory.type)")
             sharer().share(from, to: to, memory: memory, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.id))
         } else {
-            println("WARN: Failed to share unknown memory")
+            print("WARN: Failed to share unknown memory")
         }
     }
 
@@ -92,20 +92,23 @@ public class MemoryAlbum {
     }
     
     func save() {
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var path = paths.stringByAppendingPathComponent("memories.plist")
-        var memoryStrings = memories.map {memory in memory.asString()}
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+        let path = paths.stringByAppendingPathComponent("memories.plist")
+        let memoryStrings = memories.map {memory in memory.asString()}
         props?.setValue(memoryStrings, forKey: "Memories")
         props?.writeToFile(path, atomically: true)
     }
 
     func read() {
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var path = paths.stringByAppendingPathComponent("memories.plist")
-        var fileManager = NSFileManager.defaultManager()
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+        let path = paths.stringByAppendingPathComponent("memories.plist")
+        let fileManager = NSFileManager.defaultManager()
         if (!(fileManager.fileExistsAtPath(path))) {
-            var bundle : NSString = NSBundle.mainBundle().pathForResource("memories", ofType: "plist")!
-            fileManager.copyItemAtPath(bundle as String, toPath: path, error:nil)
+            let bundle : NSString = NSBundle.mainBundle().pathForResource("memories", ofType: "plist")!
+            do {
+                try fileManager.copyItemAtPath(bundle as String, toPath: path)
+            } catch {
+            }
         }
         
         props = NSDictionary(contentsOfFile: path)?.mutableCopy() as? NSDictionary

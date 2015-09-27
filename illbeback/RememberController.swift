@@ -24,7 +24,10 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        camera = Camera(parentController: self, callback: {(image, orientation) in self.addMemory!.add(self, image: image, orientation: orientation)})
+        camera = Camera(
+            parentController: self,
+            callback: {(image, orientation) in self.addMemory!.add(self, image: image, orientation: orientation)}
+        )
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -35,6 +38,5 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
         camera!.stop()
         addMemory?.viewWillDisappear(animated)
     }
-    
 }
 

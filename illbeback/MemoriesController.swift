@@ -52,12 +52,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     @IBAction func share(sender: AnyObject) {
         var sharing:[MapPinView] = []
         
-        var allPins = map.annotations
+        let allPins = map.annotations
         for pin in allPins {
             if (pin is MapPin) {
                 let mapPin = pin as! MapPin
                 if shapeController.shapeContains(mapPin.memory.location) {
-                    var pinView = map.viewForAnnotation(mapPin) as! MapPinView
+                    let pinView = map.viewForAnnotation(mapPin) as! MapPinView
                     sharing.append(pinView)
                 }
             }
@@ -76,7 +76,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum)
-        self.rephotoController = RephotoController(album: photoAlbum, memoryAlbum: memoryAlbum)
+        self.rephotoController = RephotoController(photoAlbum: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum)
         self.zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
         self.shapeController = ShapeController(map: map, memories: self)
@@ -146,8 +146,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         ensureUserKnown()
         
         memoryAlbum.downloadNewShares(user, callback: {memory in
-            var color = CategoryController.getColorForCategory(memory.type)
-            var title = "New " + memory.type + " from " + memory.originator
+            let color = CategoryController.getColorForCategory(memory.type)
+            let title = "New " + memory.type + " from " + memory.originator
             self.delay(delaySeconds) {
                 self.showMessage(title, color: color, time: 3)
             }
@@ -175,8 +175,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     func showMessage(text: String, color: UIColor, time: Double) {
-        var messageModal = Modal(viewName: "MessageView", owner: self)
-        var message = messageModal.findElementByTag(1) as! UIButton
+        let messageModal = Modal(viewName: "MessageView", owner: self)
+        let message = messageModal.findElementByTag(1) as! UIButton
         message.backgroundColor = color
         message.setTitle(text, forState: UIControlState.Normal)
         messageModal.slideDownFromTop(self.view)
@@ -187,7 +187,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     func dismissMessage(sender: AnyObject?) {
-        var messageModal = messageModals.removeLast()
+        let messageModal = messageModals.removeLast()
         messageModal.slideUpFromTop(self.view)
     }
 
@@ -205,7 +205,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     func initMap() {
         map.delegate = self
-        var tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
+        let tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
         map.addGestureRecognizer(tapRecognizer)
         map.showsPointsOfInterest = false
         map.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
@@ -214,21 +214,21 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // User clicked on map - Add a memory there
     func foundTap(recognizer: UITapGestureRecognizer) {
         if (recognizer.state == UIGestureRecognizerState.Began) {
-            var point = recognizer.locationInView(self.map)
-            var tapPoint = self.map.convertPoint(point, toCoordinateFromView: self.view)
+            let point = recognizer.locationInView(self.map)
+            let tapPoint = self.map.convertPoint(point, toCoordinateFromView: self.view)
             self.addMemory.add(self, location: tapPoint)
         }
     }
 
     // Callback for location updates
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        here = locations[0] as! CLLocation
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        here = locations[0]
     }
 
     // Callback for button on the UI
     func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation?) {
-        var actualLocation = location == nil ? here.coordinate : location!
-        var memory = Memory(id: id, type: type, description: description, location: actualLocation, user: user, orientation: orientation)
+        let actualLocation = location == nil ? here.coordinate : location!
+        let memory = Memory(id: id, type: type, description: description, location: actualLocation, user: user, orientation: orientation)
         memoryAlbum.add(memory)
     }
     
@@ -239,8 +239,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     // Callback for button on the callout
     func updateMemory(pin: MapPinView) {
-        map!.removeAnnotation(pin.annotation)
-        map!.addAnnotation(pin.memory?.asMapPin())
+        map!.removeAnnotation(pin.annotation!)
+        map!.addAnnotation((pin.memory?.asMapPin())!)
         memoryAlbum.save()
     }
     
@@ -252,19 +252,18 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     // Callback for display pins on map
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation is MapPin) {
             let pinData = annotation as! MapPin
             var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
         
             if (pinView == nil) {
-                var imageUrl = photoAlbum.getImagePath(pinData.memory.id)
+                let imageUrl = photoAlbum.getImagePath(pinData.memory.id)
                 pinView = MapPinView(memoriesController: self, memory: pinData.memory, imageUrl: imageUrl)
             }
         
             return pinView
         } else if (annotation is ShapeCorner) {
-            let pinData = annotation as! ShapeCorner
             var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("corner") as! ShapeCornerView!
             
             if (pinView == nil) {
@@ -279,7 +278,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         return nil
     }
     
-    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
         if newState == MKAnnotationViewDragState.Starting {
             view.dragState = MKAnnotationViewDragState.Dragging
         } else if newState == MKAnnotationViewDragState.Ending || newState == MKAnnotationViewDragState.Canceling {
@@ -297,7 +296,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     func showPinsInShape() {
-        var allPins = map.annotations
+        let allPins = map.annotations
         for pin in allPins {
             if (pin is MapPin) {
                 let mapPin = pin as! MapPin
@@ -311,7 +310,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
         if overlay is MKPolyline {
-            var polylineRenderer = MKPolylineRenderer(overlay: overlay)
+            let polylineRenderer = MKPolylineRenderer(overlay: overlay)
             polylineRenderer.strokeColor = UIColor(red: 0, green: 0, blue: 1, alpha: 0.2)
             polylineRenderer.lineWidth = 4
             return polylineRenderer
@@ -324,18 +323,18 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         textView.text = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
         if (text == "\n" && !textView.text.isEmpty) {
             if (textView == self.searchText) {
-                println("SEARCH TEXT \(textView.text)")
+                print("SEARCH TEXT \(textView.text)")
                 searchModal?.slideInFromLeft(self.view)
                 searchText.resignFirstResponder()
                 
-                var geocoder = CLGeocoder()
-                geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-                    if let placemark = placemarks?[0] as? CLPlacemark {
-                        self.map.setCenterCoordinate(placemark.location.coordinate, animated: true)
+                let geocoder = CLGeocoder()
+                geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+                    if let placemark = placemarks?[0] {
+                        self.map.setCenterCoordinate(placemark.location!.coordinate, animated: true)
                     }
                 })
             } else {
-                println("NEW USER TEXT \(textView.text)")
+                print("NEW USER TEXT \(textView.text)")
                 
                 newUserModal?.slideInFromRight(self.view)
                 

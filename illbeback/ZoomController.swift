@@ -12,7 +12,6 @@ import Foundation
 import MapKit
 
 class ZoomController: UIViewController, UINavigationControllerDelegate {
-
     @IBOutlet weak var photo: UIImageView!
     
     override func viewDidLoad() {
@@ -21,10 +20,8 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
-
     }
     
     override func viewWillDisappear(animated: Bool) {
-   
     }
 }

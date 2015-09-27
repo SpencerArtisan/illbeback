@@ -28,13 +28,16 @@ class Camera : NSObject {
     func createSound() {
         let snapPath = NSBundle.mainBundle().pathForResource("shutter", ofType: "mp3")
         let snapURL = NSURL(fileURLWithPath: snapPath!)
-        snapPlayer = AVAudioPlayer(contentsOfURL: snapURL, error: nil)
+        do {
+            try snapPlayer = AVAudioPlayer(contentsOfURL: snapURL)
+        } catch {
+        }
         snapPlayer.prepareToPlay()
     }
     
     func start() {
         parentController.view.addSubview(self.snapButton)
-        var screenRect = UIScreen.mainScreen().bounds
+        let screenRect = UIScreen.mainScreen().bounds
         self.camera.attachToViewController(parentController, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
         self.parentController.view.addSubview(self.snapButton)
         camera.start()
@@ -52,7 +55,7 @@ class Camera : NSObject {
     }
     
     func createSnapButton() {
-        self.snapButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        self.snapButton = UIButton(type: UIButtonType.System)
         self.snapButton.frame = CGRectMake(0, 0, 70.0, 70.0)
         self.snapButton.clipsToBounds = true
         self.snapButton.layer.cornerRadius = 35.0

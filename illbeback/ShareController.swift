@@ -110,7 +110,7 @@ class ShareController : UIViewController {
     }
     
     func shareWith(friend: String) {
-        if (pinsToShare.count == 0) {
+        if pinsToShare.count == 0 {
             editFriends()
             return
         }
@@ -140,27 +140,23 @@ class ShareController : UIViewController {
     }
     
     func shareWithNewFriend(sender: AnyObject?) {
-        hideShareModal(sender)
-        memories.newUserLabel.text = "Your friend's name"
-        memories.newUserText.becomeFirstResponder()
-        memories.newUserText.text = ""
-        memories.newUserModal?.slideOutFromRight(memories.view)
-        var cancelButton2 = memories.newUserModal?.findElementByTag(4) as! UIButton
-        cancelButton2.addTarget(self, action: "shareNewFriendCancelled:", forControlEvents: .TouchUpInside)
-        cancelButton2.enabled = false
-        delay(0.5) { cancelButton2.enabled = true }
+        newFriend(sender, action: "shareNewFriendCancelled:")
     }
     
     func createNewFriend(sender: AnyObject?) {
+        newFriend(sender, action: "createNewFriendCancelled:")
+    }
+    
+    func newFriend(sender: AnyObject?, action: Selector) {
         hideShareModal(sender)
         memories.newUserLabel.text = "Your friend's name"
         memories.newUserText.becomeFirstResponder()
         memories.newUserText.text = ""
         memories.newUserModal?.slideOutFromRight(memories.view)
-        var cancelButton2 = memories.newUserModal?.findElementByTag(4) as! UIButton
-        cancelButton2.addTarget(self, action: "createNewFriendCancelled:", forControlEvents: .TouchUpInside)
-        cancelButton2.enabled = false
-        delay(0.5) { cancelButton2.enabled = true }
+        var cancelButton = memories.newUserModal?.findElementByTag(4) as! UIButton
+        cancelButton.addTarget(self, action: action, forControlEvents: .TouchUpInside)
+        cancelButton.enabled = false
+        delay(0.5) { cancelButton.enabled = true }
     }
     
     func delay(delay:Double, closure:()->()) {

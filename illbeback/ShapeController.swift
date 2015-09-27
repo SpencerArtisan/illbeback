@@ -27,7 +27,7 @@ class ShapeController : UIViewController {
     
     func clear() {
         if polyline != nil {
-            self.map.removeOverlay(polyline)
+            self.map.removeOverlay(polyline!)
         }
         for corner in corners {
             map!.removeAnnotation(corner)
@@ -37,7 +37,7 @@ class ShapeController : UIViewController {
     
     func move(corner: ShapeCorner) {
         drawShape()
-        println(shapeContains(memories.here.coordinate))
+        print(shapeContains(memories.here.coordinate))
     }
     
     func beginShape() {
@@ -80,10 +80,10 @@ class ShapeController : UIViewController {
     func drawShape() {
         var points = shape()
         if (polyline != nil) {
-            self.map.removeOverlay(polyline)
+            self.map.removeOverlay(polyline!)
         }
         polyline = MKPolyline(coordinates: &points, count: points.count)
-        self.map.addOverlay(polyline)
+        self.map.addOverlay(polyline!)
     }
     
     func pointAt(x: Double, y: Double) -> CLLocationCoordinate2D {

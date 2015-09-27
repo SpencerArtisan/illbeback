@@ -13,7 +13,7 @@ public class Sharer {
     func share(from: String, to: String, memory: Memory, imageUrl: NSURL?) {
         if (PhotoAlbum().photoExists(memory.id)) {
             uploadImage(imageUrl, key: imageKey(memory), onComplete: {
-                println("Shared photo uploaded.  Uploading memory details...")
+                print("Shared photo uploaded.  Uploading memory details...")
                 self.uploadMemory(from, to: to, memory: memory)
             })
         } else {
@@ -24,22 +24,22 @@ public class Sharer {
     func retrieveShares(to: String, callback: (from: String, memory: Memory) -> ()) {
         shareRoot(to).observeSingleEventOfType(.Value, withBlock: {
             snapshot in
-                var givenMemories = snapshot.children
+                let givenMemories = snapshot.children
                 var receivedIds:[String] = []
             
                 while let given: FDataSnapshot = givenMemories.nextObject() as? FDataSnapshot {
-                    var from = given.value["from"] as! String
-                    var memoryString = given.value["memory"] as! String
-                    var memory = Memory(memoryString: memoryString)
+                    let from = given.value["from"] as! String
+                    let memoryString = given.value["memory"] as! String
+                    let memory = Memory(memoryString: memoryString)
                     if (self.memoryAlbum.contains(memory) || receivedIds.filter({$0 == memory.id}).count > 0) {
-                        println("Already have memory \(memory.type). Ignoring share")
+                        print("Already have memory \(memory.type). Ignoring share")
                     } else {
                         receivedIds.append(memory.id)
                         memory.recentShare = true
-                        println("Received memory \(memoryString)")
-                        var key = self.imageKey(memory)
+                        print("Received memory \(memoryString)")
+                        let key = self.imageKey(memory)
                         self.downloadImage(memory, key: key, onComplete: {
-                            println("Shared photo downloaded.  Notifying observers...")
+                            print("Shared photo downloaded.  Notifying observers...")
                             callback(from: from, memory: memory)
                         })
                     }
@@ -51,9 +51,9 @@ public class Sharer {
     private func downloadImage(memory: Memory, key: String, onComplete: () -> Void) {
         // todo -tidy
         let photoAlbum = PhotoAlbum()
-        var imageUrl = photoAlbum.getMemoryImageUrl(memory.id)
+        let imageUrl = photoAlbum.getMemoryImageUrl(memory.id)
         photoAlbum.delete(memory.id)
-        println("** AWS OP: Downloading image to: " + imageUrl.absoluteString!)
+        print("AWS OP: Downloading image to: " + imageUrl.absoluteString)
         
         let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
         readRequest.bucket = BUCKET
@@ -69,7 +69,7 @@ public class Sharer {
     }
     
     private func uploadImage(imageUrl: NSURL?, key: String, onComplete: () -> Void) {
-        println("** AWS OP: Uploading image from: " + imageUrl!.absoluteString!)
+        print("AWS OP: Uploading image from: " + imageUrl!.absoluteString)
 
         let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.bucket = BUCKET
@@ -88,16 +88,16 @@ public class Sharer {
     private func monitorAsyncTask(task: BFTask, type: String) {
         task.continueWithBlock { (task) -> AnyObject! in
             if task.error != nil {
-                println("** AWS ERROR: " + type + " error: \(task.error)")
+                print("** AWS ERROR: " + type + " error: \(task.error)")
             } else {
-                println("** AWS SUCCESS: " + type)
+                print("** AWS SUCCESS: " + type)
             }
             return nil
         }
     }
     
     private func uploadMemory(from: String, to: String, memory: Memory) {
-        println("** FIREBASE OP: Uploading memory " + memory.asString())
+        print("FIREBASE OP: Uploading memory " + memory.asString())
         var newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": from, "memory": memory.asString()])
     }

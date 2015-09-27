@@ -35,7 +35,6 @@ class MapPinView: MKAnnotationView {
     var labelArea: CGRect?
     var calloutSize: CGSize?
     
-    
     init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
         super.init(annotation: nil, reuseIdentifier: nil)
 
@@ -207,7 +206,7 @@ class MapPinView: MKAnnotationView {
         titleView!.numberOfLines = 0
         titleView!.textAlignment = NSTextAlignment.Center
         titleView!.font = titleView!.font.fontWithSize(20)
-        titleView!.text = annotation.title
+        titleView!.text = annotation!.title!
         titleView!.backgroundColor = CategoryController.getColorForCategory(memory!.type)
     }
     
@@ -262,9 +261,7 @@ class MapPinView: MKAnnotationView {
         if (self.selected) {
             addSubview(getCalloutView())
             self.superview?.bringSubviewToFront(getCalloutView())
-        }
-        
-        if (!self.selected) {
+        } else {
             getCalloutView().removeFromSuperview()
         }
     }
@@ -278,9 +275,7 @@ class MapPinView: MKAnnotationView {
             if (memory!.recentShare && hitButton(point, button: acceptButton)) {
                 memory!.recentShare = false;
                 memoriesController?.updateMemory(self)
-            } else if (memory!.recentShare && hitButton(point, button: declineButton)) {
-                memoriesController?.deleteMemory(self)
-            } else if (hitButton(point, button: deleteButton)) {
+            } else if ((memory!.recentShare && hitButton(point, button: declineButton)) || hitButton(point, button: deleteButton)) {
                 memoriesController?.deleteMemory(self)
             } else if (hitButton(point, button: shareButton)) {
                 memoriesController?.shareController.shareMemory([self])
@@ -298,17 +293,10 @@ class MapPinView: MKAnnotationView {
     }
     
     private func hitButton(point: CGPoint, button: UIView?) -> Bool {
-        if (button != nil) {
-            var pt3 = self.convertPoint(point, toView: labelView)
-            if (button!.frame.contains(pt3)) {
-                return true
-            }
-        }
-        return false
+        return button != nil && button!.frame.contains(self.convertPoint(point, toView: labelView))
     }
 
     private func hitPicture(point: CGPoint) -> Bool {
-        var pt3 = self.convertPoint(point, toView: photoView)
-        return photoView!.bounds.contains(pt3)
+        return photoView!.bounds.contains(self.convertPoint(point, toView: photoView))
     }
 }
