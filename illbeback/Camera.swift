@@ -12,6 +12,7 @@ import AVFoundation
 class Camera : NSObject {
     var camera: LLSimpleCamera!
     var snapButton: UIButton!
+    var libraryButton: UIButton!
     var parentController: UIViewController!
     var callback: ((UIImage, UIDeviceOrientation) -> Void)
     var snapPlayer: AVAudioPlayer!
@@ -22,6 +23,7 @@ class Camera : NSObject {
         super.init()
         createCamera()
         createSnapButton()
+        createLibraryButton()
         createSound()
     }
     
@@ -36,10 +38,10 @@ class Camera : NSObject {
     }
     
     func start() {
-        parentController.view.addSubview(self.snapButton)
         let screenRect = UIScreen.mainScreen().bounds
         self.camera.attachToViewController(parentController, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
         self.parentController.view.addSubview(self.snapButton)
+        self.parentController.view.addSubview(self.libraryButton)
         camera.start()
     }
     
@@ -56,16 +58,29 @@ class Camera : NSObject {
     
     func createSnapButton() {
         self.snapButton = UIButton(type: UIButtonType.System)
-        self.snapButton.frame = CGRectMake(0, 0, 70.0, 70.0)
+        self.snapButton.frame = CGRectMake(0, 0, 80.0, 80.0)
         self.snapButton.clipsToBounds = true
-        self.snapButton.layer.cornerRadius = 35.0
+        self.snapButton.layer.cornerRadius = 40.0
         self.snapButton.layer.borderColor = UIColor.whiteColor().CGColor
         self.snapButton.layer.borderWidth = 2.0
         self.snapButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         self.snapButton.layer.rasterizationScale = UIScreen.mainScreen().scale
         self.snapButton.layer.shouldRasterize = true
         self.snapButton.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 100)
+        self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 70)
+    }
+
+    func createLibraryButton() {
+        self.libraryButton = UIButton(frame: CGRectMake(0, 0, 60, 60))
+        let image = UIImage(named: "Library")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        self.libraryButton!.setImage(image, forState: UIControlState.Normal)
+        self.libraryButton?.tintColor = UIColor.blueColor()
+        self.libraryButton.clipsToBounds = true
+        self.libraryButton.layer.cornerRadius = 30.0
+        self.libraryButton.layer.borderColor = UIColor.blackColor().CGColor
+        self.libraryButton.layer.borderWidth = 1.0
+        self.libraryButton.backgroundColor = UIColor.whiteColor()
+        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 50, y: parentController.view.bounds.height - 60)
     }
     
     func takePhoto(sender : UIButton!) {
