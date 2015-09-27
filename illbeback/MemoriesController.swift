@@ -95,7 +95,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     
     @IBAction func currentLocation(sender: AnyObject) {
-        self.map.setCenterCoordinate(here.coordinate, animated: true)
+        let span = MKCoordinateSpan(latitudeDelta: 0.016, longitudeDelta: 0.016)
+        let region = MKCoordinateRegion(center: here.coordinate, span: span)
+        self.map.setRegion(region, animated: true)
+        
     }
     
     @IBAction func search(sender: AnyObject) {
