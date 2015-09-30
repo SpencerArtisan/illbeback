@@ -24,9 +24,11 @@ class CategoryController: UIViewController {
         
         for buttonx in buttons! {
             if let button = buttonx as? UIButton {
-                var buttonTitle = button.currentTitle!.uppercaseString as NSString
-                if buttonTitle.containsString(category.uppercaseString) {
-                    return button.backgroundColor!
+                if ((button.currentTitle) != nil) {
+                    var buttonTitle = button.currentTitle!.uppercaseString as NSString
+                    if buttonTitle.containsString(category.uppercaseString) {
+                        return button.backgroundColor!
+                    }
                 }
             }
         }

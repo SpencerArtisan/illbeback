@@ -9,16 +9,19 @@
 import Foundation
 import AVFoundation
 
-class Camera : NSObject {
+class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var camera: LLSimpleCamera!
     var snapButton: UIButton!
     var libraryButton: UIButton!
+    var navigationController: UINavigationController!
     var parentController: UIViewController!
-    var callback: ((UIImage, UIDeviceOrientation) -> Void)
+    var callback: ((UINavigationController, UIImage, UIDeviceOrientation) -> Void)
     var snapPlayer: AVAudioPlayer!
-    
-    init(parentController: UIViewController, callback: ((UIImage, UIDeviceOrientation) -> Void)) {
-        self.parentController = parentController
+    let imagePicker = UIImagePickerController()
+ 
+    init(navigationController: UINavigationController, callback: ((UINavigationController, UIImage, UIDeviceOrientation) -> Void)) {
+        self.navigationController = navigationController
+        self.parentController = navigationController.topViewController
         self.callback = callback
         super.init()
         createCamera()
@@ -40,8 +43,8 @@ class Camera : NSObject {
     func start() {
         let screenRect = UIScreen.mainScreen().bounds
         self.camera.attachToViewController(parentController, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
-        self.parentController.view.addSubview(self.snapButton)
-        self.parentController.view.addSubview(self.libraryButton)
+        parentController.view.addSubview(self.snapButton)
+        parentController.view.addSubview(self.libraryButton)
         camera.start()
     }
     
@@ -67,7 +70,7 @@ class Camera : NSObject {
         self.snapButton.layer.rasterizationScale = UIScreen.mainScreen().scale
         self.snapButton.layer.shouldRasterize = true
         self.snapButton.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 70)
+        self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 60)
     }
 
     func createLibraryButton() {
@@ -80,14 +83,15 @@ class Camera : NSObject {
         self.libraryButton.layer.borderColor = UIColor.blackColor().CGColor
         self.libraryButton.layer.borderWidth = 1.0
         self.libraryButton.backgroundColor = UIColor.whiteColor()
-        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 50, y: parentController.view.bounds.height - 60)
+        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 50, y: parentController.view.bounds.height - 50)
+        self.libraryButton.addTarget(self, action: "library:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     func takePhoto(sender : UIButton!) {
         snapPlayer.play()
         
         let blackView = NSBundle.mainBundle().loadNibNamed("Black", owner: self, options: nil)[0] as? UIView
-        var screenRect = UIScreen.mainScreen().bounds
+        let screenRect = UIScreen.mainScreen().bounds
         blackView!.frame = CGRectMake(0, 0, screenRect.size.width, screenRect.size.height)
         self.parentController.view.addSubview(blackView!)
         blackView!.layer.opacity = 0
@@ -104,7 +108,29 @@ class Camera : NSObject {
 
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?, orientation: UIDeviceOrientation) -> Void in
             self.snapButton.removeFromSuperview()
-            self.callback(image!, orientation)
+            self.callback(self.navigationController, image!, orientation)
             }, exactSeenImage: true)
+    }
+
+    func library(sender : UIButton!) {
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        
+        parentController.presentViewController(imagePicker, animated: true, completion: nil)
+    }
+
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.snapButton.removeFromSuperview()
+            let orientation = UIDeviceOrientation.FaceUp            
+            let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
+            let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
+            photoView.image = pickedImage
+            parentController.dismissViewControllerAnimated(false, completion: nil)
+            navigationController.pushViewController(zoomController, animated: false)
+            self.callback(navigationController, pickedImage, orientation)
+        }
+        
     }
 }

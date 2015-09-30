@@ -17,16 +17,18 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var memoryId: String?
     var memoryImage: String?
     var memoryLocation: CLLocationCoordinate2D?
+    var memories: MemoriesController?
     var callingViewController: UIViewController?
     var photoAlbum: PhotoAlbum?
     var rewordingMemory: Memory?
 
-    init(album: PhotoAlbum) {
+    init(album: PhotoAlbum, memoriesViewController: MemoriesController) {
         super.init(nibName: nil, bundle: nil)
         categoryModal = Modal(viewName: "CategoryView", owner: self)
         descriptionModal = Modal(viewName: "DescriptionView", owner: self)
         desciptionTextArea.delegate = self
         photoAlbum = album
+        memories = memoriesViewController
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -146,15 +148,13 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
-            var tabBarController = self.callingViewController!.navigationController
-            var memories = tabBarController!.childViewControllers[0] as! MemoriesController
             
             if (rewordingMemory != nil) {
                 rewordingMemory?.description = textView.text
-                memories.memoryAlbum.save()
+                memories!.memoryAlbum.save()
             } else {
-                memories.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation)
-                tabBarController?.popToRootViewControllerAnimated(true)
+                memories!.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation)
+                self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
             }
             descriptionModal.hide()
             self.desciptionTextArea.text = ""

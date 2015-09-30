@@ -13,9 +13,9 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
     var addMemory: AddMemoryController?
     var camera: Camera?
     
-    init(album: PhotoAlbum) {
+    init(album: PhotoAlbum, memoriesController: MemoriesController) {
         super.init(nibName: nil, bundle: nil)
-        addMemory = AddMemoryController(album: PhotoAlbum())
+        addMemory = AddMemoryController(album: PhotoAlbum(), memoriesViewController: memoriesController)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -25,8 +25,8 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         camera = Camera(
-            parentController: self,
-            callback: {(image, orientation) in self.addMemory!.add(self, image: image, orientation: orientation)}
+            navigationController: self.navigationController!,
+            callback: {(controller, image, orientation) in self.addMemory!.add(controller.topViewController!, image: image, orientation: orientation)}
         )
     }
     

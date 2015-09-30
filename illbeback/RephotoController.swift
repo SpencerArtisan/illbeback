@@ -31,8 +31,8 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         camera = Camera(
-            parentController: self,
-            callback: { (image, orientation) in self.replacePhoto(image, orientation: orientation) }
+            navigationController: self.navigationController!,
+            callback: { (controller, image, orientation) in self.replacePhoto(image, orientation: orientation) }
         )
     }
     
