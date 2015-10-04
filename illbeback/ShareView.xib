@@ -114,6 +114,7 @@
                 <accessibilityTraits key="traits" notEnabled="YES"/>
             </accessibility>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="496.5" y="334.5"/>
         </view>
         <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share With" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xaw-WS-bfR">
             <rect key="frame" x="0.0" y="0.0" width="190" height="50"/>
@@ -123,7 +124,7 @@
             <fontDescription key="fontDescription" type="system" pointSize="24"/>
             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <nil key="highlightedColor"/>
-            <point key="canvasLocation" x="235" y="155"/>
+            <point key="canvasLocation" x="128" y="196"/>
         </label>
     </objects>
     <resources>

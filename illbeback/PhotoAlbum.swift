@@ -33,25 +33,42 @@ public class PhotoAlbum {
     }
     
     public func getMemoryImageUrl(memoryId: String) -> NSURL {
-        var imagePath = getImagePath(memoryId)
+        let imagePath = getImagePath(memoryId)
         return NSURL(fileURLWithPath: imagePath)
     }
     
     public func getMemoryImage(memoryId: String) -> UIImage? {
         if (photoExists(memoryId)) {
-            var imagePath = getImagePath(memoryId)
+            let imagePath = getImagePath(memoryId)
             return UIImage(contentsOfFile: imagePath)!
         }
         return nil
     }
 
     public func saveMemoryImage(image: UIImage?, memoryId: String) {
-        var imagePath = getImagePath(memoryId)
-        var imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
+        let imagePath = getImagePath(memoryId)
+        let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
+        fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
+    }
+    
+    public func addMemoryImage(image: UIImage?, memoryId: String) {
+        let imagePath = getNewImagePath(memoryId)
+        print("Saving image \(imagePath)")
+        let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     
     public func getImagePath(memoryId: String) -> String {
         return "\(folder)/Memory\(memoryId).jpg"
+    }
+    
+    private func getNewImagePath(memoryId: String) -> String {
+        var candidate = "\(folder)/Memory\(memoryId).jpg"
+        var suffix = 2;
+        while (fileManager.fileExistsAtPath(candidate)) {
+            candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg"
+            suffix++
+        }
+        return candidate
     }
 }

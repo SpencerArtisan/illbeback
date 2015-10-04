@@ -64,19 +64,19 @@ class MapPinView: MKAnnotationView {
     }
     
     func initImage() {
-        var imageIcon = UIImage(named: memory!.type + " Flag")!
+        let imageIcon = UIImage(named: memory!.type + " Flag")!
 
-        var finalSize = CGSizeMake(imageIcon.size.width + 10, imageIcon.size.height + 10)
+        let finalSize = CGSizeMake(imageIcon.size.width + 10, imageIcon.size.height + 10)
         UIGraphicsBeginImageContext(finalSize)
         imageIcon.drawInRect(CGRectMake(0, 10, imageIcon.size.width, imageIcon.size.height))
         
         let inShape: Bool = memoriesController!.shapeController.shapeContains(memory!.location)
         
         if (inShape) {
-            var imageHighlight = UIImage(named: "share flag")!
+            let imageHighlight = UIImage(named: "share flag")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
         } else if (memory!.recentShare) {
-            var imageHighlight = UIImage(named: "recent")!
+            let imageHighlight = UIImage(named: "recent")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
         }
         image = UIGraphicsGetImageFromCurrentImageContext()
@@ -166,36 +166,46 @@ class MapPinView: MKAnnotationView {
     
     func createDeleteButton() {
         deleteButton = UIButton(frame: CGRectMake(labelArea!.width - 35, labelArea!.height - 39, 40, 40))
-        var image = UIImage(named: "trash")
+        let image = UIImage(named: "trash")
         deleteButton!.setImage(image, forState: UIControlState.Normal)
     }
     
     func createPhotoButton() {
         photoButton = UIButton(frame: CGRectMake(labelArea!.width / 2 - 17, labelArea!.height - 38, 40, 40))
-        var image = UIImage(named: "camera")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        let image = UIImage(named: "camera")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         photoButton!.setImage(image, forState: UIControlState.Normal)
         photoButton?.tintColor = UIColor.blueColor()
     }
     
     func createShareButton() {
         shareButton = UIButton(frame: CGRectMake(0, labelArea!.height - 40, 40, 40))
-        var image = UIImage(named: "share")
+        let image = UIImage(named: "share")
         shareButton!.setImage(image, forState: UIControlState.Normal)
     }
     
     func createPhotoView() {
         if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return }
-        var photo = UIImage(contentsOfFile: imageUrl!)
-        photoView = UIImageView(frame: CGRectMake(
+        let size = CGRectMake(
             isLandscape() ? 1 : 0,
             isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 + 17: 0,
             isLandscape() ? WITH_LANDSCAPE_PHOTO.width - 2 : WITH_PORTRAIT_PHOTO.width/2 + 1,
-            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 17 : WITH_PORTRAIT_PHOTO.height))
-        photoView!.image = photo
-//        if (isLandscape()) {
-//            var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
-//            photoView?.transform = CGAffineTransformMakeRotation(CGFloat(angle))
-//        }
+            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 17 : WITH_PORTRAIT_PHOTO.height)
+        photoView = UIImageView(frame: size)
+
+        
+        let photo = UIImage(contentsOfFile: imageUrl!)
+
+        let dot = UIImage(named: "dot")!
+        
+        let finalSize = CGSizeMake(size.width, size.height)
+        UIGraphicsBeginImageContext(finalSize)
+        photo!.drawInRect(CGRectMake(0, 0, size.width, size.height))
+        dot.drawInRect(CGRectMake(30, 20, dot.size.width, dot.size.height))
+        var photowithdots = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        //centerOffset = CGPointMake(17, -20)
+
+        photoView!.image = photowithdots
         photoView!.layer.borderWidth = 1
         photoView!.layer.borderColor = UIColor.grayColor().CGColor
     }
@@ -268,8 +278,8 @@ class MapPinView: MKAnnotationView {
 
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         var hitView = super.hitTest(point, withEvent: event)
-        var system = NSProcessInfo.processInfo().systemUptime
-        var elapsed = system - event!.timestamp
+        let system = NSProcessInfo.processInfo().systemUptime
+        let elapsed = system - event!.timestamp
         if (elapsed < 0.1 && labelView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
             hitView = calloutView!.hitTest(point, withEvent: event)
             if (memory!.recentShare && hitButton(point, button: acceptButton)) {

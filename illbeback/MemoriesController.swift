@@ -141,7 +141,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         if (self.navigationController?.topViewController != zoomController) {
             self.navigationController?.navigationBarHidden = false
             let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
-            var image = pin.photoView?.image
+            let image = pin.photoView?.image
             //var orient = pin.memory?.orientation == UIDeviceOrientation.LandscapeLeft || pin.memory?.orientation == UIDeviceOrientation.LandscapeRight ?
             //    UIImageOrientation.Left : UIImageOrientation.Up
             //var orientedImage = image?.setOrientation(UIImageOrientation.Down)

@@ -32,7 +32,7 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         camera = Camera(
             navigationController: self.navigationController!,
-            callback: { (controller, image, orientation) in self.replacePhoto(image, orientation: orientation) }
+            callback: { (controller, image, orientation) in self.addPhoto(image, orientation: orientation) }
         )
     }
     
@@ -44,10 +44,10 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
         camera!.stop()
     }
     
-    func replacePhoto(image: UIImage, orientation: UIDeviceOrientation) {
+    func addPhoto(image: UIImage, orientation: UIDeviceOrientation) {
         pinToRephoto!.memory!.orientation = orientation
         memoryAlbum!.save()
-        photoAlbum!.saveMemoryImage(image, memoryId: pinToRephoto!.memory!.id)
+        photoAlbum!.addMemoryImage(image, memoryId: pinToRephoto!.memory!.id)
         navigationController?.popToRootViewControllerAnimated(true)
         pinToRephoto!.refreshAndReopen()
     }
