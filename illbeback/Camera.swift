@@ -61,9 +61,9 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     
     func createSnapButton() {
         self.snapButton = UIButton(type: UIButtonType.System)
-        self.snapButton.frame = CGRectMake(0, 0, 80.0, 80.0)
+        self.snapButton.frame = CGRectMake(0, 0, 90.0, 90.0)
         self.snapButton.clipsToBounds = true
-        self.snapButton.layer.cornerRadius = 40.0
+        self.snapButton.layer.cornerRadius = 45.0
         self.snapButton.layer.borderColor = UIColor.whiteColor().CGColor
         self.snapButton.layer.borderWidth = 2.0
         self.snapButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
@@ -83,7 +83,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         self.libraryButton.layer.borderColor = UIColor.blackColor().CGColor
         self.libraryButton.layer.borderWidth = 1.0
         self.libraryButton.backgroundColor = UIColor.whiteColor()
-        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 50, y: parentController.view.bounds.height - 50)
+        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 60, y: parentController.view.bounds.height - 60)
         self.libraryButton.addTarget(self, action: "library:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
