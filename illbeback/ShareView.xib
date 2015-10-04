@@ -17,121 +17,91 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" alpha="0.80000001192092896" tag="2" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2zN-RR-x0a" userLabel="shareButton">
+                <button opaque="NO" alpha="0.80000001192092896" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2zN-RR-x0a" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="503" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="1" green="0.78074387577941451" blue="0.39200582806891271" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="qwc-FA-L0A"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" New friend" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="3" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H41-7A-98U" userLabel="shareButton">
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H41-7A-98U" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="448" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="0.90354900274964756" green="0.97472774621212122" blue="0.26736264331360865" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="4mG-1e-ISU"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Someone" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="4" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crh-mc-YzJ" userLabel="shareButton">
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crh-mc-YzJ" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="394" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="0.83891965517304401" green="0.90500710227272729" blue="0.24823864101696458" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="bN3-Yp-fT3"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Someone" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="5" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLY-A1-UMj" userLabel="shareButton">
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLY-A1-UMj" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="339" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="0.78897547061398787" green="0.85112847222222232" blue="0.23346001898183871" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="jfZ-lW-fMq"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Someone" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="6" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-FO-QGv" userLabel="shareButton">
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-FO-QGv" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="285" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="0.68700228383211404" green="0.74112215909090906" blue="0.20328587161169512" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="oOE-tB-Vay"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Someone" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="7" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNd-tN-bOJ" userLabel="shareButton">
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="7" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNd-tN-bOJ" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="230" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="0.61761808895219505" green="0.66627209595959602" blue="0.18275489687670152" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="oi9-f4-Hsf"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Someone" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="8" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bco-l7-O1z" userLabel="shareButton">
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bco-l7-O1z" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="175" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="0.52637988435688621" green="0.56784643308686866" blue="0.15575726035941731" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="prw-sL-SgO"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Someone" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="9" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eng-6d-bqH" userLabel="shareButton">
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eng-6d-bqH" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="120" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="0.46348788482779907" green="0.5" blue="0.13714734414435398" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="eWw-WX-V8w"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Someone" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="10" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uar-4m-mfD" userLabel="shareButton">
+                <button hidden="YES" opaque="NO" alpha="0.80000001192092896" tag="10" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uar-4m-mfD" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="65" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="0.38711772199247291" green="0.41761363636969695" blue="0.11454920221313986" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="bUU-zN-las"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Someone" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <button opaque="NO" alpha="0.80000001192092896" tag="1" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K95-CA-XJZ" userLabel="shareButton">
+                <button opaque="NO" alpha="0.80000001192092896" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K95-CA-XJZ" userLabel="shareButton">
                     <rect key="frame" x="0.0" y="558" width="190" height="55"/>
                     <animations/>
                     <color key="backgroundColor" red="0.97095959595959591" green="0.59323269538257961" blue="0.71561643042851686" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="Gpj-4r-E4h"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <state key="normal" title=" Group" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -143,53 +113,7 @@
             <accessibility key="accessibilityConfiguration">
                 <accessibilityTraits key="traits" notEnabled="YES"/>
             </accessibility>
-            <constraints>
-                <constraint firstItem="LNd-tN-bOJ" firstAttribute="height" secondItem="Uar-4m-mfD" secondAttribute="height" id="0lb-Bc-Q2P"/>
-                <constraint firstItem="crh-mc-YzJ" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="leading" id="3Xh-tO-u9W"/>
-                <constraint firstItem="dvL-FO-QGv" firstAttribute="width" secondItem="Uar-4m-mfD" secondAttribute="width" id="4Ih-vq-bC3"/>
-                <constraint firstItem="LNd-tN-bOJ" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="leading" id="5Kq-Rt-7tn"/>
-                <constraint firstAttribute="bottom" secondItem="2zN-RR-x0a" secondAttribute="bottom" constant="70" id="6Ec-Nq-xCj"/>
-                <constraint firstItem="eng-6d-bqH" firstAttribute="height" secondItem="Uar-4m-mfD" secondAttribute="height" id="6GY-bY-6q3"/>
-                <constraint firstItem="dvL-FO-QGv" firstAttribute="height" secondItem="Uar-4m-mfD" secondAttribute="height" id="Aqn-I8-otE"/>
-                <constraint firstAttribute="bottom" secondItem="K95-CA-XJZ" secondAttribute="bottom" constant="54" id="EVk-ym-dZ6"/>
-                <constraint firstItem="bco-l7-O1z" firstAttribute="height" secondItem="Uar-4m-mfD" secondAttribute="height" id="Fse-bH-ZY5"/>
-                <constraint firstItem="K95-CA-XJZ" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="leading" id="G05-5C-Xs2"/>
-                <constraint firstItem="2zN-RR-x0a" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="leading" id="H2w-rD-NCe"/>
-                <constraint firstItem="bco-l7-O1z" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="leading" id="IXV-jx-wxF"/>
-                <constraint firstItem="bco-l7-O1z" firstAttribute="width" secondItem="Uar-4m-mfD" secondAttribute="width" id="JSG-QY-bRb"/>
-                <constraint firstItem="K95-CA-XJZ" firstAttribute="width" secondItem="Uar-4m-mfD" secondAttribute="width" id="JTk-ea-bAG"/>
-                <constraint firstItem="pLY-A1-UMj" firstAttribute="height" secondItem="Uar-4m-mfD" secondAttribute="height" id="Oc0-14-8iY"/>
-                <constraint firstItem="K95-CA-XJZ" firstAttribute="top" secondItem="2zN-RR-x0a" secondAttribute="bottom" id="TFa-xs-V9u"/>
-                <constraint firstItem="dvL-FO-QGv" firstAttribute="top" secondItem="LNd-tN-bOJ" secondAttribute="bottom" id="YKC-cS-afF"/>
-                <constraint firstItem="LNd-tN-bOJ" firstAttribute="top" secondItem="bco-l7-O1z" secondAttribute="bottom" id="Z2r-cJ-MG7"/>
-                <constraint firstItem="bco-l7-O1z" firstAttribute="top" secondItem="eng-6d-bqH" secondAttribute="bottom" id="Z3e-KX-wTs"/>
-                <constraint firstItem="pLY-A1-UMj" firstAttribute="top" secondItem="LNd-tN-bOJ" secondAttribute="bottom" constant="54" id="ZWM-sb-9Pe"/>
-                <constraint firstItem="H41-7A-98U" firstAttribute="height" secondItem="Uar-4m-mfD" secondAttribute="height" id="bWd-Mj-9kb"/>
-                <constraint firstItem="pLY-A1-UMj" firstAttribute="width" secondItem="Uar-4m-mfD" secondAttribute="width" id="cJx-zz-9qa"/>
-                <constraint firstItem="crh-mc-YzJ" firstAttribute="top" secondItem="pLY-A1-UMj" secondAttribute="bottom" id="cTF-XD-NWE"/>
-                <constraint firstItem="crh-mc-YzJ" firstAttribute="height" secondItem="Uar-4m-mfD" secondAttribute="height" id="dEb-2x-GuS"/>
-                <constraint firstItem="Uar-4m-mfD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="dRD-xk-Myi"/>
-                <constraint firstItem="LNd-tN-bOJ" firstAttribute="width" secondItem="Uar-4m-mfD" secondAttribute="width" id="gHH-Hd-27k"/>
-                <constraint firstItem="K95-CA-XJZ" firstAttribute="height" secondItem="Uar-4m-mfD" secondAttribute="height" id="gNw-Ho-3fH"/>
-                <constraint firstItem="eng-6d-bqH" firstAttribute="top" secondItem="Uar-4m-mfD" secondAttribute="bottom" id="hTM-Xt-42b"/>
-                <constraint firstItem="eng-6d-bqH" firstAttribute="width" secondItem="Uar-4m-mfD" secondAttribute="width" id="ilp-NU-xyh"/>
-                <constraint firstItem="2zN-RR-x0a" firstAttribute="top" secondItem="H41-7A-98U" secondAttribute="bottom" id="jDA-TH-mFm"/>
-                <constraint firstItem="crh-mc-YzJ" firstAttribute="width" secondItem="Uar-4m-mfD" secondAttribute="width" id="kSO-kg-3SI"/>
-                <constraint firstItem="eng-6d-bqH" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="leading" id="m7I-xA-VtY"/>
-                <constraint firstItem="pLY-A1-UMj" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="leading" id="nKn-jl-acg"/>
-                <constraint firstItem="2zN-RR-x0a" firstAttribute="width" secondItem="Uar-4m-mfD" secondAttribute="width" id="oa7-fY-pQB"/>
-                <constraint firstItem="2zN-RR-x0a" firstAttribute="height" secondItem="Uar-4m-mfD" secondAttribute="height" id="poJ-dI-Lt4"/>
-                <constraint firstItem="H41-7A-98U" firstAttribute="width" secondItem="Uar-4m-mfD" secondAttribute="width" id="r1T-Sf-Izw"/>
-                <constraint firstItem="H41-7A-98U" firstAttribute="top" secondItem="pLY-A1-UMj" secondAttribute="bottom" constant="54" id="rah-yw-9kE"/>
-                <constraint firstItem="dvL-FO-QGv" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="leading" id="uSq-St-SZr"/>
-                <constraint firstItem="H41-7A-98U" firstAttribute="leading" secondItem="Uar-4m-mfD" secondAttribute="leading" id="uSt-Jb-6La"/>
-            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="6Ec-Nq-xCj"/>
-                </mask>
-            </variation>
         </view>
         <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share With" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xaw-WS-bfR">
             <rect key="frame" x="0.0" y="0.0" width="190" height="50"/>

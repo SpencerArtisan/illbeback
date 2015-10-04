@@ -50,6 +50,7 @@ class Modal {
     private func slideHorizontally(parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
         parentView.addSubview(self.view)
         self.view.frame.origin.x = start
+        print(self.view.frame.origin.x)
         
         UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             var sliderFrame = self.view.frame
