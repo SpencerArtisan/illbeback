@@ -41,6 +41,7 @@ class ShareController : UIViewController {
             shareButton.hidden = false
             shareButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
             shareButton.addTarget(self, action: "deleteFriendConfirmed:", forControlEvents: .TouchUpInside)
+            shareButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             shareButton.enabled = true
             shareButton.setImage(deleteImage, forState: UIControlState.Normal)
         }
@@ -93,6 +94,7 @@ class ShareController : UIViewController {
             shareButton.hidden = false
             shareButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
             shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
+            shareButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             shareButton.enabled = false
             shareButton.setImage(shareImage, forState: UIControlState.Normal)
             delay(0.5) { shareButton.enabled = true }
