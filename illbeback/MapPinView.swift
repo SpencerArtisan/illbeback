@@ -187,15 +187,15 @@ class MapPinView: MKAnnotationView {
         if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return }
         var photo = UIImage(contentsOfFile: imageUrl!)
         photoView = UIImageView(frame: CGRectMake(
-            isLandscape() ? 46 : 0,
-            isLandscape() ? 129 : 0,
-            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 17 : WITH_PORTRAIT_PHOTO.width/2 + 1,
-            isLandscape() ? WITH_LANDSCAPE_PHOTO.width - 2 : WITH_PORTRAIT_PHOTO.height))
+            isLandscape() ? 1 : 0,
+            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 + 17: 0,
+            isLandscape() ? WITH_LANDSCAPE_PHOTO.width - 2 : WITH_PORTRAIT_PHOTO.width/2 + 1,
+            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 17 : WITH_PORTRAIT_PHOTO.height))
         photoView!.image = photo
-        if (isLandscape()) {
-            var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
-            photoView?.transform = CGAffineTransformMakeRotation(CGFloat(angle))
-        }
+//        if (isLandscape()) {
+//            var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
+//            photoView?.transform = CGAffineTransformMakeRotation(CGFloat(angle))
+//        }
         photoView!.layer.borderWidth = 1
         photoView!.layer.borderColor = UIColor.grayColor().CGColor
     }

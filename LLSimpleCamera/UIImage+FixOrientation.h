@@ -7,3 +7,12 @@
 @interface UIImage(fixOrientation)
 - (UIImage *)fixOrientation;
 @end
+
+@interface UIImage(setOrientation)
+- (UIImage *)setOrientation:(UIImageOrientation) orientation;
+@end
+
+
+@interface UIImage(rotateImage)
+- (UIImage *)rotateImage:(UIImage *)image onDegrees:(float)degrees;
+@end

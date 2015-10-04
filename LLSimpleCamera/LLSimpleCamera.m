@@ -30,7 +30,7 @@
     if(self) {
         self.cameraQuality = quality;
         self.cameraPosition = position;
-        self.fixOrientationAfterCapture = NO;
+        self.fixOrientationAfterCapture = YES;
         self.tapToFocus = YES;
     }
     

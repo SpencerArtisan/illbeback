@@ -105,6 +105,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
     
     func add(controller: UIViewController, image: UIImage, orientation: UIDeviceOrientation) {
+        print("Adding image at device orientation \(orientation.rawValue), size \(image.size)")
         rewordingMemory = nil
         self.memoryLocation = nil
         self.callingViewController = controller

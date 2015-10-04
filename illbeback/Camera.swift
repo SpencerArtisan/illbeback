@@ -56,7 +56,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     
     func createCamera() {
         self.camera = LLSimpleCamera(quality: CameraQualityPhoto, andPosition: CameraPositionBack)
-        self.camera.fixOrientationAfterCapture = false
+        self.camera.fixOrientationAfterCapture = true
     }
     
     func createSnapButton() {
@@ -106,8 +106,17 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
                 })
         })
 
-        self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?, orientation: UIDeviceOrientation) -> Void in
+        self.camera.capture({ (camera: LLSimpleCamera?, var image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?, orientation: UIDeviceOrientation) -> Void in
             self.snapButton.removeFromSuperview()
+            print("PICTURE TAKEN WITH ORIENTATION \(image!.imageOrientation.rawValue) SIZE \(image!.size)")
+            print("DEVICE ORIENTATION IS \(orientation.rawValue)")
+            if (orientation == UIDeviceOrientation.LandscapeRight) {
+                image = image?.rotateImage(image, onDegrees: 90)
+            } else if (orientation == UIDeviceOrientation.LandscapeLeft) {
+                image = image?.rotateImage(image, onDegrees: -90)
+            }
+            
+            print("PICTURE CORRECTED WITH ORIENTATION \(image!.imageOrientation.rawValue) SIZE \(image!.size)")
             self.callback(self.navigationController, image!, orientation)
             }, exactSeenImage: true)
     }
@@ -123,14 +132,37 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.snapButton.removeFromSuperview()
-            let orientation = UIDeviceOrientation.FaceUp            
             let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
             let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
+            print("PICTURE CHOSEN WITH ORIENTATION \(pickedImage.imageOrientation.rawValue) SIZE \(pickedImage.size)")
+            
+            let correctedImage = pickedImage.fixOrientation()
+            print("PICTURE CORRECTED TO ORIENTATION \(correctedImage.imageOrientation.rawValue) SIZE \(correctedImage.size)")
+            
             photoView.image = pickedImage
             parentController.dismissViewControllerAnimated(false, completion: nil)
             navigationController.pushViewController(zoomController, animated: false)
-            self.callback(navigationController, pickedImage, orientation)
+            let devOrient = imageToDeviceOrientation(pickedImage)
+            print("Image orientation \(pickedImage.imageOrientation.rawValue) translates to device orientation \(devOrient.rawValue)")
+            self.callback(navigationController, correctedImage, devOrient)
         }
+    }
+    
+    func toDeviceOrientation(image: UIImage) -> UIDeviceOrientation {
+        if (image.size.width > image.size.height) { return UIDeviceOrientation.LandscapeRight }
+        return UIDeviceOrientation.FaceUp
+    }
+    
+    func toImageOrientation(image: UIImage) -> UIImageOrientation {
+        if (image.size.width > image.size.height) { return UIImageOrientation.Left }
+        return UIImageOrientation.Up
+    }
+    
+    func imageToDeviceOrientation(image: UIImage) -> UIDeviceOrientation {
+        if (image.imageOrientation == UIImageOrientation.Up) { return UIDeviceOrientation.LandscapeLeft }
+        if (image.imageOrientation == UIImageOrientation.Right) { return UIDeviceOrientation.Portrait }
+        if (image.imageOrientation == UIImageOrientation.Down) { return UIDeviceOrientation.LandscapeRight }
         
+        return UIDeviceOrientation.FaceUp
     }
 }
