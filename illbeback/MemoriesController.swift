@@ -122,6 +122,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         shareController.editFriends()
     }
     
+    func createGroupMode() {
+        shapeModal?.slideDownFromTop(self.view)
+        
+    }
+    
     // Callback for button on the callout
     func rephotoMemory(pin: MapPinView) {
         if (self.navigationController?.topViewController != rephotoController) {

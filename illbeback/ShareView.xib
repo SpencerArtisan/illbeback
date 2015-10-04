@@ -10,7 +10,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IhT-Li-daa" userLabel="cancelButton">
+                <button opaque="NO" tag="99" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IhT-Li-daa" userLabel="cancelButton">
                     <rect key="frame" x="191" y="0.0" width="184" height="667"/>
                     <animations/>
                     <state key="normal">
@@ -143,7 +143,7 @@
                         <constraint firstAttribute="width" constant="190" id="yvc-3R-vcf"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" New group" image="share">
+                    <state key="normal" title=" Group" image="share">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
@@ -224,6 +224,7 @@
             <fontDescription key="fontDescription" type="system" pointSize="24"/>
             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <nil key="highlightedColor"/>
+            <point key="canvasLocation" x="235" y="155"/>
         </label>
     </objects>
     <resources>
