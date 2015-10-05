@@ -158,7 +158,10 @@ class MapPinView: MKAnnotationView {
         self.calloutView?.backgroundColor = UIColor.whiteColor()
         self.calloutView?.layer.cornerRadius = 10
         self.calloutView?.addSubview(labelView!)
-        if (photoView != nil) { self.calloutView?.addSubview(photoView!) }
+        if (photoView != nil) {
+            self.calloutView?.addSubview(photoView!)
+            addDotsToPhoto()
+        }
         self.calloutView?.clipsToBounds = true
         self.calloutView?.layer.borderWidth = 1.0
         self.calloutView?.layer.borderColor = UIColor.grayColor().CGColor
@@ -177,6 +180,17 @@ class MapPinView: MKAnnotationView {
         photoButton?.tintColor = UIColor.blueColor()
     }
     
+    func addDotsToPhoto() {
+        let count = memoriesController!.photoAlbum.photoCount(memory!)
+        
+        let left = photoView!.frame.width / 2 - (CGFloat(count-1)) * 6
+        for i in 0...count-1 {
+            let dot = UIImageView(image: UIImage(named: "dot"))
+            dot.frame = CGRectMake(left + 12 * CGFloat(i), 16, 5, 5)
+            photoView!.addSubview(dot)
+        }
+    }
+    
     func createShareButton() {
         shareButton = UIButton(frame: CGRectMake(0, labelArea!.height - 40, 40, 40))
         let image = UIImage(named: "share")
@@ -185,27 +199,17 @@ class MapPinView: MKAnnotationView {
     
     func createPhotoView() {
         if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return }
-        let size = CGRectMake(
+        let photo = UIImage(contentsOfFile: imageUrl!)
+        photoView = UIImageView(frame: CGRectMake(
             isLandscape() ? 1 : 0,
             isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 + 17: 0,
             isLandscape() ? WITH_LANDSCAPE_PHOTO.width - 2 : WITH_PORTRAIT_PHOTO.width/2 + 1,
-            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 17 : WITH_PORTRAIT_PHOTO.height)
-        photoView = UIImageView(frame: size)
-
-        
-        let photo = UIImage(contentsOfFile: imageUrl!)
-
-        let dot = UIImage(named: "dot")!
-        
-        let finalSize = CGSizeMake(size.width, size.height)
-        UIGraphicsBeginImageContext(finalSize)
-        photo!.drawInRect(CGRectMake(0, 0, size.width, size.height))
-        dot.drawInRect(CGRectMake(30, 20, dot.size.width, dot.size.height))
-        var photowithdots = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        //centerOffset = CGPointMake(17, -20)
-
-        photoView!.image = photowithdots
+            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 17 : WITH_PORTRAIT_PHOTO.height))
+        photoView!.image = photo
+        //        if (isLandscape()) {
+        //            var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
+        //            photoView?.transform = CGAffineTransformMakeRotation(CGFloat(angle))
+        //        }
         photoView!.layer.borderWidth = 1
         photoView!.layer.borderColor = UIColor.grayColor().CGColor
     }

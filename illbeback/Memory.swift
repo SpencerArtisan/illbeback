@@ -46,15 +46,18 @@ public class Memory {
         if (type == "Pub") {
             type = "Bar"
         }
-
     }
     
     func asString() -> String {
-        var recentShareChar = recentShare ? "T" : "F"
+        let recentShareChar = recentShare ? "T" : "F"
         return "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(recentShareChar):\(orientation.rawValue)"
     }
     
     func asMapPin() -> MapPin {
         return MapPin(memory: self)
+    }
+    
+    func photoCount() -> Int {
+        return 3
     }
 }

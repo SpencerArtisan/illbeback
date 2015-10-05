@@ -51,6 +51,19 @@ public class PhotoAlbum {
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     
+    public func photoCount(memory: Memory) -> Int {
+        let memoryId = memory.id
+        var count = 0
+        var candidate = "\(folder)/Memory\(memoryId).jpg"
+        var suffix = 2
+        while (fileManager.fileExistsAtPath(candidate)) {
+            count++
+            candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg"
+            suffix++
+        }
+        return count
+    }
+    
     public func addMemoryImage(image: UIImage?, memoryId: String) {
         let imagePath = getNewImagePath(memoryId)
         print("Saving image \(imagePath)")
