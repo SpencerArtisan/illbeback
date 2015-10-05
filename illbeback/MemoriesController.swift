@@ -146,6 +146,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             //    UIImageOrientation.Left : UIImageOrientation.Up
             //var orientedImage = image?.setOrientation(UIImageOrientation.Down)
             photoView.image = image
+            let count = photoAlbum.photoCount(pin.memory!)
+            zoomController.setPhotoCount(count)
             self.navigationController?.pushViewController(zoomController, animated: true)
         }
     }
