@@ -89,7 +89,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.navigationBarHidden = true
         self.navigationController?.pushViewController(rememberController, animated: true)
     }
     
@@ -131,7 +131,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func rephotoMemory(pin: MapPinView) {
         if (self.navigationController?.topViewController != rephotoController) {
             rephotoController.pinToRephoto = pin
-            self.navigationController?.navigationBarHidden = false
+            self.navigationController?.navigationBarHidden = true
             self.navigationController?.pushViewController(rephotoController!, animated: true)
         }
     }
@@ -139,7 +139,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the callout
     func zoomPicture(pin: MapPinView) {
         if (self.navigationController?.topViewController != zoomController) {
-            self.navigationController?.navigationBarHidden = false
+            self.navigationController?.navigationBarHidden = true
             zoomController.photos = photoAlbum.photos(pin.memory!)
             self.navigationController?.pushViewController(zoomController, animated: true)
         }

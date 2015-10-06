@@ -8,7 +8,7 @@
         <!--Zoom Controller-->
         <scene sceneID="QA9-eT-P6h">
             <objects>
-                <viewController storyboardIdentifier="ZoomController" id="Gaz-V1-mFp" customClass="ZoomController" customModule="I_ll_Be_Back" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ZoomController" hidesBottomBarWhenPushed="YES" id="Gaz-V1-mFp" customClass="ZoomController" customModule="I_ll_Be_Back" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yGq-JV-ATp"/>
                         <viewControllerLayoutGuide type="bottom" id="TGX-M0-3LJ"/>
@@ -43,6 +43,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="photo" destination="egM-WL-ln4" id="jnj-bs-NBL"/>
                     </connections>

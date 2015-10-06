@@ -15,8 +15,13 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var photo: UIImageView!
     
     var index: Int = 0
+    var owner : ZoomSwipeController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        owner?.drawDots(index)
     }
 }

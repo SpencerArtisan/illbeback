@@ -50,6 +50,7 @@
 		97A3536D1A801CFA00973CAC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3536C1A801CFA00973CAC /* MapKit.framework */; };
 		97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */; };
 		97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */; settings = {ASSET_TAGS = (); }; };
+		97B05E261BC4746100B24BEC /* ZoomPageControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97B05E251BC4746100B24BEC /* ZoomPageControl.xib */; settings = {ASSET_TAGS = (); }; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
@@ -121,6 +122,7 @@
 		97A3536C1A801CFA00973CAC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewUser.xib; sourceTree = "<group>"; };
 		97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomSwipeController.swift; sourceTree = "<group>"; };
+		97B05E251BC4746100B24BEC /* ZoomPageControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZoomPageControl.xib; sourceTree = "<group>"; };
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				979F850A1AA11B8600A11F7F /* Camera.swift */,
 				97EA40021AFEB74C005507BF /* shutter.mp3 */,
 				97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */,
+				97B05E251BC4746100B24BEC /* ZoomPageControl.xib */,
 			);
 			name = Photo;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				97FE66841A9A50C60007FC2C /* MessageView.xib in Resources */,
 				97767D5C1B91DE2200B6A827 /* ShapeOptions.xib in Resources */,
 				97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */,
+				97B05E261BC4746100B24BEC /* ZoomPageControl.xib in Resources */,
 				9772846C1A8A818B00CE628D /* user.plist in Resources */,
 				97FE66821A9A1A400007FC2C /* memories.plist in Resources */,
 				97767D521B9088F300B6A827 /* SearchView.xib in Resources */,

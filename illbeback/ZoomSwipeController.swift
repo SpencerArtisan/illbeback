@@ -23,12 +23,12 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         let startingViewController = zoomController(0)
         let viewControllers: NSArray = [startingViewController]
         pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: false, completion: nil)
-        pageViewController!.view.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height);
+        pageViewController!.view.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height + 37);
         
         addChildViewController(pageViewController!)
         view.addSubview(pageViewController!.view)
         pageViewController!.didMoveToParentViewController(self)
-        
+        drawDots(0)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -51,8 +51,8 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         let newView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
         let xxx = newView.view.subviews[0] as! UIImageView
         xxx.image = photos[newIndex]
-        //newView.photo.image = photos[newIndex]
         newView.index = newIndex
+        newView.owner = self
         return newView
     }
     
@@ -64,4 +64,18 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         return index
     }
     
+    func drawDots(colourIndex: Int) {
+        let left = view.frame.width / 2 - (CGFloat(photos.count-1)) * 8
+        for i in 0...photos.count-1 {
+            let image = UIImage(named: "dot")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            let dot = UIImageView(image: image)
+            dot.frame = CGRectMake(left + 16 * CGFloat(i), view.frame.height - 70, 8, 8)
+            view.addSubview(dot)
+            if (i == colourIndex) {
+                dot.tintColor = UIColor.orangeColor()
+            } else {
+                dot.tintColor = UIColor.whiteColor()
+            }
+        }
+    }
 }
