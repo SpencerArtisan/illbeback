@@ -23,7 +23,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var addMemory: AddMemoryController!
     var rephotoController: RephotoController!
     var rememberController: RememberController!
-    var zoomController: ZoomController!
+    var zoomController: ZoomSwipeController!
     var shareController: ShareController!
 
     var newUserModal: Modal?
@@ -78,7 +78,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.addMemory = AddMemoryController(album: photoAlbum, memoriesViewController: self)
         self.rephotoController = RephotoController(photoAlbum: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum, memoriesController: self)
-        self.zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
+        self.zoomController = ZoomSwipeController()
         self.shapeController = ShapeController(map: map, memories: self)
         self.shareController = ShareController(user: user, memories: self)
 
@@ -140,14 +140,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func zoomPicture(pin: MapPinView) {
         if (self.navigationController?.topViewController != zoomController) {
             self.navigationController?.navigationBarHidden = false
-            let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
-            let image = pin.photoView?.image
-            //var orient = pin.memory?.orientation == UIDeviceOrientation.LandscapeLeft || pin.memory?.orientation == UIDeviceOrientation.LandscapeRight ?
-            //    UIImageOrientation.Left : UIImageOrientation.Up
-            //var orientedImage = image?.setOrientation(UIImageOrientation.Down)
-            photoView.image = image
-            let count = photoAlbum.photoCount(pin.memory!)
-            zoomController.setPhotoCount(count)
+            zoomController.photos = photoAlbum.photos(pin.memory!)
             self.navigationController?.pushViewController(zoomController, animated: true)
         }
     }

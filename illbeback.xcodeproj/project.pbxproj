@@ -49,6 +49,7 @@
 		97A3536B1A800EF500973CAC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97A3536A1A800EF500973CAC /* Media.xcassets */; };
 		97A3536D1A801CFA00973CAC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3536C1A801CFA00973CAC /* MapKit.framework */; };
 		97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */; };
+		97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */; settings = {ASSET_TAGS = (); }; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
@@ -119,6 +120,7 @@
 		97A3536A1A800EF500973CAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		97A3536C1A801CFA00973CAC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewUser.xib; sourceTree = "<group>"; };
+		97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomSwipeController.swift; sourceTree = "<group>"; };
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				972006A41A910E7500B5E74C /* PhotoAlbum.swift */,
 				979F850A1AA11B8600A11F7F /* Camera.swift */,
 				97EA40021AFEB74C005507BF /* shutter.mp3 */,
+				97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */,
 			);
 			name = Photo;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				97767D581B91B2BD00B6A827 /* ShapeCorner.swift in Sources */,
 				97140FD91A99282300B2F49A /* MemoryAlbum.swift in Sources */,
 				9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */,
+				97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */,
 				97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,

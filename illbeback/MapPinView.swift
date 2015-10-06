@@ -181,7 +181,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func addDotsToPhoto() {
-        let count = memoriesController!.photoAlbum.photoCount(memory!)
+        let count = memoriesController!.photoAlbum.photos(memory!).count
         
         let left = photoView!.frame.width / 2 - (CGFloat(count-1)) * 6
         for i in 0...count-1 {
