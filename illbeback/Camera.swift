@@ -11,6 +11,7 @@ import AVFoundation
 
 class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var camera: LLSimpleCamera!
+    var backButton: UIButton!
     var snapButton: UIButton!
     var libraryButton: UIButton!
     var navigationController: UINavigationController!
@@ -27,6 +28,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         createCamera()
         createSnapButton()
         createLibraryButton()
+        createBackButton()
         createSound()
     }
     
@@ -45,6 +47,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         self.camera.attachToViewController(parentController, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
         parentController.view.addSubview(self.snapButton)
         parentController.view.addSubview(self.libraryButton)
+        parentController.view.addSubview(self.backButton)
         camera.start()
     }
     
@@ -83,8 +86,22 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         self.libraryButton.layer.borderColor = UIColor.blackColor().CGColor
         self.libraryButton.layer.borderWidth = 1.0
         self.libraryButton.backgroundColor = UIColor.whiteColor()
-        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 60, y: parentController.view.bounds.height - 60)
+        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 65, y: parentController.view.bounds.height - 60)
         self.libraryButton.addTarget(self, action: "library:", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
+    func createBackButton() {
+        self.backButton = UIButton(frame: CGRectMake(0, 0, 60, 60))
+        let image = UIImage(named: "back")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        self.backButton!.setImage(image, forState: UIControlState.Normal)
+        self.backButton!.tintColor = UIColor.blueColor()
+        self.backButton!.clipsToBounds = true
+        self.backButton!.layer.cornerRadius = 30.0
+        self.backButton!.layer.borderColor = UIColor.blackColor().CGColor
+        self.backButton!.layer.borderWidth = 1.0
+        self.backButton!.backgroundColor = UIColor.whiteColor()
+        self.backButton.center = CGPoint(x: 65, y: parentController.view.bounds.height - 60)
+        self.backButton!.addTarget(self, action: "goBack:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     func takePhoto(sender : UIButton!) {
@@ -128,6 +145,10 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         
         parentController.presentViewController(imagePicker, animated: true, completion: nil)
     }
+    
+    func goBack(sender : UIButton!) {
+        self.navigationController.popViewControllerAnimated(true)
+    }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -165,4 +186,5 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         
         return UIDeviceOrientation.FaceUp
     }
+
 }

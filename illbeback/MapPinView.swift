@@ -186,7 +186,7 @@ class MapPinView: MKAnnotationView {
         let left = photoView!.frame.width / 2 - (CGFloat(count-1)) * 6
         for i in 0...count-1 {
             let dot = UIImageView(image: UIImage(named: "dot"))
-            dot.frame = CGRectMake(left + 12 * CGFloat(i), 16, 5, 5)
+            dot.frame = CGRectMake(left + 12 * CGFloat(i), (photoView?.frame.height)! - 20, 5, 5)
             photoView!.addSubview(dot)
         }
     }
