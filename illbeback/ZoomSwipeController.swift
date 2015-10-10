@@ -16,10 +16,11 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     var backButton: UIButton?
     var snapButton: UIButton?
     var photoButton: UIButton?
-    var libraryButton: UIButton?
+    var deleteButton: UIButton?
     var created: Bool = false
     var pinToRephoto: MapPinView?
     var memoriesController: MemoriesController?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +40,10 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         view.addSubview(pageViewController!.view)
 
         createBackButton()
-//        createLibraryButton()
-//        createSnapButton()
+        createDeleteButton()
         createPhotoButton()
         view.addSubview(self.backButton!)
-//        view.addSubview(self.libraryButton!)
-//            view.addSubview(self.snapButton!)
+        view.addSubview(self.deleteButton!)
         view.addSubview(self.photoButton!)
         
         pageViewController!.didMoveToParentViewController(self)
@@ -128,33 +127,22 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         self.photoButton!.addTarget(self, action: "photo:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
-//    func createSnapButton() {
-//        self.snapButton = UIButton(type: UIButtonType.System)
-//        self.snapButton!.frame = CGRectMake(0, 0, 90.0, 90.0)
-//        self.snapButton!.clipsToBounds = true
-//        self.snapButton!.layer.cornerRadius = 45.0
-//        self.snapButton!.layer.borderColor = UIColor.whiteColor().CGColor
-//        self.snapButton!.layer.borderWidth = 2.0
-//        self.snapButton!.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
-//        self.snapButton!.layer.rasterizationScale = UIScreen.mainScreen().scale
-//        self.snapButton!.layer.shouldRasterize = true
-//        self.snapButton!.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
-//        self.snapButton!.center = CGPoint(x: view.center.x, y: view.bounds.height - 60)
-//    }
-//    
-//    func createLibraryButton() {
-//        self.libraryButton = UIButton(frame: CGRectMake(0, 0, 60, 60))
-//        let image = UIImage(named: "Library")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-//        self.libraryButton!.setImage(image, forState: UIControlState.Normal)
-//        self.libraryButton?.tintColor = UIColor.blueColor()
-//        self.libraryButton!.clipsToBounds = true
-//        self.libraryButton!.layer.cornerRadius = 30.0
-//        self.libraryButton!.layer.borderColor = UIColor.blackColor().CGColor
-//        self.libraryButton!.layer.borderWidth = 1.0
-//        self.libraryButton!.backgroundColor = UIColor.whiteColor()
-//        self.libraryButton!.center = CGPoint(x: view.bounds.width - 65, y: view.bounds.height - 60)
-//        self.libraryButton!.addTarget(self, action: "library:", forControlEvents: UIControlEvents.TouchUpInside)
-//    }
+    func createDeleteButton() {
+        self.deleteButton = UIButton(frame: CGRectMake(0, 0, 60, 60))
+        let image = UIImage(named: "trash")
+        self.deleteButton!.setImage(image, forState: UIControlState.Normal)
+        self.deleteButton!.clipsToBounds = true
+        self.deleteButton!.layer.cornerRadius = 30.0
+        self.deleteButton!.layer.borderColor = UIColor.blackColor().CGColor
+        self.deleteButton!.layer.borderWidth = 1.0
+        self.deleteButton!.backgroundColor = UIColor.whiteColor()
+        self.deleteButton!.center = CGPoint(x: view.bounds.width - 65, y: view.bounds.height - 60)
+        self.deleteButton!.addTarget(self, action: "deletePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+
+    func deletePhoto(sender : UIButton!) {
+        memoriesController?.photoAlbum.delete("ss")
+    }
 
     func photo(sender : UIButton!) {
         memoriesController!.rephotoMemory(pinToRephoto!)
