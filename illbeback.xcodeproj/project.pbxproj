@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		351B950BBBC0C3C497174B4F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8214AFD7360B795E86E35A6 /* libPods.a */; };
+		97002F0E1BC91679002BF217 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97002F0D1BC91679002BF217 /* Photo.swift */; settings = {ASSET_TAGS = (); }; };
 		97140FD91A99282300B2F49A /* MemoryAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97140FD81A99282300B2F49A /* MemoryAlbum.swift */; };
 		9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9717D3EE1B9254D3006455D8 /* ShareController.swift */; };
 		972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A01A90ECC100B5E74C /* MapPinView.swift */; };
@@ -77,6 +78,7 @@
 /* Begin PBXFileReference section */
 		3395B5D75F7716A51B4FAC20 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8D2932CC8DC9A55330BCF225 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		97002F0D1BC91679002BF217 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		97140FD81A99282300B2F49A /* MemoryAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryAlbum.swift; sourceTree = "<group>"; };
 		9717D3EE1B9254D3006455D8 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		972006A01A90ECC100B5E74C /* MapPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				97EA40021AFEB74C005507BF /* shutter.mp3 */,
 				97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */,
 				97B05E251BC4746100B24BEC /* ZoomPageControl.xib */,
+				97002F0D1BC91679002BF217 /* Photo.swift */,
 			);
 			name = Photo;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				9725CD441A98D58B0081C1B3 /* Sharer.swift in Sources */,
 				9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */,
 				972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */,
+				97002F0E1BC91679002BF217 /* Photo.swift in Sources */,
 				97F438171A991CEC00A33FD2 /* Memory.swift in Sources */,
 				97420BBE1A92A0320076E561 /* AddMemoryController.swift in Sources */,
 				972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */,

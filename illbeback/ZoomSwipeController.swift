@@ -11,7 +11,7 @@ import MapKit
 
 class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIPageViewControllerDataSource {
     var pageViewController : UIPageViewController?
-    var photos: [UIImage] = []
+    var photos: [Photo] = []
     var index: Int = 0
     var backButton: UIButton?
     var snapButton: UIButton?
@@ -69,8 +69,8 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     
     private func zoomController(newIndex: Int) -> ZoomController {
         let newView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
-        let xxx = newView.view.subviews[0] as! UIImageView
-        xxx.image = photos[newIndex]
+        let imageView = newView.view.subviews[0] as! UIImageView
+        imageView.image = photos[newIndex].image
         newView.index = newIndex
         newView.owner = self
         return newView

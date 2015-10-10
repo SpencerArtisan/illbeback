@@ -51,17 +51,17 @@ public class PhotoAlbum {
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     
-    public func photos(memory: Memory) -> [UIImage] {
+    public func photos(memory: Memory) -> [Photo] {
         let memoryId = memory.id
-        var images:[UIImage] = []
+        var photos:[Photo] = []
         var candidate = "\(folder)/Memory\(memoryId).jpg"
         var suffix = 2
         while (fileManager.fileExistsAtPath(candidate)) {
-            images.append(UIImage(contentsOfFile: candidate)!)
+            photos.append(Photo(imagePath: candidate))
             candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg"
             suffix++
         }
-        return images
+        return photos
     }
     
     public func addMemoryImage(image: UIImage?, memoryId: String) {
