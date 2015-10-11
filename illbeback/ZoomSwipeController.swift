@@ -26,30 +26,38 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.photos = memoriesController!.photoAlbum.photos(pinToRephoto!.memory!)
+
         if (!created) {
             created = true
         
-        pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
-        pageViewController!.dataSource = self
+            pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+            pageViewController!.dataSource = self
         
-        let startingViewController = zoomController(0)
-        let viewControllers: NSArray = [startingViewController]
-        pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: false, completion: nil)
-        pageViewController!.view.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height + 37);
+            let startingViewController = zoomController(0)
+            let viewControllers: NSArray = [startingViewController]
+            pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: false, completion: nil)
+            pageViewController!.view.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height + 37);
         
-        addChildViewController(pageViewController!)
-        view.addSubview(pageViewController!.view)
+            addChildViewController(pageViewController!)
+            view.addSubview(pageViewController!.view)
 
-        createBackButton()
-        createDeleteButton()
-        createPhotoButton()
-        view.addSubview(self.backButton!)
-        view.addSubview(self.deleteButton!)
-        view.addSubview(self.photoButton!)
+            createBackButton()
+            createDeleteButton()
+            createPhotoButton()
+            view.addSubview(self.backButton!)
+            view.addSubview(self.deleteButton!)
+            view.addSubview(self.photoButton!)
         
-        pageViewController!.didMoveToParentViewController(self)
-        drawDots(0)
+            pageViewController!.didMoveToParentViewController(self)
         }
+        drawDots(0)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.photos = memoriesController!.photoAlbum.photos(pinToRephoto!.memory!)
+        showScreenOne()
+        drawDots(0)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -148,7 +156,14 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     }
 
     func deletePhoto(sender : UIButton!) {
+        print("Deleting photo at index \(index)")
         photos[index].deletePhoto()
+        photos.removeAtIndex(index)
+        if photos.count > 0 {
+            showScreenOne()
+        } else {
+            goBack(nil)
+        }
     }
 
     func photo(sender : UIButton!) {
@@ -156,6 +171,14 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     }
     
     func goBack(sender : UIButton!) {
+        pinToRephoto!.refreshAndReopen()
         self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func showScreenOne() {
+        let startingViewController = zoomController(0)
+        let viewControllers: NSArray = [startingViewController]
+        pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: false, completion: nil)
+     
     }
 }

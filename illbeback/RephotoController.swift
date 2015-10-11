@@ -48,7 +48,8 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
         pinToRephoto!.memory!.orientation = orientation
         memoryAlbum!.save()
         photoAlbum!.addMemoryImage(image, memoryId: pinToRephoto!.memory!.id)
-        navigationController?.popToRootViewControllerAnimated(true)
+//        navigationController?.popToRootViewControllerAnimated(true)
+        navigationController?.popViewControllerAnimated(true)
         pinToRephoto!.refreshAndReopen()
     }
 }

@@ -140,7 +140,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func zoomPicture(pin: MapPinView) {
         if (self.navigationController?.topViewController != zoomController) {
             self.navigationController?.navigationBarHidden = true
-            zoomController.photos = photoAlbum.photos(pin.memory!)
             zoomController.memoriesController = self
             zoomController.pinToRephoto = pin
             self.navigationController?.pushViewController(zoomController, animated: true)

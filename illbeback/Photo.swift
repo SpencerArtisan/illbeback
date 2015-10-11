@@ -19,14 +19,9 @@ public class Photo {
     }
     
     func deletePhoto() {
-        
-    }
-    
-    public func delete(photo: PhotoAlbum) {
         do {
             try self.fileManager.removeItemAtPath(imagePath)
         } catch {
         }
     }
-
 }

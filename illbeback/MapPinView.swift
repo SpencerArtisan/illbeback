@@ -52,6 +52,7 @@ class MapPinView: MKAnnotationView {
     func refreshAndReopen() {
         setSelected(false, animated: false)
         calloutView = nil
+        self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(memory!)?.imagePath
         setSelected(true, animated: false)
     }
     
@@ -198,7 +199,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createPhotoView() {
-        if (!NSFileManager.defaultManager().fileExistsAtPath(imageUrl!)) { return }
+        if (imageUrl == nil) { return }
         let photo = UIImage(contentsOfFile: imageUrl!)
         photoView = UIImageView(frame: CGRectMake(
             isLandscape() ? 1 : 0,

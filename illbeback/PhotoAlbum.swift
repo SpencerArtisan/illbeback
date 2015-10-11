@@ -41,11 +41,15 @@ public class PhotoAlbum {
         let memoryId = memory.id
         var photos:[Photo] = []
         var candidate = "\(folder)/Memory\(memoryId).jpg"
-        var suffix = 2
-        while (fileManager.fileExistsAtPath(candidate)) {
+        if fileManager.fileExistsAtPath(candidate) {
             photos.append(Photo(imagePath: candidate))
+        }
+        
+        for suffix in 2...10 {
             candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg"
-            suffix++
+            if fileManager.fileExistsAtPath(candidate) {
+                photos.append(Photo(imagePath: candidate))
+            }
         }
         return photos
     }

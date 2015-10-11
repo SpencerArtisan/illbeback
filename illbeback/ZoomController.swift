@@ -22,6 +22,7 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
+        owner?.index = index
         owner?.drawDots(index)
     }
 }
