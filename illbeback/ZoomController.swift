@@ -32,7 +32,6 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
                 
                 let width = self.photo!.image!.size.width
                 let height = self.photo!.image!.size.height
-                print("width \(width) height \(height)")
 
                 var transform = CGAffineTransformIdentity
                 if orient == UIDeviceOrientation.LandscapeLeft {
@@ -46,10 +45,6 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
                 }
                 
                 self.photo?.transform = transform
-                
-                
-                
-                print("orientationChangedInlineBlock: \(object.orientation.rawValue)")
             }})
     }
     

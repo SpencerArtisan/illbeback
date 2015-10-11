@@ -125,15 +125,12 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
 
         self.camera.capture({ (camera: LLSimpleCamera?, var image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?, orientation: UIDeviceOrientation) -> Void in
             self.snapButton.removeFromSuperview()
-            print("PICTURE TAKEN WITH ORIENTATION \(image!.imageOrientation.rawValue) SIZE \(image!.size)")
-            print("DEVICE ORIENTATION IS \(orientation.rawValue)")
             if (orientation == UIDeviceOrientation.LandscapeRight) {
                 image = image?.rotateImage(image, onDegrees: 90)
             } else if (orientation == UIDeviceOrientation.LandscapeLeft) {
                 image = image?.rotateImage(image, onDegrees: -90)
             }
             
-            print("PICTURE CORRECTED WITH ORIENTATION \(image!.imageOrientation.rawValue) SIZE \(image!.size)")
             self.callback(self.navigationController, image!, orientation)
             }, exactSeenImage: true)
     }
@@ -155,16 +152,13 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
             self.snapButton.removeFromSuperview()
             let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
             let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
-            print("PICTURE CHOSEN WITH ORIENTATION \(pickedImage.imageOrientation.rawValue) SIZE \(pickedImage.size)")
             
             let correctedImage = pickedImage.fixOrientation()
-            print("PICTURE CORRECTED TO ORIENTATION \(correctedImage.imageOrientation.rawValue) SIZE \(correctedImage.size)")
             
             photoView.image = pickedImage
             parentController.dismissViewControllerAnimated(false, completion: nil)
             navigationController.pushViewController(zoomController, animated: false)
             let devOrient = imageToDeviceOrientation(pickedImage)
-            print("Image orientation \(pickedImage.imageOrientation.rawValue) translates to device orientation \(devOrient.rawValue)")
             self.callback(navigationController, correctedImage, devOrient)
         }
     }

@@ -158,7 +158,6 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     }
 
     func deletePhoto(sender : UIButton!) {
-        print("Deleting photo at index \(index)")
         photos[index].deletePhoto()
         photos.removeAtIndex(index)
         if photos.count > 0 {

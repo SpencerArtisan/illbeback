@@ -12,11 +12,18 @@ public class Sharer {
     
     func share(from: String, to: String, memory: Memory) {
         let photos = PhotoAlbum().photos(memory)
+        print("Uploading \(photos.count) photos")
+        var leftToUpload = photos.count
         if (photos.count > 0) {
             for photo in photos {
-                uploadImage(photo.imagePath, key: photo.imagePath, onComplete: {
-                    print("Shared photo uploaded.  Uploading memory details...")
-                    self.uploadMemory(from, to: to, memory: memory)
+                let key = (photo.imagePath as NSString).lastPathComponent
+                print("    Uploading photo \(key)")
+                uploadImage(photo.imagePath, key: key, onComplete: {
+                    leftToUpload--
+                    print("    Uploaded photo '\(photo.imagePath)'.  \(leftToUpload) left")
+                    if (leftToUpload == 0) {
+                        self.uploadMemory(from, to: to, memory: memory)
+                    }
                 })
             }
         } else {
@@ -41,7 +48,7 @@ public class Sharer {
                         memory.recentShare = true
                         print("Received memory \(memoryString)")
                         self.downloadImages(memory, onComplete: {
-                            print("Shared photos downloaded.  Notifying observers...")
+                            print("All shared photos downloaded.  Notifying observers...")
                             callback(from: from, memory: memory)
                         })
                     }
@@ -55,26 +62,35 @@ public class Sharer {
         let photoAlbum = PhotoAlbum()
         let imageUrls = photoAlbum.getMemoryImageUrls(memory.id)
         
+        print("Downloading shared images for memory \(memory.id)")
+        var leftToDownload = imageUrls.count
+        
         for imageUrl in imageUrls {
-            print("AWS OP: Downloading image to: " + imageUrl.absoluteString)
+            print("    Check for image with key \(imageUrl.lastPathComponent)")
         
             let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
             readRequest.bucket = BUCKET
-            readRequest.key =  imageUrl.absoluteString
+            readRequest.key =  imageUrl.lastPathComponent!
             readRequest.downloadingFileURL = imageUrl
         
             let task = transferManager.download(readRequest)
             task.continueWithBlock { (task) -> AnyObject! in
-                onComplete()
+                if task.error != nil {
+                    print("    No image with key \(imageUrl.lastPathComponent!)")
+                } else {
+                    print("    Image downloaded \(imageUrl.lastPathComponent!)")
+                }
+                leftToDownload--
+                print("    \(leftToDownload) left to check for")
+                if (leftToDownload == 0) {
+                    onComplete()
+                }
                 return nil
             }
-            monitorAsyncTask(task, type: "Download")
         }
     }
     
     private func uploadImage(imagePath: String?, key: String, onComplete: () -> Void) {
-        print("AWS OP: Uploading image from: " + imagePath!)
-
         let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.bucket = BUCKET
         uploadRequest.key = key
@@ -83,19 +99,12 @@ public class Sharer {
             
         let task = transferManager.upload(uploadRequest)
         task.continueWithBlock { (task) -> AnyObject! in
-            onComplete()
-            return nil
-        }
-        monitorAsyncTask(task, type: "Upload")
-    }
-    
-    private func monitorAsyncTask(task: BFTask, type: String) {
-        task.continueWithBlock { (task) -> AnyObject! in
             if task.error != nil {
-                print("** AWS ERROR: " + type + " error: \(task.error)")
+                print("    Umage upload FAILED! \(key)")
             } else {
-                print("** AWS SUCCESS: " + type)
+                print("    Image uploaded \(key)")
             }
+            onComplete()
             return nil
         }
     }
@@ -109,6 +118,5 @@ public class Sharer {
     private func shareRoot(to: String) -> Firebase {
         return root.childByAppendingPath("users/" + to + "/given")
     }
-
 }
 

@@ -28,7 +28,7 @@ public class PhotoAlbum {
     
     public func getMemoryImageUrls(memoryId: String) -> [NSURL] {
         let imagePaths = getImagePaths(memoryId)
-        return [NSURL(fileURLWithPath: imagePaths[0])]
+        return imagePaths.map {NSURL(fileURLWithPath: $0)}
     }
     
     public func saveMemoryImage(image: UIImage?, memoryId: String) {
@@ -75,11 +75,9 @@ public class PhotoAlbum {
         var paths:[String] = []
         var candidate = "\(folder)/Memory\(memoryId).jpg"
         paths.append(candidate)
-        var suffix = 2;
-        while (fileManager.fileExistsAtPath(candidate)) {
+        for suffix in 2...10 {
             candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg"
             paths.append(candidate)
-            suffix++
         }
         return paths
     }
