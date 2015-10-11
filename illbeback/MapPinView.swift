@@ -184,11 +184,13 @@ class MapPinView: MKAnnotationView {
     func addDotsToPhoto() {
         let count = memoriesController!.photoAlbum.photos(memory!).count
         
-        let left = photoView!.frame.width / 2 - (CGFloat(count-1)) * 6
-        for i in 0...count-1 {
-            let dot = UIImageView(image: UIImage(named: "dot"))
-            dot.frame = CGRectMake(left + 12 * CGFloat(i), (photoView?.frame.height)! - 20, 5, 5)
-            photoView!.addSubview(dot)
+        if (count > 1) {
+            let left = photoView!.frame.width / 2 - (CGFloat(count-1)) * 6
+            for i in 0...count-1 {
+                let dot = UIImageView(image: UIImage(named: "dot"))
+                dot.frame = CGRectMake(left + 12 * CGFloat(i), (photoView?.frame.height)! - 20, 5, 5)
+                photoView!.addSubview(dot)
+            }
         }
     }
     

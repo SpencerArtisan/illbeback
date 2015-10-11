@@ -99,17 +99,19 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         }
         dots.removeAll()
         
-        let left = view.frame.width / 2 - (CGFloat(photos.count-1)) * 8
-        for i in 0...photos.count-1 {
-            let image = UIImage(named: "dot")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-            let dot = UIImageView(image: image)
-            dot.frame = CGRectMake(left + 16 * CGFloat(i), 45, 10, 10)
-            dots.append(dot)
-            view.addSubview(dot)
-            if (i == colourIndex) {
-                dot.tintColor = UIColor.orangeColor()
-            } else {
-                dot.tintColor = UIColor.whiteColor()
+        if (photos.count > 1) {
+            let left = view.frame.width / 2 - (CGFloat(photos.count-1)) * 8
+            for i in 0...photos.count-1 {
+                let image = UIImage(named: "dot")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                let dot = UIImageView(image: image)
+                dot.frame = CGRectMake(left + 16 * CGFloat(i), 45, 10, 10)
+                dots.append(dot)
+                view.addSubview(dot)
+                if (i == colourIndex) {
+                    dot.tintColor = UIColor.orangeColor()
+                } else {
+                    dot.tintColor = UIColor.whiteColor()
+                }
             }
         }
     }
