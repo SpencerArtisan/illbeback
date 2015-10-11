@@ -19,10 +19,43 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let dev = UIDevice.currentDevice()
+        dev.beginGeneratingDeviceOrientationNotifications()
+        let nc = NSNotificationCenter.defaultCenter()
+
+        //using an inline closure
+        nc.addObserverForName(UIDeviceOrientationDidChangeNotification, object: dev, queue: NSOperationQueue.mainQueue(), usingBlock: {
+            note in if let object: UIDevice = note.object as? UIDevice {
+                let orient = object.orientation
+                
+                let width = self.photo!.image!.size.width
+                let height = self.photo!.image!.size.height
+                print("width \(width) height \(height)")
+
+                var transform = CGAffineTransformIdentity
+                if orient == UIDeviceOrientation.LandscapeLeft {
+                    transform = CGAffineTransformMakeScale(width/height, width/height)
+                    transform = CGAffineTransformRotate(transform, 1.57);
+                } else if orient == UIDeviceOrientation.LandscapeRight {
+                    transform = CGAffineTransformMakeScale(width/height, width/height)
+                    transform = CGAffineTransformRotate(transform, -1.57);
+                } else if orient == UIDeviceOrientation.PortraitUpsideDown {
+                    transform = CGAffineTransformRotate(transform, 3.14);
+                }
+                
+                self.photo?.transform = transform
+                
+                
+                
+                print("orientationChangedInlineBlock: \(object.orientation.rawValue)")
+            }})
     }
     
     override func viewWillAppear(animated: Bool) {
         owner?.index = index
         owner?.drawDots(index)
     }
+    
 }
