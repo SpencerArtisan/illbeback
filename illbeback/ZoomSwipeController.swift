@@ -110,7 +110,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
                 if (i == colourIndex) {
                     dot.tintColor = UIColor.orangeColor()
                 } else {
-                    dot.tintColor = UIColor.whiteColor()
+                    dot.tintColor = UIColor.lightGrayColor()
                 }
             }
         }
