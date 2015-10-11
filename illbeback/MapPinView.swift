@@ -34,6 +34,7 @@ class MapPinView: MKAnnotationView {
     var imageUrl: String?
     var labelArea: CGRect?
     var calloutSize: CGSize?
+    var photo: UIImage?
     
     init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
         super.init(annotation: nil, reuseIdentifier: nil)
@@ -126,8 +127,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func isLandscape() -> Bool {
-        return memory?.orientation == UIDeviceOrientation.LandscapeLeft ||
-               memory?.orientation == UIDeviceOrientation.LandscapeRight
+        return photo != nil && photo!.size.width > photo!.size.height
     }
    
     func createLabelView() {
@@ -202,7 +202,7 @@ class MapPinView: MKAnnotationView {
     
     func createPhotoView() {
         if (imageUrl == nil) { return }
-        let photo = UIImage(contentsOfFile: imageUrl!)
+        photo = UIImage(contentsOfFile: imageUrl!)
         photoView = UIImageView(frame: CGRectMake(
             isLandscape() ? 1 : 0,
             isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 + 17: 0,
