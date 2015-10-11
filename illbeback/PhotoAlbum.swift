@@ -9,44 +9,30 @@
 import Foundation
 
 public class PhotoAlbum {
-    let fileManager = NSFileManager.defaultManager()
+
     var folder: String
+    let fileManager = NSFileManager.defaultManager()
     
     public init() {
         folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
     }
 
-    public func delete(memoryId: String) {
-        if (photoExists(memoryId)) {
-            let imagePath = getImagePath(memoryId)
-            print("Deleting file " + imagePath)
-            do {
-                try self.fileManager.removeItemAtPath(imagePath)
-            } catch {
-            }
+    func getMainPhoto(memory: Memory) -> Photo? {
+        let allphotos = photos(memory)
+        if (allphotos.count == 0) {
+            return nil
+        } else {
+            return allphotos[0]
         }
     }
     
-    public func photoExists(memoryId: String) -> Bool {
-        let imagePath = getImagePath(memoryId)
-        return fileManager.fileExistsAtPath(imagePath)
+    public func getMemoryImageUrls(memoryId: String) -> [NSURL] {
+        let imagePaths = getImagePaths(memoryId)
+        return [NSURL(fileURLWithPath: imagePaths[0])]
     }
     
-    public func getMemoryImageUrl(memoryId: String) -> NSURL {
-        let imagePath = getImagePath(memoryId)
-        return NSURL(fileURLWithPath: imagePath)
-    }
-    
-    public func getMemoryImage(memoryId: String) -> UIImage? {
-        if (photoExists(memoryId)) {
-            let imagePath = getImagePath(memoryId)
-            return UIImage(contentsOfFile: imagePath)!
-        }
-        return nil
-    }
-
     public func saveMemoryImage(image: UIImage?, memoryId: String) {
-        let imagePath = getImagePath(memoryId)
+        let imagePath = getNewImagePath(memoryId)
         let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
@@ -71,10 +57,6 @@ public class PhotoAlbum {
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     
-    public func getImagePath(memoryId: String) -> String {
-        return "\(folder)/Memory\(memoryId).jpg"
-    }
-    
     private func getNewImagePath(memoryId: String) -> String {
         var candidate = "\(folder)/Memory\(memoryId).jpg"
         var suffix = 2;
@@ -83,5 +65,18 @@ public class PhotoAlbum {
             suffix++
         }
         return candidate
+    }
+
+    private func getImagePaths(memoryId: String) -> [String] {
+        var paths:[String] = []
+        var candidate = "\(folder)/Memory\(memoryId).jpg"
+        paths.append(candidate)
+        var suffix = 2;
+        while (fileManager.fileExistsAtPath(candidate)) {
+            candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg"
+            paths.append(candidate)
+            suffix++
+        }
+        return paths
     }
 }

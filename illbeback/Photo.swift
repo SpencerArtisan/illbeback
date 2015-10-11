@@ -10,8 +10,23 @@ import Foundation
 
 public class Photo {
     let image: UIImage
+    let imagePath: String
+    let fileManager = NSFileManager.defaultManager()
     
     init(imagePath: String) {
         self.image = UIImage(contentsOfFile: imagePath)!
+        self.imagePath = imagePath
     }
+    
+    func deletePhoto() {
+        
+    }
+    
+    public func delete(photo: PhotoAlbum) {
+        do {
+            try self.fileManager.removeItemAtPath(imagePath)
+        } catch {
+        }
+    }
+
 }

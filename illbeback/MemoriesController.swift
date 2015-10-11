@@ -267,7 +267,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
         
             if (pinView == nil) {
-                let imageUrl = photoAlbum.getImagePath(pinData.memory.id)
+                let imageUrl = photoAlbum.getMainPhoto(pinData.memory)?.imagePath
                 pinView = MapPinView(memoriesController: self, memory: pinData.memory, imageUrl: imageUrl)
             }
         

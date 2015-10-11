@@ -10,12 +10,15 @@ public class Sharer {
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
     
-    func share(from: String, to: String, memory: Memory, imageUrl: NSURL?) {
-        if (PhotoAlbum().photoExists(memory.id)) {
-            uploadImage(imageUrl, key: imageKey(memory), onComplete: {
-                print("Shared photo uploaded.  Uploading memory details...")
-                self.uploadMemory(from, to: to, memory: memory)
-            })
+    func share(from: String, to: String, memory: Memory) {
+        let photos = PhotoAlbum().photos(memory)
+        if (photos.count > 0) {
+            for photo in photos {
+                uploadImage(photo.imagePath, key: photo.imagePath, onComplete: {
+                    print("Shared photo uploaded.  Uploading memory details...")
+                    self.uploadMemory(from, to: to, memory: memory)
+                })
+            }
         } else {
             self.uploadMemory(from, to: to, memory: memory)            
         }
@@ -37,9 +40,8 @@ public class Sharer {
                         receivedIds.append(memory.id)
                         memory.recentShare = true
                         print("Received memory \(memoryString)")
-                        let key = self.imageKey(memory)
-                        self.downloadImage(memory, key: key, onComplete: {
-                            print("Shared photo downloaded.  Notifying observers...")
+                        self.downloadImages(memory, onComplete: {
+                            print("Shared photos downloaded.  Notifying observers...")
                             callback(from: from, memory: memory)
                         })
                     }
@@ -48,33 +50,35 @@ public class Sharer {
         })
     }
     
-    private func downloadImage(memory: Memory, key: String, onComplete: () -> Void) {
+    private func downloadImages(memory: Memory, onComplete: () -> Void) {
         // todo -tidy
         let photoAlbum = PhotoAlbum()
-        let imageUrl = photoAlbum.getMemoryImageUrl(memory.id)
-        photoAlbum.delete(memory.id)
-        print("AWS OP: Downloading image to: " + imageUrl.absoluteString)
+        let imageUrls = photoAlbum.getMemoryImageUrls(memory.id)
         
-        let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
-        readRequest.bucket = BUCKET
-        readRequest.key =  key
-        readRequest.downloadingFileURL = imageUrl
+        for imageUrl in imageUrls {
+            print("AWS OP: Downloading image to: " + imageUrl.absoluteString)
         
-        var task = transferManager.download(readRequest)
-        task.continueWithBlock { (task) -> AnyObject! in
-            onComplete()
-            return nil
+            let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
+            readRequest.bucket = BUCKET
+            readRequest.key =  imageUrl.absoluteString
+            readRequest.downloadingFileURL = imageUrl
+        
+            let task = transferManager.download(readRequest)
+            task.continueWithBlock { (task) -> AnyObject! in
+                onComplete()
+                return nil
+            }
+            monitorAsyncTask(task, type: "Download")
         }
-        monitorAsyncTask(task, type: "Download")
     }
     
-    private func uploadImage(imageUrl: NSURL?, key: String, onComplete: () -> Void) {
-        print("AWS OP: Uploading image from: " + imageUrl!.absoluteString)
+    private func uploadImage(imagePath: String?, key: String, onComplete: () -> Void) {
+        print("AWS OP: Uploading image from: " + imagePath!)
 
         let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.bucket = BUCKET
         uploadRequest.key = key
-        uploadRequest.body = imageUrl
+        uploadRequest.body = NSURL(fileURLWithPath: imagePath!)
         uploadRequest.ACL = AWSS3ObjectCannedACL.AuthenticatedRead
             
         let task = transferManager.upload(uploadRequest)
@@ -98,16 +102,13 @@ public class Sharer {
     
     private func uploadMemory(from: String, to: String, memory: Memory) {
         print("FIREBASE OP: Uploading memory " + memory.asString())
-        var newNode = shareRoot(to).childByAutoId()
+        let newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": from, "memory": memory.asString()])
     }
     
     private func shareRoot(to: String) -> Firebase {
         return root.childByAppendingPath("users/" + to + "/given")
     }
-    
-    private func imageKey(memory: Memory) -> String {
-        return memory.id
-    }
+
 }
 

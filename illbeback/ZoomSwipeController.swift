@@ -141,7 +141,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     }
 
     func deletePhoto(sender : UIButton!) {
-        memoriesController?.photoAlbum.delete("ss")
+        photos[index].deletePhoto()
     }
 
     func photo(sender : UIButton!) {

@@ -62,7 +62,7 @@ public class MemoryAlbum {
     }
     
     func delete(pin: MapPinView) {
-        var memoryIndex = find(pin)
+        let memoryIndex = find(pin)
         if (memoryIndex != nil) {
             memories.removeAtIndex(memoryIndex!)
             save()
@@ -75,7 +75,7 @@ public class MemoryAlbum {
         if (memoryIndex != nil) {
             var memory = memories[memoryIndex!]
             print("Sharing \(memory.type)")
-            sharer().share(from, to: to, memory: memory, imageUrl: PhotoAlbum().getMemoryImageUrl(memory.id))
+            sharer().share(from, to: to, memory: memory)
         } else {
             print("WARN: Failed to share unknown memory")
         }
@@ -83,7 +83,7 @@ public class MemoryAlbum {
 
     private func find(pin: MapPinView) -> Int? {
         for i in 0...memories.count - 1 {
-            var memory = memories[i]
+            let memory = memories[i]
             if (memory.id == pin.memory?.id) {
                 return i
             }

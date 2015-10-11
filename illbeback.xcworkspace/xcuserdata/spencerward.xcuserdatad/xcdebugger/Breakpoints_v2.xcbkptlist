@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/Sharer.swift"
-            timestampString = "462614091.855941"
+            timestampString = "466197604.82143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "uploadImage(_:key:onComplete:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/Sharer.swift"
-            timestampString = "462614091.855941"
+            timestampString = "466197604.82143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "downloadImage(_:key:onComplete:)"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "downloadImages(_:onComplete:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,12 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/Sharer.swift"
-            timestampString = "462614091.855941"
+            timestampString = "466197604.82143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "downloadImage(_:key:onComplete:)"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "downloadImages(_:onComplete:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/Sharer.swift"
-            timestampString = "462614091.855941"
+            timestampString = "466197604.82143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "uploadImage(_:key:onComplete:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -170,12 +170,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/Sharer.swift"
-            timestampString = "462614091.855941"
+            timestampString = "466197604.82143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "downloadImage(_:key:onComplete:)"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "downloadImages(_:onComplete:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/Sharer.swift"
-            timestampString = "462614091.855941"
+            timestampString = "466197604.82143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
             landmarkName = "retrieveShares(_:callback:)"
             landmarkType = "5">
             <Locations>
@@ -775,22 +775,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "illbeback/PhotoAlbum.swift"
-            timestampString = "462438516.63033"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "getMemoryImage(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "LLSimpleCamera/UIImage+FixOrientation.m"
             timestampString = "465345215.982086"
             startingColumnNumber = "9223372036854775807"
@@ -872,45 +856,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/PhotoAlbum.swift"
-            timestampString = "462438516.63033"
+            timestampString = "466197604.82143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "getMemoryImage(_:)"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "saveMemoryImage(_:memoryId:)"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "illbeback/PhotoAlbum.swift"
-            timestampString = "462436239.476185"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "photoExists(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "illbeback/PhotoAlbum.swift"
-            timestampString = "465772425.567236"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "PhotoAlbum"
-            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1144,11 +1096,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/PhotoAlbum.swift"
-            timestampString = "465072717.867063"
+            timestampString = "466197604.82143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
             landmarkName = "init()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1839,6 +1791,22 @@
             endingLineNumber = "146"
             landmarkName = "ZoomSwipeController"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbeback/Sharer.swift"
+            timestampString = "466197604.82143"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "downloadImages(_:onComplete:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
