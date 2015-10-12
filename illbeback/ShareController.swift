@@ -153,7 +153,7 @@ class ShareController : UIViewController {
                 }
             }, onError: {
                 NSOperationQueue.mainQueue().addOperationWithBlock {
-                    self.memories.showMessage("Share failed", color: UIColor(red: 0.9, green: 0.2, blue: 0.2, alpha: 1.0), time: 2.0)
+                    self.memories.showMessage("Share failed", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: 2.0)
                 }
             })
         }
