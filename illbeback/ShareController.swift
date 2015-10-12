@@ -65,7 +65,7 @@ class ShareController : UIViewController {
         if (friends.count > 7) {
             newGroupButton.hidden = true
         } else {
-            newGroupButton.hidden = false
+            newGroupButton.hidden = true
             newGroupButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
             newGroupButton.addTarget(self, action: "createNewGroup:", forControlEvents: .TouchUpInside)
             newGroupButton.enabled = true
@@ -116,7 +116,7 @@ class ShareController : UIViewController {
         if (friends.count > 7) {
             newGroupButton.hidden = true
         } else {
-            newGroupButton.hidden = false
+            newGroupButton.hidden = true
             newGroupButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
             newGroupButton.addTarget(self, action: "shareWithNewGroup:", forControlEvents: .TouchUpInside)
             newGroupButton.enabled = true

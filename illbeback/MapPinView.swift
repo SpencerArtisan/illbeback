@@ -53,6 +53,8 @@ class MapPinView: MKAnnotationView {
     func refreshAndReopen() {
         setSelected(false, animated: false)
         calloutView = nil
+        photoView = nil
+        labelView = nil
         self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(memory!)?.imagePath
         setSelected(true, animated: false)
     }
