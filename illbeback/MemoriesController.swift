@@ -329,6 +329,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for new friend dialogs
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         textView.text = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        
+        if (textView == self.newUserText && text != "\n") {
+            if textView.text.characters.count > 10 { return false }
+        }
+        
         if (text == "\n" && !textView.text.isEmpty) {
             if (textView == self.searchText) {
                 print("SEARCH TEXT \(textView.text)")
