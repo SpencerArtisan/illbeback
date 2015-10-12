@@ -55,9 +55,19 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     }
     
     override func viewWillAppear(animated: Bool) {
+        let previousPhotoPaths = self.photos.map { $0.imagePath }
+        
         self.photos = memoriesController!.photoAlbum.photos(pinToRephoto!.memory!)
-        showScreenOne()
-        drawDots(0)
+        var i = 0
+        for photo in self.photos {
+            if !previousPhotoPaths.contains(photo.imagePath) {
+                break
+            }
+            i++
+        }
+        if i == self.photos.count { i = 0 }
+        showScreen(i)
+        drawDots(i)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -161,7 +171,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         photos[index].deletePhoto()
         photos.removeAtIndex(index)
         if photos.count > 0 {
-            showScreenOne()
+            showScreen(0)
         } else {
             goBack(nil)
         }
@@ -176,8 +186,8 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         self.navigationController!.popViewControllerAnimated(true)
     }
     
-    func showScreenOne() {
-        let startingViewController = zoomController(0)
+    func showScreen(i: Int) {
+        let startingViewController = zoomController(i)
         let viewControllers: NSArray = [startingViewController]
         pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: false, completion: nil)
      
