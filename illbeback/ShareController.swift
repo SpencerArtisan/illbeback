@@ -141,19 +141,21 @@ class ShareController : UIViewController {
             editFriends()
             return
         }
-        
+     
+        let title = pinsToShare.count == 1 ? "Sharing \(pinsToShare[0].memory!.type) with \(friend)" : "Sharing \(pinsToShare.count) flags with \(friend)"
+        let color = CategoryController.getColorForCategory(pinsToShare.count == 1 ? pinsToShare[0].memory!.type : "Memory")
+        memories.showMessage(title, color: color, time: 0.8)
+
         for pin in pinsToShare {
-            memories.memoryAlbum.share(pin, from: user.getName(), to: friend)
-        }
-        
-        if pinsToShare.count == 1 {
-            let memory = pinsToShare[0].memory
-            let title = "Shared \(memory!.type) with \(friend)"
-            let color = CategoryController.getColorForCategory(memory!.type)
-            memories.showMessage(title, color: color, time: 1.6)
-        } else {
-            let title = "Shared \(pinsToShare.count) flags with \(friend)"
-            memories.showMessage(title, color: CategoryController.getColorForCategory("Memory"), time: 1.6)
+            memories.memoryAlbum.share(pin, from: user.getName(), to: friend, onComplete: {
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    self.memories.showMessage("Share success", color: color, time: 1.6)
+                }
+            }, onError: {
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    self.memories.showMessage("Share failed", color: UIColor(red: 0.9, green: 0.2, blue: 0.2, alpha: 1.0), time: 2.0)
+                }
+            })
         }
         
         pinsToShare = []

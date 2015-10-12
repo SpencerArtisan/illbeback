@@ -70,12 +70,12 @@ public class MemoryAlbum {
         map.removeAnnotation(pin.annotation!)
     }
     
-    func share(pin: MapPinView, from: String, to: String) {
-        var memoryIndex = find(pin)
+    func share(pin: MapPinView, from: String, to: String, onComplete: () -> Void, onError: () -> Void) {
+        let memoryIndex = find(pin)
         if (memoryIndex != nil) {
-            var memory = memories[memoryIndex!]
+            let memory = memories[memoryIndex!]
             print("Sharing \(memory.type)")
-            sharer().share(from, to: to, memory: memory)
+            sharer().share(from, to: to, memory: memory, onComplete: onComplete, onError: onError)
         } else {
             print("WARN: Failed to share unknown memory")
         }

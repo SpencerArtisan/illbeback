@@ -10,7 +10,7 @@ public class Sharer {
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
     
-    func share(from: String, to: String, memory: Memory) {
+    func share(from: String, to: String, memory: Memory, onComplete: () -> Void, onError: () -> Void) {
         let photos = PhotoAlbum().photos(memory)
         print("Uploading \(photos.count) photos")
         var leftToUpload = photos.count
@@ -23,7 +23,12 @@ public class Sharer {
                     print("    Uploaded photo '\(photo.imagePath)'.  \(leftToUpload) left")
                     if (leftToUpload == 0) {
                         self.uploadMemory(from, to: to, memory: memory)
+                        onComplete()
+                        return
                     }
+                }, onError: {
+                    onError()
+                    return
                 })
             }
         } else {
@@ -90,7 +95,7 @@ public class Sharer {
         }
     }
     
-    private func uploadImage(imagePath: String?, key: String, onComplete: () -> Void) {
+    private func uploadImage(imagePath: String?, key: String, onComplete: () -> Void, onError: () -> Void) {
         let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.bucket = BUCKET
         uploadRequest.key = key
@@ -101,10 +106,12 @@ public class Sharer {
         task.continueWithBlock { (task) -> AnyObject! in
             if task.error != nil {
                 print("    Umage upload FAILED! \(key)")
+                onError()
             } else {
                 print("    Image uploaded \(key)")
+                onComplete()
             }
-            onComplete()
+            
             return nil
         }
     }
