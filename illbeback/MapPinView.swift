@@ -229,6 +229,8 @@ class MapPinView: MKAnnotationView {
         titleView!.font = titleView!.font.fontWithSize(20)
         titleView!.text = annotation!.title!
         titleView!.backgroundColor = CategoryController.getColorForCategory(memory!.type)
+        titleView!.layer.borderWidth = 0.5
+        titleView!.layer.borderColor = UIColor.lightGrayColor().CGColor
     }
     
     func createOriginatorLabel() {
