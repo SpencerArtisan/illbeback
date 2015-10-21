@@ -182,18 +182,25 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
     }
     
-    func showMessage(text: String, color: UIColor, time: Double) {
+    func showMessage(text: String, color: UIColor, time: Double?) -> Modal {
         let messageModal = Modal(viewName: "MessageView", owner: self)
         let message = messageModal.findElementByTag(1) as! UIButton
         message.backgroundColor = color
         message.setTitle(text, forState: UIControlState.Normal)
         messageModal.slideDownFromTop(self.view)
         
-        delay(time) {
-            messageModal.slideUpFromTop(self.view)
+        if time != nil {
+            delay(time!) {
+                messageModal.slideUpFromTop(self.view)
+            }
         }
+        return messageModal
     }
 
+    func dismissMessage(messageModal: Modal) {
+        messageModal.slideUpFromTop(self.view)
+    }
+    
     func dismissMessage(sender: AnyObject?) {
         let messageModal = messageModals.removeLast()
         messageModal.slideUpFromTop(self.view)

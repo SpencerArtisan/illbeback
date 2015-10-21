@@ -32,7 +32,8 @@ public class Sharer {
                 })
             }
         } else {
-            self.uploadMemory(from, to: to, memory: memory)            
+            self.uploadMemory(from, to: to, memory: memory)
+            onComplete()
         }
     }
     
