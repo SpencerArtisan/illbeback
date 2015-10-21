@@ -101,7 +101,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     
     @IBAction func cancel(sender: AnyObject) {
         hideCategorySelector()
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
     }
     
     func add(controller: UIViewController, image: UIImage, orientation: UIDeviceOrientation) {
