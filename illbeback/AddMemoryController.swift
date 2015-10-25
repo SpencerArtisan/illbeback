@@ -21,6 +21,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var callingViewController: UIViewController?
     var photoAlbum: PhotoAlbum?
     var rewordingMemory: Memory?
+    var when: NSDate?
 
     init(album: PhotoAlbum, memoriesViewController: MemoriesController) {
         super.init(nibName: nil, bundle: nil)
@@ -146,8 +147,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         let message = descriptionModal.findElementByTag(1) as! UILabel
         message.backgroundColor = CategoryController.getColorForCategory(type)
         message.text = type
-        let when = descriptionModal.findElementByTag(2) as! UIDatePicker
-        when.hidden = true
+        datePicker().hidden = true
     
         descriptionModal.slideOutFromRight(self.callingViewController!.view)
         self.desciptionTextArea.becomeFirstResponder()
@@ -157,7 +157,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         let message = descriptionModal.findElementByTag(1) as! UILabel
         message.backgroundColor = CategoryController.getColorForCategory(type)
         message.text = type
-        let when = descriptionModal.findElementByTag(2) as! UIDatePicker
+        let when = datePicker()
         when.backgroundColor = UIColor.whiteColor()
         when.minimumDate = NSDate()
         when.maximumDate = NSDate().dateByAddingTimeInterval(NSTimeInterval(31536000))
@@ -167,6 +167,9 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         self.desciptionTextArea.becomeFirstResponder()
     }
     
+    func datePicker() -> UIDatePicker {
+        return descriptionModal.findElementByTag(2) as! UIDatePicker
+    }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
@@ -176,7 +179,8 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
                 rewordingMemory?.description = textView.text
                 memories!.memoryAlbum.save()
             } else {
-                memories!.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation)
+                let when = datePicker().hidden ? nil as NSDate? : datePicker().date
+                memories!.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation, when: when)
                 self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
             }
             descriptionModal.hide()
