@@ -75,6 +75,20 @@ class MapPinView: MKAnnotationView {
         imageIcon.drawInRect(CGRectMake(0, 10, imageIcon.size.width, imageIcon.size.height))
         
         let inShape: Bool = memoriesController!.shapeController.shapeContains(memory!.location)
+
+        
+        // set the font to Helvetica Neue 18
+        let fieldFont = UIFont(name: "Helvetica Neue", size: 18)
+        
+        let attributes: NSDictionary = [
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSBackgroundColorAttributeName: UIColor.redColor(),
+            NSFontAttributeName: fieldFont!
+        ]
+        
+        let daysToGo: NSString = "11"
+        daysToGo.drawInRect(CGRectMake(0,0,100,50), withAttributes: attributes as! [String : AnyObject])
+        
         
         if (inShape) {
             let imageHighlight = UIImage(named: "share flag")!
