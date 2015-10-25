@@ -41,25 +41,26 @@ public class Memory {
         self.originator = parts[5]
         self.recentShare = parts.count > 6 ? (parts[6] == "T") : false
         self.orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
-        
-        if (type == "Gallery") {
-            type = "Arts Venue"
-        }
-        if (type == "Pub") {
-            type = "Bar"
-        }
+        self.when = parts.count > 8 ? formatter().dateFromString(parts[8]) : nil
     }
     
     func asString() -> String {
         let recentShareChar = recentShare ? "T" : "F"
-        return "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(recentShareChar):\(orientation.rawValue)"
+        var str = "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(recentShareChar):\(orientation.rawValue)"
+        if when != nil {
+            str += ":\(formatter().stringFromDate(when!))"
+        }
+        return str
     }
     
     func asMapPin() -> MapPin {
         return MapPin(memory: self)
     }
     
-    func photoCount() -> Int {
-        return 3
+    func formatter() -> NSDateFormatter {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.LongStyle
+        return formatter
     }
+
 }
