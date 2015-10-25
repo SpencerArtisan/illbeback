@@ -169,16 +169,16 @@
                 <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BP1-Su-txt">
                     <rect key="frame" x="0.0" y="622" width="200" height="45"/>
                     <animations/>
-                    <color key="backgroundColor" red="0.92824264749999996" green="0.94255050510000005" blue="0.61861419750000002" alpha="0.64000000000000001" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="9LI-WI-uRv"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Event" image="Bar">
+                    <state key="normal" title=" Event" image="Event">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
-                        <action selector="addPub:" destination="-1" eventType="touchUpInside" id="atr-1s-LhY"/>
+                        <action selector="addEvent:" destination="-1" eventType="touchUpInside" id="B87-WL-JY0"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fH0-yM-HH7" userLabel="CancelButton">
@@ -286,6 +286,7 @@
         <image name="Bar" width="32" height="32"/>
         <image name="Building" width="32" height="32"/>
         <image name="Cafe" width="33" height="33"/>
+        <image name="Event" width="33" height="33"/>
         <image name="Gallery" width="32" height="32"/>
         <image name="Green Space" width="32" height="32"/>
         <image name="Memory" width="33" height="33"/>

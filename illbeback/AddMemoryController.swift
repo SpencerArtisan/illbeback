@@ -99,6 +99,10 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         addMemory("Gallery")
     }
     
+    @IBAction func addEvent(sender: AnyObject) {
+        addMemory("Event")
+    }
+    
     @IBAction func cancel(sender: AnyObject) {
         hideCategorySelector()
         self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
