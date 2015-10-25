@@ -80,9 +80,14 @@ class MapPinView: MKAnnotationView {
             let fromNow = memory!.when!.timeIntervalSinceDate(today())
             let days = Int(fromNow) / (60*60*24)
             let daysToGo: NSString = " \(days) "
+            let nearness = CGFloat(1.0 / (1.0 + log2(1.0 + fromNow/(365.0*60.0*60.0*4.0))));
+            
+            
+          //  log10(<#T##Double#>)
+            let col = UIColor(red: nearness, green: 1 - nearness, blue: 0, alpha: 0.8)
             daysToGo.drawInRect(CGRectMake(0,finalSize.height-14,100,30), withAttributes: [
                 NSForegroundColorAttributeName: UIColor.whiteColor(),
-                NSBackgroundColorAttributeName: UIColor.redColor(),
+                NSBackgroundColorAttributeName: col,
                 NSFontAttributeName: UIFont(name: "Arial-BoldMT", size: 12)!
             ])
         }
