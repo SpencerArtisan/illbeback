@@ -77,14 +77,13 @@ class MapPinView: MKAnnotationView {
         let inShape: Bool = memoriesController!.shapeController.shapeContains(memory!.location)
 
         if memory!.when != nil {
-            
             let fromNow = memory!.when!.timeIntervalSinceDate(today())
             let days = Int(fromNow) / (60*60*24)
             let daysToGo: NSString = " \(days) "
-            daysToGo.drawInRect(CGRectMake(0,0,100,50), withAttributes: [
+            daysToGo.drawInRect(CGRectMake(0,finalSize.height-14,100,30), withAttributes: [
                 NSForegroundColorAttributeName: UIColor.whiteColor(),
                 NSBackgroundColorAttributeName: UIColor.redColor(),
-                NSFontAttributeName: UIFont(name: "Helvetica Neue", size: 18)!
+                NSFontAttributeName: UIFont(name: "Arial-BoldMT", size: 12)!
             ])
         }
         
