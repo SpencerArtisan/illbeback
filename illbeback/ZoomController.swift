@@ -36,12 +36,12 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
                 var transform = CGAffineTransformIdentity
                 if orient == UIDeviceOrientation.LandscapeLeft {
                     transform = CGAffineTransformMakeScale(width/height, width/height)
-                    transform = CGAffineTransformRotate(transform, 1.57);
+                    transform = CGAffineTransformRotate(transform, 3.14159/2);
                 } else if orient == UIDeviceOrientation.LandscapeRight {
                     transform = CGAffineTransformMakeScale(width/height, width/height)
-                    transform = CGAffineTransformRotate(transform, -1.57);
+                    transform = CGAffineTransformRotate(transform, -3.14159/2);
                 } else if orient == UIDeviceOrientation.PortraitUpsideDown {
-                    transform = CGAffineTransformRotate(transform, 3.14);
+                    transform = CGAffineTransformRotate(transform, 3.14159);
                 }
                 
                 self.photo?.transform = transform

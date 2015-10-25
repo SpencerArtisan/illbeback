@@ -142,23 +142,43 @@ class ShareController : UIViewController {
             return
         }
      
-        let title = pinsToShare.count == 1 ? "Sharing \(pinsToShare[0].memory!.type) with \(friend)" : "Sharing \(pinsToShare.count) flags with \(friend)"
+        let title = pinsToShare.count == 1 ? "Sending \(pinsToShare[0].memory!.type) to \(friend)" : "Sending \(pinsToShare.count) flags to \(friend)"
         let color = CategoryController.getColorForCategory(pinsToShare.count == 1 ? pinsToShare[0].memory!.type : "Memory")
-        let message = memories.showMessage(title, color: color, time: nil)
+        var message = memories.showMessage(title, color: color, time: nil)
 
+        let total = pinsToShare.count
+        var remaining = total
+        var failed = 0
+        
         for pin in pinsToShare {
             memories.memoryAlbum.share(pin, from: user.getName(), to: friend, onComplete: {
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     self.memories.delay(0.4) {
                         self.memories.dismissMessage(message)
-                        self.memories.showMessage("Share success", color: UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0), time: 1.6)
+                        if remaining == 1 && total == 1 {
+                            self.memories.showMessage("Sent", color: UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0), time: 1.6)
+                        } else if remaining == 1 {
+                            self.memories.showMessage("Sent all", color: UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0), time: 1.6)
+                        } else {
+                            remaining--
+                            message = self.memories.showMessage("Sent \(total - remaining) of \(total)", color: color, time: nil)
+                        }
                     }
                 }
             }, onError: {
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     self.memories.delay(0.4) {
                         self.memories.dismissMessage(message)
-                        self.memories.showMessage("Share failed", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: 2.0)
+                        if remaining == 1  && total == 1 {
+                            self.memories.showMessage("Failed", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: 2.0)
+                        } else if remaining == 1 {
+                            failed++
+                            message = self.memories.showMessage("Failed sending \(failed) out of \(total) flags", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: 2.6)
+                        } else {
+                            remaining--
+                            failed++
+                            message = self.memories.showMessage("Failed sending \(failed) out of \(total) flags", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: nil)
+                        }
                     }
                 }
             })
@@ -184,7 +204,7 @@ class ShareController : UIViewController {
     
     func newFriend(sender: AnyObject?, cancelAction: Selector) {
         hideShareModal(sender)
-        memories.newUserLabel.text = "Your friend's name"
+        memories.newUserLabel.text = "Friend's sharing name"
         memories.newUserText.becomeFirstResponder()
         memories.newUserText.text = ""
         memories.newUserModal?.slideOutFromRight(memories.view)
