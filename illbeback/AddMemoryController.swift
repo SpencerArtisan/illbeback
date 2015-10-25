@@ -100,7 +100,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func addEvent(sender: AnyObject) {
-        addMemory("Event")
+        addMemoryWithDate("Event")
     }
     
     @IBAction func cancel(sender: AnyObject) {
@@ -143,12 +143,30 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
     
     func showDescriptionEntry(type: String) {
-        var message = descriptionModal.findElementByTag(1) as! UILabel
+        let message = descriptionModal.findElementByTag(1) as! UILabel
         message.backgroundColor = CategoryController.getColorForCategory(type)
         message.text = type
+        let when = descriptionModal.findElementByTag(2) as! UIDatePicker
+        when.hidden = true
+    
         descriptionModal.slideOutFromRight(self.callingViewController!.view)
         self.desciptionTextArea.becomeFirstResponder()
     }
+
+    func showDescriptionEntryWithDate(type: String) {
+        let message = descriptionModal.findElementByTag(1) as! UILabel
+        message.backgroundColor = CategoryController.getColorForCategory(type)
+        message.text = type
+        let when = descriptionModal.findElementByTag(2) as! UIDatePicker
+        when.backgroundColor = UIColor.whiteColor()
+        when.minimumDate = NSDate()
+        when.maximumDate = NSDate().dateByAddingTimeInterval(NSTimeInterval(31536000))
+        when.hidden = false
+        
+        descriptionModal.slideOutFromRight(self.callingViewController!.view)
+        self.desciptionTextArea.becomeFirstResponder()
+    }
+    
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
@@ -174,4 +192,10 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         hideCategorySelector()
     }
 
+    func addMemoryWithDate(type: String) {
+        memoryImage = type
+        showDescriptionEntryWithDate(type)
+        hideCategorySelector()
+    }
+    
 }
