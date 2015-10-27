@@ -53,6 +53,10 @@ public class Memory {
         return str
     }
     
+    func whenFormatted() -> String {
+        return formatter().stringFromDate(NSDate())
+    }
+    
     func asMapPin() -> MapPin {
         return MapPin(memory: self)
     }

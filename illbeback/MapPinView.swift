@@ -10,9 +10,9 @@ import MapKit
 
 
 class MapPinView: MKAnnotationView {
-    let WITHOUT_PHOTO = CGSize(width: 220.0, height: 250.0)
+    let WITHOUT_PHOTO = CGSize(width: 220.0, height: 270.0)
     let WITH_PORTRAIT_PHOTO = CGSize(width: 330.0, height: 280.0)
-    let WITH_LANDSCAPE_PHOTO = CGSize(width: 230.0, height: 310.0)
+    let WITH_LANDSCAPE_PHOTO = CGSize(width: 270.0, height: 350.0)
     
     var calloutView: UIView?
     var photoView: UIImageView?
@@ -23,6 +23,7 @@ class MapPinView: MKAnnotationView {
     var shareButton: UIButton?
 
     var titleView: UILabel?
+    var dateView: UILabel?
     var originatorView: UILabel?
     var acceptButton: UILabel?
     var declineButton: UILabel?
@@ -35,6 +36,9 @@ class MapPinView: MKAnnotationView {
     var labelArea: CGRect?
     var calloutSize: CGSize?
     var photo: UIImage?
+    
+    var whenHeight: CGFloat = 0.0
+    var fromHeight: CGFloat = 0.0
     
     init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
         super.init(annotation: nil, reuseIdentifier: nil)
@@ -135,9 +139,10 @@ class MapPinView: MKAnnotationView {
                 height: photoView == nil ? WITHOUT_PHOTO.height :
                     (isLandscape() ? WITH_LANDSCAPE_PHOTO.height : WITH_PORTRAIT_PHOTO.height))
             
+            createDateLabel()
+            createOriginatorLabel()
             createSubtitleLabel()
             createTitleLabel()
-            createOriginatorLabel()
             createDeleteButton()
             createPhotoButton()
             createShareButton()
@@ -145,6 +150,7 @@ class MapPinView: MKAnnotationView {
             createDeclineButton()
             createLabelView()
             createCalloutView()
+            
         }
         return calloutView!
     }
@@ -161,6 +167,7 @@ class MapPinView: MKAnnotationView {
          labelView!.addSubview(originatorView!)
         }
         labelView!.addSubview(subtitleView!)
+        labelView!.addSubview(dateView!)
         
         if (memory!.recentShare) {
             labelView?.addSubview(acceptButton!)
@@ -192,13 +199,13 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeleteButton() {
-        deleteButton = UIButton(frame: CGRectMake(labelArea!.width - 35, labelArea!.height - 39, 40, 40))
+        deleteButton = UIButton(frame: CGRectMake(labelArea!.width - 35, labelArea!.height - 39 - whenHeight, 40, 40))
         let image = UIImage(named: "trash")
         deleteButton!.setImage(image, forState: UIControlState.Normal)
     }
     
     func createPhotoButton() {
-        photoButton = UIButton(frame: CGRectMake(labelArea!.width / 2 - 17, labelArea!.height - 38, 40, 40))
+        photoButton = UIButton(frame: CGRectMake(labelArea!.width / 2 - 17, labelArea!.height - 38 - whenHeight, 40, 40))
         let image = UIImage(named: "camera")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         photoButton!.setImage(image, forState: UIControlState.Normal)
         photoButton?.tintColor = UIColor.blueColor()
@@ -220,7 +227,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createShareButton() {
-        shareButton = UIButton(frame: CGRectMake(0, labelArea!.height - 40, 40, 40))
+        shareButton = UIButton(frame: CGRectMake(0, labelArea!.height - 40 - whenHeight, 40, 40))
         let image = UIImage(named: "share")
         shareButton!.setImage(image, forState: UIControlState.Normal)
     }
@@ -230,9 +237,9 @@ class MapPinView: MKAnnotationView {
         photo = UIImage(contentsOfFile: imageUrl!)
         photoView = UIImageView(frame: CGRectMake(
             isLandscape() ? 1 : 0,
-            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 + 17: 0,
+            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 + 20: 0,
             isLandscape() ? WITH_LANDSCAPE_PHOTO.width - 2 : WITH_PORTRAIT_PHOTO.width/2 + 1,
-            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 17 : WITH_PORTRAIT_PHOTO.height))
+            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 20: WITH_PORTRAIT_PHOTO.height))
         photoView!.image = photo
         //        if (isLandscape()) {
         //            var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
@@ -240,6 +247,19 @@ class MapPinView: MKAnnotationView {
         //        }
         photoView!.layer.borderWidth = 1
         photoView!.layer.borderColor = UIColor.grayColor().CGColor
+    }
+    
+    func createDateLabel() {
+        whenHeight = 23
+        dateView = UILabel(frame: CGRectMake(0, labelArea!.height-25, labelArea!.width, 25))
+        dateView!.layer.cornerRadius = 0
+        dateView!.numberOfLines = 0
+        dateView!.textAlignment = NSTextAlignment.Center
+        dateView!.font = UIFont.italicSystemFontOfSize(14)
+        dateView!.text = memory!.whenFormatted()
+        dateView!.backgroundColor = CategoryController.getColorForCategory(memory!.type).colorWithAlphaComponent(0.5)
+        dateView!.layer.borderWidth = 0.5
+        dateView!.layer.borderColor = UIColor.lightGrayColor().CGColor
     }
     
     func createTitleLabel() {
@@ -255,24 +275,28 @@ class MapPinView: MKAnnotationView {
     }
     
     func createOriginatorLabel() {
+        if (memoriesController?.user.getName() != memory?.originator) {
+            fromHeight = 26
+        }
         originatorView = UILabel(frame: CGRectMake(0, 40, labelArea!.width, 25))
         originatorView!.layer.cornerRadius = 0
         originatorView!.numberOfLines = 0
         originatorView!.textAlignment = NSTextAlignment.Center
         originatorView!.font = UIFont.italicSystemFontOfSize(14)
         originatorView!.text = "from " + memory!.originator
-        originatorView!.backgroundColor = CategoryController.getColorForCategory(memory!.type).colorWithAlphaComponent(0.3)
+        originatorView!.backgroundColor = CategoryController.getColorForCategory(memory!.type).colorWithAlphaComponent(0.5)
         originatorView!.layer.borderWidth = 0.5
         originatorView!.layer.borderColor = UIColor.lightGrayColor().CGColor
     }
     
     func createSubtitleLabel() {
-        subtitleView = UILabel(frame: CGRectMake(10, 65, labelArea!.width - 20, labelArea!.height - 110))
+        subtitleView = UILabel(frame: CGRectMake(6, 40 + fromHeight, labelArea!.width - 12, labelArea!.height - 74 - fromHeight - whenHeight))
         subtitleView!.backgroundColor = UIColor.whiteColor()
         subtitleView!.layer.cornerRadius = 0
         subtitleView!.numberOfLines = 0
         subtitleView!.textAlignment = NSTextAlignment.Center
         subtitleView!.text = memory!.description.isEmpty ? "No description provided" : memory!.description
+
     }
     
     func createAcceptButton() {
