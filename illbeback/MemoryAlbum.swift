@@ -37,14 +37,19 @@ public class MemoryAlbum {
         return memories.filter({$0.id == memory.id}).count > 0
     }
 
-    func downloadNewShares(user: User, callback: (memory: Memory) -> Void) {
+    func downloadNewShares(user: User, onStart: (memory: Memory) -> Void, onComplete: (memory: Memory) -> Void) {
         print("Checking for new shared memories")
         if (user.hasName()) {
-            sharer().retrieveShares(user.getName(), callback: {sender, memory in
-                print("Retrieved shared memory from " + sender + ": " + memory.asString())
-                self.add(memory)
-                callback(memory: memory)
-            })
+            sharer().retrieveShares(user.getName(),
+                onStart: {sender, memory in
+                    print("Receiving shared memory from " + sender + ": " + memory.asString())
+                    onStart(memory: memory)
+                },
+                onComplete: {sender, memory in
+                    print("Received shared memory from " + sender + ": " + memory.asString())
+                    self.add(memory)
+                    onComplete(memory: memory)
+                })
         }
     }
     

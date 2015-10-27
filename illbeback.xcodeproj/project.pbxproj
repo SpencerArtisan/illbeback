@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		351B950BBBC0C3C497174B4F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8214AFD7360B795E86E35A6 /* libPods.a */; };
-		97002F0E1BC91679002BF217 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97002F0D1BC91679002BF217 /* Photo.swift */; settings = {ASSET_TAGS = (); }; };
+		97002F0E1BC91679002BF217 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97002F0D1BC91679002BF217 /* Photo.swift */; };
 		97140FD91A99282300B2F49A /* MemoryAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97140FD81A99282300B2F49A /* MemoryAlbum.swift */; };
 		9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9717D3EE1B9254D3006455D8 /* ShareController.swift */; };
 		972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A01A90ECC100B5E74C /* MapPinView.swift */; };
@@ -50,8 +50,8 @@
 		97A3536B1A800EF500973CAC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97A3536A1A800EF500973CAC /* Media.xcassets */; };
 		97A3536D1A801CFA00973CAC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3536C1A801CFA00973CAC /* MapKit.framework */; };
 		97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */; };
-		97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */; settings = {ASSET_TAGS = (); }; };
-		97B05E261BC4746100B24BEC /* ZoomPageControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97B05E251BC4746100B24BEC /* ZoomPageControl.xib */; settings = {ASSET_TAGS = (); }; };
+		97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */; };
+		97B05E261BC4746100B24BEC /* ZoomPageControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97B05E251BC4746100B24BEC /* ZoomPageControl.xib */; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };

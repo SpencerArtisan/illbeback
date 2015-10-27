@@ -149,19 +149,30 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
         
-        var delaySeconds = 0.0
+        var delaySeconds1 = 0.0
+        var delaySeconds2 = 0.0
         
         ensureUserKnown()
         
-        memoryAlbum.downloadNewShares(user, callback: {memory in
-            let color = CategoryController.getColorForCategory(memory.type)
-            let title = "New " + memory.type + " from " + memory.originator
-            self.delay(delaySeconds) {
-                self.showMessage(title, color: color, time: 3)
-            }
+        memoryAlbum.downloadNewShares(user,
+            onStart: {memory in
+                let color = CategoryController.getColorForCategory(memory.type)
+                let title = "Downloading " + memory.type
+                self.delay(delaySeconds1) {
+                    self.showMessage(title, color: color, time: 2)
+                }
+                
+                delaySeconds1 += 1.5
+            },
+            onComplete: {memory in
+                let color = CategoryController.getColorForCategory(memory.type)
+                let title = "Downloaded " + memory.type + " from " + memory.originator
+                self.delay(delaySeconds2) {
+                    self.showMessage(title, color: color, time: 2)
+                }
             
-            delaySeconds += 2
-        })
+                delaySeconds2 += 1.5
+            })
     }
     
     func delay(delay:Double, closure:()->()) {

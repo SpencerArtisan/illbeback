@@ -37,7 +37,7 @@ public class Sharer {
         }
     }
     
-    func retrieveShares(to: String, callback: (from: String, memory: Memory) -> ()) {
+    func retrieveShares(to: String, onStart: (from: String, memory: Memory) -> (), onComplete: (from: String, memory: Memory) -> ()) {
         shareRoot(to).observeSingleEventOfType(.Value, withBlock: {
             snapshot in
                 let givenMemories = snapshot.children
@@ -53,9 +53,10 @@ public class Sharer {
                         receivedIds.append(memory.id)
                         memory.recentShare = true
                         print("Received memory \(memoryString)")
+                        onStart(from: from, memory: memory)
                         self.downloadImages(memory, onComplete: {
                             print("All shared photos downloaded.  Notifying observers...")
-                            callback(from: from, memory: memory)
+                            onComplete(from: from, memory: memory)
                         })
                     }
                 }

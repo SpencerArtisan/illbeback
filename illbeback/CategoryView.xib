@@ -174,7 +174,7 @@
                         <constraint firstAttribute="width" constant="200" id="9LI-WI-uRv"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <state key="normal" title=" Event" image="Event">
+                    <state key="normal" title="  Event" image="Event">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
