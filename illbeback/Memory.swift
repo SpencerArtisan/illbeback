@@ -54,7 +54,7 @@ public class Memory {
     }
     
     func whenFormatted() -> String {
-        return formatter().stringFromDate(NSDate())
+        return formatter().stringFromDate(when!)
     }
     
     func asMapPin() -> MapPin {

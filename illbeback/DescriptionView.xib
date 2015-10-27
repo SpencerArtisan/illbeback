@@ -49,6 +49,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="140" id="3Yj-w9-Jd6"/>
                         <constraint firstAttribute="width" constant="290" id="Yt9-7n-aCF"/>
+                        <constraint firstAttribute="height" constant="120" id="h72-Tp-Khk"/>
                     </constraints>
                     <date key="date" timeIntervalSinceReferenceDate="467465375.71707898">
                         <!--2015-10-25 11:29:35 +0000-->

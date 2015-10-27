@@ -87,7 +87,6 @@ class MapPinView: MKAnnotationView {
             let nearness = CGFloat(1.0 / (1.0 + log2(1.0 + fromNow/(365.0*60.0*60.0*4.0))));
             
             
-          //  log10(<#T##Double#>)
             let col = UIColor(red: nearness, green: 1 - nearness, blue: 0, alpha: 0.8)
             daysToGo.drawInRect(CGRectMake(0,finalSize.height-14,100,30), withAttributes: [
                 NSForegroundColorAttributeName: UIColor.whiteColor(),
@@ -167,7 +166,9 @@ class MapPinView: MKAnnotationView {
          labelView!.addSubview(originatorView!)
         }
         labelView!.addSubview(subtitleView!)
-        labelView!.addSubview(dateView!)
+        if (memory?.when != nil) {
+            labelView!.addSubview(dateView!)
+        }
         
         if (memory!.recentShare) {
             labelView?.addSubview(acceptButton!)
@@ -241,16 +242,13 @@ class MapPinView: MKAnnotationView {
             isLandscape() ? WITH_LANDSCAPE_PHOTO.width - 2 : WITH_PORTRAIT_PHOTO.width/2 + 1,
             isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 20: WITH_PORTRAIT_PHOTO.height))
         photoView!.image = photo
-        //        if (isLandscape()) {
-        //            var angle = memory!.orientation == UIDeviceOrientation.LandscapeLeft ? -M_PI_2 : M_PI_2
-        //            photoView?.transform = CGAffineTransformMakeRotation(CGFloat(angle))
-        //        }
         photoView!.layer.borderWidth = 1
         photoView!.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     func createDateLabel() {
-        whenHeight = 23
+        if (memory?.when != nil) {
+            whenHeight = 23
         dateView = UILabel(frame: CGRectMake(0, labelArea!.height-25, labelArea!.width, 25))
         dateView!.layer.cornerRadius = 0
         dateView!.numberOfLines = 0
@@ -260,6 +258,7 @@ class MapPinView: MKAnnotationView {
         dateView!.backgroundColor = CategoryController.getColorForCategory(memory!.type).colorWithAlphaComponent(0.5)
         dateView!.layer.borderWidth = 0.5
         dateView!.layer.borderColor = UIColor.lightGrayColor().CGColor
+        }
     }
     
     func createTitleLabel() {
