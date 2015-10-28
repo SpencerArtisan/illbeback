@@ -47,18 +47,14 @@ public class Sharer {
                     let from = given.value["from"] as! String
                     let memoryString = given.value["memory"] as! String
                     let memory = Memory(memoryString: memoryString)
-                    if (self.memoryAlbum.contains(memory) || receivedIds.filter({$0 == memory.id}).count > 0) {
-                        print("Already have memory \(memory.type). Ignoring share")
-                    } else {
-                        receivedIds.append(memory.id)
-                        memory.recentShare = true
-                        print("Received memory \(memoryString)")
-                        onStart(from: from, memory: memory)
-                        self.downloadImages(memory, onComplete: {
-                            print("All shared photos downloaded.  Notifying observers...")
-                            onComplete(from: from, memory: memory)
-                        })
-                    }
+                    receivedIds.append(memory.id)
+                    memory.recentShare = true
+                    print("Received memory \(memoryString)")
+                    onStart(from: from, memory: memory)
+                    self.downloadImages(memory, onComplete: {
+                        print("All shared photos downloaded.  Notifying observers...")
+                        onComplete(from: from, memory: memory)
+                    })
                 }
                 self.shareRoot(to).removeValue()
         })

@@ -47,6 +47,8 @@ public class MemoryAlbum {
                 },
                 onComplete: {sender, memory in
                     print("Received shared memory from " + sender + ": " + memory.asString())
+                    
+                    
                     self.add(memory)
                     onComplete(memory: memory)
                 })
@@ -67,29 +69,34 @@ public class MemoryAlbum {
     }
     
     func delete(pin: MapPinView) {
-        let memoryIndex = find(pin)
+        delete(pin.memory!)
+        map.removeAnnotation(pin.annotation!)
+    }
+    
+    func delete(memory: Memory) {
+        let memoryIndex = find(memory)
         if (memoryIndex != nil) {
             memories.removeAtIndex(memoryIndex!)
             save()
         }
-        map.removeAnnotation(pin.annotation!)
     }
     
     func share(pin: MapPinView, from: String, to: String, onComplete: () -> Void, onError: () -> Void) {
-        let memoryIndex = find(pin)
+        let memoryIndex = find(pin.memory!)
         if (memoryIndex != nil) {
             let memory = memories[memoryIndex!]
             print("Sharing \(memory.type)")
+            self.map.deselectAnnotation(pin.annotation, animated: false)
             sharer().share(from, to: to, memory: memory, onComplete: onComplete, onError: onError)
         } else {
             print("WARN: Failed to share unknown memory")
         }
     }
 
-    private func find(pin: MapPinView) -> Int? {
+    private func find(victim: Memory) -> Int? {
         for i in 0...memories.count - 1 {
             let memory = memories[i]
-            if (memory.id == pin.memory?.id) {
+            if (memory.asString() == victim.asString()) {
                 return i
             }
         }

@@ -341,6 +341,7 @@ class MapPinView: MKAnnotationView {
             hitView = calloutView!.hitTest(point, withEvent: event)
             if (memory!.recentShare && hitButton(point, button: acceptButton)) {
                 memory!.recentShare = false;
+                memoriesController?.removeDuplicates(self)
                 memoriesController?.updateMemory(self)
             } else if ((memory!.recentShare && hitButton(point, button: declineButton)) || hitButton(point, button: deleteButton)) {
                 memoriesController?.deleteMemory(self)
