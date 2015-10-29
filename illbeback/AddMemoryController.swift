@@ -159,7 +159,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         message.text = type
         let when = datePicker()
         when.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.75)
-       // when.minimumDate = NSDate()
+        when.minimumDate = NSDate()
         when.maximumDate = NSDate().dateByAddingTimeInterval(NSTimeInterval(31536000))
         when.hidden = false
         

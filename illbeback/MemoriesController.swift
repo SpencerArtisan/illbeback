@@ -152,7 +152,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         var delaySeconds = 0.0
 
-        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > 2 { //60 * 60 * 3 {
+        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > 60 * 60 * 3 {
             let events = memoryAlbum.getImminentEvents()
             for event in events {
                 var color = CategoryController.getColorForCategory(event.type)
