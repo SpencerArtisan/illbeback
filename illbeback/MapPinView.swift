@@ -40,6 +40,8 @@ class MapPinView: MKAnnotationView {
     var whenHeight: CGFloat = 0.0
     var fromHeight: CGFloat = 0.0
     
+    static var lastSelectionChange: NSDate?
+    
     init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
         super.init(annotation: nil, reuseIdentifier: nil)
 
@@ -318,6 +320,15 @@ class MapPinView: MKAnnotationView {
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        if selected && MapPinView.lastSelectionChange != nil && NSDate().timeIntervalSinceDate(MapPinView.lastSelectionChange!) < 0.7 {
+            print("IGNORE SELECTION")
+            
+            self.memoriesController?.delay(0.3) {
+                self.memoriesController?.map.deselectAnnotation(self.annotation, animated: false)
+            }
+            
+            return
+        }
         
         if (self.selected) {
             addSubview(getCalloutView())
@@ -328,6 +339,7 @@ class MapPinView: MKAnnotationView {
     }
 
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        
         var hitView = super.hitTest(point, withEvent: event)
         let system = NSProcessInfo.processInfo().systemUptime
         let elapsed = system - event!.timestamp
@@ -338,6 +350,7 @@ class MapPinView: MKAnnotationView {
                 memoriesController?.removeDuplicates(self)
                 memoriesController?.updateMemory(self)
             } else if ((memory!.recentShare && hitButton(point, button: declineButton)) || hitButton(point, button: deleteButton)) {
+                MapPinView.lastSelectionChange = NSDate()
                 memoriesController?.deleteMemory(self)
             } else if (hitButton(point, button: shareButton)) {
                 memoriesController?.shareController.shareMemory([self])
