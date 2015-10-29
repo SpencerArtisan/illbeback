@@ -150,15 +150,17 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.snapButton.removeFromSuperview()
-            let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
-            let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
-            
-            let correctedImage = pickedImage.fixOrientation()
-            
-            photoView.image = pickedImage
             parentController.dismissViewControllerAnimated(false, completion: nil)
-            navigationController.pushViewController(zoomController, animated: false)
+
+            if navigationController.viewControllers.count == 2 {
+                let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
+                let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
+                photoView.image = pickedImage
+                navigationController.pushViewController(zoomController, animated: false)
+            }
+            
             let devOrient = imageToDeviceOrientation(pickedImage)
+            let correctedImage = pickedImage.fixOrientation()
             self.callback(navigationController, correctedImage, devOrient)
         }
     }

@@ -14,7 +14,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                     <animations/>
                     <color key="backgroundColor" red="0.91568359649999997" green="0.92156862750000001" blue="0.6611108255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" name="Optima-Bold" family="Optima" pointSize="18"/>
+                    <fontDescription key="fontDescription" name="DiwanMishafi" family="Mishafi" pointSize="18"/>
                     <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
                     <size key="titleShadowOffset" width="2.2250738585072014e-308" height="2.2250738585072014e-308"/>
                     <state key="normal" title=" Message">
