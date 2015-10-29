@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "252"
             endingLineNumber = "252"
-            landmarkName = "locationManager(_:didUpdateLocations:)"
+            landmarkName = "initLocationManager()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -317,7 +317,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "323"
             endingLineNumber = "323"
-            landmarkName = "mapView(_:viewForAnnotation:)"
+            landmarkName = "rewordMemory(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -333,7 +333,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "347"
             endingLineNumber = "347"
-            landmarkName = "showPinsInShape()"
+            landmarkName = "mapView(_:viewForAnnotation:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -349,7 +349,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "359"
             endingLineNumber = "359"
-            landmarkName = "mapView(_:rendererForOverlay:)"
+            landmarkName = "mapView(_:annotationView:didChangeDragState:fromOldState:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -381,7 +381,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "317"
             endingLineNumber = "317"
-            landmarkName = "mapView(_:viewForAnnotation:)"
+            landmarkName = "updateMemory(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -397,7 +397,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "299"
             endingLineNumber = "299"
-            landmarkName = "rewordMemory(_:)"
+            landmarkName = "removeDuplicates(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -413,7 +413,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "116"
             endingLineNumber = "116"
-            landmarkName = "read()"
+            landmarkName = "save()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -477,8 +477,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "124"
             endingLineNumber = "124"
-            landmarkName = "MemoriesController"
-            landmarkType = "3">
+            landmarkName = "friends(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -557,8 +557,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "360"
             endingLineNumber = "360"
-            landmarkName = "hitTest(_:withEvent:)"
-            landmarkType = "5">
+            landmarkName = "MapPinView"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -669,7 +669,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "107"
             endingLineNumber = "107"
-            landmarkName = "save()"
+            landmarkName = "find(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1021,8 +1021,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "109"
             endingLineNumber = "109"
-            landmarkName = "save()"
-            landmarkType = "5">
+            landmarkName = "MemoryAlbum"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1037,7 +1037,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "108"
             endingLineNumber = "108"
-            landmarkName = "save()"
+            landmarkName = "find(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1853,7 +1853,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "212"
             endingLineNumber = "212"
-            landmarkName = "dismissMessage(_:)"
+            landmarkName = "ensureUserKnown()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1933,7 +1933,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "258"
             endingLineNumber = "258"
-            landmarkName = "createDateLabel()"
+            landmarkName = "createTitleLabel()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1949,7 +1949,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "332"
             endingLineNumber = "332"
-            landmarkName = "setSelected(_:animated:)"
+            landmarkName = "hitTest(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1965,7 +1965,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "269"
             endingLineNumber = "269"
-            landmarkName = "removeDuplicates(_:)"
+            landmarkName = "foundTap(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1981,7 +1981,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "270"
             endingLineNumber = "270"
-            landmarkName = "removeDuplicates(_:)"
+            landmarkName = "foundTap(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1997,7 +1997,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "271"
             endingLineNumber = "271"
-            landmarkName = "removeDuplicates(_:)"
+            landmarkName = "foundTap(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

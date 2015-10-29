@@ -81,7 +81,8 @@ public class Memory {
         if description == "" {
             return type
         } else {
-            return description.words()[0]
+            let withoutReturns = description.stringByReplacingOccurrencesOfString("\r\n", withString: " ")
+            return (withoutReturns as NSString).substringToIndex(min(withoutReturns.characters.count, 30))
         }
     }
 }

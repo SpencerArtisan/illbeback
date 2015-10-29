@@ -25,7 +25,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "259"
             endingLineNumber = "259"
-            landmarkName = "addMemoryHere(_:id:description:location:orientation:when:)"
+            landmarkName = "initMap()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,7 +41,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "364"
             endingLineNumber = "364"
-            landmarkName = "mapView(_:rendererForOverlay:)"
+            landmarkName = "mapView(_:annotationView:didChangeDragState:fromOldState:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,8 +73,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "239"
             endingLineNumber = "239"
-            landmarkName = "MemoriesController"
-            landmarkType = "3">
+            landmarkName = "dismissMessage(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -105,7 +105,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "206"
             endingLineNumber = "206"
-            landmarkName = "createDeleteButton()"
+            landmarkName = "createPhotoButton()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

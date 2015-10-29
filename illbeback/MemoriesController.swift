@@ -34,6 +34,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var messageModals: [Modal] = []
     var newUserLabel: UILabel!
     var newUserText: UITextView!
+    var lastTimeAppUsed: NSDate?
     
     @IBOutlet weak var sharingName: UITextView!
     
@@ -150,13 +151,26 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.navigationController?.navigationBarHidden = true
         
         var delaySeconds = 0.0
-        let events = memoryAlbum.getImminentEvents()
-        for event in events {
-            let color = CategoryController.getColorForCategory(event.type)
-            self.delay(delaySeconds) {
-                self.showMessage("\(event.summary()) in \(event.daysToGo()) days", color: color, time: 4)
+
+        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > 2 { //60 * 60 * 3 {
+            let events = memoryAlbum.getImminentEvents()
+            for event in events {
+                var color = CategoryController.getColorForCategory(event.type)
+                self.delay(delaySeconds) {
+                    var message = ""
+                    if event.daysToGo() == 1 {
+                        color = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 0.8)
+                        message = event.description == "" ? "An event is happening tomorrow" : "Tomorrow is \(event.summary())"
+                    } else if event.daysToGo() == 0 {
+                        color = UIColor(red: 1.0, green: 0.2, blue: 0, alpha: 0.8)
+                        message = event.description == "" ? "An event is happening today!" : "Today is \(event.summary())"
+                    } else {
+                        message = event.description == "" ? "\(event.daysToGo()) days until an event" : "\(event.daysToGo()) days until \(event.summary())"
+                    }
+                    self.showMessage(message, color: color, time: 4)
+                }
+                delaySeconds += 4.0
             }
-            delaySeconds += 1.0
         }
         
         var delaySeconds1 = delaySeconds
@@ -184,6 +198,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 delaySeconds2 += 1.5
             })
         
+        self.lastTimeAppUsed = NSDate()
     }
     
     func delay(delay:Double, closure:()->()) {
