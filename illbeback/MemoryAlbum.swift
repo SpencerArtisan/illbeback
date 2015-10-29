@@ -28,6 +28,10 @@ public class MemoryAlbum {
     }
     
     func addToMap() {
+        for past in getPastEvents() {
+            delete(past)
+        }
+        
         for memory in memories {
             addPin(memory)
         }
@@ -57,6 +61,10 @@ public class MemoryAlbum {
     
     func getImminentEvents() -> [Memory] {
         return memories.filter {$0.when != nil && $0.daysToGo() < 56}
+    }
+    
+    func getPastEvents() -> [Memory] {
+        return memories.filter {$0.when != nil && $0.when!.timeIntervalSinceDate($0.today()) < 0}
     }
     
     func addPin(memory: Memory) {

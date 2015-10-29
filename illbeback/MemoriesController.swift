@@ -171,6 +171,21 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 }
                 delaySeconds += 4.0
             }
+            
+            let pastEvents = memoryAlbum.getPastEvents()
+            for pastEvent in pastEvents {
+                print("Removing old event " + pastEvent.id)
+                self.memoryAlbum.delete(pastEvent)
+                for pin in self.map.annotations {
+                    if pin is MapPin && (pin as! MapPin).memory.id == pastEvent.id {
+                        let oldMemoryPin = pin as! MapPin
+                        self.map.deselectAnnotation(oldMemoryPin, animated: false)
+                        NSOperationQueue.mainQueue().addOperationWithBlock {
+                            self.map.removeAnnotation(oldMemoryPin)
+                        }
+                    }
+                }
+            }
         }
         
         var delaySeconds1 = delaySeconds
