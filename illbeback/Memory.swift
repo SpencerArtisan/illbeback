@@ -66,5 +66,36 @@ public class Memory {
         formatter.dateStyle = NSDateFormatterStyle.LongStyle
         return formatter
     }
+    
+    func daysToGo() -> Int {
+        let fromNow = when!.timeIntervalSinceDate(today())
+        return Int(fromNow) / (60*60*24)
+    }
+    
+    func today() -> NSDate {
+        let cal = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        return cal.startOfDayForDate(NSDate())
+    }
+    
+    func summary() -> String {
+        if description == "" {
+            return type
+        } else {
+            return description.words()[0]
+        }
+    }
+}
 
+extension String {
+    func words() -> [String] {
+        
+        let range = Range<String.Index>(start: self.startIndex, end: self.endIndex)
+        var words = [String]()
+        
+        self.enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, _, _, _) -> () in
+            words.append(substring!)
+        }
+        
+        return words
+    }
 }

@@ -81,12 +81,9 @@ class MapPinView: MKAnnotationView {
         let inShape: Bool = memoriesController!.shapeController.shapeContains(memory!.location)
 
         if memory!.when != nil {
-            let fromNow = memory!.when!.timeIntervalSinceDate(today())
-            let days = Int(fromNow) / (60*60*24)
-            let daysToGo: NSString = " \(days) "
-            let nearness = CGFloat(1.0 / (1.0 + log2(1.0 + fromNow/(365.0*60.0*60.0*4.0))));
+            let nearness = CGFloat(1.0 / (1.0 + log2(1.0 + CGFloat(memory!.daysToGo())/(61.0))))
             
-            
+            let daysToGo: NSString = " \(memory!.daysToGo()) "
             let col = UIColor(red: nearness, green: 1 - nearness, blue: 0, alpha: 0.8)
             daysToGo.drawInRect(CGRectMake(0,finalSize.height-14,100,30), withAttributes: [
                 NSForegroundColorAttributeName: UIColor.whiteColor(),
@@ -107,10 +104,7 @@ class MapPinView: MKAnnotationView {
         centerOffset = CGPointMake(17, -20)
     }
     
-    func today() -> NSDate {
-        let cal = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        return cal.startOfDayForDate(NSDate())
-    }
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)

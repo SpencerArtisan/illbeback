@@ -149,8 +149,18 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
         
-        var delaySeconds1 = 0.0
-        var delaySeconds2 = 0.0
+        var delaySeconds = 0.0
+        let events = memoryAlbum.getImminentEvents()
+        for event in events {
+            let color = CategoryController.getColorForCategory(event.type)
+            self.delay(delaySeconds) {
+                self.showMessage("\(event.summary()) in \(event.daysToGo()) days", color: color, time: 4)
+            }
+            delaySeconds += 1.0
+        }
+        
+        var delaySeconds1 = delaySeconds
+        var delaySeconds2 = delaySeconds
         
         ensureUserKnown()
         
@@ -173,6 +183,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             
                 delaySeconds2 += 1.5
             })
+        
     }
     
     func delay(delay:Double, closure:()->()) {

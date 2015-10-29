@@ -55,6 +55,10 @@ public class MemoryAlbum {
         }
     }
     
+    func getImminentEvents() -> [Memory] {
+        return memories.filter {$0.when != nil && $0.daysToGo() < 6}
+    }
+    
     func addPin(memory: Memory) {
         dispatch_async(dispatch_get_main_queue(), {
             let pin = memory.asMapPin()
