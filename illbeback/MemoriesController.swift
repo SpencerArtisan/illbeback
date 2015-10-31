@@ -384,6 +384,20 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
     }
     
+    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+            for aView in views {
+                if aView is MapPinView {
+                    if (aView as! MapPinView).memory?.type == "Event" {
+                        aView.superview?.bringSubviewToFront(aView)
+                        aView.layer.zPosition = 999
+                    } else {
+                        aView.superview?.sendSubviewToBack(aView)
+                    }
+                    
+                }
+            }
+    }
+    
     func showPinsInShape() {
         let allPins = map.annotations
         for pin in allPins {

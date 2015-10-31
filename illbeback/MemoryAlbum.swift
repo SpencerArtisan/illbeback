@@ -31,6 +31,7 @@ public class MemoryAlbum {
         for past in getPastEvents() {
             delete(past)
         }
+
         
         for memory in memories {
             addPin(memory)
