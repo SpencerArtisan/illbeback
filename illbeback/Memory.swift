@@ -72,6 +72,10 @@ public class Memory {
         return Int(fromNow) / (60*60*24)
     }
     
+    func isPast() -> Bool {
+        return when != nil && when!.timeIntervalSinceDate(today()) < 0
+    }
+    
     func today() -> NSDate {
         let cal = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         return cal.startOfDayForDate(NSDate())

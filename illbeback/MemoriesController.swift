@@ -152,8 +152,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         var delaySeconds = 0.0
 
-        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > 60 * 60 * 3 {
-            let events = memoryAlbum.getImminentEvents()
+        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > 60 * 60 * 5 {
+            var events = memoryAlbum.getImminentEvents()
             for event in events {
                 var color = CategoryController.getColorForCategory(event.type)
                 self.delay(delaySeconds) {
@@ -172,17 +172,20 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 delaySeconds += 4.0
             }
             
-            let pastEvents = memoryAlbum.getPastEvents()
-            for pastEvent in pastEvents {
-                print("Removing old event " + pastEvent.id)
-                self.memoryAlbum.delete(pastEvent)
-                for pin in self.map.annotations {
-                    if pin is MapPin && (pin as! MapPin).memory.id == pastEvent.id {
-                        let oldMemoryPin = pin as! MapPin
-                        self.map.deselectAnnotation(oldMemoryPin, animated: false)
+            events = memoryAlbum.getAllEvents()
+            for event in events {
+                let pin = getPin(event)
+                if pin != nil {
+                    if event.isPast() {
+                        print("Removing old event " + event.id)
+                        self.memoryAlbum.delete(event)
+                        self.map.deselectAnnotation(pin, animated: false)
                         NSOperationQueue.mainQueue().addOperationWithBlock {
-                            self.map.removeAnnotation(oldMemoryPin)
+                            self.map.removeAnnotation(pin!)
                         }
+                    } else {
+                        map!.removeAnnotation(pin!)
+                        map!.addAnnotation(pin!)
                     }
                 }
             }
@@ -214,6 +217,15 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             })
         
         self.lastTimeAppUsed = NSDate()
+    }
+    
+    func getPin(memory: Memory) -> MapPin? {
+        for pin in self.map.annotations {
+            if pin is MapPin && (pin as! MapPin).memory.id == memory.id {
+                return pin as! MapPin
+            }
+        }
+       return nil
     }
     
     func delay(delay:Double, closure:()->()) {
