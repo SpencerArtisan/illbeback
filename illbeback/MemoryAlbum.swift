@@ -11,8 +11,8 @@ import MapKit
 
 public class MemoryAlbum {
     private var _sharer: Sharer?
-    private var oldMemories = [String: Memory]()
-    private var newMemories = [String: Memory]()
+    var oldMemories = [String: Memory]()
+    var newMemories = [String: Memory]()
     private var props: NSDictionary?
     private var map: MKMapView
     
@@ -79,17 +79,6 @@ public class MemoryAlbum {
     }
     
     
-    func acceptRecentShare(memory: Memory) {
-        memory.setRecentShare(false)
-        oldMemories[memory.id] = memory
-        newMemories.removeValueForKey(memory.id)
-        save()
-    }
-    
-    func declineRecentShare(memory: Memory) {
-        newMemories.removeValueForKey(memory.id)
-        save()
-    }
     
     func add(memory: Memory) {
         if memory.isRecentShare() {

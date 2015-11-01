@@ -74,7 +74,7 @@ public class Sharer {
             let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
             readRequest.bucket = BUCKET
             readRequest.key =  imageUrl.lastPathComponent!
-            readRequest.downloadingFileURL = imageUrl
+            readRequest.downloadingFileURL = NSURL(fileURLWithPath: "\(imageUrl.path!).recent")
         
             let task = transferManager.download(readRequest)
             task.continueWithBlock { (task) -> AnyObject! in

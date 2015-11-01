@@ -334,7 +334,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             for pin in self.map.annotations {
                 if pin is MapPin && (pin as! MapPin).memory.id == newPin.memory!.id {
                     if pin !== newPin.annotation! {
-                        oldMemoryPin = pin as! MapPin
+                        oldMemoryPin = (pin as! MapPin)
                         break
                     }
                 }
@@ -349,6 +349,21 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 
             }
     }
+    
+    func acceptRecentShare(memory: Memory) {
+        memory.setRecentShare(false)
+        memoryAlbum!.oldMemories[memory.id] = memory
+        memoryAlbum!.newMemories.removeValueForKey(memory.id)
+        memoryAlbum!.save()
+        
+        photoAlbum.acceptRecentShare(memory)
+    }
+    
+    func declineRecentShare(memory: Memory) {
+        memoryAlbum!.newMemories.removeValueForKey(memory.id)
+        memoryAlbum!.save()
+    }
+
 
     // Callback for button on the callout
     func updateMemory(pin: MapPinView) {

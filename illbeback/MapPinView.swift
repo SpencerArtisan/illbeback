@@ -356,12 +356,12 @@ class MapPinView: MKAnnotationView {
             hitView = calloutView!.hitTest(point, withEvent: event)
             if (memory!.isRecentShare() && hitButton(point, button: acceptButton)) {
                 MapPinView.lastSelectionChange = NSDate()
-                memoriesController?.memoryAlbum!.acceptRecentShare(memory!)
+                memoriesController?.acceptRecentShare(memory!)
                 memoriesController?.removeDuplicatePins(self)
                 memoriesController?.updateMemory(self)
             } else if ((memory!.isRecentShare() && hitButton(point, button: declineButton))) {
                 MapPinView.lastSelectionChange = NSDate()
-                memoriesController?.memoryAlbum!.declineRecentShare(memory!)
+                memoriesController?.declineRecentShare(memory!)
                 memoriesController?.removePin(self)
             } else if (hitButton(point, button: deleteButton)) {
                 MapPinView.lastSelectionChange = NSDate()

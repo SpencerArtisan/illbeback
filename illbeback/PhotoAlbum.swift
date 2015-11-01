@@ -16,6 +16,22 @@ public class PhotoAlbum {
     public init() {
         folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
     }
+    
+    func acceptRecentShare(memory: Memory) {
+        delete(memory)
+        let paths = getImagePaths(memory.id)
+        for path in paths {
+            let recentPath = "\(path).recent"
+            if fileManager.fileExistsAtPath(recentPath) {
+                print("Promoting accepted share picture \(recentPath)")
+                do {
+                    try fileManager.moveItemAtPath(recentPath, toPath: path)
+                } catch {
+                    print("Failed to promote picture \(recentPath)")
+                }
+            }
+        }
+    }
 
     func getMainPhoto(memory: Memory) -> Photo? {
         let allphotos = photos(memory)
@@ -40,13 +56,14 @@ public class PhotoAlbum {
     public func photos(memory: Memory) -> [Photo] {
         let memoryId = memory.id
         var photos:[Photo] = []
-        var candidate = "\(folder)/Memory\(memoryId).jpg"
+        let marker = memory.isRecentShare() ? ".recent" : ""
+        var candidate = "\(folder)/Memory\(memoryId).jpg\(marker)"
         if fileManager.fileExistsAtPath(candidate) {
             photos.append(Photo(imagePath: candidate))
         }
         
         for suffix in 2...10 {
-            candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg"
+            candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg\(marker)"
             if fileManager.fileExistsAtPath(candidate) {
                 photos.append(Photo(imagePath: candidate))
             }
