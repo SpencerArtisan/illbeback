@@ -200,12 +200,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         ensureUserKnown()
         
+        var messages = [String:Modal]()
         memoryAlbum.downloadNewShares(user,
             onStart: {memory in
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloading " + memory.type
                 self.delay(delaySeconds1) {
-                    self.showMessage(title, color: color, time: 2)
+                    let message = self.showMessage(title, color: color, time: nil)
+                    messages[memory.id] = message
                 }
                 
                 delaySeconds1 += 1.5
@@ -213,7 +215,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             onComplete: {memory in
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloaded " + memory.type + " from " + memory.originator
+                let downloadingMessage = messages[memory.id]
                 self.delay(delaySeconds2) {
+                    if downloadingMessage != nil {
+                        downloadingMessage?.slideUpFromTop(self.view)
+                    }
                     self.showMessage(title, color: color, time: 2)
                 }
             

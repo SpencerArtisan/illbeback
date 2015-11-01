@@ -25,7 +25,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "292"
             endingLineNumber = "292"
-            landmarkName = "initMap()"
+            landmarkName = "initLocationManager()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,7 +73,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "272"
             endingLineNumber = "272"
-            landmarkName = "dismissMessage(_:)"
+            landmarkName = "showMessage(_:color:time:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

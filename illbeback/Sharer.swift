@@ -80,6 +80,11 @@ public class Sharer {
             task.continueWithBlock { (task) -> AnyObject! in
                 if task.error != nil {
                     print("    No image with key \(imageUrl.lastPathComponent!)")
+                    // ensure no partial file left
+                    do {
+                        try photoAlbum.fileManager.removeItemAtPath(imageUrl.path!)
+                    } catch {
+                    }
                 } else {
                     print("    Image downloaded \(imageUrl.lastPathComponent!)")
                 }
