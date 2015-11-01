@@ -15,7 +15,7 @@ public class Memory {
     var description: String
     var location: CLLocationCoordinate2D
     var originator: String
-    var recentShare: Bool
+    private var recentShare: Bool
     var orientation: UIDeviceOrientation
     var when: NSDate?
     
@@ -42,6 +42,14 @@ public class Memory {
         self.recentShare = parts.count > 6 ? (parts[6] == "T") : false
         self.orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
         self.when = parts.count > 8 ? formatter().dateFromString(parts[8]) : nil
+    }
+    
+    func isRecentShare() -> Bool {
+        return recentShare
+    }
+
+    func setRecentShare(recent: Bool) {
+        recentShare = recent
     }
     
     func asString() -> String {

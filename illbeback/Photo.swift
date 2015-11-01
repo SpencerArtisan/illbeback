@@ -20,6 +20,7 @@ public class Photo {
     
     func deletePhoto() {
         do {
+            print("Delete photo \(imagePath)")
             try self.fileManager.removeItemAtPath(imagePath)
         } catch {
         }

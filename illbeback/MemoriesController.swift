@@ -321,7 +321,15 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         photoAlbum.delete(pin.memory!)
     }
     
-    func removeDuplicates(newPin: MapPinView) {
+    func removePin(pin: MapPinView) {
+        NSOperationQueue.mainQueue().addOperationWithBlock {
+            if pin.annotation != nil {
+                self.map.removeAnnotation(pin.annotation!)
+            }
+        }
+    }
+    
+    func removeDuplicatePins(newPin: MapPinView) {
             var oldMemoryPin: MapPin?
             for pin in self.map.annotations {
                 if pin is MapPin && (pin as! MapPin).memory.id == newPin.memory!.id {

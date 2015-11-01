@@ -48,7 +48,7 @@ public class Sharer {
                     let memoryString = given.value["memory"] as! String
                     let memory = Memory(memoryString: memoryString)
                     receivedIds.append(memory.id)
-                    memory.recentShare = true
+                    memory.setRecentShare(true)
                     print("Received memory \(memoryString)")
                     onStart(from: from, memory: memory)
                     self.downloadImages(memory, onComplete: {

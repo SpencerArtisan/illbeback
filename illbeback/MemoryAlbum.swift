@@ -11,7 +11,8 @@ import MapKit
 
 public class MemoryAlbum {
     private var _sharer: Sharer?
-    private var memories = [String: Memory]()
+    private var oldMemories = [String: Memory]()
+    private var newMemories = [String: Memory]()
     private var props: NSDictionary?
     private var map: MKMapView
     
@@ -27,8 +28,12 @@ public class MemoryAlbum {
         return _sharer!
     }
     
+    func allMemories() -> [Memory] {
+        return [oldMemories.values, newMemories.values].flatMap {$0}
+    }
+    
     func addToMap() {
-        for memory in memories.values {
+        for memory in allMemories() {
             if memory.isPast() {
                 delete(memory)
             } else {
@@ -38,7 +43,7 @@ public class MemoryAlbum {
     }
     
     func contains(memory: Memory) -> Bool {
-        return memories[memory.id] != nil
+        return oldMemories[memory.id] != nil || newMemories[memory.id] != nil
     }
 
     func downloadNewShares(user: User, onStart: (memory: Memory) -> Void, onComplete: (memory: Memory) -> Void) {
@@ -52,7 +57,6 @@ public class MemoryAlbum {
                 onComplete: {sender, memory in
                     print("Received shared memory from " + sender + ": " + memory.asString())
                     
-                    
                     self.add(memory)
                     onComplete(memory: memory)
                 })
@@ -60,11 +64,11 @@ public class MemoryAlbum {
     }
     
     func getImminentEvents() -> [Memory] {
-        return memories.values.filter {$0.when != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0}
+        return allMemories().filter {$0.when != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0}
     }
     
     func getAllEvents() -> [Memory] {
-        return memories.values.filter {$0.when != nil }
+        return allMemories().filter {$0.when != nil }
     }
     
     func addPin(memory: Memory) {
@@ -74,8 +78,25 @@ public class MemoryAlbum {
         })
     }
     
+    
+    func acceptRecentShare(memory: Memory) {
+        memory.setRecentShare(false)
+        oldMemories[memory.id] = memory
+        newMemories.removeValueForKey(memory.id)
+        save()
+    }
+    
+    func declineRecentShare(memory: Memory) {
+        newMemories.removeValueForKey(memory.id)
+        save()
+    }
+    
     func add(memory: Memory) {
-        memories[memory.id] = memory
+        if memory.isRecentShare() {
+            newMemories[memory.id] = memory
+        } else {
+            oldMemories[memory.id] = memory
+        }
         save()
         addPin(memory)
     }
@@ -86,11 +107,11 @@ public class MemoryAlbum {
     }
     
     func delete(memory: Memory) {
-        memories.removeValueForKey(memory.id)
+        oldMemories.removeValueForKey(memory.id)
     }
     
     func share(pin: MapPinView, from: String, to: String, onComplete: () -> Void, onError: () -> Void) {
-        let memory = memories[pin.memory!.id]
+        let memory = oldMemories[pin.memory!.id]
         
         if (memory != nil) {
             print("Sharing \(memory!.type)")
@@ -104,7 +125,7 @@ public class MemoryAlbum {
     func save() {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
-        let memoryStrings = memories.map {memory in memory.1.asString()}
+        let memoryStrings = allMemories().map {memory in memory.asString()}
         props?.setValue(memoryStrings, forKey: "Memories")
         props?.writeToFile(path, atomically: true)
     }
@@ -126,7 +147,11 @@ public class MemoryAlbum {
         let memoryStrings = (props?.valueForKey("Memories") ?? []) as! [String]
         let memoryList = memoryStrings.map {memoryString in Memory(memoryString: memoryString)}
         for memory in memoryList {
-            memories[memory.id] = memory
+            if memory.isRecentShare() {
+                newMemories[memory.id] = memory
+            } else {
+                oldMemories[memory.id] = memory
+            }
         }
     }
 }
