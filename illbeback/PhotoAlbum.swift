@@ -83,6 +83,16 @@ public class PhotoAlbum {
     }
     
     public func delete(memory: Memory) {
-        // todo
+        let imagePaths = getImagePaths(memory.id)
+        for path in imagePaths {
+            if fileManager.fileExistsAtPath(path) {
+                do {
+                    try fileManager.removeItemAtPath(path)
+                    print("Deleted image \(path)")
+                } catch {
+                    print("Failed to delete image \(path)")
+                }
+            }
+        }
     }
 }
