@@ -60,6 +60,7 @@ class MapPinView: MKAnnotationView {
         setSelected(false, animated: false)
         calloutView = nil
         photoView = nil
+        photoButton = nil
         labelView = nil
         self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(memory!)?.imagePath
         setSelected(true, animated: false)
@@ -67,6 +68,7 @@ class MapPinView: MKAnnotationView {
     
     func refresh() {
         calloutView = nil
+        photoButton = nil
     }
     
     func refreshImage() {
@@ -171,7 +173,9 @@ class MapPinView: MKAnnotationView {
             labelView?.addSubview(declineButton!)
         } else {
             labelView!.addSubview(deleteButton!)
-            labelView!.addSubview(photoButton!)
+            if photoButton != nil {
+                labelView!.addSubview(photoButton!)
+            }
             labelView!.addSubview(shareButton!)
         }
     }
@@ -196,16 +200,27 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeleteButton() {
-        deleteButton = UIButton(frame: CGRectMake(labelArea!.width - 35, labelArea!.height - 39 - whenHeight, 40, 40))
+        let x = photoView == nil ? labelArea!.width - 35 : labelArea!.width - 65
+        deleteButton = UIButton(frame: CGRectMake(x, labelArea!.height - 39 - whenHeight, 40, 40))
         let image = UIImage(named: "trash")
         deleteButton!.setImage(image, forState: UIControlState.Normal)
     }
+
+    func createShareButton() {
+        let x = photoView == nil ? CGFloat(0) : CGFloat(30)
+        shareButton = UIButton(frame: CGRectMake(x, labelArea!.height - 40 - whenHeight, 40, 40))
+        let image = UIImage(named: "share")
+        shareButton!.setImage(image, forState: UIControlState.Normal)
+    }
     
+
     func createPhotoButton() {
+        if photoView == nil {
         photoButton = UIButton(frame: CGRectMake(labelArea!.width / 2 - 17, labelArea!.height - 38 - whenHeight, 40, 40))
         let image = UIImage(named: "camera")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         photoButton!.setImage(image, forState: UIControlState.Normal)
         photoButton?.tintColor = UIColor.blueColor()
+        }
     }
     
     func addDotsToPhoto() {
@@ -221,12 +236,6 @@ class MapPinView: MKAnnotationView {
                 photoView!.addSubview(dot)
             }
         }
-    }
-    
-    func createShareButton() {
-        shareButton = UIButton(frame: CGRectMake(0, labelArea!.height - 40 - whenHeight, 40, 40))
-        let image = UIImage(named: "share")
-        shareButton!.setImage(image, forState: UIControlState.Normal)
     }
     
     func createPhotoView() {

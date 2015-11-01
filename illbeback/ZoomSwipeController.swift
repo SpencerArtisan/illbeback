@@ -89,11 +89,14 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     private func zoomController(newIndex: Int) -> ZoomController {
         let newView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
         let imageView = newView.view.subviews[0] as! UIImageView
-        imageView.image = photos[newIndex].image
+        if newIndex >= photos.count {
+            print("Trying to show non existent image in zoom controller")
+        } else {
+            imageView.image = photos[newIndex].image
+        }
         newView.index = newIndex
         newView.owner = self
-        return newView
-    }
+        return newView    }
     
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
         return photos.count
@@ -178,7 +181,11 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     }
 
     func photo(sender : UIButton!) {
-        memoriesController!.rephotoMemory(pinToRephoto!)
+        if (self.navigationController?.topViewController != self.memoriesController!.rephotoController) {
+            self.memoriesController!.rephotoController.pinToRephoto = pinToRephoto
+            self.navigationController?.navigationBarHidden = true
+            self.navigationController?.pushViewController(self.memoriesController!.rephotoController!, animated: false)
+        }
     }
     
     func goBack(sender : UIButton!) {

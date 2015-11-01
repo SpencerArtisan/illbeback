@@ -131,9 +131,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the callout
     func rephotoMemory(pin: MapPinView) {
         if (self.navigationController?.topViewController != rephotoController) {
+            zoomController.memoriesController = self
+            zoomController.pinToRephoto = pin
             rephotoController.pinToRephoto = pin
             self.navigationController?.navigationBarHidden = true
-            self.navigationController?.pushViewController(rephotoController!, animated: true)
+            self.navigationController?.pushViewController(zoomController, animated: false)
+            self.navigationController?.pushViewController(rephotoController!, animated: false)
         }
     }
     
