@@ -20,7 +20,6 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         let dev = UIDevice.currentDevice()
         dev.beginGeneratingDeviceOrientationNotifications()
         let nc = NSNotificationCenter.defaultCenter()
@@ -29,28 +28,33 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
         nc.addObserverForName(UIDeviceOrientationDidChangeNotification, object: dev, queue: NSOperationQueue.mainQueue(), usingBlock: {
             note in if let object: UIDevice = note.object as? UIDevice {
                 let orient = object.orientation
+                self.rotate(orient)
                 
-                let width = self.photo!.image!.size.width
-                let height = self.photo!.image!.size.height
-
-                var transform = CGAffineTransformIdentity
-                if orient == UIDeviceOrientation.LandscapeLeft {
-                    transform = CGAffineTransformMakeScale(width/height, width/height)
-                    transform = CGAffineTransformRotate(transform, 3.14159/2);
-                } else if orient == UIDeviceOrientation.LandscapeRight {
-                    transform = CGAffineTransformMakeScale(width/height, width/height)
-                    transform = CGAffineTransformRotate(transform, -3.14159/2);
-                } else if orient == UIDeviceOrientation.PortraitUpsideDown {
-                    transform = CGAffineTransformRotate(transform, 3.14159);
-                }
-                
-                self.photo?.transform = transform
-            }})
+           }})
     }
     
     override func viewWillAppear(animated: Bool) {
         owner?.index = index
         owner?.drawDots(index)
+        let orientation = UIDevice.currentDevice().orientation
+        rotate(orientation)
     }
     
+    func rotate(orient: UIDeviceOrientation) {
+        let width = self.photo!.image!.size.width
+        let height = self.photo!.image!.size.height
+        
+        var transform = CGAffineTransformIdentity
+        if orient == UIDeviceOrientation.LandscapeLeft {
+            transform = CGAffineTransformMakeScale(width/height, width/height)
+            transform = CGAffineTransformRotate(transform, 3.14159/2);
+        } else if orient == UIDeviceOrientation.LandscapeRight {
+            transform = CGAffineTransformMakeScale(width/height, width/height)
+            transform = CGAffineTransformRotate(transform, -3.14159/2);
+        } else if orient == UIDeviceOrientation.PortraitUpsideDown {
+            transform = CGAffineTransformRotate(transform, 3.14159);
+        }
+        
+        self.photo?.transform = transform
+    }
 }
