@@ -11,7 +11,7 @@ import MapKit
 
 public class MemoryAlbum {
     private var _sharer: Sharer?
-    private var memories: [Memory] = []
+    private var memories = [String: Memory]()
     private var props: NSDictionary?
     private var map: MKMapView
     
@@ -28,7 +28,7 @@ public class MemoryAlbum {
     }
     
     func addToMap() {
-        for memory in memories {
+        for memory in memories.values {
             if memory.isPast() {
                 delete(memory)
             } else {
@@ -38,7 +38,7 @@ public class MemoryAlbum {
     }
     
     func contains(memory: Memory) -> Bool {
-        return memories.filter({$0.id == memory.id}).count > 0
+        return memories[memory.id] != nil
     }
 
     func downloadNewShares(user: User, onStart: (memory: Memory) -> Void, onComplete: (memory: Memory) -> Void) {
@@ -60,11 +60,11 @@ public class MemoryAlbum {
     }
     
     func getImminentEvents() -> [Memory] {
-        return memories.filter {$0.when != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0}
+        return memories.values.filter {$0.when != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0}
     }
     
     func getAllEvents() -> [Memory] {
-        return memories.filter {$0.when != nil }
+        return memories.values.filter {$0.when != nil }
     }
     
     func addPin(memory: Memory) {
@@ -75,7 +75,7 @@ public class MemoryAlbum {
     }
     
     func add(memory: Memory) {
-        memories.append(memory)
+        memories[memory.id] = memory
         save()
         addPin(memory)
     }
@@ -86,39 +86,25 @@ public class MemoryAlbum {
     }
     
     func delete(memory: Memory) {
-        let memoryIndex = find(memory)
-        if (memoryIndex != nil) {
-            memories.removeAtIndex(memoryIndex!)
-            save()
-        }
+        memories.removeValueForKey(memory.id)
     }
     
     func share(pin: MapPinView, from: String, to: String, onComplete: () -> Void, onError: () -> Void) {
-        let memoryIndex = find(pin.memory!)
-        if (memoryIndex != nil) {
-            let memory = memories[memoryIndex!]
-            print("Sharing \(memory.type)")
+        let memory = memories[pin.memory!.id]
+        
+        if (memory != nil) {
+            print("Sharing \(memory!.type)")
             self.map.deselectAnnotation(pin.annotation, animated: false)
-            sharer().share(from, to: to, memory: memory, onComplete: onComplete, onError: onError)
+            sharer().share(from, to: to, memory: memory!, onComplete: onComplete, onError: onError)
         } else {
             print("WARN: Failed to share unknown memory")
         }
-    }
-
-    private func find(victim: Memory) -> Int? {
-        for i in 0...memories.count - 1 {
-            let memory = memories[i]
-            if (memory.asString() == victim.asString()) {
-                return i
-            }
-        }
-        return nil
     }
     
     func save() {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
-        let memoryStrings = memories.map {memory in memory.asString()}
+        let memoryStrings = memories.map {memory in memory.1.asString()}
         props?.setValue(memoryStrings, forKey: "Memories")
         props?.writeToFile(path, atomically: true)
     }
@@ -137,7 +123,10 @@ public class MemoryAlbum {
         
         props = NSDictionary(contentsOfFile: path)?.mutableCopy() as? NSDictionary
         
-        var memoryStrings = (props?.valueForKey("Memories") ?? []) as! [String]
-        memories = memoryStrings.map {memoryString in Memory(memoryString: memoryString)}
+        let memoryStrings = (props?.valueForKey("Memories") ?? []) as! [String]
+        let memoryList = memoryStrings.map {memoryString in Memory(memoryString: memoryString)}
+        for memory in memoryList {
+            memories[memory.id] = memory
+        }
     }
 }

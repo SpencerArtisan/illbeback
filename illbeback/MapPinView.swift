@@ -362,8 +362,10 @@ class MapPinView: MKAnnotationView {
                 MapPinView.lastSelectionChange = NSDate()
                 memoriesController?.deleteMemory(self)
             } else if (hitButton(point, button: shareButton)) {
+                MapPinView.lastSelectionChange = NSDate()
                 memoriesController?.shareController.shareMemory([self])
             } else if (hitButton(point, button: photoButton)) {
+                MapPinView.lastSelectionChange = NSDate()
                 memoriesController?.rephotoMemory(self)
             } else if (hitButton(point, button: subtitleView)) {
                 memoriesController?.rewordMemory(self)

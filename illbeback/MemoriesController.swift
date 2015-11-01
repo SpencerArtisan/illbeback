@@ -182,6 +182,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                     if event.isPast() {
                         print("Removing old event " + event.id)
                         self.memoryAlbum.delete(event)
+                        self.photoAlbum.delete(event)
                         self.map.deselectAnnotation(pin, animated: false)
                         NSOperationQueue.mainQueue().addOperationWithBlock {
                             self.map.removeAnnotation(pin!)
@@ -317,6 +318,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the callout
     func deleteMemory(pin: MapPinView) {
         memoryAlbum.delete(pin)
+        photoAlbum.delete(pin.memory!)
     }
     
     func removeDuplicates(newPin: MapPinView) {
@@ -336,7 +338,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     self.map.removeAnnotation(oldMemoryPin!)
                 }
-                self.memoryAlbum.delete(oldMemoryPin!.memory)
                 
             }
     }

@@ -81,4 +81,8 @@ public class PhotoAlbum {
         }
         return paths
     }
+    
+    public func delete(memory: Memory) {
+        // todo
+    }
 }
