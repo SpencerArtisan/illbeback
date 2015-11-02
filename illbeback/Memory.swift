@@ -62,7 +62,14 @@ public class Memory {
     }
     
     func whenFormatted() -> String {
-        return formatter().stringFromDate(when!)
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm"
+        if formatter.stringFromDate(when!) == "00:00" {
+            formatter.dateFormat = "EEE dd MMMM"
+        } else {
+            formatter.dateFormat = "EEE d MMM HH:mm"
+        }
+        return formatter.stringFromDate(when!)
     }
     
     func asMapPin() -> MapPin {
