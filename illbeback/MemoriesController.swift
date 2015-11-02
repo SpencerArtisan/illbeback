@@ -433,14 +433,23 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             for aView in views {
                 if aView is MapPinView {
                     if (aView as! MapPinView).memory?.type == "Event" {
-                        aView.superview?.bringSubviewToFront(aView)
-                        aView.layer.zPosition = 999
-                    } else {
-                        aView.superview?.sendSubviewToBack(aView)
+                        aView.layer.zPosition = 1
                     }
-                    
                 }
             }
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+       view.layer.zPosition = 2
+    }
+    
+    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
+        view.layer.zPosition = 0
+        if view is MapPinView {
+            if (view as! MapPinView).memory?.type == "Event" {
+                view.layer.zPosition = 1
+            }
+        }
     }
     
     func showPinsInShape() {

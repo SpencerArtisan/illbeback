@@ -304,7 +304,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createAcceptButton() {
-        acceptButton = UILabel(frame: CGRectMake(0, labelArea!.height - 40, labelArea!.width / 2, 40))
+        acceptButton = UILabel(frame: CGRectMake(0, labelArea!.height - 40 - whenHeight, labelArea!.width / 2, 40))
         acceptButton!.layer.cornerRadius = 0
         acceptButton!.numberOfLines = 0
         acceptButton!.textAlignment = NSTextAlignment.Center
@@ -316,7 +316,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeclineButton() {
-        declineButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 40, labelArea!.width / 2, 40))
+        declineButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 40 - whenHeight, labelArea!.width / 2, 40))
         declineButton!.layer.cornerRadius = 0
         declineButton!.numberOfLines = 0
         declineButton!.textAlignment = NSTextAlignment.Center
