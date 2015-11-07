@@ -33,6 +33,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     let user = User()
     var messageModals: [Modal] = []
+    let queue = dispatch_queue_create("com.artisan.cachequeue", DISPATCH_QUEUE_CONCURRENT);
     var downloadingMessages = [String:Modal]()
     var newUserLabel: UILabel!
     var newUserText: UITextView!
@@ -230,6 +231,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 let title = "Downloading " + memory.type
                 self.delay(delaySeconds1) {
                     let message = self.showMessage(title, color: color, time: nil)
+                    let oldModal = self.downloadingMessages[memory.id]
+                    if oldModal != nil {
+                        oldModal?.slideUpFromTop(self.view)
+                    }
                     self.downloadingMessages[memory.id] = message
                 }
                 
@@ -238,9 +243,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             onComplete: {memory in
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloaded " + memory.type + " from " + memory.originator
-                let downloadingMessage = self.downloadingMessages[memory.id]
-                print("onComplete callback for downloading \(memory.asString()).  Will dismiss modal \(downloadingMessage) from outstanding modals \(self.downloadingMessages)")
                 self.delay(delaySeconds2) {
+                    let downloadingMessage = self.downloadingMessages[memory.id]
+                    print("onComplete callback for downloading \(memory.asString()).  Will dismiss modal \(downloadingMessage) from outstanding modals \(self.downloadingMessages)")
                     if downloadingMessage != nil {
                         print("Dismissing modal")
                         downloadingMessage?.slideUpFromTop(self.view)
@@ -252,17 +257,26 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             },
             onAckReceipt: {memory in
                 print("onAckReceipt callback for \(memory.asString())")
+                let pin = self.getPin(memory)
+                if pin != nil {
+                    self.map!.removeAnnotation(pin!)
+                    self.map!.addAnnotation(pin!)
+                }
                 let response = memory.isAccepted() ? "accepted" : "declined"
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "\(memory.originator) \(response) \(memory.summary())"
                 self.delay(delaySeconds1) {
                     self.showMessage(title, color: color, time: 2)
                 }
+                if memory.isAccepted() {
+                    self.memoryAlbum.inviteeAccepted(memory.originator, memoryId: memory.id)
+                } else {
+                    self.memoryAlbum.inviteeDeclined(memory.originator, memoryId: memory.id)
+                }
                 
                 delaySeconds1 += 1.5
             }
         )
-
     }
 
     func getPin(memory: Memory) -> MapPin? {

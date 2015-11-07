@@ -24,7 +24,7 @@ public class Memory {
     private var state: String
     var orientation: UIDeviceOrientation
     var when: NSDate?
-    var invitees: String
+    var invitees: [Invitee]
     
     init(id: String, type: String, description: String, location: CLLocationCoordinate2D, user: User, orientation: UIDeviceOrientation?, when: NSDate?) {
         self.id = id
@@ -35,7 +35,7 @@ public class Memory {
         self.state = CATEGORY_NORMAL
         self.orientation = orientation ?? UIDeviceOrientation.FaceUp
         self.when = when
-        self.invitees = ""
+        self.invitees = []
     }
     
     init(memoryString: String) {
@@ -49,7 +49,7 @@ public class Memory {
         self.originator = parts[5]
         self.state = parts.count > 6 ? parts[6] : CATEGORY_NORMAL
         self.orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
-        self.invitees = parts.count > 9 ? parts[9] : ""
+        self.invitees = parts.count > 9 && parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee(string: $0)} : []
         self.when = parts.count > 8 && parts[8] != "" ? formatter().dateFromString(parts[8]) : nil
     }
     
@@ -75,7 +75,8 @@ public class Memory {
         if state == CATEGORY_NORMAL {
             state = CATEGORY_SENT
         }
-        invitees = invitees.isEmpty ? to : "\(invitees):\(to)"
+        let invitee = Invitee(name: to)
+        invitees.append(invitee)
     }
     
     func isAccepted() -> Bool {
@@ -86,20 +87,31 @@ public class Memory {
         return state == CATEGORY_ACCEPTED || state == CATEGORY_DECLINED
     }
     
-    func getInvitees() -> [String] {
-        if invitees.isEmpty {
-            return []
-        }
-        return invitees.componentsSeparatedByString(":")
+    func getInvitees() -> [Invitee] {
+        return invitees
     }
     
-    func asString() -> String {
-        var str = "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(state):\(orientation.rawValue):"
-        if when != nil {
-            str += "\(formatter().stringFromDate(when!))"
+    func inviteeAccepted(invitee: String) {
+        for i in invitees {
+            if i.name == invitee {
+                i.accept()
+            }
         }
-        str += ":\(invitees)"
-        return str
+    }
+    
+    func inviteeDeclined(invitee: String) {
+        for i in invitees {
+            if i.name == invitee {
+                i.decline()
+            }
+        }
+    }
+    
+    
+    func asString() -> String {
+        let whenString = when != nil ? formatter().stringFromDate(when!) : ""
+        let inviteesString = invitees.map{$0.asString()}.joinWithSeparator(";")
+        return "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(state):\(orientation.rawValue):\(whenString):\(inviteesString)"
     }
     
     func whenFormatted() -> String {

@@ -132,11 +132,14 @@ public class Sharer {
     func uploadMemory(from: String, to: String, memory: Memory) {
         memory.justSent(to)
         let originalOriginator = memory.originator
+        let originalInvitees = memory.invitees
         memory.originator = from
+        memory.invitees = []
         print("FIREBASE OP: Uploading memory " + memory.asString())
         let newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": from, "memory": memory.asString()])
         memory.originator = originalOriginator
+        memory.invitees = originalInvitees
     }
     
     private func shareRoot(to: String) -> Firebase {

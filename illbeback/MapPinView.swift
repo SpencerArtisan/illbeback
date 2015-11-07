@@ -54,23 +54,24 @@ class MapPinView: MKAnnotationView {
         annotation = annotation
         enabled = true
         draggable = true
+        
         initImage()
     }
     
     func refreshAndReopen() {
         setSelected(false, animated: false)
-        calloutView = nil
-        photoView = nil
-        photoButton = nil
-        labelView = nil
-        inviteeViews = []
-        self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(memory!)?.imagePath
+        refresh()
         setSelected(true, animated: false)
     }
     
     func refresh() {
+        fromHeight = 0
+        whenHeight = 0
         calloutView = nil
         photoButton = nil
+        labelView = nil
+        inviteeViews = []
+        self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(memory!)?.imagePath
     }
     
     func refreshImage() {
@@ -306,8 +307,10 @@ class MapPinView: MKAnnotationView {
             inviteeView.numberOfLines = 0
             inviteeView.textAlignment = NSTextAlignment.Center
             inviteeView.font = UIFont.italicSystemFontOfSize(14)
-            inviteeView.text = "\(invitee): Awaiting response"
-            inviteeView.backgroundColor = CategoryController.getColorForCategory(memory!.type).colorWithAlphaComponent(0.5)
+            let state = invitee.isAccepted() ? "Accepted" : (invitee.isDeclined() ? "Declined" : "Awaiting response")
+            inviteeView.text = "\(invitee.name): \(state)"
+            inviteeView.backgroundColor = invitee.isAccepted() ? UIColor.greenColor().colorWithAlphaComponent(0.6) : (invitee.isDeclined() ? UIColor.redColor().colorWithAlphaComponent(0.6) : UIColor.lightGrayColor().colorWithAlphaComponent(0.6))
+            inviteeView.textColor = invitee.isAccepted() ? UIColor.blackColor() : (invitee.isDeclined() ? UIColor.whiteColor() : UIColor.darkGrayColor())
             inviteeView.layer.borderWidth = 0.5
             inviteeView.layer.borderColor = UIColor.lightGrayColor().CGColor
             inviteeViews.append(inviteeView)

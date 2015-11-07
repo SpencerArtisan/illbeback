@@ -131,6 +131,16 @@ public class MemoryAlbum {
         sharer().uploadMemory(from, to: memory.originator, memory: memory)
     }
     
+    func inviteeAccepted(invitee: String, memoryId: String) {
+        let memory = oldMemories[memoryId]
+        memory!.inviteeAccepted(invitee)
+    }
+
+    func inviteeDeclined(invitee: String, memoryId: String) {
+        let memory = oldMemories[memoryId]
+        memory!.inviteeDeclined(invitee)
+    }
+    
     func save() {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
