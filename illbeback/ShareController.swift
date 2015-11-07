@@ -168,6 +168,14 @@ class ShareController : UIViewController {
         memories.showPinsInShape()
     }
     
+    func acceptRecentShare(memory: Memory) {
+        memories.memoryAlbum.acceptRecentShare(memory, from: user.getName())
+    }
+    
+    func declineRecentShare(memory: Memory) {
+        memories.memoryAlbum.declineRecentShare(memory, from: user.getName())
+    }
+    
     func hideShareModal(sender: AnyObject?) {
         shareModal?.slideInFromLeft(memories.view)
     }

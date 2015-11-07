@@ -37,7 +37,11 @@ public class Sharer {
         }
     }
     
-    func retrieveShares(to: String, onStart: (from: String, memory: Memory) -> (), onComplete: (from: String, memory: Memory) -> ()) {
+    
+    func retrieveShares(to: String,
+                        onStart: (from: String, memory: Memory) -> (),
+                        onComplete: (from: String, memory: Memory) -> (),
+                        onAckReceipt: (from: String, memory: Memory) -> ()) {
         shareRoot(to).observeSingleEventOfType(.Value, withBlock: {
             snapshot in
                 let givenMemories = snapshot.children
@@ -48,13 +52,18 @@ public class Sharer {
                     let memoryString = given.value["memory"] as! String
                     let memory = Memory(memoryString: memoryString)
                     receivedIds.append(memory.id)
-                    memory.setRecentShare(true)
-                    print("Received memory \(memoryString)")
-                    onStart(from: from, memory: memory)
-                    self.downloadImages(memory, onComplete: {
-                        print("All shared photos downloaded.  Notifying observers...")
-                        onComplete(from: from, memory: memory)
-                    })
+                    memory.justReceived()
+                    if (memory.wasAck()) {
+                        print("Received acknowlegdement of share for memory \(memory)")
+                        onAckReceipt(from: from, memory: memory)
+                    } else {
+                        print("Received memory \(memoryString)")
+                        onStart(from: from, memory: memory)
+                        self.downloadImages(memory, onComplete: {
+                            print("All shared photos downloaded.  Notifying observers...")
+                            onComplete(from: from, memory: memory)
+                        })
+                    }
                 }
                 self.shareRoot(to).removeValue()
         })
@@ -119,7 +128,9 @@ public class Sharer {
         }
     }
     
-    private func uploadMemory(from: String, to: String, memory: Memory) {
+    func uploadMemory(from: String, to: String, memory: Memory) {
+        memory.justSent()
+        memory.originator = from
         print("FIREBASE OP: Uploading memory " + memory.asString())
         let newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": from, "memory": memory.asString()])

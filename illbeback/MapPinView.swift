@@ -99,7 +99,7 @@ class MapPinView: MKAnnotationView {
         if (inShape) {
             let imageHighlight = UIImage(named: "share flag")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
-        } else if (memory!.isRecentShare()) {
+        } else if (memory!.isJustReceived()) {
             let imageHighlight = UIImage(named: "recent")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
         }
@@ -168,7 +168,7 @@ class MapPinView: MKAnnotationView {
             labelView!.addSubview(dateView!)
         }
         
-        if (memory!.isRecentShare()) {
+        if (memory!.isJustReceived()) {
             labelView?.addSubview(acceptButton!)
             labelView?.addSubview(declineButton!)
         } else {
@@ -354,12 +354,12 @@ class MapPinView: MKAnnotationView {
         let elapsed = system - event!.timestamp
         if (elapsed < 0.1 && labelView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
             hitView = calloutView!.hitTest(point, withEvent: event)
-            if (memory!.isRecentShare() && hitButton(point, button: acceptButton)) {
+            if (memory!.isJustReceived() && hitButton(point, button: acceptButton)) {
                 MapPinView.lastSelectionChange = NSDate()
                 memoriesController?.acceptRecentShare(memory!)
                 memoriesController?.removeDuplicatePins(self)
                 memoriesController?.updateMemory(self)
-            } else if ((memory!.isRecentShare() && hitButton(point, button: declineButton))) {
+            } else if ((memory!.isJustReceived() && hitButton(point, button: declineButton))) {
                 MapPinView.lastSelectionChange = NSDate()
                 memoriesController?.declineRecentShare(memory!)
                 memoriesController?.removePin(self)
@@ -368,7 +368,7 @@ class MapPinView: MKAnnotationView {
                 memoriesController?.deleteMemory(self)
             } else if (hitButton(point, button: shareButton)) {
                 MapPinView.lastSelectionChange = NSDate()
-                memoriesController?.shareController.shareMemory([self])
+                memoriesController?.shareMemory(self)
             } else if (hitButton(point, button: photoButton)) {
                 MapPinView.lastSelectionChange = NSDate()
                 memoriesController?.rephotoMemory(self)

@@ -11,7 +11,10 @@ import CoreLocation
 
 public class Memory {
     let CATEGORY_NORMAL = "F"
-    let CATEGORY_AWAITING_ACCEPT = "T"
+    let CATEGORY_SENT = "S"
+    let CATEGORY_RECEIVED = "R"
+    let CATEGORY_ACCEPTED = "A"
+    let CATEGORY_DECLINED = "D"
     
     var type: String
     var id: String
@@ -47,12 +50,36 @@ public class Memory {
         self.when = parts.count > 8 ? formatter().dateFromString(parts[8]) : nil
     }
     
-    func isRecentShare() -> Bool {
-        return state == CATEGORY_AWAITING_ACCEPT
+    func isJustReceived() -> Bool {
+        return state == CATEGORY_RECEIVED
     }
 
-    func setRecentShare(recent: Bool) {
-        state = recent ? CATEGORY_AWAITING_ACCEPT : CATEGORY_NORMAL
+    func accept() {
+        state = CATEGORY_ACCEPTED
+    }
+
+    func decline() {
+        state = CATEGORY_DECLINED
+    }
+    
+    func justReceived() {
+        if state == CATEGORY_SENT {
+            state = CATEGORY_RECEIVED
+        }
+    }
+
+    func justSent() {
+        if state == CATEGORY_NORMAL {
+            state = CATEGORY_SENT
+        }
+    }
+    
+    func isAccepted() -> Bool {
+        return state == CATEGORY_ACCEPTED
+    }
+
+    func wasAck() -> Bool {
+        return state == CATEGORY_ACCEPTED || state == CATEGORY_DECLINED
     }
     
     func asString() -> String {

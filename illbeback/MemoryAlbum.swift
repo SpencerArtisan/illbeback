@@ -46,7 +46,10 @@ public class MemoryAlbum {
         return oldMemories[memory.id] != nil || newMemories[memory.id] != nil
     }
 
-    func downloadNewShares(user: User, onStart: (memory: Memory) -> Void, onComplete: (memory: Memory) -> Void) {
+    func downloadNewShares(user: User,
+                           onStart: (memory: Memory) -> Void,
+                           onComplete: (memory: Memory) -> Void,
+                           onAckReceipt: (memory: Memory) -> Void) {
         print("Checking for new shared memories")
         if (user.hasName()) {
             sharer().retrieveShares(user.getName(),
@@ -56,9 +59,12 @@ public class MemoryAlbum {
                 },
                 onComplete: {sender, memory in
                     print("Received shared memory from " + sender + ": " + memory.asString())
-                    
                     self.add(memory)
                     onComplete(memory: memory)
+                },
+                onAckReceipt: {sender, memory in
+                    print("Receiving acknowledgement of shared memory from " + sender + ": " + memory.asString())
+                    onAckReceipt(memory: memory)
                 })
         }
     }
@@ -79,16 +85,19 @@ public class MemoryAlbum {
         })
     }
     
-    
-    
     func add(memory: Memory) {
-        if memory.isRecentShare() {
+        if memory.isJustReceived() {
+            if newMemories[memory.id] == nil {
+                addPin(memory)
+            }
             newMemories[memory.id] = memory
         } else {
+            if oldMemories[memory.id] == nil {
+                addPin(memory)
+            }
             oldMemories[memory.id] = memory
         }
         save()
-        addPin(memory)
     }
     
     func delete(pin: MapPinView) {
@@ -110,6 +119,16 @@ public class MemoryAlbum {
         } else {
             print("WARN: Failed to share unknown memory")
         }
+    }
+    
+    func acceptRecentShare(memory: Memory, from: String) {
+        print("Accepting share \(memory)")
+        sharer().uploadMemory(from, to: memory.originator, memory: memory)
+    }
+    
+    func declineRecentShare(memory: Memory, from: String) {
+        print("Declining share \(memory)")
+        sharer().uploadMemory(from, to: memory.originator, memory: memory)
     }
     
     func save() {
@@ -137,7 +156,7 @@ public class MemoryAlbum {
         let memoryStrings = (props?.valueForKey("Memories") ?? []) as! [String]
         let memoryList = memoryStrings.map {memoryString in Memory(memoryString: memoryString)}
         for memory in memoryList {
-            if memory.isRecentShare() {
+            if memory.isJustReceived() {
                 newMemories[memory.id] = memory
             } else {
                 oldMemories[memory.id] = memory

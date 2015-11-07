@@ -167,6 +167,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     func remindersForImminentEvents() -> Double {
         var delaySeconds = 0.0
+        let memoryDuration = 0.6
         
         let events = memoryAlbum.getImminentEvents()
         for event in events {
@@ -184,9 +185,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                     fontColor = UIColor.blackColor()
                     message = event.description == "" ? "\(event.daysToGo()) days until an event" : "\(event.daysToGo()) days until \(event.summary())"
                 }
-                self.showMessage(message, color: color, fontColor: fontColor, time: 4)
+                self.showMessage(message, color: color, fontColor: fontColor, time: memoryDuration)
             }
-            delaySeconds += 4.0
+            delaySeconds += memoryDuration
         }
         
         return delaySeconds
@@ -224,7 +225,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         memoryAlbum.downloadNewShares(user,
             onStart: {memory in
-                print("onStart callback for downloading \(memory)")
+                print("onStart callback for downloading \(memory.asString())")
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloading " + memory.type
                 self.delay(delaySeconds1) {
@@ -238,7 +239,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloaded " + memory.type + " from " + memory.originator
                 let downloadingMessage = self.downloadingMessages[memory.id]
-                print("onComplete callback for downloading \(memory).  Will dismiss modal \(downloadingMessage)")
+                print("onComplete callback for downloading \(memory.asString()).  Will dismiss modal \(downloadingMessage) from outstanding modals \(self.downloadingMessages)")
                 self.delay(delaySeconds2) {
                     if downloadingMessage != nil {
                         print("Dismissing modal")
@@ -248,7 +249,19 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 }
                 
                 delaySeconds2 += 1.5
-        })
+            },
+            onAckReceipt: {memory in
+                print("onAckReceipt callback for \(memory.asString())")
+                let response = memory.isAccepted() ? "accepted" : "declined"
+                let color = CategoryController.getColorForCategory(memory.type)
+                let title = "\(memory.originator) \(response) \(memory.summary())"
+                self.delay(delaySeconds1) {
+                    self.showMessage(title, color: color, time: 2)
+                }
+                
+                delaySeconds1 += 1.5
+            }
+        )
 
     }
 
@@ -385,19 +398,24 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     func acceptRecentShare(memory: Memory) {
-        memory.setRecentShare(false)
+        memory.accept()
         memoryAlbum!.oldMemories[memory.id] = memory
         memoryAlbum!.newMemories.removeValueForKey(memory.id)
         memoryAlbum!.save()
-        
         photoAlbum.acceptRecentShare(memory)
+        shareController.acceptRecentShare(memory)
     }
     
     func declineRecentShare(memory: Memory) {
+        memory.decline()
         memoryAlbum!.newMemories.removeValueForKey(memory.id)
         memoryAlbum!.save()
+        shareController.declineRecentShare(memory)
     }
-
+    
+    func shareMemory(pin: MapPinView) {
+        shareController.shareMemory([pin])
+    }
 
     // Callback for button on the callout
     func updateMemory(pin: MapPinView) {

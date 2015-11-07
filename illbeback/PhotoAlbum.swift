@@ -56,7 +56,7 @@ public class PhotoAlbum {
     public func photos(memory: Memory) -> [Photo] {
         let memoryId = memory.id
         var photos:[Photo] = []
-        let marker = memory.isRecentShare() ? ".recent" : ""
+        let marker = memory.isJustReceived() ? ".recent" : ""
         var candidate = "\(folder)/Memory\(memoryId).jpg\(marker)"
         if fileManager.fileExistsAtPath(candidate) {
             photos.append(Photo(imagePath: candidate))
