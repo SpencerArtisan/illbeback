@@ -132,7 +132,7 @@ public class MemoryAlbum {
     }
     
     func save() {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
         let memoryStrings = allMemories().map {memory in memory.asString()}
         props?.setValue(memoryStrings, forKey: "Memories")
@@ -140,7 +140,7 @@ public class MemoryAlbum {
     }
 
     func read() {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! NSString
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
         let fileManager = NSFileManager.defaultManager()
         if (!(fileManager.fileExistsAtPath(path))) {
