@@ -20,13 +20,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "468084473.72791"
+            timestampString = "468580740.377162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
-            landmarkName = "initLocationManager()"
-            landmarkType = "5">
+            startingLineNumber = "299"
+            endingLineNumber = "299"
+            landmarkName = "MemoriesController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -36,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "468090876.683293"
+            timestampString = "468580740.377162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "420"
-            endingLineNumber = "420"
-            landmarkName = "mapView(_:annotationView:didChangeDragState:fromOldState:)"
+            startingLineNumber = "427"
+            endingLineNumber = "427"
+            landmarkName = "mapView(_:viewForAnnotation:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -68,12 +68,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "468084473.72791"
+            timestampString = "468580740.377162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
-            landmarkName = "showMessage(_:color:time:)"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "ensureUserKnown()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

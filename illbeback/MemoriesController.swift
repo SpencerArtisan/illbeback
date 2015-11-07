@@ -12,6 +12,7 @@ import MapKit
 
 
 class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextViewDelegate {
+    let HOUR: Double = 60 * 60
     
     @IBOutlet weak var map: MKMapView!
     var locationManager = CLLocationManager()
@@ -153,53 +154,70 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
         
+        ensureUserKnown()
+        
         var delaySeconds = 0.0
+        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
+            delaySeconds = remindersForImminentEvents()
+            updateEventPins()
+        }
 
-        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > 60 * 60 * 5 {
-            var events = memoryAlbum.getImminentEvents()
-            for event in events {
-                var color = CategoryController.getColorForCategory(event.type)
-                self.delay(delaySeconds) {
-                    var message = ""
-                    if event.daysToGo() == 1 {
-                        color = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 0.8)
-                        message = event.description == "" ? "An event is happening tomorrow" : "Tomorrow is \(event.summary())"
-                    } else if event.daysToGo() == 0 {
-                        color = UIColor(red: 1.0, green: 0.2, blue: 0, alpha: 0.8)
-                        message = event.description == "" ? "An event is happening today!" : "Today is \(event.summary())"
-                    } else {
-                        message = event.description == "" ? "\(event.daysToGo()) days until an event" : "\(event.daysToGo()) days until \(event.summary())"
-                    }
-                    self.showMessage(message, color: color, time: 4)
+        downloadNewShares(delaySeconds)
+        
+        self.lastTimeAppUsed = NSDate()
+    }
+    
+    func remindersForImminentEvents() -> Double {
+        var delaySeconds = 0.0
+        
+        let events = memoryAlbum.getImminentEvents()
+        for event in events {
+            var color = CategoryController.getColorForCategory(event.type)
+            var fontColor = UIColor.whiteColor()
+            self.delay(delaySeconds) {
+                var message = ""
+                if event.daysToGo() == 1 {
+                    color = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
+                    message = event.description == "" ? "An event is happening tomorrow" : "Tomorrow is \(event.summary())"
+                } else if event.daysToGo() == 0 {
+                    color = UIColor(red: 1.0, green: 0.2, blue: 0, alpha: 1)
+                    message = event.description == "" ? "An event is happening today!" : "Today is \(event.summary())"
+                } else {
+                    fontColor = UIColor.blackColor()
+                    message = event.description == "" ? "\(event.daysToGo()) days until an event" : "\(event.daysToGo()) days until \(event.summary())"
                 }
-                delaySeconds += 4.0
+                self.showMessage(message, color: color, fontColor: fontColor, time: 4)
             }
-            
-            events = memoryAlbum.getAllEvents()
-            for event in events {
-                let pin = getPin(event)
-                if pin != nil {
-                    if event.isPast() {
-                        print("Removing old event " + event.id)
-                        self.memoryAlbum.delete(event)
-                        self.photoAlbum.delete(event)
-                        self.map.deselectAnnotation(pin, animated: false)
-                        NSOperationQueue.mainQueue().addOperationWithBlock {
-                            self.map.removeAnnotation(pin!)
-                        }
-                    } else {
-                        map!.removeAnnotation(pin!)
-                        map!.addAnnotation(pin!)
+            delaySeconds += 4.0
+        }
+        
+        return delaySeconds
+    }
+    
+    func updateEventPins() {
+        let events = memoryAlbum.getAllEvents()
+        for event in events {
+            let pin = getPin(event)
+            if pin != nil {
+                if event.isPast() {
+                    print("Removing old event " + event.id)
+                    self.memoryAlbum.delete(event)
+                    self.photoAlbum.delete(event)
+                    self.map.deselectAnnotation(pin, animated: false)
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        self.map.removeAnnotation(pin!)
                     }
+                } else {
+                    map!.removeAnnotation(pin!)
+                    map!.addAnnotation(pin!)
                 }
             }
         }
-        
+    }
+    
+    func downloadNewShares(delaySeconds: Double) {
         var delaySeconds1 = delaySeconds
         var delaySeconds2 = delaySeconds
-        
-        ensureUserKnown()
-        
         var messages = [String:Modal]()
         memoryAlbum.downloadNewShares(user,
             onStart: {memory in
@@ -222,13 +240,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                     }
                     self.showMessage(title, color: color, time: 2)
                 }
-            
+                
                 delaySeconds2 += 1.5
-            })
-        
-        self.lastTimeAppUsed = NSDate()
+        })
+
     }
-    
+
     func getPin(memory: Memory) -> MapPin? {
         for pin in self.map.annotations {
             if pin is MapPin && (pin as! MapPin).memory.id == memory.id {
@@ -257,9 +274,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     func showMessage(text: String, color: UIColor, time: Double?) -> Modal {
+        return showMessage(text, color: color, fontColor: UIColor.blackColor(), time: time)
+    }
+    
+    func showMessage(text: String, color: UIColor, fontColor: UIColor, time: Double?) -> Modal {
         let messageModal = Modal(viewName: "MessageView", owner: self)
         let message = messageModal.findElementByTag(1) as! UIButton
-        message.backgroundColor = color
+        message.backgroundColor = color.colorWithAlphaComponent(1)
+        message.setTitleColor(fontColor, forState: UIControlState.Normal)
         message.setTitle(text, forState: UIControlState.Normal)
         messageModal.slideDownFromTop(self.view)
         
@@ -493,6 +515,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
                     if let placemark = placemarks?[0] {
                         self.map.setCenterCoordinate(placemark.location!.coordinate, animated: true)
+                        let annotation = MKPointAnnotation()
+                        
+                        annotation.coordinate = placemark.location!.coordinate
+                        self.map.addAnnotation(annotation)
+                        
                     }
                 })
             } else {

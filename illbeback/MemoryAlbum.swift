@@ -64,7 +64,8 @@ public class MemoryAlbum {
     }
     
     func getImminentEvents() -> [Memory] {
-        return allMemories().filter {$0.when != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0}
+        let imminent = allMemories().filter({$0.when != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0})
+        return imminent.sort{$0.daysToGo() < $1.daysToGo()}
     }
     
     func getAllEvents() -> [Memory] {
