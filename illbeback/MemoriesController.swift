@@ -98,9 +98,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     
     @IBAction func currentLocation(sender: AnyObject) {
-        let span = MKCoordinateSpan(latitudeDelta: 0.016, longitudeDelta: 0.016)
-        let region = MKCoordinateRegion(center: here.coordinate, span: span)
-        self.map.setRegion(region, animated: true)
+        if here != nil {
+            let span = MKCoordinateSpan(latitudeDelta: 0.016, longitudeDelta: 0.016)
+            let region = MKCoordinateRegion(center: here.coordinate, span: span)
+            self.map.setRegion(region, animated: true)
+        }
         
     }
     
@@ -123,11 +125,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     @IBAction func friends(sender: AnyObject) {
         shareController.editFriends()
-    }
-    
-    func createGroupMode() {
-        shapeModal?.slideDownFromTop(self.view)
-        
     }
     
     // Callback for button on the callout
