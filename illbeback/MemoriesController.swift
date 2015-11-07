@@ -417,14 +417,18 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         memoryAlbum!.newMemories.removeValueForKey(memory.id)
         memoryAlbum!.save()
         photoAlbum.acceptRecentShare(memory)
-        shareController.acceptRecentShare(memory)
+        if memory.isEvent() {
+            shareController.acceptRecentShare(memory)
+        }
     }
     
     func declineRecentShare(memory: Memory) {
         memory.decline()
         memoryAlbum!.newMemories.removeValueForKey(memory.id)
         memoryAlbum!.save()
-        shareController.declineRecentShare(memory)
+        if memory.isEvent() {
+            shareController.declineRecentShare(memory)
+        }
     }
     
     func shareMemory(pin: MapPinView) {

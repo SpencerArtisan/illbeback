@@ -76,6 +76,7 @@ public class Memory {
             state = CATEGORY_SENT
         }
         let invitee = Invitee(name: to)
+        invitees = invitees.filter{$0.name != to}
         invitees.append(invitee)
     }
     
@@ -107,6 +108,9 @@ public class Memory {
         }
     }
     
+    func isEvent() -> Bool {
+        return when != nil
+    }
     
     func asString() -> String {
         let whenString = when != nil ? formatter().stringFromDate(when!) : ""
