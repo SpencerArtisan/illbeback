@@ -33,6 +33,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     let user = User()
     var messageModals: [Modal] = []
+    var downloadingMessages = [String:Modal]()
     var newUserLabel: UILabel!
     var newUserText: UITextView!
     var lastTimeAppUsed: NSDate?
@@ -218,14 +219,19 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func downloadNewShares(delaySeconds: Double) {
         var delaySeconds1 = delaySeconds
         var delaySeconds2 = delaySeconds
-        var messages = [String:Modal]()
+        
+        for oldDownload in downloadingMessages.values {
+            oldDownload.slideUpFromTop(self.view)
+        }
+        downloadingMessages.removeAll()
+        
         memoryAlbum.downloadNewShares(user,
             onStart: {memory in
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloading " + memory.type
                 self.delay(delaySeconds1) {
                     let message = self.showMessage(title, color: color, time: nil)
-                    messages[memory.id] = message
+                    self.downloadingMessages[memory.id] = message
                 }
                 
                 delaySeconds1 += 1.5
@@ -233,7 +239,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             onComplete: {memory in
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloaded " + memory.type + " from " + memory.originator
-                let downloadingMessage = messages[memory.id]
+                let downloadingMessage = self.downloadingMessages[memory.id]
                 self.delay(delaySeconds2) {
                     if downloadingMessage != nil {
                         downloadingMessage?.slideUpFromTop(self.view)
@@ -249,7 +255,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func getPin(memory: Memory) -> MapPin? {
         for pin in self.map.annotations {
             if pin is MapPin && (pin as! MapPin).memory.id == memory.id {
-                return pin as! MapPin
+                return pin as? MapPin
             }
         }
        return nil

@@ -15,9 +15,8 @@ class MapPinCallout: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func hitTest(var point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+    override func hitTest(let point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         let viewPoint = superview?.convertPoint(point, toView: self) ?? point
-        let isInsideView = pointInside(viewPoint, withEvent: event)
         return super.hitTest(viewPoint, withEvent: event)
     }
     

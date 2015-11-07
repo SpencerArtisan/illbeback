@@ -43,21 +43,21 @@ class ShapeController : UIViewController {
     func beginShape() {
         clear()
         
-        var mRect = self.map.visibleMapRect
+        let mRect = self.map.visibleMapRect
         
-        var maxX = MKMapRectGetMaxX(mRect)
-        var minX = mRect.origin.x
-        var maxY = MKMapRectGetMaxY(mRect)
-        var minY = mRect.origin.y
-        var width = maxX - minX
-        var height = maxY - minY
+        let maxX = MKMapRectGetMaxX(mRect)
+        let minX = mRect.origin.x
+        let maxY = MKMapRectGetMaxY(mRect)
+        let minY = mRect.origin.y
+        let width = maxX - minX
+        let height = maxY - minY
         
-        var p1 = pointAt(minX + width * 0.3, y: maxY - height / 5)
-        var p2 = pointAt(minX + width * 0.7, y: maxY - height / 5)
-        var p3 = pointAt(maxX - width * 0.1, y: maxY - height / 2)
-        var p4 = pointAt(minX + width * 0.7, y: minY + height / 5)
-        var p5 = pointAt(minX + width * 0.3, y: minY + height / 5)
-        var p6 = pointAt(minX + width * 0.1, y: maxY - height / 2)
+        let p1 = pointAt(minX + width * 0.3, y: maxY - height / 5)
+        let p2 = pointAt(minX + width * 0.7, y: maxY - height / 5)
+        let p3 = pointAt(maxX - width * 0.1, y: maxY - height / 2)
+        let p4 = pointAt(minX + width * 0.7, y: minY + height / 5)
+        let p5 = pointAt(minX + width * 0.3, y: minY + height / 5)
+        let p6 = pointAt(minX + width * 0.1, y: maxY - height / 2)
         
         corners.append(ShapeCorner(coord: p1))
         corners.append(ShapeCorner(coord: p2))
@@ -72,7 +72,7 @@ class ShapeController : UIViewController {
     
     func drawCorners() {
         for i in 0...corners.count - 1 {
-            var corner = corners[i]
+            let corner = corners[i]
             map!.addAnnotation(corner)
         }
     }
@@ -91,7 +91,7 @@ class ShapeController : UIViewController {
     }
     
     func shape() -> [CLLocationCoordinate2D] {
-        var points = corners.map({(var corner) -> CLLocationCoordinate2D in corner.coordinate})
+        var points = corners.map({(let corner) -> CLLocationCoordinate2D in corner.coordinate})
         points.append(points[0])
         return points
     }
@@ -104,8 +104,7 @@ class ShapeController : UIViewController {
 
         var polygon = shape()
         
-        
-        var p = UIBezierPath()
+        let p = UIBezierPath()
         let firstPoint = toPoint(polygon[0]) as CGPoint
         
         p.moveToPoint(firstPoint)
