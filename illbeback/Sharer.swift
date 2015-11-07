@@ -23,6 +23,7 @@ public class Sharer {
                     print("    Uploaded photo '\(photo.imagePath)'.  \(leftToUpload) left")
                     if (leftToUpload == 0) {
                         self.uploadMemory(from, to: to, memory: memory)
+                        self.memoryAlbum.save()
                         onComplete()
                         return
                     }
@@ -129,7 +130,7 @@ public class Sharer {
     }
     
     func uploadMemory(from: String, to: String, memory: Memory) {
-        memory.justSent()
+        memory.justSent(to)
         let originalOriginator = memory.originator
         memory.originator = from
         print("FIREBASE OP: Uploading memory " + memory.asString())

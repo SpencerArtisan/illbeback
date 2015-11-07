@@ -415,6 +415,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     func shareMemory(pin: MapPinView) {
         shareController.shareMemory([pin])
+        memoryAlbum!.save()
     }
 
     // Callback for button on the callout

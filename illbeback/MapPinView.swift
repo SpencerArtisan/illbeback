@@ -25,6 +25,7 @@ class MapPinView: MKAnnotationView {
     var titleView: UILabel?
     var dateView: UILabel?
     var originatorView: UILabel?
+    var inviteeViews: [UILabel] = []
     var acceptButton: UILabel?
     var declineButton: UILabel?
     var subtitleView: UILabel?
@@ -62,6 +63,7 @@ class MapPinView: MKAnnotationView {
         photoView = nil
         photoButton = nil
         labelView = nil
+        inviteeViews = []
         self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(memory!)?.imagePath
         setSelected(true, animated: false)
     }
@@ -138,6 +140,7 @@ class MapPinView: MKAnnotationView {
             
             createDateLabel()
             createOriginatorLabel()
+            createInviteeLabel()
             createSubtitleLabel()
             createTitleLabel()
             createDeleteButton()
@@ -162,6 +165,9 @@ class MapPinView: MKAnnotationView {
         labelView!.addSubview(titleView!)
         if (memoriesController?.user.getName() != memory?.originator) {
          labelView!.addSubview(originatorView!)
+        }
+        for inviteeView in inviteeViews {
+            labelView!.addSubview(inviteeView)
         }
         labelView!.addSubview(subtitleView!)
         if (memory?.when != nil) {
@@ -291,6 +297,22 @@ class MapPinView: MKAnnotationView {
         originatorView!.backgroundColor = CategoryController.getColorForCategory(memory!.type).colorWithAlphaComponent(0.5)
         originatorView!.layer.borderWidth = 0.5
         originatorView!.layer.borderColor = UIColor.lightGrayColor().CGColor
+    }
+    
+    func createInviteeLabel() {
+        for invitee in (memory?.getInvitees())! {
+            let inviteeView = UILabel(frame: CGRectMake(0, 40 + fromHeight, labelArea!.width, 25))
+            inviteeView.layer.cornerRadius = 0
+            inviteeView.numberOfLines = 0
+            inviteeView.textAlignment = NSTextAlignment.Center
+            inviteeView.font = UIFont.italicSystemFontOfSize(14)
+            inviteeView.text = "\(invitee): Awaiting response"
+            inviteeView.backgroundColor = CategoryController.getColorForCategory(memory!.type).colorWithAlphaComponent(0.5)
+            inviteeView.layer.borderWidth = 0.5
+            inviteeView.layer.borderColor = UIColor.lightGrayColor().CGColor
+            inviteeViews.append(inviteeView)
+            fromHeight += 25
+        }
     }
     
     func createSubtitleLabel() {

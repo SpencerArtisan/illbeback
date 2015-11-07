@@ -141,6 +141,7 @@ class ShareController : UIViewController {
                             remaining--
                             message = self.memories.showMessage("Sent \(total - remaining) of \(total)", color: color, time: nil)
                         }
+                        pin.refresh()
                     }
                 }
             }, onError: {

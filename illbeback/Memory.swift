@@ -24,6 +24,7 @@ public class Memory {
     private var state: String
     var orientation: UIDeviceOrientation
     var when: NSDate?
+    var invitees: String
     
     init(id: String, type: String, description: String, location: CLLocationCoordinate2D, user: User, orientation: UIDeviceOrientation?, when: NSDate?) {
         self.id = id
@@ -34,6 +35,7 @@ public class Memory {
         self.state = CATEGORY_NORMAL
         self.orientation = orientation ?? UIDeviceOrientation.FaceUp
         self.when = when
+        self.invitees = ""
     }
     
     init(memoryString: String) {
@@ -47,7 +49,8 @@ public class Memory {
         self.originator = parts[5]
         self.state = parts.count > 6 ? parts[6] : CATEGORY_NORMAL
         self.orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
-        self.when = parts.count > 8 ? formatter().dateFromString(parts[8]) : nil
+        self.invitees = parts.count > 9 ? parts[9] : ""
+        self.when = parts.count > 8 && parts[8] != "" ? formatter().dateFromString(parts[8]) : nil
     }
     
     func isJustReceived() -> Bool {
@@ -68,10 +71,11 @@ public class Memory {
         }
     }
 
-    func justSent() {
+    func justSent(to: String) {
         if state == CATEGORY_NORMAL {
             state = CATEGORY_SENT
         }
+        invitees = invitees.isEmpty ? to : "\(invitees):\(to)"
     }
     
     func isAccepted() -> Bool {
@@ -82,11 +86,19 @@ public class Memory {
         return state == CATEGORY_ACCEPTED || state == CATEGORY_DECLINED
     }
     
-    func asString() -> String {
-        var str = "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(state):\(orientation.rawValue)"
-        if when != nil {
-            str += ":\(formatter().stringFromDate(when!))"
+    func getInvitees() -> [String] {
+        if invitees.isEmpty {
+            return []
         }
+        return invitees.componentsSeparatedByString(":")
+    }
+    
+    func asString() -> String {
+        var str = "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(state):\(orientation.rawValue):"
+        if when != nil {
+            str += "\(formatter().stringFromDate(when!))"
+        }
+        str += ":\(invitees)"
         return str
     }
     
