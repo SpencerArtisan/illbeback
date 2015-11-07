@@ -10,12 +10,15 @@ import Foundation
 import CoreLocation
 
 public class Memory {
+    let CATEGORY_NORMAL = "F"
+    let CATEGORY_AWAITING_ACCEPT = "T"
+    
     var type: String
     var id: String
     var description: String
     var location: CLLocationCoordinate2D
     var originator: String
-    private var recentShare: Bool
+    private var state: String
     var orientation: UIDeviceOrientation
     var when: NSDate?
     
@@ -25,7 +28,7 @@ public class Memory {
         self.description = description
         self.location = location
         self.originator = user.getName()
-        self.recentShare = false
+        self.state = CATEGORY_NORMAL
         self.orientation = orientation ?? UIDeviceOrientation.FaceUp
         self.when = when
     }
@@ -39,22 +42,21 @@ public class Memory {
         let long = parts[3]
         self.location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
         self.originator = parts[5]
-        self.recentShare = parts.count > 6 ? (parts[6] == "T") : false
+        self.state = parts.count > 6 ? parts[6] : CATEGORY_NORMAL
         self.orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
         self.when = parts.count > 8 ? formatter().dateFromString(parts[8]) : nil
     }
     
     func isRecentShare() -> Bool {
-        return recentShare
+        return state == CATEGORY_AWAITING_ACCEPT
     }
 
     func setRecentShare(recent: Bool) {
-        recentShare = recent
+        state = recent ? CATEGORY_AWAITING_ACCEPT : CATEGORY_NORMAL
     }
     
     func asString() -> String {
-        let recentShareChar = recentShare ? "T" : "F"
-        var str = "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(recentShareChar):\(orientation.rawValue)"
+        var str = "\(type):\(description):\(location.latitude):\(location.longitude):\(id):\(originator):\(state):\(orientation.rawValue)"
         if when != nil {
             str += ":\(formatter().stringFromDate(when!))"
         }

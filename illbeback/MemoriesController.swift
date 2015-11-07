@@ -224,6 +224,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         memoryAlbum.downloadNewShares(user,
             onStart: {memory in
+                print("onStart callback for downloading \(memory)")
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloading " + memory.type
                 self.delay(delaySeconds1) {
@@ -237,8 +238,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloaded " + memory.type + " from " + memory.originator
                 let downloadingMessage = self.downloadingMessages[memory.id]
+                print("onComplete callback for downloading \(memory).  Will dismiss modal \(downloadingMessage)")
                 self.delay(delaySeconds2) {
                     if downloadingMessage != nil {
+                        print("Dismissing modal")
                         downloadingMessage?.slideUpFromTop(self.view)
                     }
                     self.showMessage(title, color: color, time: 2)
