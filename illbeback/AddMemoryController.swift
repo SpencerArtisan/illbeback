@@ -20,7 +20,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var memories: MemoriesController?
     var callingViewController: UIViewController?
     var photoAlbum: PhotoAlbum?
-    var rewordingMemory: Memory?
+    var rewordingPin: MapPinView?
     var when: NSDate?
 
     init(album: PhotoAlbum, memoriesViewController: MemoriesController) {
@@ -111,7 +111,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     
     func add(controller: UIViewController, image: UIImage, orientation: UIDeviceOrientation) {
         print("Adding image at device orientation \(orientation.rawValue), size \(image.size)")
-        rewordingMemory = nil
+        rewordingPin = nil
         self.memoryLocation = nil
         self.callingViewController = controller
         self.memoryId = NSUUID().UUIDString
@@ -121,18 +121,27 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
    
     func add(controller: UIViewController, location: CLLocationCoordinate2D) {
-        rewordingMemory = nil
+        rewordingPin = nil
         self.memoryLocation = location
         self.callingViewController = controller
         self.memoryId = NSUUID().UUIDString
         self.showCategorySelector()
     }
     
-    func reword(controller: UIViewController, memory: Memory) {
+    func reword(controller: UIViewController, pin: MapPinView) {
         self.callingViewController = controller
-        rewordingMemory = memory
-        self.showDescriptionEntry(memory.type)
+        rewordingPin = pin
+        let memory = pin.memory!
+        if memory.isEvent() {
+            self.showDescriptionEntryWithDate(memory.type, date: memory.when!)
+        } else {
+            self.showDescriptionEntry(memory.type)
+        }
         desciptionTextArea.text = memory.description
+    }
+    
+    func reschedule(controller: UIViewController, pin: MapPinView) {
+        reword(controller, pin: pin)
     }
     
     func showCategorySelector() {
@@ -144,7 +153,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
     
     func showDescriptionEntry(type: String) {
-        let message = descriptionModal.findElementByTag(1) as! UILabel
+        let message = descriptionLabel()
         message.backgroundColor = CategoryController.getColorForCategory(type)
         message.text = type
         datePicker().hidden = true
@@ -153,8 +162,23 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         self.desciptionTextArea.becomeFirstResponder()
     }
 
-    func showDescriptionEntryWithDate(type: String) {
-        let message = descriptionModal.findElementByTag(1) as! UILabel
+    func showDescriptionEntryWithDate(type: String, date: NSDate) {
+        let message = descriptionLabel()
+        message.backgroundColor = CategoryController.getColorForCategory(type)
+        message.text = type
+        let when = datePicker()
+        when.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.75)
+        when.minimumDate = today()
+        when.maximumDate = NSDate().dateByAddingTimeInterval(NSTimeInterval(31536000))
+        when.setDate(date, animated: false)
+        when.hidden = false
+        
+        descriptionModal.slideOutFromRight(self.callingViewController!.view)
+        self.desciptionTextArea.becomeFirstResponder()
+    }
+    
+    func showDateEntry(type: String) {
+        let message = descriptionLabel()
         message.backgroundColor = CategoryController.getColorForCategory(type)
         message.text = type
         let when = datePicker()
@@ -177,15 +201,24 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         return descriptionModal.findElementByTag(2) as! UIDatePicker
     }
     
+    func descriptionLabel() -> UILabel {
+        return descriptionModal.findElementByTag(1) as! UILabel
+    }
+    
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
             
-            if (rewordingMemory != nil) {
-                rewordingMemory?.description = textView.text
+            let when = datePicker().hidden ? nil as NSDate? : datePicker().date
+            if (rewordingPin != nil) {
+                rewordingPin?.memory?.description = textView.text
+                rewordingPin?.memory?.when = when
                 memories!.memoryAlbum.save()
+                let annotation = rewordingPin!.annotation!
+                rewordingPin?.memoriesController?.map?.deselectAnnotation(annotation, animated: false)
+                rewordingPin?.memoriesController?.map?.removeAnnotation(annotation)
+                rewordingPin?.memoriesController?.map?.addAnnotation(annotation)
             } else {
-                let when = datePicker().hidden ? nil as NSDate? : datePicker().date
                 memories!.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation, when: when)
                 self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
             }
@@ -204,7 +237,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
 
     func addMemoryWithDate(type: String) {
         memoryImage = type
-        showDescriptionEntryWithDate(type)
+        showDescriptionEntryWithDate(type, date: today())
         hideCategorySelector()
     }
     

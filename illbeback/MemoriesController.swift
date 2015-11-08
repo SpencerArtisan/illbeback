@@ -449,9 +449,16 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func rewordMemory(pin: MapPinView) {
         map.deselectAnnotation(pin.annotation, animated: false)
         pin.refresh()
-        addMemory.reword(self, memory: pin.memory!)
+        addMemory.reword(self, pin: pin)
     }
-
+    
+    // Callback for button on the callout
+    func rescheduleMemory(pin: MapPinView) {
+        map.deselectAnnotation(pin.annotation, animated: false)
+        pin.refresh()
+        addMemory.reschedule(self, pin: pin)
+    }
+    
     // Callback for display pins on map
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation is MapPin) {

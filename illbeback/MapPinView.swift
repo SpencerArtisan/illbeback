@@ -64,12 +64,20 @@ class MapPinView: MKAnnotationView {
         setSelected(true, animated: false)
     }
     
+    func miniRefresh() {
+        self.labelView?.removeFromSuperview()
+        createDateLabel()
+        createLabelView()
+        self.calloutView?.addSubview(labelView!)
+    }
+    
     func refresh() {
         fromHeight = 0
         whenHeight = 0
         calloutView = nil
         photoButton = nil
         labelView = nil
+        dateView = nil
         inviteeViews = []
         self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(memory!)?.imagePath
     }
@@ -386,7 +394,6 @@ class MapPinView: MKAnnotationView {
     }
 
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        
         var hitView = super.hitTest(point, withEvent: event)
         let system = NSProcessInfo.processInfo().systemUptime
         let elapsed = system - event!.timestamp
@@ -401,6 +408,8 @@ class MapPinView: MKAnnotationView {
                 MapPinView.lastSelectionChange = NSDate()
                 memoriesController?.declineRecentShare(memory!)
                 memoriesController?.removePin(self)
+            } else if (hitButton(point, button: dateView)) {
+                memoriesController?.rescheduleMemory(self)
             } else if (hitButton(point, button: deleteButton)) {
                 MapPinView.lastSelectionChange = NSDate()
                 memoriesController?.deleteMemory(self)
