@@ -10,10 +10,13 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MmJ-qs-SJe">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MmJ-qs-SJe">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                     <animations/>
                     <color key="backgroundColor" red="0.91568359649999997" green="0.92156862750000001" blue="0.6611108255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="59" id="UHO-WG-Kog"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="MalayalamSangamMN" family="Malayalam Sangam MN" pointSize="18"/>
                     <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
                     <size key="titleShadowOffset" width="2.2250738585072014e-308" height="2.2250738585072014e-308"/>
@@ -27,6 +30,7 @@
             <constraints>
                 <constraint firstItem="MmJ-qs-SJe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MKe-er-Z72"/>
                 <constraint firstAttribute="trailing" secondItem="MmJ-qs-SJe" secondAttribute="trailing" id="P5O-iZ-ssT"/>
+                <constraint firstItem="MmJ-qs-SJe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="XmP-ge-sMJ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="419.5" y="411.5"/>

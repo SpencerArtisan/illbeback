@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MemoriesController" customModule="I_ll_Be_Back" customModuleProvider="target">
@@ -14,6 +14,29 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.90000000000000002" tag="2" contentMode="scaleToFill" restorationIdentifier="description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xvq-sa-x5T" userLabel="shareName">
+                    <rect key="frame" x="349" y="127" width="251" height="48"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="9GS-i7-5Us"/>
+                        <constraint firstAttribute="width" constant="251" id="ecb-qe-2yc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                </textView>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.90000000000000002" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your sharing name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCo-Vu-45c">
+                    <rect key="frame" x="349" y="87" width="251" height="40"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.75695591579999999" green="0.83684790860000002" blue="0.90092378849999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="251" id="1E9-TW-tWh"/>
+                        <constraint firstAttribute="height" constant="40" id="un8-hG-Ta4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <button opaque="NO" tag="4" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0u-sg-KrY" userLabel="cancelButton">
                     <rect key="frame" x="0.0" y="172" width="367" height="577"/>
                     <animations/>
@@ -21,28 +44,18 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.90000000000000002" tag="2" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xvq-sa-x5T" userLabel="shareName">
-                    <rect key="frame" x="0.0" y="127" width="251" height="48"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                </textView>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.90000000000000002" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your sharing name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCo-Vu-45c">
-                    <rect key="frame" x="0.0" y="87" width="251" height="40"/>
-                    <animations/>
-                    <color key="backgroundColor" red="0.75695591579999999" green="0.83684790860000002" blue="0.90092378849999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <animations/>
             <constraints>
+                <constraint firstItem="xvq-sa-x5T" firstAttribute="trailing" secondItem="tCo-Vu-45c" secondAttribute="trailing" id="3u3-d8-0Ks"/>
                 <constraint firstAttribute="trailing" secondItem="P0u-sg-KrY" secondAttribute="trailing" id="5fx-jS-e1r"/>
+                <constraint firstAttribute="trailing" secondItem="xvq-sa-x5T" secondAttribute="trailing" id="FJs-a4-YDV"/>
+                <constraint firstAttribute="trailing" secondItem="tCo-Vu-45c" secondAttribute="trailing" id="Mg7-7o-jwq"/>
                 <constraint firstAttribute="bottom" secondItem="P0u-sg-KrY" secondAttribute="bottom" id="NHC-gx-h0L"/>
                 <constraint firstItem="P0u-sg-KrY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="172" id="NSU-rZ-11W"/>
+                <constraint firstItem="xvq-sa-x5T" firstAttribute="top" secondItem="tCo-Vu-45c" secondAttribute="bottom" id="OC8-rT-ayP"/>
                 <constraint firstItem="P0u-sg-KrY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="YmH-ho-ddp"/>
+                <constraint firstItem="tCo-Vu-45c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="87" id="bsK-bP-Bhd"/>
             </constraints>
             <point key="canvasLocation" x="416" y="58"/>
         </view>

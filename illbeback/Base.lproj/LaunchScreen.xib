@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -16,9 +17,12 @@
                     <rect key="frame" x="0.0" y="0.0" width="380" height="680"/>
                     <animations/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Pigeon" translatesAutoresizingMaskIntoConstraints="NO" id="ruf-ms-MX0">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pigeon" translatesAutoresizingMaskIntoConstraints="NO" id="ruf-ms-MX0">
                     <rect key="frame" x="-349" y="288" width="602" height="490"/>
                     <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="ruf-ms-MX0" secondAttribute="height" multiplier="43:35" id="4XU-um-tJ9"/>
+                    </constraints>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Backmap" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
                     <rect key="frame" x="44" y="511" width="336" height="148"/>
@@ -33,11 +37,14 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.5" constant="1" id="5cJ-9S-tgC"/>
-                <constraint firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="10" id="7OO-mT-gDn"/>
+                <constraint firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="6" id="7OO-mT-gDn"/>
                 <constraint firstAttribute="bottomMargin" secondItem="4FY-g8-qFd" secondAttribute="bottom" constant="-10" id="BeF-Zx-fgJ"/>
+                <constraint firstAttribute="trailing" secondItem="ruf-ms-MX0" secondAttribute="trailing" constant="122" id="Iid-tH-v4N"/>
                 <constraint firstAttribute="trailingMargin" secondItem="4FY-g8-qFd" secondAttribute="trailing" constant="-10" id="P95-OW-KFY"/>
                 <constraint firstItem="4FY-g8-qFd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="-10" id="aOo-ks-FE0"/>
+                <constraint firstAttribute="bottom" secondItem="ruf-ms-MX0" secondAttribute="bottom" constant="-111" id="cZR-Oq-RGR"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
+                <constraint firstItem="ruf-ms-MX0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-349" id="tFe-Ed-ySM"/>
                 <constraint firstAttribute="bottom" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="8" id="us4-7a-VLH"/>
                 <constraint firstItem="4FY-g8-qFd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" constant="-10" id="val-Ls-fWH"/>
             </constraints>
