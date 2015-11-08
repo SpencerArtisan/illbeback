@@ -295,7 +295,7 @@ class MapPinView: MKAnnotationView {
     
     func createOriginatorLabel() {
         if (memoriesController?.user.getName() != memory?.originator) {
-            fromHeight = 26
+            fromHeight = 25
         }
         originatorView = UILabel(frame: CGRectMake(0, 40, labelArea!.width, 25))
         originatorView!.layer.cornerRadius = 0
@@ -350,11 +350,11 @@ class MapPinView: MKAnnotationView {
     }
     
     func createAcceptButton() {
-        acceptButton = UILabel(frame: CGRectMake(0, labelArea!.height - 40 - whenHeight, labelArea!.width / 2, 40))
+        acceptButton = UILabel(frame: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
         acceptButton!.layer.cornerRadius = 0
         acceptButton!.numberOfLines = 0
         acceptButton!.textAlignment = NSTextAlignment.Center
-        acceptButton!.font = acceptButton!.font.fontWithSize(20)
+        acceptButton!.font = acceptButton!.font.fontWithSize(18)
         acceptButton!.text = "Accept"
         acceptButton!.backgroundColor = UIColor.greenColor()
         acceptButton!.layer.borderWidth = 1
@@ -362,11 +362,11 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeclineButton() {
-        declineButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 40 - whenHeight, labelArea!.width / 2, 40))
+        declineButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
         declineButton!.layer.cornerRadius = 0
         declineButton!.numberOfLines = 0
         declineButton!.textAlignment = NSTextAlignment.Center
-        declineButton!.font = declineButton!.font.fontWithSize(20)
+        declineButton!.font = declineButton!.font.fontWithSize(18)
         declineButton!.text = "Decline"
         declineButton!.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
         declineButton!.layer.borderWidth = 1

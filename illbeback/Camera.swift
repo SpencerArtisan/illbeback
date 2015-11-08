@@ -37,9 +37,9 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         let snapURL = NSURL(fileURLWithPath: snapPath!)
         do {
             try snapPlayer = AVAudioPlayer(contentsOfURL: snapURL)
+            try snapPlayer.prepareToPlay()
         } catch {
         }
-        snapPlayer.prepareToPlay()
     }
     
     func start() {

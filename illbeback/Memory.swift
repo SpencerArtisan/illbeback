@@ -65,6 +65,10 @@ public class Memory {
         state = CATEGORY_DECLINED
     }
     
+    func resetState() {
+        state = CATEGORY_NORMAL
+    }
+    
     func justReceived() {
         if state == CATEGORY_SENT {
             state = CATEGORY_RECEIVED
