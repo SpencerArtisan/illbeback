@@ -418,6 +418,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         memoryAlbum!.save()
         photoAlbum.acceptRecentShare(memory)
         if memory.isEvent() {
+            print("Accepting event")
             shareController.acceptRecentShare(memory)
         }
     }
@@ -427,6 +428,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         memoryAlbum!.newMemories.removeValueForKey(memory.id)
         memoryAlbum!.save()
         if memory.isEvent() {
+            print("Declining event")
             shareController.declineRecentShare(memory)
         }
     }

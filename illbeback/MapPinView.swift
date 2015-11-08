@@ -307,8 +307,8 @@ class MapPinView: MKAnnotationView {
             inviteeView.numberOfLines = 0
             inviteeView.textAlignment = NSTextAlignment.Center
             inviteeView.font = UIFont.italicSystemFontOfSize(14)
-            let state = invitee.isAccepted() ? "Accepted" : (invitee.isDeclined() ? "Declined" : "Awaiting response")
-            inviteeView.text = "\(invitee.name): \(state)"
+            let state = invitee.isAccepted() ? "accepted" : (invitee.isDeclined() ? "declined" : "invited")
+            inviteeView.text = "\(invitee.name) \(state)"
             inviteeView.backgroundColor = invitee.isAccepted() ? UIColor.greenColor().colorWithAlphaComponent(0.6) : (invitee.isDeclined() ? UIColor.redColor().colorWithAlphaComponent(0.6) : UIColor.lightGrayColor().colorWithAlphaComponent(0.6))
             inviteeView.textColor = invitee.isAccepted() ? UIColor.blackColor() : (invitee.isDeclined() ? UIColor.whiteColor() : UIColor.darkGrayColor())
             inviteeView.layer.borderWidth = 0.5

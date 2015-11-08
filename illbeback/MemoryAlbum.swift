@@ -133,7 +133,9 @@ public class MemoryAlbum {
     
     func inviteeAccepted(invitee: String, memoryId: String) {
         let memory = oldMemories[memoryId]
-        memory!.inviteeAccepted(invitee)
+        if memory != nil {
+            memory!.inviteeAccepted(invitee)
+        }
     }
 
     func inviteeDeclined(invitee: String, memoryId: String) {

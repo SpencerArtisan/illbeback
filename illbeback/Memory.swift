@@ -72,12 +72,12 @@ public class Memory {
     }
 
     func justSent(to: String) {
-        if state == CATEGORY_NORMAL {
+        if state == CATEGORY_NORMAL || state == CATEGORY_SENT {
             state = CATEGORY_SENT
+            let invitee = Invitee(name: to)
+            invitees = invitees.filter{$0.name != to}
+            invitees.append(invitee)
         }
-        let invitee = Invitee(name: to)
-        invitees = invitees.filter{$0.name != to}
-        invitees.append(invitee)
     }
     
     func isAccepted() -> Bool {
@@ -135,7 +135,7 @@ public class Memory {
     
     func formatter() -> NSDateFormatter {
         let formatter = NSDateFormatter()
-        formatter.dateStyle = NSDateFormatterStyle.LongStyle
+        formatter.dateFormat = "dd MMMM yyyy"
         return formatter
     }
     
