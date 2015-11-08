@@ -63,14 +63,7 @@ class MapPinView: MKAnnotationView {
         refresh()
         setSelected(true, animated: false)
     }
-    
-    func miniRefresh() {
-        self.labelView?.removeFromSuperview()
-        createDateLabel()
-        createLabelView()
-        self.calloutView?.addSubview(labelView!)
-    }
-    
+
     func refresh() {
         fromHeight = 0
         whenHeight = 0
@@ -79,6 +72,7 @@ class MapPinView: MKAnnotationView {
         labelView = nil
         dateView = nil
         inviteeViews = []
+        photoView = nil
         self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(memory!)?.imagePath
     }
     
