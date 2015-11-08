@@ -94,7 +94,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     @IBAction func takePhoto(sender: AnyObject) {
         self.navigationController?.navigationBarHidden = true
-        self.navigationController?.pushViewController(rememberController, animated: true)
+        
+        self.navigationController?.pushViewController(rememberController, animated: false)
+
     }
     
     

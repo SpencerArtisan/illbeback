@@ -37,12 +37,13 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         let snapURL = NSURL(fileURLWithPath: snapPath!)
         do {
             try snapPlayer = AVAudioPlayer(contentsOfURL: snapURL)
-            try snapPlayer.prepareToPlay()
+            snapPlayer.prepareToPlay()
         } catch {
         }
     }
     
     func start() {
+        blackout()
         let screenRect = UIScreen.mainScreen().bounds
         self.camera.attachToViewController(parentController, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
         parentController.view.addSubview(self.snapButton)
@@ -106,20 +107,15 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     
     func takePhoto(sender : UIButton!) {
         snapPlayer.play()
-        
-        let blackView = NSBundle.mainBundle().loadNibNamed("Black", owner: self, options: nil)[0] as? UIView
-        let screenRect = UIScreen.mainScreen().bounds
-        blackView!.frame = CGRectMake(0, 0, screenRect.size.width, screenRect.size.height)
-        self.parentController.view.addSubview(blackView!)
-        blackView!.layer.opacity = 0
+        let blackView = blackout()
         
         UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            blackView!.layer.opacity = 1
+            blackView.layer.opacity = 1
             }, completion: {_ in
                 UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                    blackView!.layer.opacity = 0
+                    blackView.layer.opacity = 0
                     }, completion: {_ in
-                        blackView?.removeFromSuperview()
+                        blackView.removeFromSuperview()
                 })
         })
 
@@ -133,6 +129,15 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
             
             self.callback(self.navigationController, image!, orientation)
             }, exactSeenImage: true)
+    }
+    
+    func blackout() -> UIView {
+        let blackView = NSBundle.mainBundle().loadNibNamed("Black", owner: self, options: nil)[0] as? UIView
+        let screenRect = UIScreen.mainScreen().bounds
+        blackView!.frame = CGRectMake(0, 0, screenRect.size.width, screenRect.size.height)
+        self.parentController.view.addSubview(blackView!)
+        blackView!.layer.opacity = 0
+        return blackView!
     }
 
     func library(sender : UIButton!) {
