@@ -48,7 +48,10 @@ class Modal {
     }
     
     private func slideHorizontally(parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
-        if self.view.superview == nil { parentView.addSubview(self.view) }
+        if self.view.superview == nil {
+            parentView.addSubview(self.view)
+            self.view.frame = parentView.frame
+        }
         self.view.frame.origin.x = start
         
         UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
@@ -59,7 +62,10 @@ class Modal {
     }
     
     private func slideVertically(parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
-        if self.view.superview == nil { parentView.addSubview(self.view) }
+        if self.view.superview == nil {
+            parentView.addSubview(self.view)
+            self.view.frame = parentView.frame
+        }
         self.view.frame.origin.y = start
         
         UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {

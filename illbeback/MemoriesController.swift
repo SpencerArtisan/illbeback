@@ -273,6 +273,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 } else {
                     self.memoryAlbum.inviteeDeclined(memory.originator, memoryId: memory.id)
                 }
+                self.memoryAlbum.save()
                 
                 delaySeconds1 += 1.5
             }

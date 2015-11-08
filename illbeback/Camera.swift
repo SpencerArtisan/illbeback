@@ -153,12 +153,12 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
             parentController.dismissViewControllerAnimated(false, completion: nil)
 
             print(navigationController.viewControllers.count)
-//            if navigationController.viewControllers.count == 2 {
-//                let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
-//                let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
-//                photoView.image = pickedImage
-//                navigationController.pushViewController(zoomController, animated: false)
-//            }
+            if navigationController.viewControllers.count == 2 {
+                let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
+                let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
+                photoView.image = pickedImage
+                navigationController.pushViewController(zoomController, animated: false)
+            }
             
             let devOrient = imageToDeviceOrientation(pickedImage)
             let correctedImage = pickedImage.fixOrientation()

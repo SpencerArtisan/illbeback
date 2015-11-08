@@ -10,7 +10,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MmJ-qs-SJe">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MmJ-qs-SJe">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                     <animations/>
                     <color key="backgroundColor" red="0.91568359649999997" green="0.92156862750000001" blue="0.6611108255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -24,6 +24,10 @@
             </subviews>
             <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="MmJ-qs-SJe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MKe-er-Z72"/>
+                <constraint firstAttribute="trailing" secondItem="MmJ-qs-SJe" secondAttribute="trailing" id="P5O-iZ-ssT"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="419.5" y="411.5"/>
         </view>
