@@ -168,7 +168,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     func remindersForImminentEvents() -> Double {
         var delaySeconds = 0.0
-        let memoryDuration = 0.6
+        let memoryDuration = 2.0
         
         let events = memoryAlbum.getImminentEvents()
         for event in events {
