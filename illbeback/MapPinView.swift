@@ -301,12 +301,21 @@ class MapPinView: MKAnnotationView {
     }
     
     func createInviteeLabel() {
-        for invitee in (memory?.getInvitees())! {
-            let inviteeView = UILabel(frame: CGRectMake(0, 40 + fromHeight, labelArea!.width, 25))
+        let barHeight = memory?.getInvitees().count > 3 ? CGFloat(18) : CGFloat(25)
+        let fontSize = memory?.getInvitees().count > 3 ? CGFloat(12) : CGFloat(14)
+        var count = 0
+        for i in (memory?.getInvitees())! {
+            var invitee = i
+            count++
+            if count > 3 {
+                invitee = Invitee(name: "others")
+            }
+            
+            let inviteeView = UILabel(frame: CGRectMake(0, 40 + fromHeight, labelArea!.width, barHeight))
             inviteeView.layer.cornerRadius = 0
             inviteeView.numberOfLines = 0
             inviteeView.textAlignment = NSTextAlignment.Center
-            inviteeView.font = UIFont.italicSystemFontOfSize(14)
+            inviteeView.font = UIFont.italicSystemFontOfSize(fontSize)
             let state = invitee.isAccepted() ? "accepted" : (invitee.isDeclined() ? "declined" : "invited")
             inviteeView.text = "\(invitee.name) \(state)"
             inviteeView.backgroundColor = invitee.isAccepted() ? UIColor.greenColor().colorWithAlphaComponent(0.6) : (invitee.isDeclined() ? UIColor.redColor().colorWithAlphaComponent(0.6) : UIColor.lightGrayColor().colorWithAlphaComponent(0.6))
@@ -314,7 +323,11 @@ class MapPinView: MKAnnotationView {
             inviteeView.layer.borderWidth = 0.5
             inviteeView.layer.borderColor = UIColor.lightGrayColor().CGColor
             inviteeViews.append(inviteeView)
-            fromHeight += 25
+            fromHeight += barHeight
+            
+            if count > 3 {
+               break
+            }
         }
     }
     

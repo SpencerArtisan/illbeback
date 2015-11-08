@@ -108,12 +108,7 @@ class ShareController : UIViewController {
         delay(0.5) { cancelButton.enabled = true }
     }
     
-    func shareMemoryConfirmed(sender: AnyObject?) {
-        let friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        shareWith(friend!)
-        hideShareModal(sender)
-    }
-    
+
     func shareWith(friend: String) {
         if pinsToShare.count == 0 {
             editFriends()
@@ -141,6 +136,8 @@ class ShareController : UIViewController {
                             remaining--
                             message = self.memories.showMessage("Sent \(total - remaining) of \(total)", color: color, time: nil)
                         }
+                        self.memories.memoryAlbum.save()
+                        self.memories.map.deselectAnnotation(pin.annotation, animated: false)
                         pin.refresh()
                     }
                 }
@@ -209,6 +206,13 @@ class ShareController : UIViewController {
             ),
             dispatch_get_main_queue(), closure)
     }
+    
+    func shareMemoryConfirmed(sender: AnyObject?) {
+        let friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        shareWith(friend!)
+        hideShareModal(sender)
+    }
+    
     
     func shareMemoryCancelled(sender: AnyObject?) {
         pinsToShare = []
