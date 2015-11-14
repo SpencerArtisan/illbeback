@@ -303,13 +303,17 @@ class MapPinView: MKAnnotationView {
     }
     
     func createInviteeLabel() {
+        if !memory!.isEvent() {
+            return
+        }
+        
         let barHeight = memory?.getInvitees().count > 2 ? CGFloat(18) : CGFloat(25)
         let fontSize = memory?.getInvitees().count > 2 ? CGFloat(12) : CGFloat(14)
         var count = 0
         for i in (memory?.getInvitees())! {
             var invitee = i
             count++
-            if count > 3 {
+            if count == 4 && memory?.getInvitees().count > 4 {
                 invitee = Invitee(name: "others")
             }
             
@@ -327,7 +331,7 @@ class MapPinView: MKAnnotationView {
             inviteeViews.append(inviteeView)
             fromHeight += barHeight
             
-            if count > 3 {
+            if count == 4 {
                break
             }
         }
