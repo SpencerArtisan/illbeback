@@ -34,8 +34,14 @@ public class MemoryAlbum {
         return [oldMemories.values, newMemories.values].flatMap {$0}
     }
     
+    func allMemoriesExcludingDuplicates() -> [Memory] {
+        let oldWithoutNewEquivalent: [Memory] = oldMemories.values.filter {self.newMemories[$0.id] == nil}
+        let newMems: [Memory] = newMemories.values.reverse()
+        return [oldWithoutNewEquivalent, newMems].flatMap {$0}
+    }
+    
     func addToMap() {
-        for memory in allMemories() {
+        for memory in allMemoriesExcludingDuplicates() {
             if memory.isPast() {
                 delete(memory)
             } else {
@@ -89,6 +95,18 @@ public class MemoryAlbum {
     
     func add(memory: Memory) {
         if memory.isJustReceived() {
+            if oldMemories[memory.id] != nil {
+                let oldPin = getPin(oldMemories[memory.id]!)
+                if oldPin != nil {
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        self.map.deselectAnnotation(oldPin, animated: false)
+                        NSOperationQueue.mainQueue().addOperationWithBlock {
+                            self.map.removeAnnotation(oldPin!)
+                        }
+                    }
+                }
+            }
+
             if newMemories[memory.id] == nil {
                 addPin(memory)
             }
@@ -100,6 +118,16 @@ public class MemoryAlbum {
             oldMemories[memory.id] = memory
         }
         save()
+    }
+    
+    
+    func getPin(memory: Memory) -> MapPin? {
+        for pin in self.map.annotations {
+            if pin is MapPin && (pin as! MapPin).memory.id == memory.id {
+                return pin as? MapPin
+            }
+        }
+        return nil
     }
     
     func delete(pin: MapPinView) {

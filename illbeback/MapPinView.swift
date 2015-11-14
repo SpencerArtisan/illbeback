@@ -290,7 +290,7 @@ class MapPinView: MKAnnotationView {
         titleView!.numberOfLines = 0
         titleView!.textAlignment = NSTextAlignment.Center
         titleView!.font = titleView!.font.fontWithSize(20)
-        titleView!.text = annotation!.title!
+        titleView!.text = memory!.type
         titleView!.backgroundColor = CategoryController.getColorForCategory(memory!.type)
         titleView!.layer.borderWidth = 0.5
         titleView!.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -428,7 +428,6 @@ class MapPinView: MKAnnotationView {
                     memoriesController?.unblankMemory(self)
                 } else if memory!.isJustReceived() {
                     memoriesController?.acceptRecentShare(memory!)
-                    memoriesController?.removeDuplicatePins(self)
                     memoriesController?.updateMemory(self)
                 }
             } else if declineButton != nil && hitButton(point, button: declineButton) {
@@ -436,8 +435,9 @@ class MapPinView: MKAnnotationView {
                 if memory!.isBlank() {
                     memoriesController?.deleteMemory(self)
                 } else if memory!.isJustReceived() {
-                    memoriesController?.declineRecentShare(memory!)
                     memoriesController?.removePin(self)
+                    memoriesController?.declineRecentShare(memory!)
+                    
                 }
             } else if (hitButton(point, button: dateView)) {
                 memoriesController?.rescheduleMemory(self)

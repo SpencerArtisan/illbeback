@@ -394,27 +394,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
     }
     
-    func removeDuplicatePins(newPin: MapPinView) {
-            var oldMemoryPin: MapPin?
-            for pin in self.map.annotations {
-                if pin is MapPin && (pin as! MapPin).memory.id == newPin.memory!.id {
-                    if pin !== newPin.annotation! {
-                        oldMemoryPin = (pin as! MapPin)
-                        break
-                    }
-                }
-            }
-        
-            if oldMemoryPin != nil {
-                print("Removing old memory " + newPin.memory!.id)
-                self.map.deselectAnnotation(oldMemoryPin, animated: false)
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    self.map.removeAnnotation(oldMemoryPin!)
-                }
-                
-            }
-    }
-    
     func acceptRecentShare(memory: Memory) {
         memory.accept()
         memoryAlbum!.oldMemories[memory.id] = memory
@@ -431,9 +410,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func declineRecentShare(memory: Memory) {
         memory.decline()
         memoryAlbum!.newMemories.removeValueForKey(memory.id)
+
         if memory.isEvent() {
             print("Declining event")
             shareController.declineRecentShare(memory)
+        }
+        let oldMemory = memoryAlbum!.oldMemories[memory.id]
+        if oldMemory != nil {
+            map!.addAnnotation(oldMemory!.asMapPin())
         }
         memoryAlbum!.save()
     }
