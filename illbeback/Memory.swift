@@ -116,6 +116,10 @@ public class Memory {
         return when != nil
     }
     
+    func isBlank() -> Bool {
+        return type == "Blank"
+    }
+    
     func asString() -> String {
         let whenString = when != nil ? formatter().stringFromDate(when!) : ""
         let inviteesString = invitees.map{$0.asString()}.joinWithSeparator(";")

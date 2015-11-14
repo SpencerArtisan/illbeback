@@ -69,10 +69,15 @@ class MapPinView: MKAnnotationView {
         whenHeight = 0
         calloutView = nil
         photoButton = nil
-        labelView = nil
+        titleView = nil
+        createTitleLabel()
         dateView = nil
         inviteeViews = []
         photoView = nil
+        shareButton = nil
+        acceptButton = nil
+        declineButton = nil
+        labelView = nil
         self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(memory!)?.imagePath
     }
     
@@ -177,7 +182,7 @@ class MapPinView: MKAnnotationView {
             labelView!.addSubview(dateView!)
         }
         
-        if (memory!.isJustReceived()) {
+        if (memory!.isJustReceived() || memory!.isBlank()) {
             labelView?.addSubview(acceptButton!)
             labelView?.addSubview(declineButton!)
         } else {
@@ -185,7 +190,9 @@ class MapPinView: MKAnnotationView {
             if photoButton != nil {
                 labelView!.addSubview(photoButton!)
             }
-            labelView!.addSubview(shareButton!)
+            if shareButton != nil {
+                labelView!.addSubview(shareButton!)
+            }
         }
     }
     
@@ -216,19 +223,21 @@ class MapPinView: MKAnnotationView {
     }
 
     func createShareButton() {
-        let x = photoView == nil ? CGFloat(0) : CGFloat(30)
-        shareButton = UIButton(frame: CGRectMake(x, labelArea!.height - 40 - whenHeight, 40, 40))
-        let image = UIImage(named: "share")
-        shareButton!.setImage(image, forState: UIControlState.Normal)
+        if !memory!.isBlank() {
+            let x = photoView == nil ? CGFloat(0) : CGFloat(30)
+            shareButton = UIButton(frame: CGRectMake(x, labelArea!.height - 40 - whenHeight, 40, 40))
+            let image = UIImage(named: "share")
+            shareButton!.setImage(image, forState: UIControlState.Normal)
+        }
     }
     
 
     func createPhotoButton() {
-        if photoView == nil {
-        photoButton = UIButton(frame: CGRectMake(labelArea!.width / 2 - 17, labelArea!.height - 38 - whenHeight, 40, 40))
-        let image = UIImage(named: "camera")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        photoButton!.setImage(image, forState: UIControlState.Normal)
-        photoButton?.tintColor = UIColor.blueColor()
+        if photoView == nil && !memory!.isBlank() {
+            photoButton = UIButton(frame: CGRectMake(labelArea!.width / 2 - 17, labelArea!.height - 38 - whenHeight, 40, 40))
+            let image = UIImage(named: "camera")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            photoButton!.setImage(image, forState: UIControlState.Normal)
+            photoButton?.tintColor = UIColor.blueColor()
         }
     }
     
@@ -344,31 +353,34 @@ class MapPinView: MKAnnotationView {
         subtitleView!.numberOfLines = 0
         subtitleView!.textAlignment = NSTextAlignment.Center
         subtitleView!.text = memory!.description.isEmpty ? "No description provided" : memory!.description
-
     }
     
     func createAcceptButton() {
+        if memory!.isJustReceived() || memory!.isBlank() {
         acceptButton = UILabel(frame: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
         acceptButton!.layer.cornerRadius = 0
         acceptButton!.numberOfLines = 0
         acceptButton!.textAlignment = NSTextAlignment.Center
         acceptButton!.font = acceptButton!.font.fontWithSize(18)
-        acceptButton!.text = "Accept"
+        acceptButton!.text = memory!.isBlank() ? "Use" : "Accept"
         acceptButton!.backgroundColor = UIColor.greenColor()
         acceptButton!.layer.borderWidth = 1
         acceptButton!.layer.borderColor = UIColor.grayColor().CGColor
+        }
     }
     
     func createDeclineButton() {
+        if memory!.isJustReceived() || memory!.isBlank() {
         declineButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
         declineButton!.layer.cornerRadius = 0
         declineButton!.numberOfLines = 0
         declineButton!.textAlignment = NSTextAlignment.Center
         declineButton!.font = declineButton!.font.fontWithSize(18)
-        declineButton!.text = "Decline"
+        declineButton!.text = memory!.isBlank() ? "Delete" : "Decline"
         declineButton!.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
         declineButton!.layer.borderWidth = 1
         declineButton!.layer.borderColor = UIColor.grayColor().CGColor
+        }
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -389,14 +401,12 @@ class MapPinView: MKAnnotationView {
             let callout = getCalloutView()
             addSubview(callout)
             self.superview?.bringSubviewToFront(callout)
-            print("Showing callout")
             
             let map = self.memoriesController!.map
             let pinCoord = memory!.location
             let mapTopCoord = map.convertPoint(CGPointMake(0, 0), toCoordinateFromView: map)
             let mapBottomCoord = map.convertPoint(CGPointMake(0, map.frame.height), toCoordinateFromView: map)
             let coordsTopToBottom = mapTopCoord.latitude - mapBottomCoord.latitude
-            print(coordsTopToBottom)
             let rescrollCoord = CLLocationCoordinate2D(latitude: (pinCoord.latitude + coordsTopToBottom/5), longitude: pinCoord.longitude)
             
             self.memoriesController?.map.setCenterCoordinate(rescrollCoord, animated: true)
@@ -412,15 +422,23 @@ class MapPinView: MKAnnotationView {
         let elapsed = system - event!.timestamp
         if (elapsed < 0.1 && labelView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
             hitView = calloutView!.hitTest(point, withEvent: event)
-            if (memory!.isJustReceived() && hitButton(point, button: acceptButton)) {
+            if acceptButton != nil && hitButton(point, button: acceptButton) {
                 MapPinView.lastSelectionChange = NSDate()
-                memoriesController?.acceptRecentShare(memory!)
-                memoriesController?.removeDuplicatePins(self)
-                memoriesController?.updateMemory(self)
-            } else if ((memory!.isJustReceived() && hitButton(point, button: declineButton))) {
+                if memory!.isBlank() {
+                    memoriesController?.unblankMemory(self)
+                } else if memory!.isJustReceived() {
+                    memoriesController?.acceptRecentShare(memory!)
+                    memoriesController?.removeDuplicatePins(self)
+                    memoriesController?.updateMemory(self)
+                }
+            } else if declineButton != nil && hitButton(point, button: declineButton) {
                 MapPinView.lastSelectionChange = NSDate()
-                memoriesController?.declineRecentShare(memory!)
-                memoriesController?.removePin(self)
+                if memory!.isBlank() {
+                    memoriesController?.deleteMemory(self)
+                } else if memory!.isJustReceived() {
+                    memoriesController?.declineRecentShare(memory!)
+                    memoriesController?.removePin(self)
+                }
             } else if (hitButton(point, button: dateView)) {
                 memoriesController?.rescheduleMemory(self)
             } else if (hitButton(point, button: deleteButton)) {

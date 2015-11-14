@@ -32,7 +32,7 @@ class CategoryController: UIViewController {
                 }
             }
         }
-        return UIColor.grayColor()
+        return UIColor.whiteColor()
     }
 }
 

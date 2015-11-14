@@ -464,6 +464,13 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         addMemory.reschedule(self, pin: pin)
     }
     
+    // Callback for button on the callout
+    func unblankMemory(pin: MapPinView) {
+        map.deselectAnnotation(pin.annotation, animated: false)
+        pin.refresh()
+        addMemory.unblank(self, pin: pin)
+    }
+    
     // Callback for display pins on map
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation is MapPin) {
@@ -571,12 +578,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 let geocoder = CLGeocoder()
                 geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
                     if let placemark = placemarks?[0] {
-                        self.map.setCenterCoordinate(placemark.location!.coordinate, animated: true)
+                        let span = MKCoordinateSpan(latitudeDelta: 0.016, longitudeDelta: 0.016)
+                        let region = MKCoordinateRegion(center: placemark.location!.coordinate, span: span)
+                        self.map.setRegion(region, animated: true)
                         
-                        
-                        self.addMemory.addBlank(self, location: placemark.location!.coordinate)
-
-                        
+                        self.addMemory.addBlank(self, location: placemark.location!.coordinate, description: textView.text)
                     }
                 })
             } else {

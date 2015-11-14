@@ -22,6 +22,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var photoAlbum: PhotoAlbum?
     var rewordingPin: MapPinView?
     var when: NSDate?
+    var categoryShownAt: NSDate?
 
     init(album: PhotoAlbum, memoriesViewController: MemoriesController) {
         super.init(nibName: nil, bundle: nil)
@@ -111,8 +112,10 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func cancel(sender: AnyObject) {
-        categoryModal.hide()
-        self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
+        if self.categoryShownAt == nil || NSDate().timeIntervalSinceDate(categoryShownAt!) > 0.7 {
+            categoryModal.hide()
+            self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
+        }
     }
     
     func add(controller: UIViewController, image: UIImage, orientation: UIDeviceOrientation) {
@@ -134,13 +137,14 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         self.showCategorySelector()
     }
 
-    func addBlank(controller: UIViewController, location: CLLocationCoordinate2D) {
-        memories!.addMemoryHere("Blank", id: NSUUID().UUIDString, description: "", location: location, orientation: self.orientation, when: nil)
+    func addBlank(controller: UIViewController, location: CLLocationCoordinate2D, description: String) {
+        memories!.addMemoryHere("Blank", id: NSUUID().UUIDString, description: description, location: location, orientation: self.orientation, when: nil)
     }
     
     func reword(controller: UIViewController, pin: MapPinView) {
         self.callingViewController = controller
         rewordingPin = pin
+        memoryImage = pin.memory!.type
         let memory = pin.memory!
         if memory.isEvent() {
             self.showDescriptionEntryWithDate(memory.type, date: memory.when!)
@@ -154,7 +158,15 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         reword(controller, pin: pin)
     }
     
+    func unblank(controller: UIViewController, pin: MapPinView) {
+        self.callingViewController = controller
+        rewordingPin = pin
+
+        self.showCategorySelector()
+    }
+    
     func showCategorySelector() {
+        self.categoryShownAt = NSDate()
         categoryModal.slideOutFromLeft(self.callingViewController!.view)
     }
     
@@ -223,6 +235,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
             if (rewordingPin != nil) {
                 rewordingPin?.memory?.description = textView.text
                 rewordingPin?.memory?.when = when
+                rewordingPin?.memory?.type = self.memoryImage!
                 memories!.memoryAlbum.save()
                 let annotation = rewordingPin!.annotation!
                 rewordingPin?.memoriesController?.map?.deselectAnnotation(annotation, animated: false)
@@ -240,15 +253,19 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
     
     func addMemory(type: String) {
-        memoryImage = type
-        showDescriptionEntry(type)
-        hideCategorySelector()
+        if self.categoryShownAt == nil || NSDate().timeIntervalSinceDate(categoryShownAt!) > 0.7 {
+            memoryImage = type
+            showDescriptionEntry(type)
+            hideCategorySelector()
+        }
     }
 
     func addMemoryWithDate(type: String) {
-        memoryImage = type
-        showDescriptionEntryWithDate(type, date: today())
-        hideCategorySelector()
+        if self.categoryShownAt == nil || NSDate().timeIntervalSinceDate(categoryShownAt!) > 0.7 {
+            memoryImage = type
+            showDescriptionEntryWithDate(type, date: today())
+            hideCategorySelector()
+        }
     }
     
 }
