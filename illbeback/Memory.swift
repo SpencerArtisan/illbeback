@@ -10,18 +10,18 @@ import Foundation
 import CoreLocation
 
 public class Memory {
-    let CATEGORY_NORMAL = "F"
-    let CATEGORY_SENT = "S"
-    let CATEGORY_RECEIVED = "R"
-    let CATEGORY_ACCEPTED = "A"
-    let CATEGORY_DECLINED = "D"
+    static let CATEGORY_NORMAL = "F"
+    static let CATEGORY_SENT = "S"
+    static let CATEGORY_RECEIVED = "R"
+    static let CATEGORY_ACCEPTED = "A"
+    static let CATEGORY_DECLINED = "D"
     
     var type: String
     var id: String
     var description: String
     var location: CLLocationCoordinate2D
     var originator: String
-    private var state: String
+    var state: String
     var orientation: UIDeviceOrientation
     var when: NSDate?
     var invitees: [Invitee]
@@ -32,7 +32,7 @@ public class Memory {
         self.description = description
         self.location = location
         self.originator = user.getName()
-        self.state = CATEGORY_NORMAL
+        self.state = Memory.CATEGORY_NORMAL
         self.orientation = orientation ?? UIDeviceOrientation.FaceUp
         self.when = when
         self.invitees = []
@@ -47,37 +47,37 @@ public class Memory {
         let long = parts[3]
         self.location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
         self.originator = parts[5]
-        self.state = parts.count > 6 ? parts[6] : CATEGORY_NORMAL
+        self.state = parts.count > 6 ? parts[6] : Memory.CATEGORY_NORMAL
         self.orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
         self.invitees = parts.count > 9 && parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee(string: $0)} : []
         self.when = parts.count > 8 && parts[8] != "" ? formatter().dateFromString(parts[8]) : nil
     }
     
     func isJustReceived() -> Bool {
-        return state == CATEGORY_RECEIVED
+        return state == Memory.CATEGORY_RECEIVED
     }
 
     func accept() {
-        state = CATEGORY_ACCEPTED
+        state = Memory.CATEGORY_ACCEPTED
     }
 
     func decline() {
-        state = CATEGORY_DECLINED
+        state = Memory.CATEGORY_DECLINED
     }
     
     func resetState() {
-        state = CATEGORY_NORMAL
+        state = Memory.CATEGORY_NORMAL
     }
     
     func justReceived() {
-        if state == CATEGORY_SENT {
-            state = CATEGORY_RECEIVED
+        if state == Memory.CATEGORY_SENT {
+            state = Memory.CATEGORY_RECEIVED
         }
     }
 
     func justSent(to: String) {
-        if state == CATEGORY_NORMAL || state == CATEGORY_SENT {
-            state = CATEGORY_SENT
+        if state == Memory.CATEGORY_NORMAL || state == Memory.CATEGORY_SENT {
+            state = Memory.CATEGORY_SENT
             let invitee = Invitee(name: to)
             invitees = invitees.filter{$0.name != to}
             invitees.append(invitee)
@@ -85,11 +85,11 @@ public class Memory {
     }
     
     func isAccepted() -> Bool {
-        return state == CATEGORY_ACCEPTED
+        return state == Memory.CATEGORY_ACCEPTED
     }
 
     func wasAck() -> Bool {
-        return state == CATEGORY_ACCEPTED || state == CATEGORY_DECLINED
+        return state == Memory.CATEGORY_ACCEPTED || state == Memory.CATEGORY_DECLINED
     }
     
     func getInvitees() -> [Invitee] {

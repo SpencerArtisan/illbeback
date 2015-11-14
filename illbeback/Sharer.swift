@@ -49,6 +49,7 @@ public class Sharer {
             snapshot in
                 let givenMemories = snapshot.children
                 var receivedIds:[String] = []
+            var successes: UInt = 0
             
                 while let given: FDataSnapshot = givenMemories.nextObject() as? FDataSnapshot {
                     let from = given.value["from"] as! String
@@ -59,17 +60,29 @@ public class Sharer {
                     if (memory.wasAck()) {
                         print("Received acknowlegdement of share for memory \(memory)")
                         onAckReceipt(from: from, memory: memory)
+
+                        self.shareRoot(to).removeValue()
+                        successes++
+                        self.updateBadge(to, badge: snapshot.childrenCount - successes)
                     } else {
                         print("Received memory \(memoryString)")
                         onStart(from: from, memory: memory)
                         self.downloadImages(memory, onComplete: {
                             print("All shared photos downloaded.  Notifying observers...")
                             onComplete(from: from, memory: memory)
+                            
+                            self.shareRoot(to).removeValue()
+                            successes++
+                            self.updateBadge(to, badge: snapshot.childrenCount - successes)
                         })
                     }
                 }
-                self.shareRoot(to).removeValue()
+                self.updateBadge(to, badge: snapshot.childrenCount)
         })
+    }
+    
+    private func updateBadge(user: String, badge: UInt) {
+        UIApplication.sharedApplication().applicationIconBadgeNumber = Int(badge)
     }
     
     private func downloadImages(memory: Memory, onComplete: () -> Void) {
@@ -135,13 +148,16 @@ public class Sharer {
         memory.justSent(to)
         let originalOriginator = memory.originator
         let originalInvitees = memory.invitees
+        let originalState = memory.state
         memory.originator = from
         memory.invitees = []
+        memory.state = Memory.CATEGORY_SENT
         print("FIREBASE OP: Uploading memory " + memory.asString())
         let newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": from, "memory": memory.asString()])
         memory.originator = originalOriginator
         memory.invitees = originalInvitees
+        memory.state = originalState
     }
     
     private func shareRoot(to: String) -> Firebase {
