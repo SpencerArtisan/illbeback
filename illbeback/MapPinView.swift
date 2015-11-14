@@ -384,8 +384,23 @@ class MapPinView: MKAnnotationView {
         }
         
         if (self.selected) {
-            addSubview(getCalloutView())
-            self.superview?.bringSubviewToFront(getCalloutView())
+            //topLeft = [mapView convertPoint:CGPointMake(0, 0) toCoordinateFromView:mapView];
+
+            let callout = getCalloutView()
+            addSubview(callout)
+            self.superview?.bringSubviewToFront(callout)
+            print("Showing callout")
+            
+            let map = self.memoriesController!.map
+            let pinCoord = memory!.location
+            let mapTopCoord = map.convertPoint(CGPointMake(0, 0), toCoordinateFromView: map)
+            let mapBottomCoord = map.convertPoint(CGPointMake(0, map.frame.height), toCoordinateFromView: map)
+            let coordsTopToBottom = mapTopCoord.latitude - mapBottomCoord.latitude
+            print(coordsTopToBottom)
+            let rescrollCoord = CLLocationCoordinate2D(latitude: (pinCoord.latitude + coordsTopToBottom/5), longitude: pinCoord.longitude)
+            
+            self.memoriesController?.map.setCenterCoordinate(rescrollCoord, animated: true)
+            
         } else {
             getCalloutView().removeFromSuperview()
         }
