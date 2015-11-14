@@ -572,10 +572,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
                     if let placemark = placemarks?[0] {
                         self.map.setCenterCoordinate(placemark.location!.coordinate, animated: true)
-                        let annotation = MKPointAnnotation()
                         
-                        annotation.coordinate = placemark.location!.coordinate
-                        self.map.addAnnotation(annotation)
+                        
+                        self.addMemory.addBlank(self, location: placemark.location!.coordinate)
+
                         
                     }
                 })

@@ -125,13 +125,17 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         self.photoAlbum!.saveMemoryImage(image, memoryId: self.memoryId!)
         self.showCategorySelector()
     }
-   
+    
     func add(controller: UIViewController, location: CLLocationCoordinate2D) {
         rewordingPin = nil
         self.memoryLocation = location
         self.callingViewController = controller
         self.memoryId = NSUUID().UUIDString
         self.showCategorySelector()
+    }
+
+    func addBlank(controller: UIViewController, location: CLLocationCoordinate2D) {
+        memories!.addMemoryHere("Blank", id: NSUUID().UUIDString, description: "", location: location, orientation: self.orientation, when: nil)
     }
     
     func reword(controller: UIViewController, pin: MapPinView) {
