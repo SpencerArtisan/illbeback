@@ -14,10 +14,10 @@
          contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
       </ContextState>
       <ContextState
-         contextName = "I_ll_Be_Back.Camera.(takePhoto (I_ll_Be_Back.Camera) -&gt; (Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UIButton&gt;) -&gt; ()).(closure #3):Camera.swift">
+         contextName = "static Global.storeDeviceToken() -&gt; ():Global.swift">
          <PersistentStrings>
             <PersistentString
-               value = "(UIImage?)image">
+               value = "Global.deviceToken">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -28,10 +28,10 @@
                value = "elapsed">
             </PersistentString>
             <PersistentString
-               value = "event!.type">
+               value = "self.selected">
             </PersistentString>
             <PersistentString
-               value = "self.selected">
+               value = "event!.type">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -40,6 +40,14 @@
          <PersistentStrings>
             <PersistentString
                value = "zoomController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.Camera.(takePhoto (I_ll_Be_Back.Camera) -&gt; (Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UIButton&gt;) -&gt; ()).(closure #3):Camera.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "(UIImage?)image">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

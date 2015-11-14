@@ -88,9 +88,13 @@ class ShareController : UIViewController {
             shareButton.setImage(shareImage, forState: UIControlState.Normal)
             delay(0.5) { shareButton.enabled = true }
         }
+        while (tag <= 15) {
+            let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
+            shareButton.hidden = true
+        }
         
         let newFriendButton = shareModal?.findElementByTag(2) as! UIButton
-        if (friends.count > 7) {
+        if (friends.count > 12) {
             newFriendButton.hidden = true
         } else {
             newFriendButton.hidden = false

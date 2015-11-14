@@ -3,12 +3,14 @@ public class Sharer {
     private let BUCKET = "illbebackappus"
     private var transferManager: AWSS3TransferManager
     private var memoryAlbum: MemoryAlbum
+    private static var deviceToken: NSData?
     
-    init(memoryAlbum: MemoryAlbum) {
+    init(memoryAlbum: MemoryAlbum, user: String) {
         self.memoryAlbum = memoryAlbum
         root = Firebase(url:"https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
+
     
     func share(from: String, to: String, memory: Memory, onComplete: () -> Void, onError: () -> Void) {
         let photos = PhotoAlbum().photos(memory)

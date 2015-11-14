@@ -24,6 +24,7 @@ class User {
     func setName(name: String) {
         self.name = name
         write()
+        Global.setUser(self)
     }
     
     func hasName() -> Bool {
@@ -66,7 +67,9 @@ class User {
         props = NSDictionary(contentsOfFile: path)?.mutableCopy() as? NSDictionary
     
         friends = props?.valueForKey("Friends") as? [String]
-        name = props?.valueForKey("Name") as? String
+        if props?.valueForKey("Name") != nil {
+            setName(props?.valueForKey("Name") as! String)
+        }
     }
     
     private func getPath() -> String {

@@ -24,6 +24,7 @@
 		9725CD421A98D2C60081C1B3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD411A98D2C60081C1B3 /* SystemConfiguration.framework */; };
 		9725CD441A98D58B0081C1B3 /* Sharer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9725CD431A98D58B0081C1B3 /* Sharer.swift */; };
 		97420BBE1A92A0320076E561 /* AddMemoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97420BBD1A92A0320076E561 /* AddMemoryController.swift */; };
+		9749EE451BF749E300C1606B /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9749EE441BF749E300C1606B /* Global.swift */; };
 		9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9759BF6B1A802AD300B945CB /* illbebackinfo.plist */; };
 		9759BF6E1A802C4100B945CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759BF6D1A802C4100B945CB /* CoreLocation.framework */; };
 		9759BF701A80318300B945CB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759BF6F1A80318300B945CB /* ImageIO.framework */; };
@@ -97,6 +98,7 @@
 		973ABB2A1A99048300564820 /* libPods-AWSCognitoSync.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AWSCognitoSync.a"; path = "Pods/build/Debug-iphoneos/libPods-AWSCognitoSync.a"; sourceTree = "<group>"; };
 		973ABB2B1A99048300564820 /* libPods-AWSiOSSDKv2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AWSiOSSDKv2.a"; path = "Pods/build/Debug-iphoneos/libPods-AWSiOSSDKv2.a"; sourceTree = "<group>"; };
 		97420BBD1A92A0320076E561 /* AddMemoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMemoryController.swift; sourceTree = "<group>"; };
+		9749EE441BF749E300C1606B /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		9759BF6B1A802AD300B945CB /* illbebackinfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = illbebackinfo.plist; sourceTree = "<group>"; };
 		9759BF6D1A802C4100B945CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9759BF6F1A80318300B945CB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -263,6 +265,7 @@
 				97A353531A800B9500973CAC /* LaunchScreen.xib */,
 				97FE66831A9A50C60007FC2C /* MessageView.xib */,
 				97EA3FFE1AFE9A1C005507BF /* Black.xib */,
+				9749EE441BF749E300C1606B /* Global.swift */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -427,7 +430,11 @@
 				TargetAttributes = {
 					97A353421A800B9500973CAC = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = YWXKS4E5M8;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					97A353591A800B9500973CAC = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -540,6 +547,7 @@
 				97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
+				9749EE451BF749E300C1606B /* Global.swift in Sources */,
 				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,
 				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
 				97E3B9181A857A00007DB06E /* MapPin.swift in Sources */,

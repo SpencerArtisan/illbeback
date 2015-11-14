@@ -15,15 +15,17 @@ public class MemoryAlbum {
     var newMemories = [String: Memory]()
     private var props: NSDictionary?
     private var map: MKMapView
+    private let user: String
     
-    init(map: MKMapView) {
+    init(map: MKMapView, user: String) {
         self.map = map
+        self.user = user
         read()
     }
     
     func sharer() -> Sharer {
         if self._sharer == nil {
-            self._sharer = Sharer(memoryAlbum: self)
+            self._sharer = Sharer(memoryAlbum: self, user: user)
         }
         return _sharer!
     }

@@ -339,7 +339,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     func initMemories() {
-        memoryAlbum = MemoryAlbum(map: map)
+        memoryAlbum = MemoryAlbum(map: map, user: user.getName())
         memoryAlbum.addToMap()
     }
     
