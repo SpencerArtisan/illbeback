@@ -60,6 +60,8 @@
 		97EA40011AFEA36B005507BF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97EA40001AFEA36B005507BF /* AVFoundation.framework */; };
 		97EA40031AFEB74C005507BF /* shutter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 97EA40021AFEB74C005507BF /* shutter.mp3 */; };
 		97F438171A991CEC00A33FD2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F438161A991CEC00A33FD2 /* Memory.swift */; };
+		97FA33431BF7BEFE00248F67 /* Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33421BF7BEFE00248F67 /* Events.xib */; };
+		97FA33451BF7E18800248F67 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33441BF7E18800248F67 /* EventController.swift */; };
 		97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FE667B1A99EB1E0007FC2C /* ShareView.xib */; };
 		97FE667E1A99FC220007FC2C /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667D1A99FC220007FC2C /* Modal.swift */; };
 		97FE66801A9A19570007FC2C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667F1A9A19570007FC2C /* User.swift */; };
@@ -135,6 +137,8 @@
 		97EA40001AFEA36B005507BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		97EA40021AFEB74C005507BF /* shutter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shutter.mp3; sourceTree = "<group>"; };
 		97F438161A991CEC00A33FD2 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		97FA33421BF7BEFE00248F67 /* Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Events.xib; sourceTree = "<group>"; };
+		97FA33441BF7E18800248F67 /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
 		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
 		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
@@ -314,6 +318,7 @@
 			children = (
 				97A353461A800B9500973CAC /* Supporting Files */,
 				97A3536A1A800EF500973CAC /* Media.xcassets */,
+				97FA33411BF7BEE500248F67 /* Events */,
 				97662C901BA2228800ACFF3A /* Pins */,
 				97662C931BA2230100ACFF3A /* Photo */,
 				97662C941BA2231A00ACFF3A /* Share */,
@@ -354,6 +359,15 @@
 				97A3535F1A800B9500973CAC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97FA33411BF7BEE500248F67 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				97FA33421BF7BEFE00248F67 /* Events.xib */,
+				97FA33441BF7E18800248F67 /* EventController.swift */,
+			);
+			name = Events;
 			sourceTree = "<group>";
 		};
 		97FC73291A840B8D00676F16 /* LLSimpleCamera */ = {
@@ -482,6 +496,7 @@
 				97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */,
 				976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */,
 				97A353551A800B9500973CAC /* LaunchScreen.xib in Resources */,
+				97FA33431BF7BEFE00248F67 /* Events.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +549,7 @@
 			files = (
 				9725CD441A98D58B0081C1B3 /* Sharer.swift in Sources */,
 				9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */,
+				97FA33451BF7E18800248F67 /* EventController.swift in Sources */,
 				972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */,
 				97002F0E1BC91679002BF217 /* Photo.swift in Sources */,
 				97F438171A991CEC00A33FD2 /* Memory.swift in Sources */,

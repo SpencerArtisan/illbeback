@@ -26,6 +26,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var rememberController: RememberController!
     var zoomController: ZoomSwipeController!
     var shareController: ShareController!
+    var eventController: EventController!
 
     var newUserModal: Modal?
     var searchModal: Modal?
@@ -45,6 +46,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     func getView() -> UIView {
         return self.view
+    }
+    
+    @IBAction func showEvents(sender: AnyObject) {
+        eventController.showEvents()
     }
     
     @IBAction func cancel(sender: AnyObject) {
@@ -80,6 +85,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum, memoriesViewController: self)
+        self.eventController = EventController(memoriesViewController: self)
         self.rephotoController = RephotoController(photoAlbum: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum, memoriesController: self)
         self.zoomController = ZoomSwipeController()
@@ -94,9 +100,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     @IBAction func takePhoto(sender: AnyObject) {
         self.navigationController?.navigationBarHidden = true
-        
         self.navigationController?.pushViewController(rememberController, animated: false)
-
     }
     
     
@@ -106,7 +110,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             let region = MKCoordinateRegion(center: here.coordinate, span: span)
             self.map.setRegion(region, animated: true)
         }
-        
     }
     
     @IBAction func search(sender: AnyObject) {

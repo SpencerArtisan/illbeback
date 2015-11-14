@@ -160,6 +160,18 @@
                                     <action selector="friends:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="r3f-G8-alf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbX-Mm-eun" userLabel="events">
+                                <rect key="frame" x="544" y="0.0" width="50" height="50"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="LoY-Kk-3dA"/>
+                                    <constraint firstAttribute="width" constant="50" id="j5W-3l-wmi"/>
+                                </constraints>
+                                <state key="normal" image="alarmblue"/>
+                                <connections>
+                                    <action selector="showEvents:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="ONO-Im-j7y"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -175,15 +187,25 @@
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="OYa-GC-pvf"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="leading" secondItem="ZNr-gZ-dda" secondAttribute="trailing" constant="8" symbolic="YES" id="QWV-sH-mzq"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="leading" secondItem="DtY-Nv-kkq" secondAttribute="trailing" constant="8" symbolic="YES" id="UWp-wg-0ig"/>
+                            <constraint firstItem="OyB-ot-KZY" firstAttribute="width" secondItem="fbX-Mm-eun" secondAttribute="width" id="Uy4-sE-ClH"/>
                             <constraint firstItem="HH0-zd-1ZB" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="VYa-Rm-faC"/>
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" id="Wok-zH-KRA"/>
+                            <constraint firstAttribute="trailing" secondItem="fbX-Mm-eun" secondAttribute="trailing" id="ayq-hq-aSp"/>
                             <constraint firstItem="ZNr-gZ-dda" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="cyN-s7-bNC"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="width" secondItem="HH0-zd-1ZB" secondAttribute="width" id="dfp-67-duM"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="dtK-HW-4aL"/>
                             <constraint firstItem="DtY-Nv-kkq" firstAttribute="leading" secondItem="SbP-CO-Ehi" secondAttribute="trailing" constant="8" symbolic="YES" id="e0Y-pi-cHW"/>
+                            <constraint firstItem="fbX-Mm-eun" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="foE-Fa-72T"/>
+                            <constraint firstItem="OyB-ot-KZY" firstAttribute="height" secondItem="fbX-Mm-eun" secondAttribute="height" id="gOA-D7-t5i"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="oSw-8q-NAR"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="ZNr-gZ-dda" secondAttribute="bottom" constant="35" id="pab-XA-2Zf"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Uy4-sE-ClH"/>
+                                <exclude reference="gOA-D7-t5i"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Memories" image="globe" id="cPa-gy-q4n"/>
                     <navigationItem key="navigationItem" id="oTP-Ge-dDQ"/>
@@ -222,6 +244,7 @@
         <image name="Pigeon" width="800" height="613"/>
         <image name="Search blue" width="32" height="32"/>
         <image name="Shape" width="32" height="32"/>
+        <image name="alarmblue" width="25" height="25"/>
         <image name="camera" width="26" height="26"/>
         <image name="camerablue" width="52" height="52"/>
         <image name="globe" width="26" height="26"/>
