@@ -32,6 +32,12 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         memories = memoriesViewController
     }
     
+    @IBAction func cancelDescription(sender: AnyObject) {
+        descriptionModal.hide()
+        self.desciptionTextArea.text = ""
+        self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
