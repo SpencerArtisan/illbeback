@@ -15,6 +15,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     let HOUR: Double = 60 * 60
     
     @IBOutlet weak var map: MKMapView!
+    
+    @IBOutlet weak var alarmButton: UIButton!
+    
     var locationManager = CLLocationManager()
     var here: CLLocation!
     var memoryAlbum: MemoryAlbum!
@@ -98,6 +101,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"nameTaken:", name: "NameTaken", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"nameAccepted:", name: "NameAccepted", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"eventListChange:", name: "EventListChange", object: nil)
     }
     
     func nameTaken(note: NSNotification) {
@@ -109,6 +113,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func nameAccepted(note: NSNotification) {
         let name = note.userInfo!["name"]
         self.showMessage("Weclome to Backmap \(name!)", color: UIColor.greenColor(), fontColor: UIColor.blackColor(), time: 3.0)
+    }
+    
+    func eventListChange(note: NSNotification) {
+        let enable = note.userInfo!["enable"] as! Bool
+        self.alarmButton.hidden = !enable
     }
     
     @IBAction func takePhoto(sender: AnyObject) {

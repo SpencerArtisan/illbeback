@@ -24,6 +24,7 @@ public class Sharer {
                     leftToUpload--
                     print("    Uploaded photo '\(photo.imagePath)'.  \(leftToUpload) left")
                     if (leftToUpload == 0) {
+                        memory.state = Memory.CATEGORY_SENT
                         self.uploadMemory(from, to: to, memory: memory)
                         self.memoryAlbum.save()
                         onComplete()
@@ -35,6 +36,7 @@ public class Sharer {
                 })
             }
         } else {
+            memory.state = Memory.CATEGORY_SENT
             self.uploadMemory(from, to: to, memory: memory)
             onComplete()
         }

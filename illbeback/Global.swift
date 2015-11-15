@@ -46,6 +46,8 @@ class Global {
                 if !snapshot.exists() || snapshot.value.objectForKey("iphone") == nil {
                     print("FIREBASE OP: NO existing device token")
                     NSNotificationCenter.defaultCenter().postNotificationName("NameAccepted", object: nil, userInfo: ["name":user.getName()])
+                    print("FIREBASE OP: Uploading device token \(tokenString) to \(url)")
+                    node.setValue(["iphone": tokenString])
                 } else {
                     let existingToken = snapshot.value.objectForKey("iphone")
                     print("FIREBASE OP: Existing device token \(existingToken!)")
@@ -57,10 +59,7 @@ class Global {
                         NSNotificationCenter.defaultCenter().postNotificationName("NameTaken", object: nil, userInfo: ["name":takenName])
                         return
                     }
-                }
-                
-                print("FIREBASE OP: Uploading device token \(tokenString) to \(url)")
-                node.setValue(["iphone": tokenString])
+                }                
             })
         }
     }

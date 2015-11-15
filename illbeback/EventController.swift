@@ -34,7 +34,7 @@ class EventsController: UIViewController, UITextViewDelegate {
         delay(1) {
             self.cancelButton.enabled = true
         }
-        let events = memories.memoryAlbum.getAllEvents()
+        let events = memories.memoryAlbum.getAllEventsExcludingDuplicates()
         var tag = 1
         for event in events {
             let eventView = eventsModal.findElementByTag(tag) as? EventView

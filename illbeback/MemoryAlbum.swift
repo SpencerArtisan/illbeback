@@ -84,10 +84,17 @@ public class MemoryAlbum {
         return all.sort{$0.daysToGo() < $1.daysToGo()}
     }
     
+    func getAllEventsExcludingDuplicates() -> [Memory] {
+        let all = allMemoriesExcludingDuplicates().filter {$0.when != nil }
+        return all.sort{$0.daysToGo() < $1.daysToGo()}
+    }
+    
     func addPin(memory: Memory) {
         dispatch_async(dispatch_get_main_queue(), {
             let pin = memory.asMapPin()
+            print("Adding pin for \(memory.asString())")
             self.map.addAnnotation(pin)
+            self.enableEventList()
         })
     }
     
@@ -131,10 +138,12 @@ public class MemoryAlbum {
     func delete(pin: MapPinView) {
         delete(pin.memory!)
         map.removeAnnotation(pin.annotation!)
+        enableEventList()
     }
     
     func delete(memory: Memory) {
         oldMemories.removeValueForKey(memory.id)
+        enableEventList()
     }
     
     func share(pin: MapPinView, from: String, to: String, onComplete: () -> Void, onError: () -> Void) {
@@ -202,5 +211,12 @@ public class MemoryAlbum {
                 oldMemories[memory.id] = memory
             }
         }
+        enableEventList()
+    }
+    
+    func enableEventList() {
+        let enable = getAllEventsExcludingDuplicates().count > 0
+        NSNotificationCenter.defaultCenter().postNotificationName("EventListChange", object: nil, userInfo: ["enable":enable])
+
     }
 }

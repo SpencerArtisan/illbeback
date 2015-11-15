@@ -212,6 +212,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="alarmButton" destination="fbX-Mm-eun" id="Fh2-AA-56G"/>
                         <outlet property="map" destination="dG8-Di-Pbv" id="veE-id-wvD"/>
                     </connections>
                 </viewController>

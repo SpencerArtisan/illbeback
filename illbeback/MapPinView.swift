@@ -70,7 +70,6 @@ class MapPinView: MKAnnotationView {
         calloutView = nil
         photoButton = nil
         titleView = nil
-        createTitleLabel()
         dateView = nil
         inviteeViews = []
         photoView = nil
