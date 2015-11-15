@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventView" customModule="I_ll_Be_Back" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="xpB-1r-v6F" id="p5f-k7-2Hp"/>
+                <outlet property="title" destination="Sbx-rm-3je" id="ctG-Yn-VsM"/>
+                <outlet property="when" destination="WFm-Cz-esj" id="8Vz-Eb-EVc"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpB-1r-v6F" userLabel="event">
+            <rect key="frame" x="0.0" y="0.0" width="307" height="54"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hangmen theatre" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sbx-rm-3je" userLabel="title">
+                    <rect key="frame" x="70" y="0.0" width="237" height="54"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="0.86190878378378366" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="MalayalamSangamMN" family="Malayalam Sangam MN" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="next Mon" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WFm-Cz-esj" userLabel="when">
+                    <rect key="frame" x="0.0" y="0.0" width="70" height="54"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.0" green="0.5" blue="0.5" alpha="0.90498310810270266" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="jC4-Zf-M3j"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="WFm-Cz-esj" firstAttribute="top" secondItem="xpB-1r-v6F" secondAttribute="top" id="5NJ-RU-hZv"/>
+                <constraint firstItem="WFm-Cz-esj" firstAttribute="leading" secondItem="xpB-1r-v6F" secondAttribute="leading" id="JGt-mH-LPZ"/>
+                <constraint firstItem="Sbx-rm-3je" firstAttribute="leading" secondItem="WFm-Cz-esj" secondAttribute="trailing" id="OuL-WP-2Ug"/>
+                <constraint firstAttribute="trailing" secondItem="Sbx-rm-3je" secondAttribute="trailing" id="YoU-da-xaZ"/>
+                <constraint firstItem="Sbx-rm-3je" firstAttribute="leading" secondItem="xpB-1r-v6F" secondAttribute="leading" id="eCe-GT-9Ac"/>
+                <constraint firstItem="Sbx-rm-3je" firstAttribute="top" secondItem="xpB-1r-v6F" secondAttribute="top" id="etb-v5-a6q"/>
+                <constraint firstAttribute="bottom" secondItem="Sbx-rm-3je" secondAttribute="bottom" id="fUS-OH-eWZ"/>
+                <constraint firstAttribute="bottom" secondItem="WFm-Cz-esj" secondAttribute="bottom" id="it3-73-DOT"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="eCe-GT-9Ac"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="247.5" y="-532"/>
+        </view>
+    </objects>
+</document>

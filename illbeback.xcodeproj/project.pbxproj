@@ -62,6 +62,8 @@
 		97F438171A991CEC00A33FD2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F438161A991CEC00A33FD2 /* Memory.swift */; };
 		97FA33431BF7BEFE00248F67 /* Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33421BF7BEFE00248F67 /* Events.xib */; };
 		97FA33451BF7E18800248F67 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33441BF7E18800248F67 /* EventController.swift */; };
+		97FA33471BF7E3A400248F67 /* Event.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33461BF7E3A400248F67 /* Event.xib */; };
+		97FA33491BF7E52600248F67 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33481BF7E52600248F67 /* EventView.swift */; };
 		97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FE667B1A99EB1E0007FC2C /* ShareView.xib */; };
 		97FE667E1A99FC220007FC2C /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667D1A99FC220007FC2C /* Modal.swift */; };
 		97FE66801A9A19570007FC2C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667F1A9A19570007FC2C /* User.swift */; };
@@ -139,6 +141,8 @@
 		97F438161A991CEC00A33FD2 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		97FA33421BF7BEFE00248F67 /* Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Events.xib; sourceTree = "<group>"; };
 		97FA33441BF7E18800248F67 /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
+		97FA33461BF7E3A400248F67 /* Event.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Event.xib; sourceTree = "<group>"; };
+		97FA33481BF7E52600248F67 /* EventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
 		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
 		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
@@ -366,6 +370,8 @@
 			children = (
 				97FA33421BF7BEFE00248F67 /* Events.xib */,
 				97FA33441BF7E18800248F67 /* EventController.swift */,
+				97FA33461BF7E3A400248F67 /* Event.xib */,
+				97FA33481BF7E52600248F67 /* EventView.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -492,6 +498,7 @@
 				97FE66821A9A1A400007FC2C /* memories.plist in Resources */,
 				97767D521B9088F300B6A827 /* SearchView.xib in Resources */,
 				97A353501A800B9500973CAC /* Main.storyboard in Resources */,
+				97FA33471BF7E3A400248F67 /* Event.xib in Resources */,
 				97A3536B1A800EF500973CAC /* Media.xcassets in Resources */,
 				97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */,
 				976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */,
@@ -562,6 +569,7 @@
 				97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */,
 				97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
+				97FA33491BF7E52600248F67 /* EventView.swift in Sources */,
 				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
 				9749EE451BF749E300C1606B /* Global.swift in Sources */,
 				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,

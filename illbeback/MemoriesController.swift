@@ -26,7 +26,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var rememberController: RememberController!
     var zoomController: ZoomSwipeController!
     var shareController: ShareController!
-    var eventController: EventController!
+    var eventController: EventsController!
 
     var newUserModal: Modal?
     var searchModal: Modal?
@@ -85,7 +85,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum, memoriesViewController: self)
-        self.eventController = EventController(memoriesViewController: self)
+        self.eventController = EventsController(memoriesViewController: self)
         self.rephotoController = RephotoController(photoAlbum: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum, memoriesController: self)
         self.zoomController = ZoomSwipeController()

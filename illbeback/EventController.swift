@@ -10,9 +10,11 @@ import Foundation
 
 import MapKit
 
-class EventController: UIViewController, UITextViewDelegate {
+class EventsController: UIViewController, UITextViewDelegate {
     var eventsModal: Modal!
     var memories: MemoriesController!
+    
+    @IBOutlet weak var cancelButton: UIButton!
     
     init(memoriesViewController: MemoriesController) {
         super.init(nibName: nil, bundle: nil)
@@ -29,10 +31,48 @@ class EventController: UIViewController, UITextViewDelegate {
     }
     
     func showEvents() {
+        delay(1) {
+            self.cancelButton.enabled = true
+        }
+        let events = memories.memoryAlbum.getAllEvents()
+        var tag = 1
+        for event in events {
+            let eventView = eventsModal.findElementByTag(tag) as? EventView
+            if eventView == nil {
+                break;
+            }
+            eventView!.setEvent(event)
+            eventView!.hidden = false
+            tag++
+        }
+        while (true) {
+            let eventView = eventsModal.findElementByTag(tag) as? EventView
+            if eventView == nil {
+                break;
+            }
+            eventView!.hidden = true
+            tag++
+        }
+        
         eventsModal.slideOutFromRight(self.memories.view)
     }
     
     func hideEvents() {
         eventsModal.slideInFromRight(self.memories.view)
+    }
+    
+    @IBAction func cancel(sender: AnyObject) {
+        cancelButton.enabled = false
+        hideEvents()
+    }
+    
+    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
     }
 }

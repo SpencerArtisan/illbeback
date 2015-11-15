@@ -83,7 +83,8 @@ public class MemoryAlbum {
     }
     
     func getAllEvents() -> [Memory] {
-        return allMemories().filter {$0.when != nil }
+        let all = allMemories().filter {$0.when != nil }
+        return all.sort{$0.daysToGo() < $1.daysToGo()}
     }
     
     func addPin(memory: Memory) {
