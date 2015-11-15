@@ -12,8 +12,8 @@ class EventView: UIView {
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var when: UILabel!
-  
     
+    var memories: MemoriesController!
     private var event: Memory?
     
     override init(frame: CGRect) {
@@ -26,9 +26,14 @@ class EventView: UIView {
         loadXib()
     }
     
+    @IBAction func goto(sender: AnyObject) {
+        print("go to \(event!.summary())")
+        memories.centerMap(event!.location)
+    }
+    
     func setEvent(event: Memory) {
         self.event = event
-        title.text = event.summary()
+        title.text = " \(event.summary())"
         when.text = formatWhen(event)
     }
     

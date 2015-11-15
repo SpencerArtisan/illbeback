@@ -42,6 +42,7 @@ class EventsController: UIViewController, UITextViewDelegate {
                 break;
             }
             eventView!.setEvent(event)
+            eventView!.memories = memories
             eventView!.hidden = false
             tag++
         }

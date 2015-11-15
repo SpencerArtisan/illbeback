@@ -106,9 +106,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     @IBAction func currentLocation(sender: AnyObject) {
         if here != nil {
-            let span = MKCoordinateSpan(latitudeDelta: 0.016, longitudeDelta: 0.016)
-            let region = MKCoordinateRegion(center: here.coordinate, span: span)
-            self.map.setRegion(region, animated: true)
+            centerMap(here!.coordinate)
         }
     }
     
@@ -565,10 +563,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 let geocoder = CLGeocoder()
                 geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
                     if let placemark = placemarks?[0] {
-                        let span = MKCoordinateSpan(latitudeDelta: 0.016, longitudeDelta: 0.016)
-                        let region = MKCoordinateRegion(center: placemark.location!.coordinate, span: span)
-                        self.map.setRegion(region, animated: true)
-                        
+                        self.centerMap(placemark.location!.coordinate)
                         self.addMemory.addBlank(self, location: placemark.location!.coordinate, description: textView.text)
                     }
                 })
@@ -591,6 +586,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
         return true
         
+    }
+    
+    
+    func centerMap(at: CLLocationCoordinate2D) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.016, longitudeDelta: 0.016)
+        let region = MKCoordinateRegion(center: at, span: span)
+        self.map.setRegion(region, animated: true)
+
     }
 }
 
