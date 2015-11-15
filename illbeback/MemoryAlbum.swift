@@ -15,17 +15,15 @@ public class MemoryAlbum {
     var newMemories = [String: Memory]()
     private var props: NSDictionary?
     private var map: MKMapView
-    private let user: String
     
-    init(map: MKMapView, user: String) {
+    init(map: MKMapView) {
         self.map = map
-        self.user = user
         read()
     }
     
     func sharer() -> Sharer {
         if self._sharer == nil {
-            self._sharer = Sharer(memoryAlbum: self, user: user)
+            self._sharer = Sharer(memoryAlbum: self)
         }
         return _sharer!
     }
@@ -54,13 +52,12 @@ public class MemoryAlbum {
         return oldMemories[memory.id] != nil || newMemories[memory.id] != nil
     }
 
-    func downloadNewShares(user: User,
-                           onStart: (memory: Memory) -> Void,
+    func downloadNewShares(onStart: (memory: Memory) -> Void,
                            onComplete: (memory: Memory) -> Void,
                            onAckReceipt: (memory: Memory) -> Void) {
         print("Checking for new shared memories")
-        if (user.hasName()) {
-            sharer().retrieveShares(user.getName(),
+        if (Global.getUser().hasName()) {
+            sharer().retrieveShares(Global.getUser().getName(),
                 onStart: {sender, memory in
                     print("Receiving shared memory from " + sender + ": " + memory.asString())
                     onStart(memory: memory)

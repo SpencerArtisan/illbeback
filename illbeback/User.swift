@@ -23,12 +23,12 @@ class User {
     
     func setName(name: String) {
         self.name = name
+        print("Setting user name to \(name)")
         write()
-        Global.setUser(self)
     }
     
     func hasName() -> Bool {
-        return name != nil
+        return name != nil && name != ""
     }
     
     func getFriends() -> [String] {

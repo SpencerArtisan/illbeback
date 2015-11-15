@@ -32,7 +32,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var searchModal: Modal?
     var shapeModal: Modal?
 
-    let user = User()
     var messageModals: [Modal] = []
     let queue = dispatch_queue_create("com.artisan.cachequeue", DISPATCH_QUEUE_CONCURRENT);
     var downloadingMessages = [String:Modal]()
@@ -90,12 +89,26 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.rememberController = RememberController(album: photoAlbum, memoriesController: self)
         self.zoomController = ZoomSwipeController()
         self.shapeController = ShapeController(map: map, memories: self)
-        self.shareController = ShareController(user: user, memories: self)
+        self.shareController = ShareController(memories: self)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
         self.newUserText.delegate = self
         self.searchText.delegate = self
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"nameTaken:", name: "NameTaken", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"nameAccepted:", name: "NameAccepted", object: nil)
+    }
+    
+    func nameTaken(note: NSNotification) {
+        let takenName = note.userInfo!["name"]
+        self.showMessage("Sharing name \(takenName!) taken!", color: UIColor.redColor(), fontColor: UIColor.whiteColor(), time: 3.0)
+        ensureUserKnown()
+    }
+    
+    func nameAccepted(note: NSNotification) {
+        let name = note.userInfo!["name"]
+        self.showMessage("Weclome to Backmap \(name!)", color: UIColor.greenColor(), fontColor: UIColor.blackColor(), time: 3.0)
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
@@ -227,8 +240,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
         downloadingMessages.removeAll()
         
-        memoryAlbum.downloadNewShares(user,
-            onStart: {memory in
+        memoryAlbum.downloadNewShares(
+            {memory in
                 print("onStart callback for downloading \(memory.asString())")
                 let color = CategoryController.getColorForCategory(memory.type)
                 let title = "Downloading " + memory.type
@@ -302,7 +315,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     private func ensureUserKnown() {
-        if (!user.hasName()) {
+        if (!Global.userDefined()) {
             newUserLabel.text = "Your sharing name"
             newUserText.becomeFirstResponder()
             newUserText.text = ""
@@ -340,7 +353,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     func initMemories() {
-        memoryAlbum = MemoryAlbum(map: map, user: user.getName())
+        memoryAlbum = MemoryAlbum(map: map)
         memoryAlbum.addToMap()
     }
     
@@ -376,7 +389,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the UI
     func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation?, when: NSDate?) {
         let actualLocation = location == nil ? here.coordinate : location!
-        let memory = Memory(id: id, type: type, description: description, location: actualLocation, user: user, orientation: orientation, when: when)
+        let memory = Memory(id: id, type: type, description: description, location: actualLocation, user: Global.getUser(), orientation: orientation, when: when)
         memoryAlbum.add(memory)
     }
     
@@ -572,11 +585,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 
                 newUserModal?.slideInFromRight(self.view)
                 
-                if (!user.hasName()) {
-                    user.setName(textView.text)
+                if (!Global.userDefined()) {
+                    Global.setUserName(textView.text)
                     newUserText.resignFirstResponder()
                 } else {
-                    user.addFriend(textView.text)
+                    Global.getUser().addFriend(textView.text)
                     newUserText.resignFirstResponder()
                     shareController.shareWith(textView.text)
                 }

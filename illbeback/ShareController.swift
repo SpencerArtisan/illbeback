@@ -9,15 +9,13 @@
 import Foundation
 
 class ShareController : UIViewController {
-    var user: User
     var shareModal: Modal?
     var pinsToShare: [MapPinView] = []
     var memories: MemoriesController
     
-    init(user: User, memories: MemoriesController) {
+    init(memories: MemoriesController) {
         self.shareModal = Modal(viewName: "ShareView", owner: memories)
         self.memories = memories
-        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -34,7 +32,7 @@ class ShareController : UIViewController {
         let deleteImage = UIImage(named: "trash")!
         
         var tag = 3
-        let friends: [String] = user.getFriends()
+        let friends: [String] = Global.getUser().getFriends()
         for friend in friends {
             let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
             shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
@@ -76,7 +74,7 @@ class ShareController : UIViewController {
         let shareImage = UIImage(named: "share")!
        
         var tag = 3
-        let friends: [String] = user.getFriends()
+        let friends: [String] = Global.getUser().getFriends()
         for friend in friends {
             let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
             shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
@@ -128,7 +126,7 @@ class ShareController : UIViewController {
         var failed = 0
         
         for pin in pinsToShare {
-            memories.memoryAlbum.share(pin, from: user.getName(), to: friend, onComplete: {
+            memories.memoryAlbum.share(pin, from: Global.getUser().getName(), to: friend, onComplete: {
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     self.memories.delay(0.4) {
                         self.memories.dismissMessage(message)
@@ -171,11 +169,11 @@ class ShareController : UIViewController {
     }
     
     func acceptRecentShare(memory: Memory) {
-        memories.memoryAlbum.acceptRecentShare(memory, from: user.getName())
+        memories.memoryAlbum.acceptRecentShare(memory, from: Global.getUser().getName())
     }
     
     func declineRecentShare(memory: Memory) {
-        memories.memoryAlbum.declineRecentShare(memory, from: user.getName())
+        memories.memoryAlbum.declineRecentShare(memory, from: Global.getUser().getName())
     }
     
     func hideShareModal(sender: AnyObject?) {
@@ -233,7 +231,7 @@ class ShareController : UIViewController {
     
     func deleteFriendConfirmed(sender: AnyObject?) {
         let friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        user.removeFriend(friend!)
+        Global.getUser().removeFriend(friend!)
         showEditFriends()
     }
     

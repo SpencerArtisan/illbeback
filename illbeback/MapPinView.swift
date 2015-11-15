@@ -171,7 +171,7 @@ class MapPinView: MKAnnotationView {
         labelView = UIView(frame: labelArea!)
         labelView!.backgroundColor = UIColor.whiteColor()
         labelView!.addSubview(titleView!)
-        if (memoriesController?.user.getName() != memory?.originator) {
+        if (Global.getUser().getName() != memory?.originator) {
          labelView!.addSubview(originatorView!)
         }
         for inviteeView in inviteeViews {
@@ -297,7 +297,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createOriginatorLabel() {
-        if (memoriesController?.user.getName() != memory?.originator) {
+        if (Global.getUser().getName() != memory?.originator) {
             fromHeight = 25
         }
         originatorView = UILabel(frame: CGRectMake(0, 40, labelArea!.width, 25))

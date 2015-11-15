@@ -5,7 +5,7 @@ public class Sharer {
     private var memoryAlbum: MemoryAlbum
     private static var deviceToken: NSData?
     
-    init(memoryAlbum: MemoryAlbum, user: String) {
+    init(memoryAlbum: MemoryAlbum) {
         self.memoryAlbum = memoryAlbum
         root = Firebase(url:"https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.defaultS3TransferManager()

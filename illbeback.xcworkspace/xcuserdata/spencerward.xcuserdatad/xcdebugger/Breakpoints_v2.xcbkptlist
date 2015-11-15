@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "342"
+            endingLineNumber = "342"
             landmarkName = "showMessage(_:color:fontColor:time:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -312,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "445"
-            endingLineNumber = "445"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
             landmarkName = "MemoriesController"
             landmarkType = "3">
          </BreakpointContent>
@@ -328,11 +328,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "471"
-            endingLineNumber = "471"
+            startingLineNumber = "484"
+            endingLineNumber = "484"
             landmarkName = "mapView(_:viewForAnnotation:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -360,11 +360,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
+            startingLineNumber = "398"
+            endingLineNumber = "398"
             landmarkName = "deleteMemory(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -376,11 +376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoryAlbum.swift"
-            timestampString = "469270741.98799"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "save()"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoryAlbum.swift"
-            timestampString = "469270741.98799"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "read()"
             landmarkType = "5">
          </BreakpointContent>
@@ -440,11 +440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "friends(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -568,11 +568,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469230331.039744"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -632,11 +632,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoryAlbum.swift"
-            timestampString = "469270741.98799"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "declineRecentShare(_:from:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -808,11 +808,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/ShareController.swift"
-            timestampString = "468698410.991017"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "shareMemory(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -824,11 +824,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/ShareController.swift"
-            timestampString = "468698410.991017"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "hideShareModal(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -840,11 +840,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/ShareController.swift"
-            timestampString = "468698410.991017"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "shareMemoryCancelled(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -856,11 +856,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/ShareController.swift"
-            timestampString = "468698410.991017"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
             landmarkName = "shareNewFriendCancelled(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -872,11 +872,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/ShareController.swift"
-            timestampString = "468698410.991017"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
             landmarkName = "ShareController"
             landmarkType = "3">
          </BreakpointContent>
@@ -936,11 +936,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoryAlbum.swift"
-            timestampString = "469270741.98799"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "MemoryAlbum"
             landmarkType = "3">
          </BreakpointContent>
@@ -1224,11 +1224,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/ShareController.swift"
-            timestampString = "468698410.991017"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "shareMemoryCancelled(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1672,11 +1672,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "downloadNewShares(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1784,11 +1784,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
             landmarkName = "MemoriesController"
             landmarkType = "3">
          </BreakpointContent>
@@ -1800,11 +1800,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "347"
-            endingLineNumber = "347"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "initLocationManager()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1816,11 +1816,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "348"
-            endingLineNumber = "348"
+            startingLineNumber = "361"
+            endingLineNumber = "361"
             landmarkName = "initLocationManager()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1944,11 +1944,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoryAlbum.swift"
-            timestampString = "469215402.91434"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "addToMap()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1960,11 +1960,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoryAlbum.swift"
-            timestampString = "469215402.91434"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "addToMap()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1976,11 +1976,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoryAlbum.swift"
-            timestampString = "469215402.91434"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
             landmarkName = "addToMap()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1992,11 +1992,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "488"
-            endingLineNumber = "488"
+            startingLineNumber = "501"
+            endingLineNumber = "501"
             landmarkName = "mapView(_:annotationView:didChangeDragState:fromOldState:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2008,11 +2008,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoryAlbum.swift"
-            timestampString = "469270741.98799"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "save()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2056,11 +2056,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "507"
-            endingLineNumber = "507"
+            startingLineNumber = "520"
+            endingLineNumber = "520"
             landmarkName = "mapView(_:didAddAnnotationViews:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2072,11 +2072,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "506"
-            endingLineNumber = "506"
+            startingLineNumber = "519"
+            endingLineNumber = "519"
             landmarkName = "mapView(_:didAddAnnotationViews:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2088,11 +2088,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "503"
-            endingLineNumber = "503"
+            startingLineNumber = "516"
+            endingLineNumber = "516"
             landmarkName = "mapView(_:didAddAnnotationViews:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2104,11 +2104,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "499"
-            endingLineNumber = "499"
+            startingLineNumber = "512"
+            endingLineNumber = "512"
             landmarkName = "mapView(_:annotationView:didChangeDragState:fromOldState:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2120,11 +2120,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "500"
-            endingLineNumber = "500"
+            startingLineNumber = "513"
+            endingLineNumber = "513"
             landmarkName = "mapView(_:annotationView:didChangeDragState:fromOldState:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2360,11 +2360,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
             landmarkName = "downloadNewShares(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2376,11 +2376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
+            startingLineNumber = "290"
+            endingLineNumber = "290"
             landmarkName = "downloadNewShares(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2392,11 +2392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274245.31426"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "403"
-            endingLineNumber = "403"
+            startingLineNumber = "416"
+            endingLineNumber = "416"
             landmarkName = "acceptRecentShare(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2536,11 +2536,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/Global.swift"
-            timestampString = "469193722.957675"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "storeDeviceToken()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2744,11 +2744,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoryAlbum.swift"
-            timestampString = "469215402.91434"
+            timestampString = "469280205.630077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "allMemories()"
             landmarkType = "5">
             <Locations>
@@ -2808,11 +2808,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469230331.039744"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "takePhoto(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2840,12 +2840,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/MemoriesController.swift"
-            timestampString = "469274170.123333"
+            timestampString = "469281268.525107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "currentLocation(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbeback/MemoriesController.swift"
+            timestampString = "469280364.866181"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "nameTaken(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
