@@ -24,19 +24,19 @@ class Modal {
     }
     
     func slideOutFromLeft(parentView: UIView) {
-        slideHorizontally(parentView, start: -250, end: 0, hide: false)
+        slideHorizontally(parentView, start: -350, end: 0, hide: false)
     }
 
     func slideInFromLeft(parentView: UIView) {
-        slideHorizontally(parentView, start: 0, end: -250, hide: true)
+        slideHorizontally(parentView, start: 0, end: -350, hide: true)
     }
     
     func slideOutFromRight(parentView: UIView) {
-        slideHorizontally(parentView, start: 350, end: 0, hide: false)
+        slideHorizontally(parentView, start: 450, end: 0, hide: false)
     }
     
     func slideInFromRight(parentView: UIView) {
-        slideHorizontally(parentView, start: 0, end: 350, hide: false)
+        slideHorizontally(parentView, start: 0, end: 450, hide: false)
     }
     
     func hide() {
@@ -64,7 +64,7 @@ class Modal {
     private func slideVertically(parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
         if self.view.superview == nil {
             parentView.addSubview(self.view)
-            self.view.frame = parentView.frame
+            self.view.frame = CGRectMake(0, 0, parentView.frame.width, self.view.frame.height)
         }
         self.view.frame.origin.y = start
         

@@ -31,9 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
         }
         
-        let settings = UIUserNotificationSettings(forTypes: [.Badge, .Alert], categories: nil)
-        UIApplication.sharedApplication().registerForRemoteNotifications()
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        #if (arch(i386) || arch(x86_64)) && os(iOS)
+            print("SIMULATOR")
+            Global.setDevice(NSData(bytes: [0xff] as [UInt8], length: 1))
+        #else
+            let settings = UIUserNotificationSettings(forTypes: [.Badge, .Alert], categories: nil)
+            UIApplication.sharedApplication().registerForRemoteNotifications()
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        #endif
+        
         
         return true
     }

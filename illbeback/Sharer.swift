@@ -148,16 +148,16 @@ public class Sharer {
         memory.justSent(to)
         let originalOriginator = memory.originator
         let originalInvitees = memory.invitees
-        let originalState = memory.state
+        
         memory.originator = from
         memory.invitees = []
-        memory.state = Memory.CATEGORY_SENT
+        
         print("FIREBASE OP: Uploading memory " + memory.asString())
         let newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": from, "memory": memory.asString()])
         memory.originator = originalOriginator
         memory.invitees = originalInvitees
-        memory.state = originalState
+        
     }
     
     private func shareRoot(to: String) -> Firebase {

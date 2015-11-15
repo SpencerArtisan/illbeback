@@ -150,12 +150,12 @@ public class MemoryAlbum {
     }
     
     func acceptRecentShare(memory: Memory, from: String) {
-        print("Accepting share \(memory)")
+        print("Accepting share \(memory.asString())")
         sharer().uploadMemory(from, to: memory.originator, memory: memory)
     }
     
     func declineRecentShare(memory: Memory, from: String) {
-        print("Declining share \(memory)")
+        print("Declining share \(memory.asString())")
         sharer().uploadMemory(from, to: memory.originator, memory: memory)
     }
     
