@@ -182,11 +182,19 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
             updateEventPins()
+            checkForImminentEvents()
         }
-
+        
         downloadNewShares()
         
         self.lastTimeAppUsed = NSDate()
+    }
+    
+    func checkForImminentEvents() {
+        let imminentEvents = memoryAlbum.getImminentEvents()
+        if imminentEvents.count > 0 && imminentEvents[0].daysToGo() < 2 {
+            eventController.showEvents()
+        }
     }
     
     func updateEventPins() {
