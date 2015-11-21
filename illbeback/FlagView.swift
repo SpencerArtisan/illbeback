@@ -37,12 +37,12 @@ class FlagView: UIView {
     func setMemory(memory: Memory) {
         self.memory = memory
         titleView.text = " \(memory.summary())"
-        
         colorByCategory()
     }
-
     
     private func colorByCategory() {
+        typeView.image = CategoryController.getImageForCategory(self.memory!.type)
+        bkgView.backgroundColor = CategoryController.getColorForCategory(self.memory!.type).colorWithAlphaComponent(0.8)
     }
     
     private func loadXib() {

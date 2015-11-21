@@ -28,6 +28,10 @@ public class MemoryAlbum {
         return _sharer!
     }
     
+    func getNewMemories() -> [Memory] {
+        return [newMemories.values].flatMap {$0}
+    }
+    
     func allMemories() -> [Memory] {
         return [oldMemories.values, newMemories.values].flatMap {$0}
     }

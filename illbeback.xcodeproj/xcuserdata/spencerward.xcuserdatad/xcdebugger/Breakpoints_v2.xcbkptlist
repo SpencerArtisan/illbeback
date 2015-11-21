@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/CategoryController.swift"
-            timestampString = "465340927.432206"
+            timestampString = "469828798.61523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
             landmarkName = "getColorForCategory(_:)"
             landmarkType = "5">
          </BreakpointContent>

@@ -39,7 +39,7 @@ class FlagsController: UIViewController, UITextViewDelegate {
         delay(1) {
             self.cancelButton.enabled = true
         }
-        let flags = memories.memoryAlbum.getAllEventsExcludingDuplicates()
+        let flags = memories.memoryAlbum.getNewMemories()
         var tag = 1
         for flag in flags {
             let flagView = flagsModal.findElementByTag(tag) as? FlagView
