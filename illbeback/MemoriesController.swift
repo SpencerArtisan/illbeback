@@ -180,43 +180,13 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
         ensureUserKnown()
         
-        var delaySeconds = 0.0
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
-            delaySeconds = remindersForImminentEvents()
             updateEventPins()
         }
 
-        downloadNewShares(delaySeconds)
+        downloadNewShares()
         
         self.lastTimeAppUsed = NSDate()
-    }
-    
-    func remindersForImminentEvents() -> Double {
-        var delaySeconds = 0.0
-        let memoryDuration = 2.0
-        
-        let events = memoryAlbum.getImminentEvents()
-        for event in events {
-            var color = CategoryController.getColorForCategory(event.type)
-            var fontColor = UIColor.whiteColor()
-            self.delay(delaySeconds) {
-                var message = ""
-                if event.daysToGo() == 1 {
-                    color = UIColor(red: 0.8, green: 0.5, blue: 0, alpha: 1)
-                    message = event.description == "" ? "An event is happening tomorrow" : "Tomorrow is \(event.summary())"
-                } else if event.daysToGo() == 0 {
-                    color = UIColor(red: 1.0, green: 0.2, blue: 0, alpha: 1)
-                    message = event.description == "" ? "An event is happening today!" : "Today is \(event.summary())"
-                } else {
-                    fontColor = UIColor.blackColor()
-                    message = event.description == "" ? "\(event.daysToGo()) days until an event" : "\(event.daysToGo()) days until \(event.summary())"
-                }
-                self.showMessage(message, color: color, fontColor: fontColor, time: memoryDuration)
-            }
-            delaySeconds += memoryDuration
-        }
-        
-        return delaySeconds
     }
     
     func updateEventPins() {
@@ -240,9 +210,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
     }
     
-    func downloadNewShares(delaySeconds: Double) {
-        var delaySeconds1 = delaySeconds
-        var delaySeconds2 = delaySeconds
+    func downloadNewShares() {
+        var delaySeconds1: Double = 0
+        var delaySeconds2: Double = 0
         
         for oldDownload in downloadingMessages.values {
             oldDownload.slideUpFromTop(self.view)
