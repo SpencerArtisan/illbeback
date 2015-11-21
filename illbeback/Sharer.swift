@@ -79,7 +79,7 @@ public class Sharer {
                         })
                     }
                 }
-                self.updateBadge(to, badge: snapshot.childrenCount)
+//                self.updateBadge(to, badge: snapshot.childrenCount)
         })
     }
     
