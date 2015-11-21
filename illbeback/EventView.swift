@@ -15,6 +15,7 @@ class EventView: UIView {
     
     var memories: MemoriesController!
     private var event: Memory?
+    private var normalColor: UIColor?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,6 +36,7 @@ class EventView: UIView {
         self.event = event
         title.text = " \(event.summary())"
         when.text = formatWhen(event)
+        colorIfSoon()
     }
     
     private func formatWhen(event: Memory) -> String {
@@ -52,7 +54,17 @@ class EventView: UIView {
             formatter2.dateFormat = "d MMM"
             return "\(formatter.stringFromDate(event.when!))\r\n\(formatter2.stringFromDate(event.when!))"
         }
+    }
     
+    private func colorIfSoon() {
+        if event?.daysToGo() < 2 {
+            normalColor = when.backgroundColor
+            when.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.86)
+        } else {
+            if normalColor != nil {
+                when.backgroundColor = normalColor
+            }
+        }
     }
     
     private func loadXib() {
