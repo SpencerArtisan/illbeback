@@ -177,7 +177,9 @@ public class MemoryAlbum {
 
     func inviteeDeclined(invitee: String, memoryId: String) {
         let memory = oldMemories[memoryId]
-        memory!.inviteeDeclined(invitee)
+        if memory != nil {
+            memory!.inviteeDeclined(invitee)
+        }
     }
     
     func save() {
