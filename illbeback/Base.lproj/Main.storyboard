@@ -172,8 +172,8 @@
                                     <action selector="showEvents:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="ONO-Im-j7y"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPX-1B-P6g" userLabel="newStuff">
-                                <rect key="frame" x="20" y="0.0" width="50" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPX-1B-P6g" userLabel="newStuff">
+                                <rect key="frame" x="4" y="0.0" width="50" height="50"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="0Hk-9z-ESi"/>
@@ -199,7 +199,7 @@
                             <constraint firstItem="DtY-Nv-kkq" firstAttribute="width" secondItem="HH0-zd-1ZB" secondAttribute="width" id="MvN-tI-H4Q"/>
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="OYa-GC-pvf"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="leading" secondItem="ZNr-gZ-dda" secondAttribute="trailing" constant="8" symbolic="YES" id="QWV-sH-mzq"/>
-                            <constraint firstItem="KPX-1B-P6g" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="UQY-Ta-6Nj"/>
+                            <constraint firstItem="KPX-1B-P6g" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="-15" id="UQY-Ta-6Nj"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="leading" secondItem="DtY-Nv-kkq" secondAttribute="trailing" constant="8" symbolic="YES" id="UWp-wg-0ig"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="width" secondItem="fbX-Mm-eun" secondAttribute="width" id="Uy4-sE-ClH"/>
                             <constraint firstItem="HH0-zd-1ZB" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="VYa-Rm-faC"/>
@@ -212,7 +212,7 @@
                             <constraint firstItem="fbX-Mm-eun" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="foE-Fa-72T"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="height" secondItem="fbX-Mm-eun" secondAttribute="height" id="gOA-D7-t5i"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="oSw-8q-NAR"/>
-                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="ZNr-gZ-dda" secondAttribute="bottom" constant="35" id="pab-XA-2Zf"/>
+                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="ZNr-gZ-dda" secondAttribute="bottom" constant="30" id="pab-XA-2Zf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
