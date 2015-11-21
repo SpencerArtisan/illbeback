@@ -47,8 +47,6 @@ class EventView: UIView {
             return "tomorrow"
         } else if event.daysToGo() < 7 {
             return formatter.stringFromDate(event.when!)
-        } else if event.daysToGo() < 14 {
-            return "next\r\n\(formatter.stringFromDate(event.when!))"
         } else {
             let formatter2 = NSDateFormatter()
             formatter2.dateFormat = "d MMM"
