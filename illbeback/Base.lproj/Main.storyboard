@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mDu-Dq-cTC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mDu-Dq-cTC">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -172,6 +172,18 @@
                                     <action selector="showEvents:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="ONO-Im-j7y"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPX-1B-P6g" userLabel="newStuff">
+                                <rect key="frame" x="20" y="0.0" width="50" height="50"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="0Hk-9z-ESi"/>
+                                    <constraint firstAttribute="width" constant="50" id="Fzk-YR-sy3"/>
+                                </constraints>
+                                <state key="normal" image="newStuff"/>
+                                <connections>
+                                    <action selector="showNewStuff:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="I47-qk-AKe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -181,11 +193,13 @@
                             <constraint firstAttribute="trailing" secondItem="dG8-Di-Pbv" secondAttribute="trailing" id="9OA-Rd-N8G"/>
                             <constraint firstItem="ZNr-gZ-dda" firstAttribute="leading" secondItem="HH0-zd-1ZB" secondAttribute="trailing" constant="8" symbolic="YES" id="9Vv-XO-hJS"/>
                             <constraint firstItem="DtY-Nv-kkq" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="Dlf-ik-2Fr"/>
+                            <constraint firstItem="KPX-1B-P6g" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="HmD-5v-KBY"/>
                             <constraint firstItem="ZNr-gZ-dda" firstAttribute="width" secondItem="HH0-zd-1ZB" secondAttribute="width" id="JEf-qf-8mo"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="JbX-y1-Zg8"/>
                             <constraint firstItem="DtY-Nv-kkq" firstAttribute="width" secondItem="HH0-zd-1ZB" secondAttribute="width" id="MvN-tI-H4Q"/>
                             <constraint firstItem="dG8-Di-Pbv" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="OYa-GC-pvf"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="leading" secondItem="ZNr-gZ-dda" secondAttribute="trailing" constant="8" symbolic="YES" id="QWV-sH-mzq"/>
+                            <constraint firstItem="KPX-1B-P6g" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="UQY-Ta-6Nj"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="leading" secondItem="DtY-Nv-kkq" secondAttribute="trailing" constant="8" symbolic="YES" id="UWp-wg-0ig"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="width" secondItem="fbX-Mm-eun" secondAttribute="width" id="Uy4-sE-ClH"/>
                             <constraint firstItem="HH0-zd-1ZB" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="VYa-Rm-faC"/>
@@ -239,7 +253,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Circle" width="100" height="100"/>
+        <image name="Circle" width="75" height="75"/>
         <image name="Circle Small" width="50" height="50"/>
         <image name="Friend" width="32" height="32"/>
         <image name="Pigeon" width="800" height="613"/>
@@ -247,8 +261,9 @@
         <image name="Shape" width="32" height="32"/>
         <image name="alarmblue" width="25" height="25"/>
         <image name="camera" width="26" height="26"/>
-        <image name="camerablue" width="52" height="52"/>
+        <image name="camerablue" width="50" height="50"/>
         <image name="globe" width="26" height="26"/>
         <image name="here" width="29" height="29"/>
+        <image name="newStuff" width="25" height="25"/>
     </resources>
 </document>

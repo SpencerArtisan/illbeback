@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FlagsController" customModule="I_ll_Be_Back" customModuleProvider="target">
+            <connections>
+                <outlet property="cancelButton" destination="Bmh-GY-6Of" id="tWm-3n-ulY"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bmh-GY-6Of" userLabel="cancel">
+                    <rect key="frame" x="8" y="8" width="584" height="584"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Aaj-68-oPK"/>
+                    </connections>
+                </button>
+                <view tag="1" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5n2-BP-cnt" customClass="FlagView" customModule="I_ll_Be_Back" customModuleProvider="target">
+                    <rect key="frame" x="8" y="105" width="278" height="40"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="240" id="Ud1-L0-6er"/>
+                        <constraint firstAttribute="height" constant="40" id="XL2-8K-ie4"/>
+                    </constraints>
+                </view>
+                <view tag="2" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cD6-wa-Qq7" customClass="FlagView" customModule="I_ll_Be_Back" customModuleProvider="target">
+                    <rect key="frame" x="8" y="146" width="278" height="40"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="7M2-Mr-tw3"/>
+                        <constraint firstAttribute="width" constant="278" id="7eK-LB-bOe"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="7eK-LB-bOe"/>
+                            <exclude reference="7M2-Mr-tw3"/>
+                        </mask>
+                    </variation>
+                </view>
+                <view tag="3" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xsa-Fp-YX9" customClass="FlagView" customModule="I_ll_Be_Back" customModuleProvider="target">
+                    <rect key="frame" x="8" y="187" width="278" height="40"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="Ckx-Hm-2nT"/>
+                        <constraint firstAttribute="width" constant="278" id="o3c-Xc-at1"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="o3c-Xc-at1"/>
+                            <exclude reference="Ckx-Hm-2nT"/>
+                        </mask>
+                    </variation>
+                </view>
+                <view tag="4" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wCa-kM-QKT" customClass="FlagView" customModule="I_ll_Be_Back" customModuleProvider="target">
+                    <rect key="frame" x="8" y="228" width="278" height="40"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="278" id="au3-Pz-0oO"/>
+                        <constraint firstAttribute="height" constant="70" id="kQU-sB-1Vc"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="au3-Pz-0oO"/>
+                            <exclude reference="kQU-sB-1Vc"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="5n2-BP-cnt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="105" id="5kW-pu-9xi"/>
+                <constraint firstItem="Bmh-GY-6Of" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="7Kt-rw-Mtc"/>
+                <constraint firstItem="Xsa-Fp-YX9" firstAttribute="top" secondItem="cD6-wa-Qq7" secondAttribute="bottom" constant="1" id="8qa-CI-FZP"/>
+                <constraint firstAttribute="bottomMargin" secondItem="Bmh-GY-6Of" secondAttribute="bottom" id="BQk-jX-BVr"/>
+                <constraint firstItem="cD6-wa-Qq7" firstAttribute="top" secondItem="5n2-BP-cnt" secondAttribute="bottom" constant="15" id="Bur-VH-xkc"/>
+                <constraint firstItem="wCa-kM-QKT" firstAttribute="top" secondItem="Xsa-Fp-YX9" secondAttribute="bottom" constant="1" id="CDz-WV-fcW"/>
+                <constraint firstItem="wCa-kM-QKT" firstAttribute="width" secondItem="5n2-BP-cnt" secondAttribute="width" id="FoI-QQ-MTY"/>
+                <constraint firstItem="cD6-wa-Qq7" firstAttribute="top" secondItem="5n2-BP-cnt" secondAttribute="bottom" constant="15" id="Gpd-G0-8M8"/>
+                <constraint firstItem="cD6-wa-Qq7" firstAttribute="width" secondItem="5n2-BP-cnt" secondAttribute="width" id="RwB-hQ-Sne"/>
+                <constraint firstItem="Xsa-Fp-YX9" firstAttribute="height" secondItem="5n2-BP-cnt" secondAttribute="height" id="S1i-N8-6BA"/>
+                <constraint firstItem="wCa-kM-QKT" firstAttribute="leading" secondItem="5n2-BP-cnt" secondAttribute="leading" id="TN2-Gc-pBv"/>
+                <constraint firstItem="cD6-wa-Qq7" firstAttribute="top" secondItem="5n2-BP-cnt" secondAttribute="bottom" constant="1" id="Vqk-Xi-QfD"/>
+                <constraint firstItem="wCa-kM-QKT" firstAttribute="height" secondItem="5n2-BP-cnt" secondAttribute="height" id="Z7k-Dj-Dy5"/>
+                <constraint firstItem="cD6-wa-Qq7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="Zm1-0T-dWU"/>
+                <constraint firstItem="5n2-BP-cnt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="cn9-Mz-V3z"/>
+                <constraint firstItem="cD6-wa-Qq7" firstAttribute="leading" secondItem="5n2-BP-cnt" secondAttribute="leading" id="d1M-1g-Wy7"/>
+                <constraint firstAttribute="trailingMargin" secondItem="Bmh-GY-6Of" secondAttribute="trailing" id="d1f-da-2tS"/>
+                <constraint firstItem="Xsa-Fp-YX9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="f0d-uT-yjH"/>
+                <constraint firstItem="Xsa-Fp-YX9" firstAttribute="top" secondItem="cD6-wa-Qq7" secondAttribute="bottom" constant="33" id="fKg-Gw-cQj"/>
+                <constraint firstItem="cD6-wa-Qq7" firstAttribute="height" secondItem="5n2-BP-cnt" secondAttribute="height" id="h76-cH-MfG"/>
+                <constraint firstItem="Xsa-Fp-YX9" firstAttribute="top" secondItem="cD6-wa-Qq7" secondAttribute="bottom" constant="33" id="jqz-DW-QZp"/>
+                <constraint firstItem="Xsa-Fp-YX9" firstAttribute="width" secondItem="5n2-BP-cnt" secondAttribute="width" id="n0F-Fk-gLJ"/>
+                <constraint firstItem="Xsa-Fp-YX9" firstAttribute="leading" secondItem="5n2-BP-cnt" secondAttribute="leading" id="nHO-bq-b4R"/>
+                <constraint firstItem="Bmh-GY-6Of" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="oOT-BM-qbA"/>
+                <constraint firstItem="wCa-kM-QKT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="qO6-JU-wTd"/>
+            </constraints>
+            <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Bur-VH-xkc"/>
+                    <exclude reference="Gpd-G0-8M8"/>
+                    <exclude reference="d1M-1g-Wy7"/>
+                    <exclude reference="fKg-Gw-cQj"/>
+                    <exclude reference="jqz-DW-QZp"/>
+                    <exclude reference="nHO-bq-b4R"/>
+                    <exclude reference="TN2-Gc-pBv"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

@@ -30,6 +30,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var zoomController: ZoomSwipeController!
     var shareController: ShareController!
     var eventController: EventsController!
+    var flagController: FlagsController!
 
     var newUserModal: Modal?
     var searchModal: Modal?
@@ -48,6 +49,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     func getView() -> UIView {
         return self.view
+    }
+    
+    @IBAction func showNewStuff(sender: AnyObject) {
+        flagController.showFlags()
     }
     
     @IBAction func showEvents(sender: AnyObject) {
@@ -88,6 +93,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum, memoriesViewController: self)
         self.eventController = EventsController(memoriesViewController: self)
+        self.flagController = FlagsController(memoriesViewController: self)
         self.rephotoController = RephotoController(photoAlbum: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum, memoriesController: self)
         self.zoomController = ZoomSwipeController()
