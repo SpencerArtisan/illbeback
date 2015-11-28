@@ -19,7 +19,9 @@ class Global {
     
     static func setDevice(deviceToken: NSData) {
         self.deviceToken = deviceToken
-        storeDeviceToken()
+        if userDefined() {
+            storeDeviceToken(true)
+        }
     }
     
     static func userDefined() -> Bool {
@@ -28,10 +30,10 @@ class Global {
     
     static func setUserName(name: String) {
         user.setName(name)
-        storeDeviceToken()
+        storeDeviceToken(false)
     }
     
-    static func storeDeviceToken() {
+    static func storeDeviceToken(allowOverwrite: Bool) {
         if !tokenStored && deviceToken != nil && userDefined() {
             tokenStored = true
           
@@ -53,11 +55,16 @@ class Global {
                     print("FIREBASE OP: Existing device token \(existingToken!)")
                     if existingToken! as! String != tokenString {
                         print("FIREBASE OP: Device token MISMATCH!")
-                        let takenName = user.getName()
-                        user.setName("")
-                        tokenStored = false
-                        NSNotificationCenter.defaultCenter().postNotificationName("NameTaken", object: nil, userInfo: ["name":takenName])
-                        return
+                        if allowOverwrite {
+                            print("FIREBASE OP: Overwriting old device token")
+                            NSNotificationCenter.defaultCenter().postNotificationName("NameAccepted", object: nil, userInfo: ["name":user.getName()])
+                            node.setValue(["iphone": tokenString])                        
+                        } else {
+                            let takenName = user.getName()
+                            user.setName("")
+                            tokenStored = false
+                            NSNotificationCenter.defaultCenter().postNotificationName("NameTaken", object: nil, userInfo: ["name":takenName])
+                        }
                     }
                 }                
             })
