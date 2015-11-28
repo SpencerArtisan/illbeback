@@ -557,7 +557,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         textView.text = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
         
         if (textView == self.newUserText && text != "\n") {
-            if textView.text.characters.count > 10 { return false }
+            if textView.text.characters.count + text.characters.count > 14 { return false }
         }
         
         if (text == "\n" && !textView.text.isEmpty) {
