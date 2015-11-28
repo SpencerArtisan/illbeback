@@ -15,8 +15,10 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     let HOUR: Double = 60 * 60
     
     @IBOutlet weak var map: MKMapView!
-    
+    @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var alarmButton: UIButton!
+    @IBOutlet weak var sharingName: UITextView!
+    @IBOutlet weak var searchText: UITextView!
     
     var locationManager = CLLocationManager()
     var here: CLLocation!
@@ -43,9 +45,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var newUserText: UITextView!
     var lastTimeAppUsed: NSDate?
     
-    @IBOutlet weak var sharingName: UITextView!
-    
-    @IBOutlet weak var searchText: UITextView!
     
     func getView() -> UIView {
         return self.view
@@ -104,6 +103,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
         self.newUserText.delegate = self
         self.searchText.delegate = self
+        updateButtonStates()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"nameTaken:", name: "NameTaken", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"nameAccepted:", name: "NameAccepted", object: nil)
@@ -192,6 +192,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
         
         downloadNewShares()
+        updateButtonStates()
+        
         
         self.lastTimeAppUsed = NSDate()
     }
@@ -260,6 +262,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                         downloadingMessage?.slideUpFromTop(self.view)
                     }
                     self.showMessage(title, color: color, time: 2)
+                    self.updateButtonStates()
                 }
                 
                 delaySeconds2 += 1.5
@@ -384,6 +387,12 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         let actualLocation = location == nil ? here.coordinate : location!
         let memory = Memory(id: id, type: type, description: description, location: actualLocation, user: Global.getUser(), orientation: orientation, when: when)
         memoryAlbum.add(memory)
+        updateButtonStates()
+    }
+    
+    func updateButtonStates() {
+        alarmButton.hidden = memoryAlbum.getAllEvents().count == 0
+        newButton.hidden = memoryAlbum.getNewMemories().count == 0
     }
     
     // Callback for button on the callout
@@ -412,6 +421,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             memory.resetState()
         }
         memoryAlbum!.save()
+        updateButtonStates()
     }
     
     func declineRecentShare(memory: Memory) {
@@ -427,6 +437,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             map!.addAnnotation(oldMemory!.asMapPin())
         }
         memoryAlbum!.save()
+        updateButtonStates()
     }
     
     func shareMemory(pin: MapPinView) {
