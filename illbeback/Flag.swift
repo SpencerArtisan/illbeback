@@ -35,10 +35,15 @@ class Flag {
     }
     
     func update(description: String) throws {
-        guard _state == .Neutral && _updateOfferedToken == nil else {
+        guard canUpdate() else {
             throw StateMachineError.InvalidTransition
         }
         _token.description(description)
+    }
+    
+    func canUpdate() -> Bool {
+        return _state == .Neutral || _state == .AcceptingUpdate || _state == .DecliningUpdate ||
+               _state == .AcceptingNew 
     }
     
     func externalUpdate(token: FlagToken) {
