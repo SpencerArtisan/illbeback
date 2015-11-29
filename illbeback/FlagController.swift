@@ -18,7 +18,7 @@ class FlagsController: UIViewController, UITextViewDelegate {
     
     init(memoriesViewController: MemoriesController) {
         super.init(nibName: nil, bundle: nil)
-        flagsModal = Modal(viewName: "Flags", owner: self)
+        flagsModal = Modal(viewName: "FlagsView", owner: self)
         memories = memoriesViewController
     }
     

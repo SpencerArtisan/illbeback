@@ -23,6 +23,15 @@
 		9725CD401A98D2BE0081C1B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD3F1A98D2BE0081C1B3 /* Security.framework */; };
 		9725CD421A98D2C60081C1B3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD411A98D2C60081C1B3 /* SystemConfiguration.framework */; };
 		9725CD441A98D58B0081C1B3 /* Sharer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9725CD431A98D58B0081C1B3 /* Sharer.swift */; };
+		973F25201C0B7A160034A235 /* FlagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F251F1C0B7A160034A235 /* FlagTest.swift */; };
+		973F25221C0B7A2D0034A235 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25211C0B7A2D0034A235 /* Flag.swift */; };
+		973F25231C0B7A2D0034A235 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25211C0B7A2D0034A235 /* Flag.swift */; };
+		973F25251C0B7C450034A235 /* FlagState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25241C0B7C450034A235 /* FlagState.swift */; };
+		973F25261C0B7C450034A235 /* FlagState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25241C0B7C450034A235 /* FlagState.swift */; };
+		973F25281C0B7EC50034A235 /* FlagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25271C0B7EC50034A235 /* FlagToken.swift */; };
+		973F25291C0B7EC50034A235 /* FlagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25271C0B7EC50034A235 /* FlagToken.swift */; };
+		973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252A1C0B8F1E0034A235 /* StateMachineError.swift */; };
+		973F252C1C0B8F1E0034A235 /* StateMachineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252A1C0B8F1E0034A235 /* StateMachineError.swift */; };
 		97420BBE1A92A0320076E561 /* AddMemoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97420BBD1A92A0320076E561 /* AddMemoryController.swift */; };
 		9749EE451BF749E300C1606B /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9749EE441BF749E300C1606B /* Global.swift */; };
 		9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9759BF6B1A802AD300B945CB /* illbebackinfo.plist */; };
@@ -48,7 +57,6 @@
 		97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3534C1A800B9500973CAC /* MemoriesController.swift */; };
 		97A353501A800B9500973CAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97A3534E1A800B9500973CAC /* Main.storyboard */; };
 		97A353551A800B9500973CAC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A353531A800B9500973CAC /* LaunchScreen.xib */; };
-		97A353611A800B9500973CAC /* illbebackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A353601A800B9500973CAC /* illbebackTests.swift */; };
 		97A3536B1A800EF500973CAC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97A3536A1A800EF500973CAC /* Media.xcassets */; };
 		97A3536D1A801CFA00973CAC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3536C1A801CFA00973CAC /* MapKit.framework */; };
 		97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */; };
@@ -64,8 +72,8 @@
 		97FA33451BF7E18800248F67 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33441BF7E18800248F67 /* EventController.swift */; };
 		97FA33471BF7E3A400248F67 /* Event.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33461BF7E3A400248F67 /* Event.xib */; };
 		97FA33491BF7E52600248F67 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33481BF7E52600248F67 /* EventView.swift */; };
-		97FC86671C00EEB600C30C56 /* Flag.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FC86661C00EEB600C30C56 /* Flag.xib */; };
-		97FC86691C00EED400C30C56 /* Flags.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FC86681C00EED400C30C56 /* Flags.xib */; };
+		97FC86671C00EEB600C30C56 /* FlagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FC86661C00EEB600C30C56 /* FlagView.xib */; };
+		97FC86691C00EED400C30C56 /* FlagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FC86681C00EED400C30C56 /* FlagsView.xib */; };
 		97FC866B1C00F44D00C30C56 /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC866A1C00F44D00C30C56 /* FlagView.swift */; };
 		97FC866D1C00F45D00C30C56 /* FlagController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC866C1C00F45D00C30C56 /* FlagController.swift */; };
 		97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FE667B1A99EB1E0007FC2C /* ShareView.xib */; };
@@ -105,6 +113,11 @@
 		9725CD431A98D58B0081C1B3 /* Sharer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sharer.swift; sourceTree = "<group>"; };
 		973ABB2A1A99048300564820 /* libPods-AWSCognitoSync.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AWSCognitoSync.a"; path = "Pods/build/Debug-iphoneos/libPods-AWSCognitoSync.a"; sourceTree = "<group>"; };
 		973ABB2B1A99048300564820 /* libPods-AWSiOSSDKv2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AWSiOSSDKv2.a"; path = "Pods/build/Debug-iphoneos/libPods-AWSiOSSDKv2.a"; sourceTree = "<group>"; };
+		973F251F1C0B7A160034A235 /* FlagTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagTest.swift; sourceTree = "<group>"; };
+		973F25211C0B7A2D0034A235 /* Flag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
+		973F25241C0B7C450034A235 /* FlagState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagState.swift; sourceTree = "<group>"; };
+		973F25271C0B7EC50034A235 /* FlagToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagToken.swift; sourceTree = "<group>"; };
+		973F252A1C0B8F1E0034A235 /* StateMachineError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachineError.swift; sourceTree = "<group>"; };
 		97420BBD1A92A0320076E561 /* AddMemoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMemoryController.swift; sourceTree = "<group>"; };
 		9749EE441BF749E300C1606B /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		9759BF6B1A802AD300B945CB /* illbebackinfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = illbebackinfo.plist; sourceTree = "<group>"; };
@@ -131,7 +144,6 @@
 		97A353541A800B9500973CAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		97A3535A1A800B9500973CAC /* illbebackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = illbebackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		97A3535F1A800B9500973CAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		97A353601A800B9500973CAC /* illbebackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = illbebackTests.swift; sourceTree = "<group>"; };
 		97A3536A1A800EF500973CAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		97A3536C1A801CFA00973CAC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewUser.xib; sourceTree = "<group>"; };
@@ -151,8 +163,8 @@
 		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
 		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
-		97FC86661C00EEB600C30C56 /* Flag.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Flag.xib; sourceTree = "<group>"; };
-		97FC86681C00EED400C30C56 /* Flags.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Flags.xib; sourceTree = "<group>"; };
+		97FC86661C00EEB600C30C56 /* FlagView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlagView.xib; sourceTree = "<group>"; };
+		97FC86681C00EED400C30C56 /* FlagsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlagsView.xib; sourceTree = "<group>"; };
 		97FC866A1C00F44D00C30C56 /* FlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
 		97FC866C1C00F45D00C30C56 /* FlagController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagController.swift; sourceTree = "<group>"; };
 		97FE667B1A99EB1E0007FC2C /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareView.xib; sourceTree = "<group>"; };
@@ -200,6 +212,25 @@
 				8D2932CC8DC9A55330BCF225 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		973F251D1C0B77E20034A235 /* StateMachine */ = {
+			isa = PBXGroup;
+			children = (
+				973F25211C0B7A2D0034A235 /* Flag.swift */,
+				973F25241C0B7C450034A235 /* FlagState.swift */,
+				973F25271C0B7EC50034A235 /* FlagToken.swift */,
+				973F252A1C0B8F1E0034A235 /* StateMachineError.swift */,
+			);
+			name = StateMachine;
+			sourceTree = "<group>";
+		};
+		973F251E1C0B79D80034A235 /* StateMachine */ = {
+			isa = PBXGroup;
+			children = (
+				973F251F1C0B7A160034A235 /* FlagTest.swift */,
+			);
+			name = StateMachine;
 			sourceTree = "<group>";
 		};
 		97662C8E1BA2218E00ACFF3A /* Users */ = {
@@ -328,6 +359,7 @@
 		97A353451A800B9500973CAC /* illbeback */ = {
 			isa = PBXGroup;
 			children = (
+				973F251D1C0B77E20034A235 /* StateMachine */,
 				97FC86651C00EE6300C30C56 /* NewFlags */,
 				97A353461A800B9500973CAC /* Supporting Files */,
 				97A3536A1A800EF500973CAC /* Media.xcassets */,
@@ -360,7 +392,7 @@
 		97A3535D1A800B9500973CAC /* illbebackTests */ = {
 			isa = PBXGroup;
 			children = (
-				97A353601A800B9500973CAC /* illbebackTests.swift */,
+				973F251E1C0B79D80034A235 /* StateMachine */,
 				97A3535E1A800B9500973CAC /* Supporting Files */,
 			);
 			path = illbebackTests;
@@ -399,8 +431,8 @@
 		97FC86651C00EE6300C30C56 /* NewFlags */ = {
 			isa = PBXGroup;
 			children = (
-				97FC86661C00EEB600C30C56 /* Flag.xib */,
-				97FC86681C00EED400C30C56 /* Flags.xib */,
+				97FC86661C00EEB600C30C56 /* FlagView.xib */,
+				97FC86681C00EED400C30C56 /* FlagsView.xib */,
 				97FC866A1C00F44D00C30C56 /* FlagView.swift */,
 				97FC866C1C00F45D00C30C56 /* FlagController.swift */,
 			);
@@ -518,14 +550,14 @@
 				97FE66821A9A1A400007FC2C /* memories.plist in Resources */,
 				97767D521B9088F300B6A827 /* SearchView.xib in Resources */,
 				97A353501A800B9500973CAC /* Main.storyboard in Resources */,
-				97FC86671C00EEB600C30C56 /* Flag.xib in Resources */,
+				97FC86671C00EEB600C30C56 /* FlagView.xib in Resources */,
 				97FA33471BF7E3A400248F67 /* Event.xib in Resources */,
 				97A3536B1A800EF500973CAC /* Media.xcassets in Resources */,
 				97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */,
 				976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */,
 				97A353551A800B9500973CAC /* LaunchScreen.xib in Resources */,
 				97FA33431BF7BEFE00248F67 /* Events.xib in Resources */,
-				97FC86691C00EED400C30C56 /* Flags.xib in Resources */,
+				97FC86691C00EED400C30C56 /* FlagsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,11 +619,13 @@
 				97767D581B91B2BD00B6A827 /* ShapeCorner.swift in Sources */,
 				971807451BEE75DB007B759B /* Invitee.swift in Sources */,
 				97140FD91A99282300B2F49A /* MemoryAlbum.swift in Sources */,
+				973F25221C0B7A2D0034A235 /* Flag.swift in Sources */,
 				9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */,
 				97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */,
 				97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				97FA33491BF7E52600248F67 /* EventView.swift in Sources */,
+				973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,
 				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
 				9749EE451BF749E300C1606B /* Global.swift in Sources */,
 				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,
@@ -601,12 +635,14 @@
 				979F850B1AA11B8600A11F7F /* Camera.swift in Sources */,
 				97767D541B91901600B6A827 /* ShapeController.swift in Sources */,
 				97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */,
+				973F25251C0B7C450034A235 /* FlagState.swift in Sources */,
 				97A353491A800B9500973CAC /* AppDelegate.swift in Sources */,
 				975CD7441AFFD6E800662BFC /* ZoomController.swift in Sources */,
 				97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */,
 				97FE66801A9A19570007FC2C /* User.swift in Sources */,
 				97A3534B1A800B9500973CAC /* RememberController.swift in Sources */,
 				976696ED1A8A9EF4004CB60D /* CategoryController.swift in Sources */,
+				973F25281C0B7EC50034A235 /* FlagToken.swift in Sources */,
 				97FC866B1C00F44D00C30C56 /* FlagView.swift in Sources */,
 				972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */,
 			);
@@ -616,7 +652,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97A353611A800B9500973CAC /* illbebackTests.swift in Sources */,
+				973F252C1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,
+				973F25261C0B7C450034A235 /* FlagState.swift in Sources */,
+				973F25291C0B7EC50034A235 /* FlagToken.swift in Sources */,
+				973F25231C0B7A2D0034A235 /* Flag.swift in Sources */,
+				973F25201C0B7A160034A235 /* FlagTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

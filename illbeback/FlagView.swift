@@ -46,7 +46,7 @@ class FlagView: UIView {
     }
     
     private func loadXib() {
-        containerView = NSBundle.mainBundle().loadNibNamed("Flag", owner: self, options: nil)[0] as! UIView
+        containerView = NSBundle.mainBundle().loadNibNamed("FlagView", owner: self, options: nil)[0] as! UIView
         
         self.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
