@@ -13,9 +13,17 @@ class Flag {
     private var _token: FlagToken
     private var _updateOfferedToken: FlagToken?
     
-    init() {
-        _state = FlagState.Neutral
-        _token = FlagToken(token: "")
+    static func create() -> Flag {
+        return Flag(state: .Neutral, token: FlagToken(token: ""))
+    }
+    
+    static func offered(token: FlagToken) -> Flag {
+        return Flag(state: .NewOffered, token: token)
+    }
+    
+    private init(state: FlagState, token: FlagToken) {
+        _state = state
+        _token = token
     }
     
     func state() -> FlagState {
@@ -54,11 +62,50 @@ class Flag {
         
     }
     
+    func declineUpdateSuccess() {
+        _state = .Neutral
+    }
+    
+    func declineUpdateFailure() {
+        
+    }
+    
     func declineUpdate() throws {
         guard _state == .UpdateOffered && _updateOfferedToken != nil else {
             throw StateMachineError.InvalidTransition
         }
         _state = .DecliningUpdate
+        _updateOfferedToken = nil
+    }
+
+    func acceptNew() throws {
+        guard _state == .NewOffered else {
+            throw StateMachineError.InvalidTransition
+        }
+        _state = .AcceptingNew
+    }
+    
+    func acceptNewSuccess() {
+        _state = .Neutral
+    }
+    
+    func acceptNewFailure() {
+        
+    }
+    
+    func declineNewSuccess() {
+        _state = .Dead
+    }
+    
+    func declineNewFailure() {
+        
+    }
+    
+    func declineNew() throws {
+        guard _state == .NewOffered else {
+            throw StateMachineError.InvalidTransition
+        }
+        _state = .DecliningNew
         _updateOfferedToken = nil
     }
 }

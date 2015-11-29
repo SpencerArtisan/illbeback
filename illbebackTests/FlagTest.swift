@@ -23,6 +23,13 @@ class FlagTest: XCTestCase {
         XCTAssertEqual(flag.state(), FlagState.Neutral)
     }
     
+    func testReceivedFlagInitiallyNewOffered() {
+        let token = createToken("External description")
+        let flag = createReceivedFlag(token)
+        XCTAssertEqual(flag.state(), FlagState.NewOffered)
+        XCTAssertEqual(flag.description(), "External description")
+    }
+    
     func testUpdateNeutralRemainsNeutral() {
         let flag = createFlag()
         try! flag.update("New description")
@@ -76,6 +83,24 @@ class FlagTest: XCTestCase {
         XCTAssertEqual(flag.description(), "Original description")
     }
     
+    func testSuccessfulDeclineUpdateReturnsToNeutral() {
+        let flag = createFlag()
+        let token = createToken()
+        flag.externalUpdate(token)
+        try! flag.declineUpdate()
+        flag.declineUpdateSuccess()
+        XCTAssertEqual(flag.state(), FlagState.Neutral)
+    }
+    
+    func testFailedDeclineUpdateRemainsInDeclining() {
+        let flag = createFlag()
+        let token = createToken()
+        flag.externalUpdate(token)
+        try! flag.declineUpdate()
+        flag.declineUpdateFailure()
+        XCTAssertEqual(flag.state(), FlagState.DecliningUpdate)
+    }
+    
     func testCannotUpdateUpdateOfferedFlag() {
         let flag = createFlag()
         let token = createToken()
@@ -93,6 +118,76 @@ class FlagTest: XCTestCase {
         assertError({ try flag.declineUpdate() })
     }
     
+
+    
+    func testAcceptNewOfferedBecomesAcceptingAndRetainsDescription() {
+        let token = createToken("External description")
+        let flag = createReceivedFlag(token)
+        try! flag.acceptNew()
+        XCTAssertEqual(flag.state(), FlagState.AcceptingNew)
+        XCTAssertEqual(flag.description(), "External description")
+    }
+    
+    func testSuccessfulAcceptNewReturnsToNeutral() {
+        let token = createToken("External description")
+        let flag = createReceivedFlag(token)
+        try! flag.acceptNew()
+        flag.acceptNewSuccess()
+        XCTAssertEqual(flag.state(), FlagState.Neutral)
+    }
+    
+    func testFailedAcceptNewRemainsInAccepting() {
+        let token = createToken("External description")
+        let flag = createReceivedFlag(token)
+        try! flag.acceptNew()
+        flag.acceptNewFailure()
+        XCTAssertEqual(flag.state(), FlagState.AcceptingNew)
+    }
+    
+    func testDeclineNewOfferedBecomesDeclining() {
+        let token = createToken("External description")
+        let flag = createReceivedFlag(token)
+        try! flag.declineNew()
+        XCTAssertEqual(flag.state(), FlagState.DecliningNew)
+    }
+    
+    func testSuccessfulDeclineGoesToDead() {
+        let token = createToken("External description")
+        let flag = createReceivedFlag(token)
+        try! flag.acceptNew()
+        flag.declineNewSuccess()
+        XCTAssertEqual(flag.state(), FlagState.Dead)
+    }
+    
+    func testFailedDeclineNewRemainsInDeclining() {
+        let token = createToken("External description")
+        let flag = createReceivedFlag(token)
+        try! flag.acceptNew()
+        flag.declineNewFailure()
+        XCTAssertEqual(flag.state(), FlagState.AcceptingNew)
+    }
+    
+    func testCannotUpdateNewOfferedFlag() {
+        let token = createToken("External description")
+        let flag = createReceivedFlag(token)
+        assertError({ try flag.update("New description") })
+    }
+    
+    func testCannotAcceptNewANeutralFlag() {
+        let flag = createFlag()
+        assertError({ try flag.acceptNew() })
+    }
+    
+    func testCannotDeclineNewANeutralFlag() {
+        let flag = createFlag()
+        assertError({ try flag.declineNew() })
+    }
+    
+    
+
+    
+    
+    
     
     private func assertError(code: () throws -> Void) {
         do {
@@ -104,7 +199,11 @@ class FlagTest: XCTestCase {
     }
     
     private func createFlag() -> Flag {
-        return Flag()
+        return Flag.create()
+    }
+    
+    private func createReceivedFlag(token: FlagToken) -> Flag {
+        return Flag.offered(token)
     }
     
     private func createToken() -> FlagToken {

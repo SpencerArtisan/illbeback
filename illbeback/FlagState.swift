@@ -13,4 +13,8 @@ enum FlagState {
     case UpdateOffered
     case AcceptingUpdate
     case DecliningUpdate
+    case NewOffered
+    case AcceptingNew
+    case DecliningNew
+    case Dead
 }
