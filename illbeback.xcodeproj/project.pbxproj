@@ -32,6 +32,11 @@
 		973F25291C0B7EC50034A235 /* FlagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25271C0B7EC50034A235 /* FlagToken.swift */; };
 		973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252A1C0B8F1E0034A235 /* StateMachineError.swift */; };
 		973F252C1C0B8F1E0034A235 /* StateMachineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252A1C0B8F1E0034A235 /* StateMachineError.swift */; };
+		973F252E1C0BA6F50034A235 /* Invitee2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee2.swift */; };
+		973F252F1C0BA6F50034A235 /* Invitee2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee2.swift */; };
+		973F25311C0BA8D60034A235 /* InviteeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25301C0BA8D60034A235 /* InviteeState.swift */; };
+		973F25321C0BA8D60034A235 /* InviteeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25301C0BA8D60034A235 /* InviteeState.swift */; };
+		973F25341C0BA9610034A235 /* InviteeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25331C0BA9610034A235 /* InviteeTest.swift */; };
 		97420BBE1A92A0320076E561 /* AddMemoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97420BBD1A92A0320076E561 /* AddMemoryController.swift */; };
 		9749EE451BF749E300C1606B /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9749EE441BF749E300C1606B /* Global.swift */; };
 		9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9759BF6B1A802AD300B945CB /* illbebackinfo.plist */; };
@@ -118,6 +123,9 @@
 		973F25241C0B7C450034A235 /* FlagState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagState.swift; sourceTree = "<group>"; };
 		973F25271C0B7EC50034A235 /* FlagToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagToken.swift; sourceTree = "<group>"; };
 		973F252A1C0B8F1E0034A235 /* StateMachineError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachineError.swift; sourceTree = "<group>"; };
+		973F252D1C0BA6F50034A235 /* Invitee2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invitee2.swift; sourceTree = "<group>"; };
+		973F25301C0BA8D60034A235 /* InviteeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeState.swift; sourceTree = "<group>"; };
+		973F25331C0BA9610034A235 /* InviteeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeTest.swift; sourceTree = "<group>"; };
 		97420BBD1A92A0320076E561 /* AddMemoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMemoryController.swift; sourceTree = "<group>"; };
 		9749EE441BF749E300C1606B /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		9759BF6B1A802AD300B945CB /* illbebackinfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = illbebackinfo.plist; sourceTree = "<group>"; };
@@ -221,6 +229,8 @@
 				973F25241C0B7C450034A235 /* FlagState.swift */,
 				973F25271C0B7EC50034A235 /* FlagToken.swift */,
 				973F252A1C0B8F1E0034A235 /* StateMachineError.swift */,
+				973F252D1C0BA6F50034A235 /* Invitee2.swift */,
+				973F25301C0BA8D60034A235 /* InviteeState.swift */,
 			);
 			name = StateMachine;
 			sourceTree = "<group>";
@@ -229,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				973F251F1C0B7A160034A235 /* FlagTest.swift */,
+				973F25331C0BA9610034A235 /* InviteeTest.swift */,
 			);
 			name = StateMachine;
 			sourceTree = "<group>";
@@ -613,6 +624,7 @@
 				97FA33451BF7E18800248F67 /* EventController.swift in Sources */,
 				972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */,
 				97002F0E1BC91679002BF217 /* Photo.swift in Sources */,
+				973F252E1C0BA6F50034A235 /* Invitee2.swift in Sources */,
 				97F438171A991CEC00A33FD2 /* Memory.swift in Sources */,
 				97420BBE1A92A0320076E561 /* AddMemoryController.swift in Sources */,
 				972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */,
@@ -622,6 +634,7 @@
 				973F25221C0B7A2D0034A235 /* Flag.swift in Sources */,
 				9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */,
 				97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */,
+				973F25311C0BA8D60034A235 /* InviteeState.swift in Sources */,
 				97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				97FA33491BF7E52600248F67 /* EventView.swift in Sources */,
@@ -652,10 +665,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				973F25341C0BA9610034A235 /* InviteeTest.swift in Sources */,
 				973F252C1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,
 				973F25261C0B7C450034A235 /* FlagState.swift in Sources */,
 				973F25291C0B7EC50034A235 /* FlagToken.swift in Sources */,
+				973F252F1C0BA6F50034A235 /* Invitee2.swift in Sources */,
 				973F25231C0B7A2D0034A235 /* Flag.swift in Sources */,
+				973F25321C0BA8D60034A235 /* InviteeState.swift in Sources */,
 				973F25201C0B7A160034A235 /* FlagTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

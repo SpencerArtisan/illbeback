@@ -10,14 +10,6 @@ import XCTest
 
 class FlagTest: XCTestCase {
 
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-
     func testInitiallyNeutral() {
         let flag = createFlag()
         XCTAssertEqual(flag.state(), FlagState.Neutral)
@@ -208,11 +200,25 @@ class FlagTest: XCTestCase {
         try! flag.declineNew()
         assertError({ try flag.update("New description") })
     }
+    
     func testCannotUpdateDeadFlag() {
         let flag = createReceivedFlag()
         try! flag.declineNew()
         flag.declineNewSuccess()
         assertError({ try flag.update("New description") })
+    }
+    
+    func testInitiallyNoInvitees() {
+        let flag = createFlag()
+        XCTAssertEqual(flag.invitees().count, 0)
+    }
+    
+    func testSharingCreatesInvitingInvitee() {
+        let flag = createFlag()
+        flag.share("Friend")
+        XCTAssertEqual(flag.invitees().count, 1)
+        XCTAssertEqual(flag.invitees()[0].name(), "Friend")
+        XCTAssertEqual(flag.invitees()[0].state(), InviteeState.Inviting)
     }
     
     private func assertError(code: () throws -> Void) {

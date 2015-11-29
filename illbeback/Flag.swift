@@ -10,6 +10,7 @@ import Foundation
 
 class Flag {
     private var _state: FlagState
+    private var _invitees: [Invitee2]
     private var _token: FlagToken
     private var _updateOfferedToken: FlagToken?
     
@@ -24,6 +25,11 @@ class Flag {
     private init(state: FlagState, token: FlagToken) {
         _state = state
         _token = token
+        _invitees = []
+    }
+    
+    func invitees() -> [Invitee2] {
+        return _invitees
     }
     
     func state() -> FlagState {
@@ -32,6 +38,11 @@ class Flag {
     
     func description() -> String? {
         return _updateOfferedToken != nil ? _updateOfferedToken?.description() : _token.description()
+    }
+    
+    func share(friend: String) {
+        let invitee = Invitee2(name: friend)
+        _invitees.append(invitee)
     }
     
     func update(description: String) throws {
@@ -43,7 +54,7 @@ class Flag {
     
     func canUpdate() -> Bool {
         return _state == .Neutral || _state == .AcceptingUpdate || _state == .DecliningUpdate ||
-               _state == .AcceptingNew 
+               _state == .AcceptingNew
     }
     
     func externalUpdate(token: FlagToken) {
@@ -64,7 +75,6 @@ class Flag {
     }
     
     func acceptUpdateFailure() {
-        
     }
     
     func declineUpdateSuccess() {
@@ -72,7 +82,6 @@ class Flag {
     }
     
     func declineUpdateFailure() {
-        
     }
     
     func declineUpdate() throws {
@@ -95,7 +104,6 @@ class Flag {
     }
     
     func acceptNewFailure() {
-        
     }
     
     func declineNewSuccess() {
@@ -103,7 +111,6 @@ class Flag {
     }
     
     func declineNewFailure() {
-        
     }
     
     func declineNew() throws {
