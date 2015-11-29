@@ -10,10 +10,12 @@ import Foundation
 
 class Flag {
     private var _state: FlagState
-    private var _description: String?
+    private var _token: FlagToken
+    private var _updateOfferedToken: FlagToken?
     
     init() {
         _state = FlagState.Neutral
+        _token = FlagToken(token: "")
     }
     
     func state() -> FlagState {
@@ -21,18 +23,42 @@ class Flag {
     }
     
     func description() -> String? {
-        return _description
+        return _updateOfferedToken != nil ? _updateOfferedToken?.description() : _token.description()
     }
     
     func update(description: String) throws {
-        guard _state == .Neutral else {
+        guard _state == .Neutral && _updateOfferedToken == nil else {
             throw StateMachineError.InvalidTransition
         }
-        _description = description
+        _token.description(description)
     }
     
     func externalUpdate(token: FlagToken) {
         _state = FlagState.UpdateOffered
-        _description = token.description()
+        _updateOfferedToken = token
+    }
+    
+    func acceptUpdate() throws {
+        guard _state == .UpdateOffered && _updateOfferedToken != nil else {
+            throw StateMachineError.InvalidTransition
+        }
+        _state = .AcceptingUpdate
+        _token = _updateOfferedToken!
+    }
+    
+    func acceptUpdateSuccess() {
+        _state = .Neutral
+    }
+    
+    func acceptUpdateFailure() {
+        
+    }
+    
+    func declineUpdate() throws {
+        guard _state == .UpdateOffered && _updateOfferedToken != nil else {
+            throw StateMachineError.InvalidTransition
+        }
+        _state = .DecliningUpdate
+        _updateOfferedToken = nil
     }
 }

@@ -11,4 +11,6 @@ import Foundation
 enum FlagState {
     case Neutral
     case UpdateOffered
+    case AcceptingUpdate
+    case DecliningUpdate
 }

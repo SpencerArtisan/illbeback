@@ -18,4 +18,8 @@ class FlagToken {
     func description() -> String {
         return _token
     }
+    
+    func description(newDescription: String) {
+        _token = newDescription
+    }
 }
