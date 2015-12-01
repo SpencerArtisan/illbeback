@@ -23,20 +23,12 @@
 		9725CD401A98D2BE0081C1B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD3F1A98D2BE0081C1B3 /* Security.framework */; };
 		9725CD421A98D2C60081C1B3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD411A98D2C60081C1B3 /* SystemConfiguration.framework */; };
 		9725CD441A98D58B0081C1B3 /* Sharer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9725CD431A98D58B0081C1B3 /* Sharer.swift */; };
-		973F25201C0B7A160034A235 /* FlagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F251F1C0B7A160034A235 /* FlagTest.swift */; };
 		973F25221C0B7A2D0034A235 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25211C0B7A2D0034A235 /* Flag.swift */; };
-		973F25231C0B7A2D0034A235 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25211C0B7A2D0034A235 /* Flag.swift */; };
 		973F25251C0B7C450034A235 /* FlagState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25241C0B7C450034A235 /* FlagState.swift */; };
-		973F25261C0B7C450034A235 /* FlagState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25241C0B7C450034A235 /* FlagState.swift */; };
 		973F25281C0B7EC50034A235 /* FlagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25271C0B7EC50034A235 /* FlagToken.swift */; };
-		973F25291C0B7EC50034A235 /* FlagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25271C0B7EC50034A235 /* FlagToken.swift */; };
 		973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252A1C0B8F1E0034A235 /* StateMachineError.swift */; };
-		973F252C1C0B8F1E0034A235 /* StateMachineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252A1C0B8F1E0034A235 /* StateMachineError.swift */; };
 		973F252E1C0BA6F50034A235 /* Invitee2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee2.swift */; };
-		973F252F1C0BA6F50034A235 /* Invitee2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee2.swift */; };
 		973F25311C0BA8D60034A235 /* InviteeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25301C0BA8D60034A235 /* InviteeState.swift */; };
-		973F25321C0BA8D60034A235 /* InviteeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25301C0BA8D60034A235 /* InviteeState.swift */; };
-		973F25341C0BA9610034A235 /* InviteeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25331C0BA9610034A235 /* InviteeTest.swift */; };
 		97420BBE1A92A0320076E561 /* AddMemoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97420BBD1A92A0320076E561 /* AddMemoryController.swift */; };
 		9749EE451BF749E300C1606B /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9749EE441BF749E300C1606B /* Global.swift */; };
 		9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9759BF6B1A802AD300B945CB /* illbebackinfo.plist */; };
@@ -67,6 +59,16 @@
 		97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */; };
 		97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */; };
 		97B05E261BC4746100B24BEC /* ZoomPageControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97B05E251BC4746100B24BEC /* ZoomPageControl.xib */; };
+		97C7325A1C0E5A70002B5214 /* BackmapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C732591C0E5A70002B5214 /* BackmapUITests.swift */; };
+		97C732621C0E5B0C002B5214 /* FlagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F251F1C0B7A160034A235 /* FlagTest.swift */; };
+		97C732631C0E5B0C002B5214 /* InviteeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25331C0BA9610034A235 /* InviteeTest.swift */; };
+		97C732641C0E5B73002B5214 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25211C0B7A2D0034A235 /* Flag.swift */; };
+		97C732651C0E5B73002B5214 /* FlagState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25241C0B7C450034A235 /* FlagState.swift */; };
+		97C732661C0E5B73002B5214 /* FlagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25271C0B7EC50034A235 /* FlagToken.swift */; };
+		97C732671C0E5B73002B5214 /* StateMachineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252A1C0B8F1E0034A235 /* StateMachineError.swift */; };
+		97C732681C0E5B73002B5214 /* Invitee2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee2.swift */; };
+		97C732691C0E5B73002B5214 /* InviteeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25301C0BA8D60034A235 /* InviteeState.swift */; };
+		97C7326A1C0E5BA0002B5214 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667F1A9A19570007FC2C /* User.swift */; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
@@ -89,7 +91,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		97A3535B1A800B9500973CAC /* PBXContainerItemProxy */ = {
+		97C7325C1C0E5A70002B5214 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 97A3533B1A800B9500973CAC /* Project object */;
 			proxyType = 1;
@@ -150,13 +152,14 @@
 		97A3534C1A800B9500973CAC /* MemoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesController.swift; sourceTree = "<group>"; };
 		97A3534F1A800B9500973CAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97A353541A800B9500973CAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		97A3535A1A800B9500973CAC /* illbebackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = illbebackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		97A3535F1A800B9500973CAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97A3536A1A800EF500973CAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		97A3536C1A801CFA00973CAC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewUser.xib; sourceTree = "<group>"; };
 		97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomSwipeController.swift; sourceTree = "<group>"; };
 		97B05E251BC4746100B24BEC /* ZoomPageControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZoomPageControl.xib; sourceTree = "<group>"; };
+		97C732571C0E5A70002B5214 /* BackmapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BackmapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97C732591C0E5A70002B5214 /* BackmapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackmapUITests.swift; sourceTree = "<group>"; };
+		97C7325B1C0E5A70002B5214 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
@@ -203,7 +206,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		97A353571A800B9500973CAC /* Frameworks */ = {
+		97C732541C0E5A70002B5214 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -242,6 +245,7 @@
 				973F25331C0BA9610034A235 /* InviteeTest.swift */,
 			);
 			name = StateMachine;
+			path = ../illbebackTests;
 			sourceTree = "<group>";
 		};
 		97662C8E1BA2218E00ACFF3A /* Users */ = {
@@ -351,7 +355,7 @@
 			children = (
 				97662C961BA2237C00ACFF3A /* Infrastructure */,
 				97A353451A800B9500973CAC /* illbeback */,
-				97A3535D1A800B9500973CAC /* illbebackTests */,
+				97C732581C0E5A70002B5214 /* BackmapUITests */,
 				97A353441A800B9500973CAC /* Products */,
 				850AD98990B700D9BC165773 /* Pods */,
 				EECFAABBC43934F677B29798 /* Frameworks */,
@@ -362,7 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				97A353431A800B9500973CAC /* I'll Be Back.app */,
-				97A3535A1A800B9500973CAC /* illbebackTests.xctest */,
+				97C732571C0E5A70002B5214 /* BackmapUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -400,21 +404,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		97A3535D1A800B9500973CAC /* illbebackTests */ = {
+		97C732581C0E5A70002B5214 /* BackmapUITests */ = {
 			isa = PBXGroup;
 			children = (
 				973F251E1C0B79D80034A235 /* StateMachine */,
-				97A3535E1A800B9500973CAC /* Supporting Files */,
+				97C732591C0E5A70002B5214 /* BackmapUITests.swift */,
+				97C7325B1C0E5A70002B5214 /* Info.plist */,
 			);
-			path = illbebackTests;
-			sourceTree = "<group>";
-		};
-		97A3535E1A800B9500973CAC /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				97A3535F1A800B9500973CAC /* Info.plist */,
-			);
-			name = "Supporting Files";
+			path = BackmapUITests;
 			sourceTree = "<group>";
 		};
 		97FA33411BF7BEE500248F67 /* Events */ = {
@@ -483,23 +480,23 @@
 			productReference = 97A353431A800B9500973CAC /* I'll Be Back.app */;
 			productType = "com.apple.product-type.application";
 		};
-		97A353591A800B9500973CAC /* illbebackTests */ = {
+		97C732561C0E5A70002B5214 /* BackmapUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 97A353671A800B9500973CAC /* Build configuration list for PBXNativeTarget "illbebackTests" */;
+			buildConfigurationList = 97C7325E1C0E5A70002B5214 /* Build configuration list for PBXNativeTarget "BackmapUITests" */;
 			buildPhases = (
-				97A353561A800B9500973CAC /* Sources */,
-				97A353571A800B9500973CAC /* Frameworks */,
-				97A353581A800B9500973CAC /* Resources */,
+				97C732531C0E5A70002B5214 /* Sources */,
+				97C732541C0E5A70002B5214 /* Frameworks */,
+				97C732551C0E5A70002B5214 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				97A3535C1A800B9500973CAC /* PBXTargetDependency */,
+				97C7325D1C0E5A70002B5214 /* PBXTargetDependency */,
 			);
-			name = illbebackTests;
-			productName = illbebackTests;
-			productReference = 97A3535A1A800B9500973CAC /* illbebackTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			name = BackmapUITests;
+			productName = BackmapUITests;
+			productReference = 97C732571C0E5A70002B5214 /* BackmapUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -507,7 +504,7 @@
 		97A3533B1A800B9500973CAC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Spencer Ward";
 				TargetAttributes = {
@@ -519,8 +516,8 @@
 							};
 						};
 					};
-					97A353591A800B9500973CAC = {
-						CreatedOnToolsVersion = 6.1.1;
+					97C732561C0E5A70002B5214 = {
+						CreatedOnToolsVersion = 7.1.1;
 						TestTargetID = 97A353421A800B9500973CAC;
 					};
 				};
@@ -539,7 +536,7 @@
 			projectRoot = "";
 			targets = (
 				97A353421A800B9500973CAC /* illbeback */,
-				97A353591A800B9500973CAC /* illbebackTests */,
+				97C732561C0E5A70002B5214 /* BackmapUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -572,7 +569,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		97A353581A800B9500973CAC /* Resources */ = {
+		97C732551C0E5A70002B5214 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -661,28 +658,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		97A353561A800B9500973CAC /* Sources */ = {
+		97C732531C0E5A70002B5214 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				973F25341C0BA9610034A235 /* InviteeTest.swift in Sources */,
-				973F252C1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,
-				973F25261C0B7C450034A235 /* FlagState.swift in Sources */,
-				973F25291C0B7EC50034A235 /* FlagToken.swift in Sources */,
-				973F252F1C0BA6F50034A235 /* Invitee2.swift in Sources */,
-				973F25231C0B7A2D0034A235 /* Flag.swift in Sources */,
-				973F25321C0BA8D60034A235 /* InviteeState.swift in Sources */,
-				973F25201C0B7A160034A235 /* FlagTest.swift in Sources */,
+				97C732671C0E5B73002B5214 /* StateMachineError.swift in Sources */,
+				97C7325A1C0E5A70002B5214 /* BackmapUITests.swift in Sources */,
+				97C732651C0E5B73002B5214 /* FlagState.swift in Sources */,
+				97C732691C0E5B73002B5214 /* InviteeState.swift in Sources */,
+				97C732631C0E5B0C002B5214 /* InviteeTest.swift in Sources */,
+				97C732661C0E5B73002B5214 /* FlagToken.swift in Sources */,
+				97C732621C0E5B0C002B5214 /* FlagTest.swift in Sources */,
+				97C732641C0E5B73002B5214 /* Flag.swift in Sources */,
+				97C7326A1C0E5BA0002B5214 /* User.swift in Sources */,
+				97C732681C0E5B73002B5214 /* Invitee2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		97A3535C1A800B9500973CAC /* PBXTargetDependency */ = {
+		97C7325D1C0E5A70002B5214 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 97A353421A800B9500973CAC /* illbeback */;
-			targetProxy = 97A3535B1A800B9500973CAC /* PBXContainerItemProxy */;
+			targetProxy = 97C7325C1C0E5A70002B5214 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -841,37 +840,35 @@
 			};
 			name = Release;
 		};
-		97A353681A800B9500973CAC /* Debug */ = {
+		97C7325F1C0E5A70002B5214 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = illbebackTests/Info.plist;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = BackmapUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = skw.BackmapUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/I'll Be Back.app/I'll Be Back";
+				TEST_TARGET_NAME = illbeback;
+				USES_XCTRUNNER = YES;
 			};
 			name = Debug;
 		};
-		97A353691A800B9500973CAC /* Release */ = {
+		97C732601C0E5A70002B5214 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = illbebackTests/Info.plist;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = BackmapUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = skw.BackmapUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/I'll Be Back.app/I'll Be Back";
+				TEST_TARGET_NAME = illbeback;
+				USES_XCTRUNNER = YES;
 			};
 			name = Release;
 		};
@@ -896,14 +893,13 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		97A353671A800B9500973CAC /* Build configuration list for PBXNativeTarget "illbebackTests" */ = {
+		97C7325E1C0E5A70002B5214 /* Build configuration list for PBXNativeTarget "BackmapUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				97A353681A800B9500973CAC /* Debug */,
-				97A353691A800B9500973CAC /* Release */,
+				97C7325F1C0E5A70002B5214 /* Debug */,
+				97C732601C0E5A70002B5214 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

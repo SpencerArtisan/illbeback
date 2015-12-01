@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreLocation
+import UIKit
 
 class Flag {
     private var _state: FlagState
@@ -14,8 +16,10 @@ class Flag {
     private var _token: FlagToken
     private var _updateOfferedToken: FlagToken?
     
-    static func create() -> Flag {
-        return Flag(state: .Neutral, token: FlagToken(token: ""))
+    
+    static func create(id: String, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) -> Flag {
+        let token = FlagToken(id: id, type: type, description: description, location: location, originator: originator, orientation: orientation, when: when)
+        return Flag(state: .Neutral, token: token)
     }
     
     static func offered(token: FlagToken) -> Flag {

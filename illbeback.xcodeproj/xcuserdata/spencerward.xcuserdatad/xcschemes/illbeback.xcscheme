@@ -52,6 +52,16 @@
                ReferencedContainer = "container:illbeback.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "97C732561C0E5A70002B5214"
+               BuildableName = "BackmapUITests.xctest"
+               BlueprintName = "BackmapUITests"
+               ReferencedContainer = "container:illbeback.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

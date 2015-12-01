@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
 public class Memory {
     static let CATEGORY_NORMAL = "F"

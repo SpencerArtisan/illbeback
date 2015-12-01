@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import CoreLocation
 
 class FlagTest: XCTestCase {
 
@@ -231,7 +232,7 @@ class FlagTest: XCTestCase {
     }
     
     private func createFlag() -> Flag {
-        return Flag.create()
+        return Flag.create("id", type: "type", description: "desctiption", location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate())
     }
     
     private func createReceivedFlag() -> Flag {
@@ -243,10 +244,10 @@ class FlagTest: XCTestCase {
     }
     
     private func createToken() -> FlagToken {
-        return FlagToken(token: "dummy")
+        return createToken("description")
     }
 
     private func createToken(description: String) -> FlagToken {
-        return FlagToken(token: description)
+        return FlagToken(id: "id", type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate())
     }
 }
