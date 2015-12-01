@@ -16,18 +16,18 @@ class FlagToken {
     private var _description: String
     private var _location: CLLocationCoordinate2D
     private var _originator: String
-//    private var _state: FlagState
+    private var _state: FlagState
     private var _orientation: UIDeviceOrientation
     private var _when: NSDate?
     private var _invitees: [Invitee2]
     
-    init(id: String, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) {
+    init(id: String, state: FlagState, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) {
         self._id = id
         self._type = type
         self._description = description
         self._location = location
         self._originator = originator
-//        self._state = Memory.CATEGORY_NORMAL
+        self._state = state
         self._orientation = orientation ?? UIDeviceOrientation.FaceUp
         self._when = when
         self._invitees = []
@@ -42,7 +42,7 @@ class FlagToken {
         let long = parts[3]
         self._location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
         self._originator = parts[5]
-//        self._state = parts.count > 6 ? parts[6] : Memory.CATEGORY_NORMAL
+        self._state = FlagState.fromCode(parts[6])
         self._orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
         self._invitees = parts.count > 9 && parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee2(name: $0)} : []
         self._when = parts.count > 8 && parts[8] != "" ? formatter().dateFromString(parts[8]) : nil
@@ -54,6 +54,14 @@ class FlagToken {
     
     func description(description: String) {
         _description = description
+    }
+    
+    func state() -> FlagState {
+        return _state
+    }
+    
+    func state(state: FlagState) {
+        _state = state
     }
     
     private func decode(token: String) {

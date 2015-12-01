@@ -248,6 +248,6 @@ class FlagTest: XCTestCase {
     }
 
     private func createToken(description: String) -> FlagToken {
-        return FlagToken(id: "id", type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate())
+        return FlagToken(id: "id", state: FlagState.Neutral, type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate())
     }
 }

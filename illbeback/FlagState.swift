@@ -8,13 +8,21 @@
 
 import Foundation
 
-enum FlagState {
-    case Neutral
-    case UpdateOffered
-    case AcceptingUpdate
-    case DecliningUpdate
-    case NewOffered
-    case AcceptingNew
-    case DecliningNew
-    case Dead
+enum FlagState : String {
+    case Neutral = "O"
+    case UpdateOffered = "U"
+    case AcceptingUpdate = "AU"
+    case DecliningUpdate = "DU"
+    case NewOffered = "N"
+    case AcceptingNew = "AN"
+    case DecliningNew = "DN"
+    case Dead = "X"
+    
+    func code() -> String {
+        return rawValue
+    }
+    
+    static func fromCode(code: String) -> FlagState {
+        return FlagState(rawValue: code)!
+    }
 }

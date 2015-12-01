@@ -3117,7 +3117,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
             endingLineNumber = "25"
-            landmarkName = "init(id:type:description:location:user:orientation:when:)"
+            landmarkName = "init(id:state:type:description:location:originator:orientation:when:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3135,6 +3135,68 @@
             endingLineNumber = "12"
             landmarkName = "FlagTest"
             landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagTest.__deallocating_deinit"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagTest.swift"
+                  timestampString = "470705210.93603"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagTest.init (BackmapUITests.FlagTest.Type)(invocation : Swift.Optional&lt;__ObjC.NSInvocation&gt;) -&gt; BackmapUITests.FlagTest"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagTest.swift"
+                  timestampString = "470705210.936277"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagTest.init (BackmapUITests.FlagTest.Type)(selector : ObjectiveC.Selector) -&gt; BackmapUITests.FlagTest"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagTest.swift"
+                  timestampString = "470705210.936783"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagTest.init (BackmapUITests.FlagTest.Type)() -&gt; BackmapUITests.FlagTest"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagTest.swift"
+                  timestampString = "470705210.937212"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

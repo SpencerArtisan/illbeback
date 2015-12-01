@@ -11,23 +11,22 @@ import CoreLocation
 import UIKit
 
 class Flag {
-    private var _state: FlagState
     private var _invitees: [Invitee2]
     private var _token: FlagToken
     private var _updateOfferedToken: FlagToken?
     
     
     static func create(id: String, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) -> Flag {
-        let token = FlagToken(id: id, type: type, description: description, location: location, originator: originator, orientation: orientation, when: when)
-        return Flag(state: .Neutral, token: token)
+        let token = FlagToken(id: id, state: .Neutral, type: type, description: description, location: location, originator: originator, orientation: orientation, when: when)
+        return Flag(token: token)
     }
     
     static func offered(token: FlagToken) -> Flag {
-        return Flag(state: .NewOffered, token: token)
+        token.state(.NewOffered)
+        return Flag(token: token)
     }
     
-    private init(state: FlagState, token: FlagToken) {
-        _state = state
+    private init(token: FlagToken) {
         _token = token
         _invitees = []
     }
@@ -37,7 +36,12 @@ class Flag {
     }
     
     func state() -> FlagState {
-        return _state
+        return _token.state()
+    }
+    
+    
+    func state(state: FlagState) {
+        _token.state(state)
     }
     
     func description() -> String? {
@@ -57,71 +61,71 @@ class Flag {
     }
     
     func canUpdate() -> Bool {
-        return _state == .Neutral || _state == .AcceptingUpdate || _state == .DecliningUpdate ||
-               _state == .AcceptingNew
+        return state() == .Neutral || state() == .AcceptingUpdate || state() == .DecliningUpdate ||
+               state() == .AcceptingNew
     }
     
     func externalUpdate(token: FlagToken) {
-        _state = FlagState.UpdateOffered
+        _token.state(.UpdateOffered)
         _updateOfferedToken = token
     }
     
     func acceptUpdate() throws {
-        guard _state == .UpdateOffered && _updateOfferedToken != nil else {
+        guard state() == .UpdateOffered && _updateOfferedToken != nil else {
             throw StateMachineError.InvalidTransition
         }
-        _state = .AcceptingUpdate
         _token = _updateOfferedToken!
+        state(.AcceptingUpdate)
     }
     
     func acceptUpdateSuccess() {
-        _state = .Neutral
+        state(.Neutral)
     }
     
     func acceptUpdateFailure() {
     }
     
     func declineUpdateSuccess() {
-        _state = .Neutral
+        state(.Neutral)
     }
     
     func declineUpdateFailure() {
     }
     
     func declineUpdate() throws {
-        guard _state == .UpdateOffered && _updateOfferedToken != nil else {
+        guard state() == .UpdateOffered && _updateOfferedToken != nil else {
             throw StateMachineError.InvalidTransition
         }
-        _state = .DecliningUpdate
+        state(.DecliningUpdate)
         _updateOfferedToken = nil
     }
 
     func acceptNew() throws {
-        guard _state == .NewOffered else {
+        guard state() == .NewOffered else {
             throw StateMachineError.InvalidTransition
         }
-        _state = .AcceptingNew
+        state(.AcceptingNew)
     }
     
     func acceptNewSuccess() {
-        _state = .Neutral
+        state(.Neutral)
     }
     
     func acceptNewFailure() {
     }
     
     func declineNewSuccess() {
-        _state = .Dead
+        state(.Dead)
     }
     
     func declineNewFailure() {
     }
     
     func declineNew() throws {
-        guard _state == .NewOffered else {
+        guard state() == .NewOffered else {
             throw StateMachineError.InvalidTransition
         }
-        _state = .DecliningNew
+        state(.DecliningNew)
         _updateOfferedToken = nil
     }
 }
