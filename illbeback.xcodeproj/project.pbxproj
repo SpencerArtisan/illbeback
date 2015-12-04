@@ -72,6 +72,7 @@
 		97C7326C1C0E608D002B5214 /* FlagStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C7326B1C0E608D002B5214 /* FlagStateTest.swift */; };
 		97D34AAA1C12244A00118819 /* FlagTokenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AA91C12244A00118819 /* FlagTokenTest.swift */; };
 		97D34AAC1C12414400118819 /* InviteeStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AAB1C12414400118819 /* InviteeStateTest.swift */; };
+		97D34AAF1C12453100118819 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AAE1C12453100118819 /* Util.swift */; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
@@ -166,6 +167,7 @@
 		97C7326B1C0E608D002B5214 /* FlagStateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagStateTest.swift; sourceTree = "<group>"; };
 		97D34AA91C12244A00118819 /* FlagTokenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagTokenTest.swift; sourceTree = "<group>"; };
 		97D34AAB1C12414400118819 /* InviteeStateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeStateTest.swift; sourceTree = "<group>"; };
+		97D34AAE1C12453100118819 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 		97A353451A800B9500973CAC /* illbeback */ = {
 			isa = PBXGroup;
 			children = (
+				97D34AAD1C12451F00118819 /* Util */,
 				973F251D1C0B77E20034A235 /* StateMachine */,
 				97FC86651C00EE6300C30C56 /* NewFlags */,
 				97A353461A800B9500973CAC /* Supporting Files */,
@@ -421,6 +424,14 @@
 				97C7325B1C0E5A70002B5214 /* Info.plist */,
 			);
 			path = BackmapUITests;
+			sourceTree = "<group>";
+		};
+		97D34AAD1C12451F00118819 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				97D34AAE1C12453100118819 /* Util.swift */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 		97FA33411BF7BEE500248F67 /* Events */ = {
@@ -652,6 +663,7 @@
 				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
 				97E3B9181A857A00007DB06E /* MapPin.swift in Sources */,
 				979F850B1AA11B8600A11F7F /* Camera.swift in Sources */,
+				97D34AAF1C12453100118819 /* Util.swift in Sources */,
 				97767D541B91901600B6A827 /* ShapeController.swift in Sources */,
 				97A3534D1A800B9500973CAC /* MemoriesController.swift in Sources */,
 				973F25251C0B7C450034A235 /* FlagState.swift in Sources */,
