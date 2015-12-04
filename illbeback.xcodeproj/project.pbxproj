@@ -71,6 +71,7 @@
 		97C7326A1C0E5BA0002B5214 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667F1A9A19570007FC2C /* User.swift */; };
 		97C7326C1C0E608D002B5214 /* FlagStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C7326B1C0E608D002B5214 /* FlagStateTest.swift */; };
 		97D34AAA1C12244A00118819 /* FlagTokenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AA91C12244A00118819 /* FlagTokenTest.swift */; };
+		97D34AAC1C12414400118819 /* InviteeStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AAB1C12414400118819 /* InviteeStateTest.swift */; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
@@ -164,6 +165,7 @@
 		97C7325B1C0E5A70002B5214 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C7326B1C0E608D002B5214 /* FlagStateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagStateTest.swift; sourceTree = "<group>"; };
 		97D34AA91C12244A00118819 /* FlagTokenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagTokenTest.swift; sourceTree = "<group>"; };
+		97D34AAB1C12414400118819 /* InviteeStateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeStateTest.swift; sourceTree = "<group>"; };
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				973F25331C0BA9610034A235 /* InviteeTest.swift */,
 				97C7326B1C0E608D002B5214 /* FlagStateTest.swift */,
 				97D34AA91C12244A00118819 /* FlagTokenTest.swift */,
+				97D34AAB1C12414400118819 /* InviteeStateTest.swift */,
 			);
 			name = StateMachine;
 			path = ../illbebackTests;
@@ -669,6 +672,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C732671C0E5B73002B5214 /* StateMachineError.swift in Sources */,
+				97D34AAC1C12414400118819 /* InviteeStateTest.swift in Sources */,
 				97C7325A1C0E5A70002B5214 /* BackmapUITests.swift in Sources */,
 				97C732651C0E5B73002B5214 /* FlagState.swift in Sources */,
 				97C732691C0E5B73002B5214 /* InviteeState.swift in Sources */,

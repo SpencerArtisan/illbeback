@@ -9,8 +9,22 @@
 import Foundation
 
 enum InviteeState: String {
-    case Inviting
-    case Invited
-    case Accepted
-    case Declined
+    case Inviting = "i"
+    case Invited = "I"
+    case Accepted = "A"
+    case Declined = "D"
+    
+    func code() -> String {
+        return rawValue
+    }
+    
+    static func fromCode(code: String) -> InviteeState {
+        switch code {
+        case "W":
+            return InviteeState.Invited
+        default:
+            return InviteeState(rawValue: code)!
+        }
+    }
+
 }
