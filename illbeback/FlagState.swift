@@ -23,6 +23,19 @@ enum FlagState : String {
     }
     
     static func fromCode(code: String) -> FlagState {
-        return FlagState(rawValue: code)!
+        switch code {
+        case "F":
+            return FlagState.Neutral
+        case "S":
+            return FlagState.Neutral
+        case "A":
+            return FlagState.Neutral
+        case "D":
+            return FlagState.Neutral
+        case "R":
+            return FlagState.UpdateOffered
+        default:
+            return FlagState(rawValue: code)!
+        }
     }
 }
