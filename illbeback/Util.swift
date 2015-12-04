@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Util {
+class Utils {
     static func today() -> NSDate {
         let cal = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         return cal.startOfDayForDate(NSDate())

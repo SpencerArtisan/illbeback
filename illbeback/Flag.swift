@@ -23,8 +23,16 @@ class Flag {
         return Flag(token: token)
     }
     
+    static func decode(encoded: String) -> Flag {
+        return Flag(token: FlagToken(token: encoded))
+    }
+    
     private init(token: FlagToken) {
         _token = token
+    }
+    
+    func encode() -> String {
+        return _token.encode()
     }
     
     func isEvent() -> Bool {
@@ -56,7 +64,7 @@ class Flag {
     }
     
     func daysToGo() -> Int {
-        let fromNow = when()!.timeIntervalSinceDate(Util.today())
+        let fromNow = when()!.timeIntervalSinceDate(Utils.today())
         return Int(fromNow) / (60*60*24)
     }
     
