@@ -17,6 +17,12 @@ class Invitee2 {
         _state = .Inviting
     }
     
+    init(code: String) {
+        let parts = code.componentsSeparatedByString(",")
+        _name = parts[0]
+        _state = InviteeState(rawValue: parts[1])!
+    }
+    
     func name() -> String {
         return _name
     }
@@ -39,5 +45,9 @@ class Invitee2 {
     
     func declined() {
         _state = .Declined
+    }
+    
+    func encode() -> String {
+        return "\(_name),\(_state.rawValue)"
     }
 }

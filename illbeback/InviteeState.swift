@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum InviteeState {
+enum InviteeState: String {
     case Inviting
     case Invited
     case Accepted

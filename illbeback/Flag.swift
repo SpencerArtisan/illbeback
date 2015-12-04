@@ -11,10 +11,7 @@ import CoreLocation
 import UIKit
 
 class Flag {
-    private var _invitees: [Invitee2]
     private var _token: FlagToken
-    private var _updateOfferedToken: FlagToken?
-    
     
     static func create(id: String, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) -> Flag {
         let token = FlagToken(id: id, state: .Neutral, type: type, description: description, location: location, originator: originator, orientation: orientation, when: when)
@@ -28,29 +25,43 @@ class Flag {
     
     private init(token: FlagToken) {
         _token = token
-        _invitees = []
     }
     
     func invitees() -> [Invitee2] {
-        return _invitees
+        return _token.invitees()
     }
     
     func state() -> FlagState {
         return _token.state()
     }
     
-    
     func state(state: FlagState) {
         _token.state(state)
     }
     
-    func description() -> String? {
-        return _updateOfferedToken != nil ? _updateOfferedToken?.description() : _token.description()
+    func description() -> String {
+        return _token.descriptionUpdate() ?? _token.description()
+    }
+    
+    func when() -> NSDate? {
+        return _token.whenUpdate() ?? _token.when()
+    }
+    
+    func location() -> CLLocationCoordinate2D {
+        return _token.locationUpdate() ?? _token.location()
+    }
+    
+    func type() -> String {
+        return _token.type()
+    }
+    
+    func originator() -> String {
+        return _token.originator()
     }
     
     func share(friend: String) {
         let invitee = Invitee2(name: friend)
-        _invitees.append(invitee)
+        _token.addInvitee(invitee)
     }
     
     func update(description: String) throws {
@@ -67,14 +78,14 @@ class Flag {
     
     func externalUpdate(token: FlagToken) {
         _token.state(.UpdateOffered)
-        _updateOfferedToken = token
+        _token.offerUpdate(token)
     }
     
     func acceptUpdate() throws {
-        guard state() == .UpdateOffered && _updateOfferedToken != nil else {
+        guard state() == .UpdateOffered else {
             throw StateMachineError.InvalidTransition
         }
-        _token = _updateOfferedToken!
+        _token.acceptUpdate()
         state(.AcceptingUpdate)
     }
     
@@ -93,11 +104,11 @@ class Flag {
     }
     
     func declineUpdate() throws {
-        guard state() == .UpdateOffered && _updateOfferedToken != nil else {
+        guard state() == .UpdateOffered else {
             throw StateMachineError.InvalidTransition
         }
+        _token.declineUpdate()
         state(.DecliningUpdate)
-        _updateOfferedToken = nil
     }
 
     func acceptNew() throws {
@@ -126,6 +137,5 @@ class Flag {
             throw StateMachineError.InvalidTransition
         }
         state(.DecliningNew)
-        _updateOfferedToken = nil
     }
 }

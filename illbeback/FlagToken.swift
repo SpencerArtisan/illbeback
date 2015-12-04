@@ -14,11 +14,14 @@ class FlagToken {
     private var _type: String
     private var _id: String
     private var _description: String
+    private var _descriptionUpdate: String?
     private var _location: CLLocationCoordinate2D
+    private var _locationUpdate: CLLocationCoordinate2D?
     private var _originator: String
     private var _state: FlagState
     private var _orientation: UIDeviceOrientation
     private var _when: NSDate?
+    private var _whenUpdate: NSDate?
     private var _invitees: [Invitee2]
     
     init(id: String, state: FlagState, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) {
@@ -37,15 +40,65 @@ class FlagToken {
         var parts = token.componentsSeparatedByString(":")
         self._id = parts[4]
         self._type = parts[0]
-        self._description = parts[1]
-        let lat = parts[2]
-        let long = parts[3]
-        self._location = CLLocationCoordinate2D(latitude: (lat as NSString).doubleValue, longitude: (long as NSString).doubleValue)
+        let descriptionParts = parts[1].componentsSeparatedByString(",")
+        self._description = descriptionParts[0]
+        if descriptionParts.count == 2 {
+            self._descriptionUpdate = descriptionParts[1]
+        }
+        let latParts = parts[2].componentsSeparatedByString(",")
+        let longParts = parts[3].componentsSeparatedByString(",")
+        self._location = CLLocationCoordinate2D(latitude: (latParts[0] as NSString).doubleValue, longitude: (longParts[0] as NSString).doubleValue)
+        if latParts.count == 2 && latParts[1] != "" && longParts.count == 2 && longParts[1] != "" {
+            self._locationUpdate = CLLocationCoordinate2D(latitude: (latParts[1] as NSString).doubleValue, longitude: (longParts[1] as NSString).doubleValue)
+        }
         self._originator = parts[5]
         self._state = FlagState.fromCode(parts[6])
         self._orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
-        self._invitees = parts.count > 9 && parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee2(name: $0)} : []
-        self._when = parts.count > 8 && parts[8] != "" ? formatter().dateFromString(parts[8]) : nil
+        self._invitees = parts.count > 9 && parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee2(code: $0)} : []
+        if parts.count > 8 {
+            let whenParts = parts[8].componentsSeparatedByString(",")
+            self._when = whenParts[0] != "" ? formatter().dateFromString(whenParts[0]) : nil
+            if whenParts.count == 2 {
+                self._whenUpdate = whenParts[1] != "" ? formatter().dateFromString(whenParts[1]) : nil
+            }
+        }
+    }
+    
+    func offerUpdate(token: FlagToken) {
+        _descriptionUpdate = token.description()
+        _locationUpdate = token.location()
+        _whenUpdate = token.when()
+    }
+    
+    func acceptUpdate() {
+        _description = _descriptionUpdate!
+        _location = _locationUpdate!
+        _when = _whenUpdate
+        _descriptionUpdate = nil
+        _locationUpdate = nil
+        _whenUpdate = nil
+    }
+    
+    func declineUpdate() {
+        _descriptionUpdate = nil
+        _locationUpdate = nil
+        _whenUpdate = nil
+    }
+    
+    func type() -> String {
+        return _type
+    }
+    
+    func originator() -> String {
+        return _originator
+    }
+    
+    func invitees() -> [Invitee2] {
+        return _invitees
+    }
+    
+    func addInvitee(invitee: Invitee2) {
+        _invitees.append(invitee)
     }
     
     func description() -> String {
@@ -56,6 +109,34 @@ class FlagToken {
         _description = description
     }
     
+    func location() -> CLLocationCoordinate2D {
+        return _location
+    }
+    
+    func location(location: CLLocationCoordinate2D) {
+        _location = location
+    }
+    
+    func when() -> NSDate? {
+        return _when
+    }
+    
+    func when(when: NSDate?) {
+        _when = when
+    }
+    
+    func descriptionUpdate() -> String? {
+        return _descriptionUpdate
+    }
+    
+    func locationUpdate() -> CLLocationCoordinate2D? {
+        return _locationUpdate
+    }
+
+    func whenUpdate() -> NSDate? {
+        return _whenUpdate
+    }
+
     func state() -> FlagState {
         return _state
     }
@@ -64,18 +145,31 @@ class FlagToken {
         _state = state
     }
     
-    private func decode(token: String) {
-        
+    func encode() -> String {
+        let whenString = _when != nil ? formatter().stringFromDate(_when!) : ""
+        let whenUpdateString = _whenUpdate != nil ? formatter().stringFromDate(_whenUpdate!) : ""
+        let inviteesString = _invitees.map{$0.encode()}.joinWithSeparator(";")
+        let latitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.latitude)"
+        let longitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.longitude)"
+        let descriptionUpdateString = _descriptionUpdate == nil ? "" : ",\(_descriptionUpdate!)"
+        return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator):\(_state.code()):\(_orientation.rawValue):\(whenString),\(whenUpdateString):\(inviteesString)"
     }
     
+    func whenFormatted() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm"
+        if formatter.stringFromDate(_when!) == "00:00" {
+            formatter.dateFormat = "EEE dd MMMM"
+        } else {
+            formatter.dateFormat = "EEE d MMM HH:mm"
+        }
+        return formatter.stringFromDate(_when!)
+    }
+
     private func formatter() -> NSDateFormatter {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "dd MMMM yyyy"
+        formatter.dateFormat = "dd MMMM yyyy HH-mm-ss-SSS"
         return formatter
     }
 
-    
-    private func encode() {
-        
-    }
 }
