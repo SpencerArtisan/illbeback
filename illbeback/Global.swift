@@ -47,7 +47,7 @@ class Global {
                
                 if !snapshot.exists() || snapshot.value.objectForKey("iphone") == nil {
                     print("FIREBASE OP: NO existing device token")
-                    NSNotificationCenter.defaultCenter().postNotificationName("NameAccepted", object: nil, userInfo: ["name":user.getName()])
+                    Utils.notifyObservers("NameAccepted", properties: ["name":user.getName()])
                     print("FIREBASE OP: Uploading device token \(tokenString) to \(url)")
                     node.setValue(["iphone": tokenString])
                 } else {
@@ -57,13 +57,13 @@ class Global {
                         print("FIREBASE OP: Device token MISMATCH!")
                         if allowOverwrite {
                             print("FIREBASE OP: Overwriting old device token")
-                            NSNotificationCenter.defaultCenter().postNotificationName("NameAccepted", object: nil, userInfo: ["name":user.getName()])
-                            node.setValue(["iphone": tokenString])                        
+                            Utils.notifyObservers("NameAccepted", properties: ["name":user.getName()])
+                            node.setValue(["iphone": tokenString])
                         } else {
                             let takenName = user.getName()
                             user.setName("")
                             tokenStored = false
-                            NSNotificationCenter.defaultCenter().postNotificationName("NameTaken", object: nil, userInfo: ["name":takenName])
+                            Utils.notifyObservers("NameTaken", properties: ["name":takenName])
                         }
                     }
                 }                

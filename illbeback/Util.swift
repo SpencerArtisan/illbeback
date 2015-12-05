@@ -35,4 +35,8 @@ class Utils {
     static func addObserver(observer: NSObject, selector: Selector, event: String) {
         NSNotificationCenter.defaultCenter().addObserver(observer, selector: selector, name: event, object: nil)
     }
+    
+    static func notifyObservers(event: String, properties: [NSObject: AnyObject]) {
+        NSNotificationCenter.defaultCenter().postNotificationName(event, object: nil, userInfo: properties)
+    }
 }

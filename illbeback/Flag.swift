@@ -77,7 +77,7 @@ public class Flag {
     
     func daysToGo() -> Int {
         let fromNow = when()!.timeIntervalSinceDate(Utils.today())
-        return Int(fromNow) / (60*60*24)
+        return Int(Int64(fromNow) / Int64(60*60*24))
     }
     
     func isPast() -> Bool {
@@ -124,7 +124,7 @@ public class Flag {
         }
     }
     
-    func share(friend: String) {
+    func invite(friend: String) {
         let invitee = Invitee2(name: friend)
         _token.addInvitee(invitee)
     }

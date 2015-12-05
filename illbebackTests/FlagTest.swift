@@ -216,7 +216,7 @@ class FlagTest: XCTestCase {
     
     func testSharingCreatesInvitingInvitee() {
         let flag = createFlag()
-        flag.share("Friend")
+        flag.invite("Friend")
         XCTAssertEqual(flag.invitees().count, 1)
         XCTAssertEqual(flag.invitees()[0].name(), "Friend")
         XCTAssertEqual(flag.invitees()[0].state(), InviteeState.Inviting)

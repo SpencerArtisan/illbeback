@@ -29,7 +29,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var rephotoController: RephotoController!
     var rememberController: RememberController!
     var zoomController: ZoomSwipeController!
-//    var shareController: ShareController!
+    var shareController: ShareController!
     var eventListController: EventsController!
     var flagListController: FlagsController!
 
@@ -102,7 +102,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.rememberController = RememberController(album: photoAlbum, memoriesController: self)
         self.zoomController = ZoomSwipeController()
         self.shapeController = ShapeController(map: map, memories: self)
-//        self.shareController = ShareController(memories: self)
+        self.shareController = ShareController(memories: self)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
@@ -111,6 +111,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
   
         updateButtonStates()
         
+        flagRepository.read()
         self.flagRenderer.add(flagRepository.flags())
    
         Utils.addObserver(self, selector: "nameTaken:", event: "NameTaken")
@@ -408,8 +409,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
 
     func shareMemory(pin: MapPinView) {
-//        shareController.shareMemory([pin])
-//        memoryAlbum!.save()
+        shareController.shareMemory([pin])
+        flagRepository.save()
     }
 
     // Callback for button on the callout

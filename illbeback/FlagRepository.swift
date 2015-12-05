@@ -12,7 +12,6 @@ class FlagRepository {
     private var _flags = [Flag]()
     
     init() {
-        read()
     }
     
     func flags() -> [Flag] {
