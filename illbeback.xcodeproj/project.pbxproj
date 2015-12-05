@@ -58,7 +58,6 @@
 		97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */; };
 		97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */; };
 		97B05E261BC4746100B24BEC /* ZoomPageControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97B05E251BC4746100B24BEC /* ZoomPageControl.xib */; };
-		97C7325A1C0E5A70002B5214 /* BackmapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C732591C0E5A70002B5214 /* BackmapUITests.swift */; };
 		97C732621C0E5B0C002B5214 /* FlagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F251F1C0B7A160034A235 /* FlagTest.swift */; };
 		97C732631C0E5B0C002B5214 /* InviteeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25331C0BA9610034A235 /* InviteeTest.swift */; };
 		97C732641C0E5B73002B5214 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25211C0B7A2D0034A235 /* Flag.swift */; };
@@ -168,7 +167,6 @@
 		97B05E211BC468FB00B24BEC /* ZoomSwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomSwipeController.swift; sourceTree = "<group>"; };
 		97B05E251BC4746100B24BEC /* ZoomPageControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZoomPageControl.xib; sourceTree = "<group>"; };
 		97C732571C0E5A70002B5214 /* BackmapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BackmapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		97C732591C0E5A70002B5214 /* BackmapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackmapUITests.swift; sourceTree = "<group>"; };
 		97C7325B1C0E5A70002B5214 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C7326B1C0E608D002B5214 /* FlagStateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagStateTest.swift; sourceTree = "<group>"; };
 		97D34AA91C12244A00118819 /* FlagTokenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagTokenTest.swift; sourceTree = "<group>"; };
@@ -434,7 +432,6 @@
 			isa = PBXGroup;
 			children = (
 				973F251E1C0B79D80034A235 /* StateMachine */,
-				97C732591C0E5A70002B5214 /* BackmapUITests.swift */,
 				97C7325B1C0E5A70002B5214 /* Info.plist */,
 			);
 			path = BackmapUITests;
@@ -703,7 +700,6 @@
 			files = (
 				97C732671C0E5B73002B5214 /* StateMachineError.swift in Sources */,
 				97D34AAC1C12414400118819 /* InviteeStateTest.swift in Sources */,
-				97C7325A1C0E5A70002B5214 /* BackmapUITests.swift in Sources */,
 				97D34AB51C12548B00118819 /* Util.swift in Sources */,
 				97C732651C0E5B73002B5214 /* FlagState.swift in Sources */,
 				97C732691C0E5B73002B5214 /* InviteeState.swift in Sources */,

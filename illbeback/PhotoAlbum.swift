@@ -8,14 +8,16 @@
 
 import Foundation
 
-public class PhotoAlbum {
+public class PhotoAlbum : NSObject {
 
     var folder: String
     let fileManager = NSFileManager.defaultManager()
     
-    public init() {
-        folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
-    }
+    public override init() {
+        folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        super.init()
+        Utils.addObserver(self, selector: "onFlagRemoved:", event: "FlagRemoved")
+   }
     
     func acceptRecentShare(flag: Flag) {
         delete(flag)
@@ -42,18 +44,18 @@ public class PhotoAlbum {
         }
     }
     
-    public func getMemoryImageUrls(memoryId: String) -> [NSURL] {
+    func getFlagImageUrls(memoryId: String) -> [NSURL] {
         let imagePaths = getImagePaths(memoryId)
         return imagePaths.map {NSURL(fileURLWithPath: $0)}
     }
     
-    public func saveMemoryImage(image: UIImage?, flagId: String) {
+    func saveFlagImage(image: UIImage?, flagId: String) {
         let imagePath = getNewImagePath(flagId)
         let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     
-    public func photos(flag: Flag) -> [Photo] {
+    func photos(flag: Flag) -> [Photo] {
         let flagId = flag.id()
         var photos:[Photo] = []
         let marker = flag.state() == .UpdateOffered ? ".recent" : ""
@@ -71,7 +73,7 @@ public class PhotoAlbum {
         return photos
     }
     
-    public func addFlagImage(image: UIImage?, flagId: String) {
+    func addFlagImage(image: UIImage?, flagId: String) {
         let imagePath = getNewImagePath(flagId)
         print("Saving image \(imagePath)")
         let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
@@ -99,7 +101,13 @@ public class PhotoAlbum {
         return paths
     }
     
-    public func delete(flag: Flag) {
+    func onFlagRemoved(note: NSNotification) {
+        print("Flag removed to repo.  Delting photos...")
+        let flag = note.userInfo!["flag"] as! Flag
+        delete(flag)
+    }
+    
+    func delete(flag: Flag) {
         let imagePaths = getImagePaths(flag.id())
         for path in imagePaths {
             if fileManager.fileExistsAtPath(path) {

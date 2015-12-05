@@ -90,7 +90,7 @@ public class Sharer {
     private func downloadImages(flag: Flag, onComplete: () -> Void) {
         // todo -tidy
         let photoAlbum = PhotoAlbum()
-        let imageUrls = photoAlbum.getMemoryImageUrls(flag.id())
+        let imageUrls = photoAlbum.getFlagImageUrls(flag.id())
         
         print("Downloading shared images for flag \(flag.id())")
         var leftToDownload = imageUrls.count

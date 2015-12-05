@@ -52,7 +52,7 @@ class InBox {
     private func downloadImages(flag: Flag, onComplete: () -> Void) {
         print("Downloading shared images for flag \(flag.id())")
         
-        let imageUrls = photoAlbum.getMemoryImageUrls(flag.id())
+        let imageUrls = photoAlbum.getFlagImageUrls(flag.id())
         var leftToDownload = imageUrls.count
         
         for imageUrl in imageUrls {

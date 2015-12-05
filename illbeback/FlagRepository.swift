@@ -22,6 +22,7 @@ class FlagRepository {
     
     func remove(flag: Flag) {
         _flags.removeObject(flag)
+        Utils.notifyObservers("FlagRemoved", properties: ["flag": flag])
     }
     
     func events() -> [Flag] {

@@ -18,29 +18,29 @@ class FlagRenderer: NSObject {
         self.memoriesController = memoriesController
         super.init()
         Utils.addObserver(self, selector: "onFlagAdded:", event: "FlagAdded")
+        Utils.addObserver(self, selector: "onFlagRemoved:", event: "FlagRemoved")
     }
     
     func render(viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if (annotation is MapPin) {
+        if annotation is MapPin {
             let pinData = annotation as! MapPin
             var pinView = map.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
             
-            if (pinView == nil) {
+            if pinView == nil {
                 pinView = MapPinView(memoriesController: memoriesController, flag: pinData.flag)
             }
             
             return pinView
-        } else if (annotation is ShapeCorner) {
+        } else if annotation is ShapeCorner {
             var pinView = map.dequeueReusableAnnotationViewWithIdentifier("corner") as! ShapeCornerView!
             
-            if (pinView == nil) {
+            if pinView == nil {
                 pinView = ShapeCornerView(memoriesController: memoriesController)
             }
             
             pinView.setSelected(true, animated: true)
             
             return pinView
-            
         }
         return nil
     }
@@ -48,14 +48,15 @@ class FlagRenderer: NSObject {
     func onFlagAdded(note: NSNotification) {
         print("Flag added to repo.  Adding it to map...")
         let flag = note.userInfo!["flag"] as! Flag
-        if flag.isPast() {
-            // todo WRONG PLACE
-            remove(flag)
-        } else {
-            add(flag)
-        }
+        add(flag)
     }
 
+    func onFlagRemoved(note: NSNotification) {
+        print("Flag removed from repo.  Removing from map...")
+        let flag = note.userInfo!["flag"] as! Flag
+        remove(flag)
+    }
+    
     func add(flag: Flag) {
         Utils.runOnUiThread() {
             let pin = self.createPin(flag)

@@ -15,8 +15,8 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var descriptionModal: Modal!
     var orientation: UIDeviceOrientation?
     var flagId: String?
-    var memoryImage: String?
-    var memoryLocation: CLLocationCoordinate2D?
+    var flagImage: String?
+    var flagLocation: CLLocationCoordinate2D?
     var memoriesController: MemoriesController?
     var callingViewController: UIViewController?
     var photoAlbum: PhotoAlbum?
@@ -121,30 +121,30 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     func add(controller: UIViewController, image: UIImage, orientation: UIDeviceOrientation) {
         print("Adding image at device orientation \(orientation.rawValue), size \(image.size)")
         rewordingPin = nil
-        self.memoryLocation = nil
+        self.flagLocation = nil
         self.callingViewController = controller
         self.flagId = NSUUID().UUIDString
         self.orientation = orientation
-        self.photoAlbum!.saveMemoryImage(image, flagId: self.flagId!)
+        self.photoAlbum!.saveFlagImage(image, flagId: self.flagId!)
         self.showCategorySelector()
     }
     
     func add(controller: UIViewController, location: CLLocationCoordinate2D) {
         rewordingPin = nil
-        self.memoryLocation = location
+        self.flagLocation = location
         self.callingViewController = controller
         self.flagId = NSUUID().UUIDString
         self.showCategorySelector()
     }
 
     func addBlank(controller: UIViewController, location: CLLocationCoordinate2D, description: String) {
-        memoriesController!.addMemoryHere("Blank", id: NSUUID().UUIDString, description: description, location: location, orientation: self.orientation, when: nil)
+        memoriesController!.addFlagHere("Blank", id: NSUUID().UUIDString, description: description, location: location, orientation: self.orientation, when: nil)
     }
     
     func reword(controller: UIViewController, pin: MapPinView) {
         self.callingViewController = controller
         rewordingPin = pin
-        memoryImage = pin.flag!.type()
+        flagImage = pin.flag!.type()
         let flag = pin.flag!
         if flag.isEvent() {
             self.showDescriptionEntryWithDate(flag.type(), date: flag.when()!)
@@ -235,14 +235,14 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
             if (rewordingPin != nil) {
                 rewordingPin?.flag?.description(textView.text)
                 rewordingPin?.flag?.when(when)
-                rewordingPin?.flag?.type(self.memoryImage!)
+                rewordingPin?.flag?.type(self.flagImage!)
                 memoriesController!.flagRepository.save()
                 let annotation = rewordingPin!.annotation!
                 rewordingPin?.memoriesController?.map?.deselectAnnotation(annotation, animated: false)
                 rewordingPin?.memoriesController?.map?.removeAnnotation(annotation)
                 rewordingPin?.memoriesController?.map?.addAnnotation(annotation)
             } else {
-                memoriesController!.addMemoryHere(memoryImage!, id: flagId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation, when: when)
+                memoriesController!.addFlagHere(flagImage!, id: flagId!, description: textView.text, location: self.flagLocation, orientation: self.orientation, when: when)
                 self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
             }
             descriptionModal.hide()
@@ -254,7 +254,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     
     func addMemory(type: String) {
         if self.categoryShownAt == nil || NSDate().timeIntervalSinceDate(categoryShownAt!) > 0.7 {
-            memoryImage = type
+            flagImage = type
             showDescriptionEntry(type)
             hideCategorySelector()
         }
@@ -262,7 +262,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
 
     func addMemoryWithDate(type: String) {
         if self.categoryShownAt == nil || NSDate().timeIntervalSinceDate(categoryShownAt!) > 0.7 {
-            memoryImage = type
+            flagImage = type
             showDescriptionEntryWithDate(type, date: today())
             hideCategorySelector()
         }

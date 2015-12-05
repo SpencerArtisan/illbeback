@@ -427,7 +427,6 @@ class MapPinView: MKAnnotationView {
                     memoriesController?.unblankMemory(self)
                 } else if flag!.state() == .UpdateOffered {
                     memoriesController?.acceptRecentShare(flag!)
-                    memoriesController?.updateMemory(self)
                 }
             } else if declineButton != nil && hitButton(point, button: declineButton) {
                 MapPinView.lastSelectionChange = NSDate()
