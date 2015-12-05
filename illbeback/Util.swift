@@ -13,4 +13,8 @@ class Utils {
         let cal = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         return cal.startOfDayForDate(NSDate())
     }
+    
+    static func runOnUiThread(closure:()->()) {
+        dispatch_async(dispatch_get_main_queue(), closure)
+    }
 }

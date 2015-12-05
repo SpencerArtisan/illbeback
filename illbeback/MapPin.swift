@@ -13,6 +13,13 @@ class MapPin : NSObject, MKAnnotation {
     var subtitle: String?
     var memory: Memory
     
+    init(flag: Flag) {
+        self.coordinate = flag.location()
+        self.title = flag.type()
+        self.subtitle = flag.description().isEmpty ? "No description provided" : flag.description()
+        self.memory = Memory(memoryString: flag.encode())
+    }
+    
     init(memory: Memory) {
         self.coordinate = memory.location
         self.title = memory.type

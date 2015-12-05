@@ -77,6 +77,7 @@
 		97D34AB31C124AFD00118819 /* FlagRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AB21C124AFD00118819 /* FlagRepositoryTest.swift */; };
 		97D34AB41C12543300118819 /* FlagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AB01C12472A00118819 /* FlagRepository.swift */; };
 		97D34AB51C12548B00118819 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AAE1C12453100118819 /* Util.swift */; };
+		97D34AB71C126C9100118819 /* FlagRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AB61C126C9100118819 /* FlagRenderer.swift */; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
@@ -174,6 +175,7 @@
 		97D34AAE1C12453100118819 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		97D34AB01C12472A00118819 /* FlagRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagRepository.swift; sourceTree = "<group>"; };
 		97D34AB21C124AFD00118819 /* FlagRepositoryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagRepositoryTest.swift; sourceTree = "<group>"; };
+		97D34AB61C126C9100118819 /* FlagRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagRenderer.swift; sourceTree = "<group>"; };
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				973F252D1C0BA6F50034A235 /* Invitee2.swift */,
 				973F25301C0BA8D60034A235 /* InviteeState.swift */,
 				97D34AB01C12472A00118819 /* FlagRepository.swift */,
+				97D34AB61C126C9100118819 /* FlagRenderer.swift */,
 			);
 			name = StateMachine;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */,
 				97FA33451BF7E18800248F67 /* EventController.swift in Sources */,
 				972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */,
+				97D34AB71C126C9100118819 /* FlagRenderer.swift in Sources */,
 				97002F0E1BC91679002BF217 /* Photo.swift in Sources */,
 				973F252E1C0BA6F50034A235 /* Invitee2.swift in Sources */,
 				97F438171A991CEC00A33FD2 /* Memory.swift in Sources */,
