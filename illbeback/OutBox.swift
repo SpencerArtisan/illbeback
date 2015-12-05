@@ -24,6 +24,8 @@ class OutBox {
     }
     
     func send() {
+        print("SENDING...")
+
         for flag in flagRepository.flags() {
             let inviting = flag.invitees().filter {$0.state() == InviteeState.Inviting}
             for invitee in inviting {

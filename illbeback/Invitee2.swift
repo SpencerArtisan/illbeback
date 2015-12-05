@@ -32,7 +32,7 @@ class Invitee2 {
     }
     
     func invitingSuccess() {
-        _state = .Invited
+        state(.Invited)
     }
     
     func invitingFailure() {
@@ -40,14 +40,19 @@ class Invitee2 {
     }
     
     func accepted() {
-        _state = .Accepted
+        state(.Accepted)
     }
     
     func declined() {
-        _state = .Declined
+        state(.Declined)
     }
     
     func encode() -> String {
         return "\(_name),\(_state.rawValue)"
+    }
+    
+    private func state(state: InviteeState) {
+        print("< INVITEE State transition \(_name) from \(_state) to \(state) >")
+        _state = state
     }
 }

@@ -199,10 +199,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             checkForImminentEvents()
         }
         
-//        downloadNewShares()
+        downloadNewShares()
         updateButtonStates()
         
         self.lastTimeAppUsed = NSDate()
+    }
+    
+    private func downloadNewShares() {
+        InBox(flagRepository: flagRepository).receive()
     }
     
     func checkForImminentEvents() {
@@ -216,71 +220,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         flagRenderer.updateEventPins(flagRepository.events())
     }
     
-//    func downloadNewShares() {
-//        var delaySeconds1: Double = 0
-//        var delaySeconds2: Double = 0
-//        
-//        for oldDownload in downloadingMessages.values {
-//            oldDownload.slideUpFromTop(self.view)
-//        }
-//        downloadingMessages.removeAll()
-//        
-//        memoryAlbum.downloadNewShares(
-//            {memory in
-//                print("onStart callback for downloading \(memory.asString())")
-//                let color = CategoryController.getColorForCategory(memory.type)
-//                let title = "Downloading " + memory.type
-//                self.delay(delaySeconds1) {
-//                    let message = self.showMessage(title, color: color, time: nil)
-//                    let oldModal = self.downloadingMessages[memory.id]
-//                    if oldModal != nil {
-//                        oldModal?.slideUpFromTop(self.view)
-//                    }
-//                    self.downloadingMessages[memory.id] = message
-//                }
-//                
-//                delaySeconds1 += 1.5
-//            },
-//            onComplete: {memory in
-//                let color = CategoryController.getColorForCategory(memory.type)
-//                let title = "Downloaded " + memory.type + " from " + memory.originator
-//                self.delay(delaySeconds2) {
-//                    let downloadingMessage = self.downloadingMessages[memory.id]
-//                    print("onComplete callback for downloading \(memory.asString()).  Will dismiss modal \(downloadingMessage) from outstanding modals \(self.downloadingMessages)")
-//                    if downloadingMessage != nil {
-//                        print("Dismissing modal")
-//                        downloadingMessage?.slideUpFromTop(self.view)
-//                    }
-//                    self.showMessage(title, color: color, time: 2)
-//                    self.updateButtonStates()
-//                }
-//                
-//                delaySeconds2 += 1.5
-//            },
-//            onAckReceipt: {memory in
-//                print("onAckReceipt callback for \(memory.asString())")
-//                let pin = self.getPin(memory)
-//                if pin != nil {
-//                    self.map!.removeAnnotation(pin!)
-//                    self.map!.addAnnotation(pin!)
-//                }
-//                let response = memory.isAccepted() ? "accepted" : "declined"
-//                let color = CategoryController.getColorForCategory(memory.type)
-//                let title = "\(memory.originator) \(response) \(memory.summary())"
-//                self.delay(delaySeconds1) {
-//                    self.showMessage(title, color: color, time: 2)
-//                }
-//                if memory.isAccepted() {
-//                    self.memoryAlbum.inviteeAccepted(memory.originator, memoryId: memory.id)
-//                } else {
-//                    self.memoryAlbum.inviteeDeclined(memory.originator, memoryId: memory.id)
-//                }
-//                self.memoryAlbum.save()
-//                
-//                delaySeconds1 += 1.5
-//            }
-//        )
-//    }
+
 
     private func ensureUserKnown() {
         if (!Global.userDefined()) {

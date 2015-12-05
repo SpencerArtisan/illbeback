@@ -150,6 +150,7 @@ class FlagToken {
     }
     
     func state(state: FlagState) {
+        print("< FLAG State transition \(_type) from \(_state) to \(state) >")
         _state = state
     }
     

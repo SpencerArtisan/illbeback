@@ -89,6 +89,7 @@
 		97FA33451BF7E18800248F67 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33441BF7E18800248F67 /* EventController.swift */; };
 		97FA33471BF7E3A400248F67 /* Event.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33461BF7E3A400248F67 /* Event.xib */; };
 		97FA33491BF7E52600248F67 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33481BF7E52600248F67 /* EventView.swift */; };
+		97FA73F51C135D5A00E9A57A /* InBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA73F41C135D5A00E9A57A /* InBox.swift */; };
 		97FC86671C00EEB600C30C56 /* FlagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FC86661C00EEB600C30C56 /* FlagView.xib */; };
 		97FC86691C00EED400C30C56 /* FlagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FC86681C00EED400C30C56 /* FlagsView.xib */; };
 		97FC866B1C00F44D00C30C56 /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC866A1C00F44D00C30C56 /* FlagView.swift */; };
@@ -187,6 +188,7 @@
 		97FA33441BF7E18800248F67 /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		97FA33461BF7E3A400248F67 /* Event.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Event.xib; sourceTree = "<group>"; };
 		97FA33481BF7E52600248F67 /* EventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
+		97FA73F41C135D5A00E9A57A /* InBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InBox.swift; sourceTree = "<group>"; };
 		97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
 		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
 		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				97D34AB01C12472A00118819 /* FlagRepository.swift */,
 				97D34AB61C126C9100118819 /* FlagRenderer.swift */,
 				97D34ABA1C12F5BB00118819 /* OutBox.swift */,
+				97FA73F41C135D5A00E9A57A /* InBox.swift */,
 			);
 			name = StateMachine;
 			sourceTree = "<group>";
@@ -669,6 +672,7 @@
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				97FA33491BF7E52600248F67 /* EventView.swift in Sources */,
 				973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,
+				97FA73F51C135D5A00E9A57A /* InBox.swift in Sources */,
 				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
 				9749EE451BF749E300C1606B /* Global.swift in Sources */,
 				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,
