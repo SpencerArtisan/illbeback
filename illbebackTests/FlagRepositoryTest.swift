@@ -28,6 +28,16 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(events[0].description(), "today event")
     }
     
+    func testFind() {
+        let flag = event("an event")
+        repository.add(flag)
+        XCTAssertEqual(repository.find("id"), flag)
+    }
+    
+    func testFindFails() {
+        XCTAssertEqual(repository.find("unknown"), nil)
+    }
+    
     func testDelete() {
         // todo
     }

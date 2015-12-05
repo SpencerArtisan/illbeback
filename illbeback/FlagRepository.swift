@@ -25,6 +25,10 @@ class FlagRepository {
         Utils.notifyObservers("FlagRemoved", properties: ["flag": flag])
     }
     
+    func find(id: String) -> Flag? {
+        return _flags.filter {$0.id() == id}.first
+    }
+    
     func events() -> [Flag] {
         let all = _flags.filter {$0.when() != nil }
         return all.sort {$0.daysToGo() < $1.daysToGo()}
