@@ -110,6 +110,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.searchText.delegate = self
   
         updateButtonStates()
+        
         self.flagRenderer.add(flagRepository.flags())
    
         Utils.addObserver(self, selector: "nameTaken:", event: "NameTaken")

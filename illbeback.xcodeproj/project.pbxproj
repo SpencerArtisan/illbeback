@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		351B950BBBC0C3C497174B4F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8214AFD7360B795E86E35A6 /* libPods.a */; };
 		97002F0E1BC91679002BF217 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97002F0D1BC91679002BF217 /* Photo.swift */; };
-		97140FD91A99282300B2F49A /* MemoryAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97140FD81A99282300B2F49A /* MemoryAlbum.swift */; };
 		9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9717D3EE1B9254D3006455D8 /* ShareController.swift */; };
 		971807451BEE75DB007B759B /* Invitee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971807441BEE75DB007B759B /* Invitee.swift */; };
 		972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A01A90ECC100B5E74C /* MapPinView.swift */; };
@@ -84,7 +83,6 @@
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
 		97EA40011AFEA36B005507BF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97EA40001AFEA36B005507BF /* AVFoundation.framework */; };
 		97EA40031AFEB74C005507BF /* shutter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 97EA40021AFEB74C005507BF /* shutter.mp3 */; };
-		97F438171A991CEC00A33FD2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F438161A991CEC00A33FD2 /* Memory.swift */; };
 		97FA33431BF7BEFE00248F67 /* Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33421BF7BEFE00248F67 /* Events.xib */; };
 		97FA33451BF7E18800248F67 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33441BF7E18800248F67 /* EventController.swift */; };
 		97FA33471BF7E3A400248F67 /* Event.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33461BF7E3A400248F67 /* Event.xib */; };
@@ -114,7 +112,6 @@
 		3395B5D75F7716A51B4FAC20 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8D2932CC8DC9A55330BCF225 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		97002F0D1BC91679002BF217 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		97140FD81A99282300B2F49A /* MemoryAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryAlbum.swift; sourceTree = "<group>"; };
 		9717D3EE1B9254D3006455D8 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		971807441BEE75DB007B759B /* Invitee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invitee.swift; sourceTree = "<group>"; };
 		972006A01A90ECC100B5E74C /* MapPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
@@ -183,7 +180,6 @@
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
 		97EA40001AFEA36B005507BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		97EA40021AFEB74C005507BF /* shutter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shutter.mp3; sourceTree = "<group>"; };
-		97F438161A991CEC00A33FD2 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		97FA33421BF7BEFE00248F67 /* Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Events.xib; sourceTree = "<group>"; };
 		97FA33441BF7E18800248F67 /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		97FA33461BF7E3A400248F67 /* Event.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Event.xib; sourceTree = "<group>"; };
@@ -308,8 +304,6 @@
 				976696EC1A8A9EF4004CB60D /* CategoryController.swift */,
 				97420BBD1A92A0320076E561 /* AddMemoryController.swift */,
 				97A3534C1A800B9500973CAC /* MemoriesController.swift */,
-				97F438161A991CEC00A33FD2 /* Memory.swift */,
-				97140FD81A99282300B2F49A /* MemoryAlbum.swift */,
 				972006A61A9140FB00B5E74C /* DescriptionView.xib */,
 				97767D511B9088F300B6A827 /* SearchView.xib */,
 				976696EE1A8AA317004CB60D /* CategoryView.xib */,
@@ -657,12 +651,10 @@
 				97D34AB71C126C9100118819 /* FlagRenderer.swift in Sources */,
 				97002F0E1BC91679002BF217 /* Photo.swift in Sources */,
 				973F252E1C0BA6F50034A235 /* Invitee2.swift in Sources */,
-				97F438171A991CEC00A33FD2 /* Memory.swift in Sources */,
 				97420BBE1A92A0320076E561 /* AddMemoryController.swift in Sources */,
 				972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */,
 				97767D581B91B2BD00B6A827 /* ShapeCorner.swift in Sources */,
 				971807451BEE75DB007B759B /* Invitee.swift in Sources */,
-				97140FD91A99282300B2F49A /* MemoryAlbum.swift in Sources */,
 				973F25221C0B7A2D0034A235 /* Flag.swift in Sources */,
 				97D34AB11C12472A00118819 /* FlagRepository.swift in Sources */,
 				9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */,

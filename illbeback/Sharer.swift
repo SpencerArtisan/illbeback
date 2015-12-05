@@ -2,11 +2,11 @@ public class Sharer {
     private var root: Firebase
     private let BUCKET = "illbebackappus"
     private var transferManager: AWSS3TransferManager
-    private var memoryAlbum: MemoryAlbum
+//    private var memoryAlbum: MemoryAlbum
     private static var deviceToken: NSData?
     
-    init(memoryAlbum: MemoryAlbum) {
-        self.memoryAlbum = memoryAlbum
+    init() {
+//        self.memoryAlbum = memoryAlbum
         root = Firebase(url:"https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
@@ -44,9 +44,9 @@ public class Sharer {
     
     
     func retrieveShares(to: String,
-                        onStart: (from: String, memory: Memory) -> (),
-                        onComplete: (from: String, memory: Memory) -> (),
-                        onAckReceipt: (from: String, memory: Memory) -> ()) {
+                        onStart: (from: String, flag: Flag) -> (),
+                        onComplete: (from: String, flag: Flag) -> (),
+                        onAckReceipt: (from: String, flag: Flag) -> ()) {
 //        shareRoot(to).observeSingleEventOfType(.Value, withBlock: {
 //            snapshot in
 //                let givenMemories = snapshot.children
@@ -87,12 +87,12 @@ public class Sharer {
         UIApplication.sharedApplication().applicationIconBadgeNumber = Int(badge)
     }
     
-    private func downloadImages(memory: Memory, onComplete: () -> Void) {
+    private func downloadImages(flag: Flag, onComplete: () -> Void) {
         // todo -tidy
         let photoAlbum = PhotoAlbum()
-        let imageUrls = photoAlbum.getMemoryImageUrls(memory.id)
+        let imageUrls = photoAlbum.getMemoryImageUrls(flag.id())
         
-        print("Downloading shared images for memory \(memory.id)")
+        print("Downloading shared images for flag \(flag.id())")
         var leftToDownload = imageUrls.count
         
         for imageUrl in imageUrls {
@@ -146,7 +146,7 @@ public class Sharer {
         }
     }
     
-    func uploadMemory(from: String, to: String, memory: Memory) {
+    func uploadFlag(from: String, to: String, flag: Flag) {
 //        memory.justSent(to)
 //        let originalOriginator = memory.originator
 //        let originalInvitees = memory.invitees

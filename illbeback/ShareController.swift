@@ -168,11 +168,11 @@ class ShareController : UIViewController {
 //        memories.showPinsInShape()
     }
     
-    func acceptRecentShare(memory: Memory) {
+    func acceptRecentShare(flag: Flag) {
 //        memories.memoryAlbum.acceptRecentShare(memory, from: Global.getUser().getName())
     }
     
-    func declineRecentShare(memory: Memory) {
+    func declineRecentShare(flag: Flag) {
 //        memories.memoryAlbum.declineRecentShare(memory, from: Global.getUser().getName())
     }
     
