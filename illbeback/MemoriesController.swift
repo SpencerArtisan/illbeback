@@ -46,6 +46,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     var flagRenderer: FlagRenderer!
     var flagRepository: FlagRepository!
+    var outBox: OutBox!
     
     func getView() -> UIView {
         return self.view
@@ -66,20 +67,20 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     @IBAction func share(sender: AnyObject) {
-//        var sharing:[MapPinView] = []
-//        
-//        let allPins = map.annotations
-//        for pin in allPins {
-//            if (pin is MapPin) {
-//                let mapPin = pin as! MapPin
-//                if shapeController.shapeContains(mapPin.memory.location) {
-//                    let pinView = map.viewForAnnotation(mapPin) as! MapPinView
-//                    sharing.append(pinView)
-//                }
-//            }
-//        }
-//
-//        shareController.shareMemory(sharing)
+        var sharing:[MapPinView] = []
+        
+        let allPins = map.annotations
+        for pin in allPins {
+            if (pin is MapPin) {
+                let mapPin = pin as! MapPin
+                if !mapPin.flag.isBlank() && shapeController.shapeContains(mapPin.flag.location()) {
+                    let pinView = map.viewForAnnotation(mapPin) as! MapPinView
+                    sharing.append(pinView)
+                }
+            }
+        }
+
+        shareController.shareMemory(sharing)
     }
 
 
@@ -102,6 +103,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.zoomController = ZoomSwipeController()
         self.shapeController = ShapeController(map: map, memories: self)
         self.shareController = ShareController(memories: self)
+        self.outBox = OutBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
@@ -204,7 +206,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     private func downloadNewShares() {
-        InBox(flagRepository: flagRepository).receive()
+        InBox(flagRepository: flagRepository, photoAlbum: photoAlbum).receive()
     }
     
     private func checkForImminentEvents() {
@@ -312,33 +314,15 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     func acceptRecentShare(flag: Flag) {
-//        memory.accept()
-//        memoryAlbum!.oldMemories[memory.id] = memory
-//        memoryAlbum!.newMemories.removeValueForKey(memory.id)
-//        photoAlbum.acceptRecentShare(memory)
-//        if memory.isEvent() {
-//            print("Accepting event")
-//            shareController.acceptRecentShare(memory)
-//            memory.resetState()
-//        }
-//        memoryAlbum!.save()
-//        updateButtonStates()
+        try! flag.acceptNew()
+        updateButtonStates()
+        outBox.send()
     }
 
     func declineRecentShare(flag: Flag) {
-//        memory.decline()
-//        memoryAlbum!.newMemories.removeValueForKey(memory.id)
-//
-//        if memory.isEvent() {
-//            print("Declining event")
-//            shareController.declineRecentShare(memory)
-//        }
-//        let oldMemory = memoryAlbum!.oldMemories[memory.id]
-//        if oldMemory != nil {
-//            map!.addAnnotation(oldMemory!.asMapPin())
-//        }
-//        memoryAlbum!.save()
-//        updateButtonStates()
+        try! flag.declineNew()
+        updateButtonStates()
+        outBox.send()
     }
 
     func shareMemory(pin: MapPinView) {

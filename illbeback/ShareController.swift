@@ -17,7 +17,7 @@ class ShareController : UIViewController {
     init(memories: MemoriesController) {
         self.shareModal = Modal(viewName: "ShareView", owner: memories)
         self.memoriesController = memories
-        self.outBox = OutBox(flagRepository: memoriesController.flagRepository)
+        self.outBox = OutBox(flagRepository: memoriesController.flagRepository, photoAlbum: memoriesController.photoAlbum)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -176,14 +176,6 @@ class ShareController : UIViewController {
 //        memories.shapeModal?.slideUpFromTop(view)
 //        memories.shapeController.clear()
 //        memories.showPinsInShape()
-    }
-    
-    func acceptRecentShare(flag: Flag) {
-//        memories.memoryAlbum.acceptRecentShare(memory, from: Global.getUser().getName())
-    }
-    
-    func declineRecentShare(flag: Flag) {
-//        memories.memoryAlbum.declineRecentShare(memory, from: Global.getUser().getName())
     }
     
     func hideShareModal(sender: AnyObject?) {

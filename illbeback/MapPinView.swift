@@ -108,7 +108,7 @@ class MapPinView: MKAnnotationView {
         if (inShape) {
             let imageHighlight = UIImage(named: "share flag")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
-        } else if (flag!.state() == FlagState.UpdateOffered) {
+        } else if (flag!.state() == FlagState.UpdateOffered || flag!.state() == FlagState.NewOffered) {
             let imageHighlight = UIImage(named: "recent")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
         }
@@ -181,7 +181,7 @@ class MapPinView: MKAnnotationView {
             labelView!.addSubview(dateView!)
         }
         
-        if (flag!.state() == FlagState.UpdateOffered || flag!.isBlank()) {
+        if (flag!.state() == FlagState.UpdateOffered || flag!.state() == FlagState.NewOffered || flag!.isBlank()) {
             labelView?.addSubview(acceptButton!)
             labelView?.addSubview(declineButton!)
         } else {
@@ -355,30 +355,30 @@ class MapPinView: MKAnnotationView {
     }
     
     func createAcceptButton() {
-        if flag!.state() == FlagState.UpdateOffered || flag!.isBlank() {
-        acceptButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
-        acceptButton!.layer.cornerRadius = 0
-        acceptButton!.numberOfLines = 0
-        acceptButton!.textAlignment = NSTextAlignment.Center
-        acceptButton!.font = acceptButton!.font.fontWithSize(18)
-        acceptButton!.text = flag!.isBlank() ? "Use" : "Accept"
-        acceptButton!.backgroundColor = UIColor.greenColor()
-        acceptButton!.layer.borderWidth = 1
-        acceptButton!.layer.borderColor = UIColor.grayColor().CGColor
+        if flag!.state() == FlagState.UpdateOffered || flag!.state() == FlagState.NewOffered || flag!.isBlank() {
+            acceptButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
+            acceptButton!.layer.cornerRadius = 0
+            acceptButton!.numberOfLines = 0
+            acceptButton!.textAlignment = NSTextAlignment.Center
+            acceptButton!.font = acceptButton!.font.fontWithSize(18)
+            acceptButton!.text = flag!.isBlank() ? "Use" : "Accept"
+            acceptButton!.backgroundColor = UIColor.greenColor()
+            acceptButton!.layer.borderWidth = 1
+            acceptButton!.layer.borderColor = UIColor.grayColor().CGColor
         }
     }
     
     func createDeclineButton() {
-        if flag!.state() == FlagState.UpdateOffered || flag!.isBlank() {
-        declineButton = UILabel(frame: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
-        declineButton!.layer.cornerRadius = 0
-        declineButton!.numberOfLines = 0
-        declineButton!.textAlignment = NSTextAlignment.Center
-        declineButton!.font = declineButton!.font.fontWithSize(18)
-        declineButton!.text = flag!.isBlank() ? "Delete" : "Decline"
-        declineButton!.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
-        declineButton!.layer.borderWidth = 1
-        declineButton!.layer.borderColor = UIColor.grayColor().CGColor
+        if flag!.state() == FlagState.UpdateOffered || flag!.state() == FlagState.NewOffered || flag!.isBlank() {
+            declineButton = UILabel(frame: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
+            declineButton!.layer.cornerRadius = 0
+            declineButton!.numberOfLines = 0
+            declineButton!.textAlignment = NSTextAlignment.Center
+            declineButton!.font = declineButton!.font.fontWithSize(18)
+            declineButton!.text = flag!.isBlank() ? "Delete" : "Decline"
+            declineButton!.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
+            declineButton!.layer.borderWidth = 1
+            declineButton!.layer.borderColor = UIColor.grayColor().CGColor
         }
     }
     
@@ -425,17 +425,16 @@ class MapPinView: MKAnnotationView {
                 MapPinView.lastSelectionChange = NSDate()
                 if flag!.isBlank() {
                     memoriesController?.unblankMemory(self)
-                } else if flag!.state() == .UpdateOffered {
+                } else if flag!.state() == .UpdateOffered || flag!.state() == .NewOffered {
                     memoriesController?.acceptRecentShare(flag!)
                 }
             } else if declineButton != nil && hitButton(point, button: declineButton) {
                 MapPinView.lastSelectionChange = NSDate()
                 if flag!.isBlank() {
                     memoriesController?.deleteMemory(self)
-                } else if flag!.state() == .UpdateOffered {
+                } else if flag!.state() == .UpdateOffered || flag!.state() == .NewOffered {
                     memoriesController?.removePin(self)
                     memoriesController?.declineRecentShare(flag!)
-                    
                 }
             } else if (hitButton(point, button: dateView)) {
                 memoriesController?.rescheduleMemory(self)

@@ -46,21 +46,20 @@ class FlagRenderer: NSObject {
     }
 
     func onFlagAdded(note: NSNotification) {
-        print("Flag added to repo.  Adding it to map...")
         let flag = note.userInfo!["flag"] as! Flag
+        print("\(flag.type()) added to repo.  Adding it to map...")
         add(flag)
     }
 
     func onFlagRemoved(note: NSNotification) {
-        print("Flag removed from repo.  Removing from map...")
         let flag = note.userInfo!["flag"] as! Flag
+        print("\(flag.type()) removed from repo.  Removing from map...")
         remove(flag)
     }
     
     func add(flag: Flag) {
         Utils.runOnUiThread() {
             let pin = self.createPin(flag)
-            print("Adding pin for \(flag.encode())")
             self.map.addAnnotation(pin)
         }
     }

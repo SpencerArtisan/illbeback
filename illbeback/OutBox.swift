@@ -16,16 +16,21 @@ class OutBox {
     private var transferManager: AWSS3TransferManager
     private static var deviceToken: NSData?
   
-    init(flagRepository: FlagRepository) {
+    init(flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.flagRepository = flagRepository
-        self.photoAlbum = PhotoAlbum()
+        self.photoAlbum = photoAlbum
         root = Firebase(url:"https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
     
     func send() {
         print("SENDING...")
-
+        sendInvites()
+        sendAccepts()
+        sendDeclines()
+    }
+    
+    private func sendInvites() {
         for flag in flagRepository.flags() {
             let inviting = flag.invitees().filter {$0.state() == InviteeState.Inviting}
             for invitee in inviting {
@@ -34,11 +39,30 @@ class OutBox {
         }
     }
     
+    private func sendAccepts() {
+        let accepting = flagRepository.flags().filter {$0.state() == FlagState.AcceptingNew}
+        for flag in accepting {
+            print("Accepting \(flag.type())")
+            self.uploadFlagDetails(flag.originator(), flag: flag)
+            flag.acceptNewSuccess()
+        }
+    }
+    
+    private func sendDeclines() {
+        let declining = flagRepository.flags().filter {$0.state() == FlagState.DecliningNew}
+        for flag in declining {
+            print("Declining \(flag.type())")
+            self.uploadFlagDetails(flag.originator(), flag: flag)
+            flag.declineNewSuccess()
+        }
+    }
+    
     func invite(invitee: Invitee2, flag: Flag) {
         Utils.notifyObservers("Inviting", properties: ["name": invitee.name(), "flag": flag])
         uploadPhotos(invitee, flag: flag,
             onComplete: {
-                self.uploadFlagDetails(invitee, flag: flag)
+                self.uploadFlagDetails(invitee.name(), flag: flag)
+                invitee.invitingSuccess()
             },
             onError: {
                 invitee.invitingFailure()
@@ -104,11 +128,10 @@ class OutBox {
         }
     }
     
-    func uploadFlagDetails(invitee: Invitee2, flag: Flag) {
+    private func uploadFlagDetails(to: String, flag: Flag) {
         print("FIREBASE OP: Uploading flag " + flag.encode())
-        let newNode = shareRoot(invitee.name()).childByAutoId()
+        let newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": Global.getUser().getName(), "memory": flag.encode()])
-        invitee.invitingSuccess()
         // todo - handle failure
     }
     

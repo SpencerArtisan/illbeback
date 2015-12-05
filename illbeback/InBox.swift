@@ -16,9 +16,9 @@ class InBox {
     private var transferManager: AWSS3TransferManager
     private static var deviceToken: NSData?
     
-    init(flagRepository: FlagRepository) {
+    init(flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.flagRepository = flagRepository
-        self.photoAlbum = PhotoAlbum()
+        self.photoAlbum = photoAlbum
         root = Firebase(url:"https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
     }
@@ -28,8 +28,6 @@ class InBox {
             return
         }
         
-        print("RECEIVING...")
-
         shareRoot(Global.getUser().getName()).observeSingleEventOfType(.Value, withBlock: { snapshot in
             let givenFlags = snapshot.children
             while let givenFlag: FDataSnapshot = givenFlags.nextObject() as? FDataSnapshot {
