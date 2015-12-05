@@ -36,7 +36,7 @@ class InBox {
         })
     }
     
-    private func receive(givenFlag: FDataSnapshot) {
+    func receive(givenFlag: FDataSnapshot) {
         let encoded = givenFlag.value["memory"] as! String
         let flag = Flag.offered(FlagToken(token: encoded))
     

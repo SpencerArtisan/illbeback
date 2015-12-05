@@ -89,9 +89,6 @@
 		97FA33471BF7E3A400248F67 /* Event.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33461BF7E3A400248F67 /* Event.xib */; };
 		97FA33491BF7E52600248F67 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33481BF7E52600248F67 /* EventView.swift */; };
 		97FA73F51C135D5A00E9A57A /* InBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA73F41C135D5A00E9A57A /* InBox.swift */; };
-		97FA73F71C13927400E9A57A /* InBoxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA73F61C13927400E9A57A /* InBoxTest.swift */; };
-		97FA73F81C13931A00E9A57A /* InBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA73F41C135D5A00E9A57A /* InBox.swift */; };
-		97FA73F91C13932900E9A57A /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A41A910E7500B5E74C /* PhotoAlbum.swift */; };
 		97FC86671C00EEB600C30C56 /* FlagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FC86661C00EEB600C30C56 /* FlagView.xib */; };
 		97FC86691C00EED400C30C56 /* FlagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FC86681C00EED400C30C56 /* FlagsView.xib */; };
 		97FC866B1C00F44D00C30C56 /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC866A1C00F44D00C30C56 /* FlagView.swift */; };
@@ -190,7 +187,6 @@
 		97FA33461BF7E3A400248F67 /* Event.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Event.xib; sourceTree = "<group>"; };
 		97FA33481BF7E52600248F67 /* EventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		97FA73F41C135D5A00E9A57A /* InBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InBox.swift; sourceTree = "<group>"; };
-		97FA73F61C13927400E9A57A /* InBoxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InBoxTest.swift; sourceTree = "<group>"; };
 		97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
 		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
 		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
@@ -272,7 +268,6 @@
 				97D34AA91C12244A00118819 /* FlagTokenTest.swift */,
 				97D34AAB1C12414400118819 /* InviteeStateTest.swift */,
 				97D34AB21C124AFD00118819 /* FlagRepositoryTest.swift */,
-				97FA73F61C13927400E9A57A /* InBoxTest.swift */,
 			);
 			name = StateMachine;
 			path = ../illbebackTests;
@@ -706,19 +701,16 @@
 				97C732671C0E5B73002B5214 /* StateMachineError.swift in Sources */,
 				97D34AAC1C12414400118819 /* InviteeStateTest.swift in Sources */,
 				97D34AB51C12548B00118819 /* Util.swift in Sources */,
-				97FA73F91C13932900E9A57A /* PhotoAlbum.swift in Sources */,
 				97C732651C0E5B73002B5214 /* FlagState.swift in Sources */,
 				97C732691C0E5B73002B5214 /* InviteeState.swift in Sources */,
 				97C732631C0E5B0C002B5214 /* InviteeTest.swift in Sources */,
 				97D34AAA1C12244A00118819 /* FlagTokenTest.swift in Sources */,
 				97C732661C0E5B73002B5214 /* FlagToken.swift in Sources */,
-				97FA73F81C13931A00E9A57A /* InBox.swift in Sources */,
 				97C732621C0E5B0C002B5214 /* FlagTest.swift in Sources */,
 				97D34AB41C12543300118819 /* FlagRepository.swift in Sources */,
 				97C732641C0E5B73002B5214 /* Flag.swift in Sources */,
 				97C7326A1C0E5BA0002B5214 /* User.swift in Sources */,
 				97D34AB31C124AFD00118819 /* FlagRepositoryTest.swift in Sources */,
-				97FA73F71C13927400E9A57A /* InBoxTest.swift in Sources */,
 				97D34ABC1C1316D900118819 /* Extensions.swift in Sources */,
 				97C732681C0E5B73002B5214 /* Invitee2.swift in Sources */,
 				97C7326C1C0E608D002B5214 /* FlagStateTest.swift in Sources */,
@@ -895,12 +887,17 @@
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = BackmapUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = skw.BackmapUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TEST_TARGET_NAME = illbeback;
 				USES_XCTRUNNER = YES;
 			};
@@ -911,12 +908,17 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = BackmapUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = skw.BackmapUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TEST_TARGET_NAME = illbeback;
 				USES_XCTRUNNER = YES;
 			};
