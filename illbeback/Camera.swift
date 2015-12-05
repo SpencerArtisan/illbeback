@@ -17,7 +17,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     var navigationController: UINavigationController!
     var parentController: UIViewController!
     var callback: ((UINavigationController, UIImage, UIDeviceOrientation) -> Void)
-    var snapPlayer: AVAudioPlayer!
+    var snapPlayer: AVAudioPlayer?
     let imagePicker = UIImagePickerController()
  
     init(navigationController: UINavigationController, callback: ((UINavigationController, UIImage, UIDeviceOrientation) -> Void)) {
@@ -35,11 +35,15 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     func createSound() {
         let snapPath = NSBundle.mainBundle().pathForResource("shutter", ofType: "mp3")
         let snapURL = NSURL(fileURLWithPath: snapPath!)
-        do {
-            try snapPlayer = AVAudioPlayer(contentsOfURL: snapURL)
-            snapPlayer.prepareToPlay()
-        } catch {
-        }
+        #if (arch(i386) || arch(x86_64)) && os(iOS)
+            print("SIMULATOR")
+        #else
+            do {
+                try snapPlayer = AVAudioPlayer(contentsOfURL: snapURL)
+                snapPlayer.prepareToPlay()
+            } catch {
+            }
+        #endif
     }
     
     func start() {
@@ -106,7 +110,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     }
     
     func takePhoto(sender : UIButton!) {
-        snapPlayer.play()
+        snapPlayer?.play()
         let blackView = blackout()
         
         UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
