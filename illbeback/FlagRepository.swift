@@ -11,15 +11,13 @@ import Foundation
 class FlagRepository {
     private var _flags = [Flag]()
     
-    init() {
-    }
-    
     func flags() -> [Flag] {
         return _flags
     }
     
     func add(flag: Flag) {
         _flags.append(flag)
+        Utils.notifyObservers("FlagAdded", properties: ["flag": flag])
     }
     
     func remove(flag: Flag) {
@@ -28,7 +26,7 @@ class FlagRepository {
     
     func events() -> [Flag] {
         let all = _flags.filter {$0.when() != nil }
-        return all.sort{$0.daysToGo() < $1.daysToGo()}
+        return all.sort {$0.daysToGo() < $1.daysToGo()}
     }
     
     func new() -> [Flag] {
@@ -36,8 +34,8 @@ class FlagRepository {
     }
     
     func imminentEvents() -> [Flag] {
-        let imminent = _flags.filter({$0.when() != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0})
-        return imminent.sort{$0.daysToGo() < $1.daysToGo()}
+        let imminent = _flags.filter {$0.when() != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0}
+        return imminent.sort {$0.daysToGo() < $1.daysToGo()}
     }
     
     func save() {
@@ -64,6 +62,7 @@ class FlagRepository {
         let props = NSDictionary(contentsOfFile: path)?.mutableCopy() as! NSDictionary
         
         let encodedFlags = (props.valueForKey("Memories") ?? []) as! [String]
-        _flags = encodedFlags.map {encodedFlag in Flag.decode(encodedFlag)}
+        encodedFlags.map {encodedFlag in Flag.decode(encodedFlag)}
+                    .forEach {flag in self.add(flag)}
     }
 }

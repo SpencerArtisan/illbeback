@@ -9,13 +9,15 @@
 import Foundation
 import MapKit
 
-class FlagRenderer {
+class FlagRenderer: NSObject {
     private let map: MKMapView
     private let memoriesController: MemoriesController
     
     init(map: MKMapView, memoriesController: MemoriesController) {
         self.map = map
         self.memoriesController = memoriesController
+        super.init()
+        Utils.addObserver(self, selector: "onFlagAdded:", event: "FlagAdded")
     }
     
     func render(viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -43,14 +45,14 @@ class FlagRenderer {
         return nil
     }
 
-    func add(flags: [Flag]) {
-        for flag in flags {
-            if flag.isPast() {
-                // todo WRONG PLACE
-                remove(flag)
-            } else {
-                add(flag)
-            }
+    func onFlagAdded(note: NSNotification) {
+        print("Flag added to repo.  Adding it to map...")
+        let flag = note.userInfo!["flag"] as! Flag
+        if flag.isPast() {
+            // todo WRONG PLACE
+            remove(flag)
+        } else {
+            add(flag)
         }
     }
 
@@ -67,6 +69,7 @@ class FlagRenderer {
     }
     
     func remove(flag: Flag) {
+        print("Removed pin for \(flag.encode())")
         map.removeAnnotation(getPin(flag)!)
     }
     
@@ -86,9 +89,6 @@ class FlagRenderer {
             if pin != nil {
                 if event.isPast() {
                     print("Removing old event \(event.id)")
-                    // todo HINT
-//                    self.memoryAlbum.delete(event)
-//                    self.photoAlbum.delete(event)
                     self.map.deselectAnnotation(pin, animated: false)
                     Utils.runOnUiThread2() {
                         self.map.removeAnnotation(pin!)
