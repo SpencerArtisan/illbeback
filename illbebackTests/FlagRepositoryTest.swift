@@ -13,16 +13,16 @@ class FlagRepositoryTest : XCTestCase {
     private let repository = FlagRepository()
 
     func testEvents() {
-        repository.addFlag(event("an event"))
-        repository.addFlag(nonEvent("not an event"))
+        repository.add(event("an event"))
+        repository.add(nonEvent("not an event"))
         let events = repository.events()
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0].description(), "an event")
     }
     
     func testImminentEvents() {
-        repository.addFlag(flag(NSDate(), description: "today event"))
-        repository.addFlag(flag(NSDate.distantFuture(), description: "distant event"))
+        repository.add(flag(NSDate(), description: "today event"))
+        repository.add(flag(NSDate.distantFuture(), description: "distant event"))
         let events = repository.imminentEvents()
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0].description(), "today event")

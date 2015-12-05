@@ -20,7 +20,7 @@ class Invitee2 {
     init(code: String) {
         let parts = code.componentsSeparatedByString(",")
         _name = parts[0]
-        _state = InviteeState(rawValue: parts[1])!
+        _state = InviteeState.fromCode(parts[1])
     }
     
     func name() -> String {

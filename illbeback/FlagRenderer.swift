@@ -24,7 +24,7 @@ class FlagRenderer {
             var pinView = map.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
             
             if (pinView == nil) {
-                pinView = MapPinView(memoriesController: memoriesController, memory: pinData.memory)
+                pinView = MapPinView(memoriesController: memoriesController, flag: pinData.flag)
             }
             
             return pinView
@@ -43,6 +43,16 @@ class FlagRenderer {
         return nil
     }
 
+    func add(flags: [Flag]) {
+        for flag in flags {
+            if flag.isPast() {
+                // todo WRONG PLACE
+                remove(flag)
+            } else {
+                add(flag)
+            }
+        }
+    }
 
     func add(flag: Flag) {
         Utils.runOnUiThread() {
@@ -56,17 +66,19 @@ class FlagRenderer {
         map.removeAnnotation(pin.annotation!)
     }
     
+    func remove(flag: Flag) {
+        map.removeAnnotation(getPin(flag)!)
+    }
+    
     func update(pin: MapPinView) {
         map.removeAnnotation(pin.annotation!)
-        map.addAnnotation((pin.memory?.asMapPin())!)
-        //memoryAlbum.save()
+        map.addAnnotation(createPin(pin.flag!))
     }
     
     func refresh(pin: MapPinView) {
         map.deselectAnnotation(pin.annotation, animated: false)
         pin.refresh()
     }
-
 
     func updateEventPins(events: [Flag]) {
         for event in events {
@@ -91,7 +103,7 @@ class FlagRenderer {
     
     func getPin(flag: Flag) -> MapPin? {
         for pin in self.map.annotations {
-            if pin is MapPin && (pin as! MapPin).memory.id == flag.id() {
+            if pin is MapPin && (pin as! MapPin).flag.id() == flag.id() {
                 return pin as? MapPin
             }
         }

@@ -138,9 +138,6 @@ public class Memory {
         return formatter.stringFromDate(when!)
     }
     
-    func asMapPin() -> MapPin {
-        return MapPin(memory: self)
-    }
     
     func formatter() -> NSDateFormatter {
         let formatter = NSDateFormatter()

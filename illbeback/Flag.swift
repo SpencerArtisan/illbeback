@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import UIKit
 
-class Flag {
+public class Flag {
     private var _token: FlagToken
     
     static func create(id: String, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) -> Flag {
@@ -63,8 +63,16 @@ class Flag {
         return _token.descriptionUpdate() ?? _token.description()
     }
     
+    func description(description: String) {
+        _token.description(description)
+    }
+    
     func when() -> NSDate? {
         return _token.whenUpdate() ?? _token.when()
+    }
+    
+    func when(when: NSDate?) {
+        _token.when(when)
     }
     
     func daysToGo() -> Int {
@@ -86,13 +94,21 @@ class Flag {
         }
         return formatter.stringFromDate(when()!)
     }
-
+    
     func location() -> CLLocationCoordinate2D {
         return _token.locationUpdate() ?? _token.location()
     }
     
+    func location(location: CLLocationCoordinate2D) {
+        _token.location(location)
+    }
+    
     func type() -> String {
         return _token.type()
+    }
+    
+    func type(type: String) {
+        _token.type(type)
     }
     
     func originator() -> String {
@@ -187,4 +203,11 @@ class Flag {
         }
         state(.DecliningNew)
     }
+
+}
+
+extension Flag: Equatable {}
+
+public func ==(lhs: Flag, rhs: Flag) -> Bool {
+    return lhs.id() == rhs.id()
 }

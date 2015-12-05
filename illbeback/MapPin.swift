@@ -11,24 +11,17 @@ class MapPin : NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String?
-    var memory: Memory
+    var flag: Flag
     
     init(flag: Flag) {
         self.coordinate = flag.location()
         self.title = flag.type()
         self.subtitle = flag.description().isEmpty ? "No description provided" : flag.description()
-        self.memory = Memory(memoryString: flag.encode())
-    }
-    
-    init(memory: Memory) {
-        self.coordinate = memory.location
-        self.title = memory.type
-        self.subtitle = memory.description.isEmpty ? "No description provided" : memory.description
-        self.memory = memory
+        self.flag = flag
     }
     
     func setCoordinate2(newCoordinate: CLLocationCoordinate2D) {
         coordinate = newCoordinate
-        memory.location = newCoordinate
+        flag.location(newCoordinate)
     }
 }

@@ -17,9 +17,9 @@ public class PhotoAlbum {
         folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
     }
     
-    func acceptRecentShare(memory: Memory) {
-        delete(memory)
-        let paths = getImagePaths(memory.id)
+    func acceptRecentShare(flag: Flag) {
+        delete(flag)
+        let paths = getImagePaths(flag.id())
         for path in paths {
             let recentPath = "\(path).recent"
             if fileManager.fileExistsAtPath(recentPath) {
@@ -33,8 +33,8 @@ public class PhotoAlbum {
         }
     }
 
-    func getMainPhoto(memory: Memory) -> Photo? {
-        let allphotos = photos(memory)
+    func getMainPhoto(flag: Flag) -> Photo? {
+        let allphotos = photos(flag)
         if (allphotos.count == 0) {
             return nil
         } else {
@@ -47,23 +47,23 @@ public class PhotoAlbum {
         return imagePaths.map {NSURL(fileURLWithPath: $0)}
     }
     
-    public func saveMemoryImage(image: UIImage?, memoryId: String) {
-        let imagePath = getNewImagePath(memoryId)
+    public func saveMemoryImage(image: UIImage?, flagId: String) {
+        let imagePath = getNewImagePath(flagId)
         let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     
-    public func photos(memory: Memory) -> [Photo] {
-        let memoryId = memory.id
+    public func photos(flag: Flag) -> [Photo] {
+        let flagId = flag.id()
         var photos:[Photo] = []
-        let marker = memory.isJustReceived() ? ".recent" : ""
-        var candidate = "\(folder)/Memory\(memoryId).jpg\(marker)"
+        let marker = flag.state() == .UpdateOffered ? ".recent" : ""
+        var candidate = "\(folder)/Memory\(flagId).jpg\(marker)"
         if fileManager.fileExistsAtPath(candidate) {
             photos.append(Photo(imagePath: candidate))
         }
         
         for suffix in 2...10 {
-            candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg\(marker)"
+            candidate = "\(folder)/Memory\(flagId)-\(suffix).jpg\(marker)"
             if fileManager.fileExistsAtPath(candidate) {
                 photos.append(Photo(imagePath: candidate))
             }
@@ -71,36 +71,36 @@ public class PhotoAlbum {
         return photos
     }
     
-    public func addMemoryImage(image: UIImage?, memoryId: String) {
-        let imagePath = getNewImagePath(memoryId)
+    public func addFlagImage(image: UIImage?, flagId: String) {
+        let imagePath = getNewImagePath(flagId)
         print("Saving image \(imagePath)")
         let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
     }
     
-    private func getNewImagePath(memoryId: String) -> String {
-        var candidate = "\(folder)/Memory\(memoryId).jpg"
+    private func getNewImagePath(flagId: String) -> String {
+        var candidate = "\(folder)/Memory\(flagId).jpg"
         var suffix = 2;
         while (fileManager.fileExistsAtPath(candidate)) {
-            candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg"
+            candidate = "\(folder)/Memory\(flagId)-\(suffix).jpg"
             suffix++
         }
         return candidate
     }
 
-    private func getImagePaths(memoryId: String) -> [String] {
+    private func getImagePaths(flagId: String) -> [String] {
         var paths:[String] = []
-        var candidate = "\(folder)/Memory\(memoryId).jpg"
+        var candidate = "\(folder)/Memory\(flagId).jpg"
         paths.append(candidate)
         for suffix in 2...10 {
-            candidate = "\(folder)/Memory\(memoryId)-\(suffix).jpg"
+            candidate = "\(folder)/Memory\(flagId)-\(suffix).jpg"
             paths.append(candidate)
         }
         return paths
     }
     
-    public func delete(memory: Memory) {
-        let imagePaths = getImagePaths(memory.id)
+    public func delete(flag: Flag) {
+        let imagePaths = getImagePaths(flag.id())
         for path in imagePaths {
             if fileManager.fileExistsAtPath(path) {
                 do {

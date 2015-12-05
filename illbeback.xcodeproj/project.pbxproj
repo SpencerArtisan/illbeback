@@ -78,6 +78,7 @@
 		97D34AB41C12543300118819 /* FlagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AB01C12472A00118819 /* FlagRepository.swift */; };
 		97D34AB51C12548B00118819 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AAE1C12453100118819 /* Util.swift */; };
 		97D34AB71C126C9100118819 /* FlagRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AB61C126C9100118819 /* FlagRenderer.swift */; };
+		97D34AB91C127C1D00118819 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AB81C127C1D00118819 /* Extensions.swift */; };
 		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
@@ -176,6 +177,7 @@
 		97D34AB01C12472A00118819 /* FlagRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagRepository.swift; sourceTree = "<group>"; };
 		97D34AB21C124AFD00118819 /* FlagRepositoryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagRepositoryTest.swift; sourceTree = "<group>"; };
 		97D34AB61C126C9100118819 /* FlagRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagRenderer.swift; sourceTree = "<group>"; };
+		97D34AB81C127C1D00118819 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				97D34AAE1C12453100118819 /* Util.swift */,
+				97D34AB81C127C1D00118819 /* Extensions.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -666,6 +669,7 @@
 				97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */,
 				973F25311C0BA8D60034A235 /* InviteeState.swift in Sources */,
 				97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */,
+				97D34AB91C127C1D00118819 /* Extensions.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				97FA33491BF7E52600248F67 /* EventView.swift in Sources */,
 				973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,

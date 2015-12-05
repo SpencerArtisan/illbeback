@@ -14,10 +14,10 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var categoryModal: Modal!
     var descriptionModal: Modal!
     var orientation: UIDeviceOrientation?
-    var memoryId: String?
+    var flagId: String?
     var memoryImage: String?
     var memoryLocation: CLLocationCoordinate2D?
-    var memories: MemoriesController?
+    var memoriesController: MemoriesController?
     var callingViewController: UIViewController?
     var photoAlbum: PhotoAlbum?
     var rewordingPin: MapPinView?
@@ -30,7 +30,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         descriptionModal = Modal(viewName: "DescriptionView", owner: self)
         desciptionTextArea.delegate = self
         photoAlbum = album
-        memories = memoriesViewController
+        memoriesController = memoriesViewController
     }
     
     @IBAction func cancelDescription(sender: AnyObject) {
@@ -123,9 +123,9 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         rewordingPin = nil
         self.memoryLocation = nil
         self.callingViewController = controller
-        self.memoryId = NSUUID().UUIDString
+        self.flagId = NSUUID().UUIDString
         self.orientation = orientation
-        self.photoAlbum!.saveMemoryImage(image, memoryId: self.memoryId!)
+        self.photoAlbum!.saveMemoryImage(image, flagId: self.flagId!)
         self.showCategorySelector()
     }
     
@@ -133,25 +133,25 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
         rewordingPin = nil
         self.memoryLocation = location
         self.callingViewController = controller
-        self.memoryId = NSUUID().UUIDString
+        self.flagId = NSUUID().UUIDString
         self.showCategorySelector()
     }
 
     func addBlank(controller: UIViewController, location: CLLocationCoordinate2D, description: String) {
-        memories!.addMemoryHere("Blank", id: NSUUID().UUIDString, description: description, location: location, orientation: self.orientation, when: nil)
+        memoriesController!.addMemoryHere("Blank", id: NSUUID().UUIDString, description: description, location: location, orientation: self.orientation, when: nil)
     }
     
     func reword(controller: UIViewController, pin: MapPinView) {
         self.callingViewController = controller
         rewordingPin = pin
-        memoryImage = pin.memory!.type
-        let memory = pin.memory!
-        if memory.isEvent() {
-            self.showDescriptionEntryWithDate(memory.type, date: memory.when!)
+        memoryImage = pin.flag!.type()
+        let flag = pin.flag!
+        if flag.isEvent() {
+            self.showDescriptionEntryWithDate(flag.type(), date: flag.when()!)
         } else {
-            self.showDescriptionEntry(memory.type)
+            self.showDescriptionEntry(flag.type())
         }
-        desciptionTextArea.text = memory.description
+        desciptionTextArea.text = flag.description()
     }
     
     func reschedule(controller: UIViewController, pin: MapPinView) {
@@ -233,16 +233,16 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
             
             let when = datePicker().hidden ? nil as NSDate? : datePicker().date
             if (rewordingPin != nil) {
-                rewordingPin?.memory?.description = textView.text
-                rewordingPin?.memory?.when = when
-                rewordingPin?.memory?.type = self.memoryImage!
-                memories!.memoryAlbum.save()
+                rewordingPin?.flag?.description(textView.text)
+                rewordingPin?.flag?.when(when)
+                rewordingPin?.flag?.type(self.memoryImage!)
+                memoriesController!.flagRepository.save()
                 let annotation = rewordingPin!.annotation!
                 rewordingPin?.memoriesController?.map?.deselectAnnotation(annotation, animated: false)
                 rewordingPin?.memoriesController?.map?.removeAnnotation(annotation)
                 rewordingPin?.memoriesController?.map?.addAnnotation(annotation)
             } else {
-                memories!.addMemoryHere(memoryImage!, id: memoryId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation, when: when)
+                memoriesController!.addMemoryHere(memoryImage!, id: flagId!, description: textView.text, location: self.memoryLocation, orientation: self.orientation, when: when)
                 self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
             }
             descriptionModal.hide()

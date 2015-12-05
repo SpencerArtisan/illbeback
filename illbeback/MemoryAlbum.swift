@@ -94,12 +94,12 @@ public class MemoryAlbum {
     }
     
     func addPin(memory: Memory) {
-        dispatch_async(dispatch_get_main_queue(), {
-            let pin = memory.asMapPin()
-            print("Adding pin for \(memory.asString())")
-            self.map.addAnnotation(pin)
-            self.enableEventList()
-        })
+//        dispatch_async(dispatch_get_main_queue(), {
+//            let pin = memory.asMapPin()
+//            print("Adding pin for \(memory.asString())")
+//            self.map.addAnnotation(pin)
+//            self.enableEventList()
+//        })
     }
     
     func add(memory: Memory) {
@@ -132,7 +132,7 @@ public class MemoryAlbum {
     
     func getPin(memory: Memory) -> MapPin? {
         for pin in self.map.annotations {
-            if pin is MapPin && (pin as! MapPin).memory.id == memory.id {
+            if pin is MapPin && (pin as! MapPin).flag.id() == memory.id {
                 return pin as? MapPin
             }
         }
@@ -140,7 +140,7 @@ public class MemoryAlbum {
     }
     
     func delete(pin: MapPinView) {
-        delete(pin.memory!)
+//        delete(pin.flag!)
         map.removeAnnotation(pin.annotation!)
         enableEventList()
     }

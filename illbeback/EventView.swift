@@ -14,7 +14,7 @@ class EventView: UIView {
     @IBOutlet weak var when: UILabel!
     
     var memories: MemoriesController!
-    private var event: Memory?
+    private var event: Flag?
     private var normalColor: UIColor?
     
     override init(frame: CGRect) {
@@ -29,17 +29,17 @@ class EventView: UIView {
     
     @IBAction func goto(sender: AnyObject) {
         print("go to \(event!.summary())")
-        memories.centerMap(event!.location)
+        memories.centerMap(event!.location())
     }
     
-    func setEvent(event: Memory) {
+    func setEvent(event: Flag) {
         self.event = event
         title.text = " \(event.summary())"
         when.text = formatWhen(event)
         colorIfSoon()
     }
     
-    private func formatWhen(event: Memory) -> String {
+    private func formatWhen(event: Flag) -> String {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "EEE"
         
@@ -48,11 +48,11 @@ class EventView: UIView {
         } else if event.daysToGo() == 1 {
             return "tomorrow"
         } else if event.daysToGo() < 7 {
-            return formatter.stringFromDate(event.when!)
+            return formatter.stringFromDate(event.when()!)
         } else {
             let formatter2 = NSDateFormatter()
             formatter2.dateFormat = "d MMM"
-            return "\(formatter.stringFromDate(event.when!))\r\n\(formatter2.stringFromDate(event.when!))"
+            return "\(formatter.stringFromDate(event.when()!))\r\n\(formatter2.stringFromDate(event.when()!))"
         }
     }
     

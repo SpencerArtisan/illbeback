@@ -15,8 +15,8 @@ class FlagView: UIView {
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var bkgView: UILabel!
     
-    var memories: MemoriesController!
-    private var memory: Memory?
+    var memoriesController: MemoriesController!
+    private var flag: Flag?
     private var normalColor: UIColor?
     
     override init(frame: CGRect) {
@@ -30,19 +30,19 @@ class FlagView: UIView {
     }
     
     @IBAction func goto(sender: AnyObject) {
-        print("go to \(memory!.summary())")
-        memories.centerMap(memory!.location)
+        print("go to \(flag!.summary())")
+        memoriesController.centerMap(flag!.location())
     }
     
-    func setMemory(memory: Memory) {
-        self.memory = memory
-        titleView.text = " \(memory.summary())"
+    func setFlag(flag: Flag) {
+        self.flag = flag
+        titleView.text = " \(flag.summary())"
         colorByCategory()
     }
     
     private func colorByCategory() {
-        typeView.image = CategoryController.getImageForCategory(self.memory!.type)
-        bkgView.backgroundColor = CategoryController.getColorForCategory(self.memory!.type).colorWithAlphaComponent(0.8)
+        typeView.image = CategoryController.getImageForCategory(self.flag!.type())
+        bkgView.backgroundColor = CategoryController.getColorForCategory(self.flag!.type()).colorWithAlphaComponent(0.8)
     }
     
     private func loadXib() {

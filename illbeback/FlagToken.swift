@@ -92,6 +92,10 @@ class FlagToken {
     func type() -> String {
         return _type
     }
+
+    func type(type: String) {
+        _type = type
+    }
     
     func originator() -> String {
         return _originator

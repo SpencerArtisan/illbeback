@@ -26,7 +26,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.photos = memoriesController!.photoAlbum.photos(pinToRephoto!.memory!)
+        self.photos = memoriesController!.photoAlbum.photos(pinToRephoto!.flag!)
 
         if (!created) {
             created = true
@@ -57,7 +57,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     override func viewWillAppear(animated: Bool) {
         let previousPhotoPaths = self.photos.map { $0.imagePath }
         
-        self.photos = memoriesController!.photoAlbum.photos(pinToRephoto!.memory!)
+        self.photos = memoriesController!.photoAlbum.photos(pinToRephoto!.flag!)
         var i = 0
         for photo in self.photos {
             if !previousPhotoPaths.contains(photo.imagePath) {

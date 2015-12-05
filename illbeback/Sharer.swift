@@ -12,34 +12,34 @@ public class Sharer {
     }
 
     
-    func share(from: String, to: String, memory: Memory, onComplete: () -> Void, onError: () -> Void) {
-        let photos = PhotoAlbum().photos(memory)
-        print("Uploading \(photos.count) photos")
-        var leftToUpload = photos.count
-        if (photos.count > 0) {
-            for photo in photos {
-                let key = (photo.imagePath as NSString).lastPathComponent
-                print("    Uploading photo \(key)")
-                uploadImage(photo.imagePath, key: key, onComplete: {
-                    leftToUpload--
-                    print("    Uploaded photo '\(photo.imagePath)'.  \(leftToUpload) left")
-                    if (leftToUpload == 0) {
-                        memory.state = Memory.CATEGORY_SENT
-                        self.uploadMemory(from, to: to, memory: memory)
-                        self.memoryAlbum.save()
-                        onComplete()
-                        return
-                    }
-                }, onError: {
-                    onError()
-                    return
-                })
-            }
-        } else {
-            memory.state = Memory.CATEGORY_SENT
-            self.uploadMemory(from, to: to, memory: memory)
-            onComplete()
-        }
+    func share(from: String, to: String, flag: Flag, onComplete: () -> Void, onError: () -> Void) {
+//        let photos = PhotoAlbum().photos(flag)
+//        print("Uploading \(photos.count) photos")
+//        var leftToUpload = photos.count
+//        if (photos.count > 0) {
+//            for photo in photos {
+//                let key = (photo.imagePath as NSString).lastPathComponent
+//                print("    Uploading photo \(key)")
+//                uploadImage(photo.imagePath, key: key, onComplete: {
+//                    leftToUpload--
+//                    print("    Uploaded photo '\(photo.imagePath)'.  \(leftToUpload) left")
+//                    if (leftToUpload == 0) {
+//                        flag.state() = Memory.CATEGORY_SENT
+//                        self.uploadMemory(from, to: to, memory: memory)
+//                        self.memoryAlbum.save()
+//                        onComplete()
+//                        return
+//                    }
+//                }, onError: {
+//                    onError()
+//                    return
+//                })
+//            }
+//        } else {
+//            memory.state = Memory.CATEGORY_SENT
+//            self.uploadMemory(from, to: to, memory: memory)
+//            onComplete()
+//        }
     }
     
     
@@ -47,40 +47,40 @@ public class Sharer {
                         onStart: (from: String, memory: Memory) -> (),
                         onComplete: (from: String, memory: Memory) -> (),
                         onAckReceipt: (from: String, memory: Memory) -> ()) {
-        shareRoot(to).observeSingleEventOfType(.Value, withBlock: {
-            snapshot in
-                let givenMemories = snapshot.children
-                var receivedIds:[String] = []
-            var successes: UInt = 0
-            
-                while let given: FDataSnapshot = givenMemories.nextObject() as? FDataSnapshot {
-                    let from = given.value["from"] as! String
-                    let memoryString = given.value["memory"] as! String
-                    let memory = Memory(memoryString: memoryString)
-                    receivedIds.append(memory.id)
-                    memory.justReceived()
-                    if (memory.wasAck()) {
-                        print("Received acknowlegdement of share for memory \(memory)")
-                        onAckReceipt(from: from, memory: memory)
-
-                        self.shareRoot(to).removeValue()
-                        successes++
-                        self.updateBadge(to, badge: snapshot.childrenCount - successes)
-                    } else {
-                        print("Received memory \(memoryString)")
-                        onStart(from: from, memory: memory)
-                        self.downloadImages(memory, onComplete: {
-                            print("All shared photos downloaded.  Notifying observers...")
-                            onComplete(from: from, memory: memory)
-                            
-                            self.shareRoot(to).removeValue()
-                            successes++
-                            self.updateBadge(to, badge: snapshot.childrenCount - successes)
-                        })
-                    }
-                }
-//                self.updateBadge(to, badge: snapshot.childrenCount)
-        })
+//        shareRoot(to).observeSingleEventOfType(.Value, withBlock: {
+//            snapshot in
+//                let givenMemories = snapshot.children
+//                var receivedIds:[String] = []
+//            var successes: UInt = 0
+//            
+//                while let given: FDataSnapshot = givenMemories.nextObject() as? FDataSnapshot {
+//                    let from = given.value["from"] as! String
+//                    let memoryString = given.value["memory"] as! String
+//                    let memory = Memory(memoryString: memoryString)
+//                    receivedIds.append(memory.id)
+//                    memory.justReceived()
+//                    if (memory.wasAck()) {
+//                        print("Received acknowlegdement of share for memory \(memory)")
+//                        onAckReceipt(from: from, memory: memory)
+//
+//                        self.shareRoot(to).removeValue()
+//                        successes++
+//                        self.updateBadge(to, badge: snapshot.childrenCount - successes)
+//                    } else {
+//                        print("Received memory \(memoryString)")
+//                        onStart(from: from, memory: memory)
+//                        self.downloadImages(memory, onComplete: {
+//                            print("All shared photos downloaded.  Notifying observers...")
+//                            onComplete(from: from, memory: memory)
+//                            
+//                            self.shareRoot(to).removeValue()
+//                            successes++
+//                            self.updateBadge(to, badge: snapshot.childrenCount - successes)
+//                        })
+//                    }
+//                }
+////                self.updateBadge(to, badge: snapshot.childrenCount)
+//        })
     }
     
     private func updateBadge(user: String, badge: UInt) {
@@ -147,19 +147,19 @@ public class Sharer {
     }
     
     func uploadMemory(from: String, to: String, memory: Memory) {
-        memory.justSent(to)
-        let originalOriginator = memory.originator
-        let originalInvitees = memory.invitees
-        
-        memory.originator = from
-        memory.invitees = []
-        
-        print("FIREBASE OP: Uploading memory " + memory.asString())
-        let newNode = shareRoot(to).childByAutoId()
-        newNode.setValue(["from": from, "memory": memory.asString()])
-        memory.originator = originalOriginator
-        memory.invitees = originalInvitees
-        
+//        memory.justSent(to)
+//        let originalOriginator = memory.originator
+//        let originalInvitees = memory.invitees
+//        
+//        memory.originator = from
+//        memory.invitees = []
+//        
+//        print("FIREBASE OP: Uploading memory " + memory.asString())
+//        let newNode = shareRoot(to).childByAutoId()
+//        newNode.setValue(["from": from, "memory": memory.asString()])
+//        memory.originator = originalOriginator
+//        memory.invitees = originalInvitees
+//        
     }
     
     private func shareRoot(to: String) -> Firebase {

@@ -22,7 +22,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     var locationManager = CLLocationManager()
     var here: CLLocation!
-    var memoryAlbum: MemoryAlbum!
     let photoAlbum = PhotoAlbum()
     
     var shapeController: ShapeController!
@@ -45,6 +44,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var newUserText: UITextView!
     var lastTimeAppUsed: NSDate?
     
+    // NEW WORLD
+    var flagRenderer: FlagRenderer!
+    var flagRepository: FlagRepository!
     
     func getView() -> UIView {
         return self.view
@@ -86,15 +88,17 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         super.viewDidLoad()
         initLocationManager()
         initMap()
-        initMemories()
         
+        self.flagRepository = FlagRepository()
+        self.flagRenderer = FlagRenderer(map: map, memoriesController: self)
+
         self.newUserModal = Modal(viewName: "NewUser", owner: self)
         self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum, memoriesViewController: self)
         self.eventListController = EventsController(memoriesViewController: self)
         self.flagListController = FlagsController(memoriesViewController: self)
-        self.rephotoController = RephotoController(photoAlbum: photoAlbum, memoryAlbum: memoryAlbum)
+        self.rephotoController = RephotoController(photoAlbum: photoAlbum, flagRepository: flagRepository)
         self.rememberController = RememberController(album: photoAlbum, memoriesController: self)
         self.zoomController = ZoomSwipeController()
         self.shapeController = ShapeController(map: map, memories: self)
@@ -106,6 +110,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.searchText.delegate = self
   
         updateButtonStates()
+        self.flagRenderer.add(flagRepository.flags())
    
         Utils.addObserver(self, selector: "nameTaken:", event: "NameTaken")
         Utils.addObserver(self, selector: "nameAccepted:", event: "NameAccepted")
@@ -199,31 +204,14 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     func checkForImminentEvents() {
-        let imminentEvents = memoryAlbum.getImminentEvents()
+        let imminentEvents = flagRepository.imminentEvents()
         if imminentEvents.count > 0 && imminentEvents[0].daysToGo() < 2 {
             eventListController.showEvents()
         }
     }
     
     func updateEventPins() {
-        let events = memoryAlbum.getAllEvents()
-        for event in events {
-            let pin = getPin(event)
-            if pin != nil {
-                if event.isPast() {
-                    print("Removing old event " + event.id)
-                    self.memoryAlbum.delete(event)
-                    self.photoAlbum.delete(event)
-                    self.map.deselectAnnotation(pin, animated: false)
-                    NSOperationQueue.mainQueue().addOperationWithBlock {
-                        self.map.removeAnnotation(pin!)
-                    }
-                } else {
-                    map!.removeAnnotation(pin!)
-                    map!.addAnnotation(pin!)
-                }
-            }
-        }
+        flagRenderer.updateEventPins(flagRepository.events())
     }
     
 //    func downloadNewShares() {
@@ -292,16 +280,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 //        )
 //    }
 
-    func getPin(memory: Memory) -> MapPin? {
-        for pin in self.map.annotations {
-            if pin is MapPin && (pin as! MapPin).memory.id == memory.id {
-                return pin as? MapPin
-            }
-        }
-       return nil
-    }
-    
-    
     private func ensureUserKnown() {
         if (!Global.userDefined()) {
             newUserLabel.text = "Your sharing name"
@@ -339,11 +317,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         let messageModal = messageModals.removeLast()
         messageModal.slideUpFromTop(self.view)
     }
-
-    func initMemories() {
-        memoryAlbum = MemoryAlbum(map: map)
-        memoryAlbum.addToMap()
-    }
     
     func initLocationManager() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -377,22 +350,22 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the UI
     func addMemoryHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation?, when: NSDate?) {
         let actualLocation = location == nil ? here.coordinate : location!
-        let memory = Memory(id: id, type: type, description: description, location: actualLocation, user: Global.getUser(), orientation: orientation, when: when)
-        memoryAlbum.add(memory)
-        // todo
+        let flag = Flag.create(id, type: type, description: description, location: actualLocation, originator: Global.getUser().getName(), orientation: orientation, when: when)
+        flagRepository.add(flag)
+        flagRenderer.add(flag)
         updateButtonStates()
     }
     
     func updateButtonStates() {
-        alarmButton.hidden = memoryAlbum.getAllEvents().count == 0
-        newButton.hidden = memoryAlbum.getNewMemories().count == 0
+        alarmButton.hidden = flagRepository.events().count == 0
+        newButton.hidden = flagRepository.new().count == 0
     }
     
     // Callback for button on the callout
     func deleteMemory(pin: MapPinView) {
-        memoryAlbum.delete(pin)
-        photoAlbum.delete(pin.memory!)
-        memoryAlbum.save()
+        flagRepository.remove(pin.flag!)
+        photoAlbum.delete(pin.flag!)
+        flagRenderer.remove(pin)
     }
     
     func removePin(pin: MapPinView) {
@@ -403,7 +376,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
     }
     
-    func acceptRecentShare(memory: Memory) {
+    func acceptRecentShare(flag: Flag) {
 //        memory.accept()
 //        memoryAlbum!.oldMemories[memory.id] = memory
 //        memoryAlbum!.newMemories.removeValueForKey(memory.id)
@@ -417,7 +390,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 //        updateButtonStates()
     }
 
-    func declineRecentShare(memory: Memory) {
+    func declineRecentShare(flag: Flag) {
 //        memory.decline()
 //        memoryAlbum!.newMemories.removeValueForKey(memory.id)
 //
@@ -440,9 +413,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
 
     // Callback for button on the callout
     func updateMemory(pin: MapPinView) {
-        map!.removeAnnotation(pin.annotation!)
-        map!.addAnnotation((pin.memory?.asMapPin())!)
-        memoryAlbum.save()
+        flagRenderer.update(pin)
+        flagRepository.save()
     }
     
     // Callback for button on the callout
@@ -468,29 +440,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     
     // Callback for display pins on map
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if (annotation is MapPin) {
-            let pinData = annotation as! MapPin
-            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
-        
-            if (pinView == nil) {
-                let imageUrl = photoAlbum.getMainPhoto(pinData.memory)?.imagePath
-                pinView = MapPinView(memoriesController: self, memory: pinData.memory)
-            }
-        
-            return pinView
-        } else if (annotation is ShapeCorner) {
-            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("corner") as! ShapeCornerView!
-            
-            if (pinView == nil) {
-                pinView = ShapeCornerView(memoriesController: self)
-            }
-            
-            pinView.setSelected(true, animated: true)
-            
-            return pinView
-            
-        }
-        return nil
+        return flagRenderer.render(viewForAnnotation: annotation)
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
@@ -501,7 +451,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             if (view.annotation is MapPin) {
                 let pinData = view.annotation as! MapPin
                 pinData.setCoordinate2(pinData.coordinate)
-                self.memoryAlbum.save()
+                self.flagRepository.save()
             } else if (view.annotation is ShapeCorner) {
                 let pinData = view.annotation as! ShapeCorner
                 shapeController.move(pinData)
@@ -513,7 +463,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
             for aView in views {
                 if aView is MapPinView {
-                    if (aView as! MapPinView).memory?.type == "Event" {
+                    if (aView as! MapPinView).flag?.type() == "Event" {
                         aView.layer.zPosition = 1
                     }
                 }
@@ -527,7 +477,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
         view.layer.zPosition = 0
         if view is MapPinView {
-            if (view as! MapPinView).memory?.type == "Event" {
+            if (view as! MapPinView).flag?.type() == "Event" {
                 view.layer.zPosition = 1
             }
         }

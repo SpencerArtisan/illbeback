@@ -15,13 +15,13 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     let addMemory = AddMemoryController()
     var camera: Camera?
     var photoAlbum: PhotoAlbum?
-    var memoryAlbum: MemoryAlbum?
+    private var flagRepository: FlagRepository
     var pinToRephoto: MapPinView?
     
-    init(photoAlbum: PhotoAlbum, memoryAlbum: MemoryAlbum) {
-        super.init(nibName: nil, bundle: nil)
+    init(photoAlbum: PhotoAlbum, flagRepository: FlagRepository) {
         self.photoAlbum = photoAlbum
-        self.memoryAlbum = memoryAlbum
+        self.flagRepository = flagRepository
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -45,9 +45,9 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     }
     
     func addPhoto(image: UIImage, orientation: UIDeviceOrientation) {
-        pinToRephoto!.memory!.orientation = orientation
-        memoryAlbum!.save()
-        photoAlbum!.addMemoryImage(image, memoryId: pinToRephoto!.memory!.id)
+        //pinToRephoto!.flag!.orientation(orientation)
+        flagRepository.save()
+        photoAlbum!.addFlagImage(image, flagId: pinToRephoto!.flag!.id())
 //        navigationController?.popToRootViewControllerAnimated(true)
         navigationController?.popViewControllerAnimated(false)
         pinToRephoto!.refreshAndReopen()
