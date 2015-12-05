@@ -30,9 +30,9 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     var rephotoController: RephotoController!
     var rememberController: RememberController!
     var zoomController: ZoomSwipeController!
-    var shareController: ShareController!
-    var eventController: EventsController!
-    var flagController: FlagsController!
+//    var shareController: ShareController!
+    var eventListController: EventsController!
+    var flagListController: FlagsController!
 
     var newUserModal: Modal?
     var searchModal: Modal?
@@ -51,11 +51,11 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     @IBAction func showNewStuff(sender: AnyObject) {
-        flagController.showFlags()
+        flagListController.showFlags()
     }
     
     @IBAction func showEvents(sender: AnyObject) {
-        eventController.showEvents()
+        eventListController.showEvents()
     }
     
     @IBAction func cancel(sender: AnyObject) {
@@ -65,20 +65,20 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     @IBAction func share(sender: AnyObject) {
-        var sharing:[MapPinView] = []
-        
-        let allPins = map.annotations
-        for pin in allPins {
-            if (pin is MapPin) {
-                let mapPin = pin as! MapPin
-                if shapeController.shapeContains(mapPin.memory.location) {
-                    let pinView = map.viewForAnnotation(mapPin) as! MapPinView
-                    sharing.append(pinView)
-                }
-            }
-        }
-
-        shareController.shareMemory(sharing)
+//        var sharing:[MapPinView] = []
+//        
+//        let allPins = map.annotations
+//        for pin in allPins {
+//            if (pin is MapPin) {
+//                let mapPin = pin as! MapPin
+//                if shapeController.shapeContains(mapPin.memory.location) {
+//                    let pinView = map.viewForAnnotation(mapPin) as! MapPinView
+//                    sharing.append(pinView)
+//                }
+//            }
+//        }
+//
+//        shareController.shareMemory(sharing)
     }
 
 
@@ -87,27 +87,29 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         initLocationManager()
         initMap()
         initMemories()
+        
         self.newUserModal = Modal(viewName: "NewUser", owner: self)
         self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
         self.addMemory = AddMemoryController(album: photoAlbum, memoriesViewController: self)
-        self.eventController = EventsController(memoriesViewController: self)
-        self.flagController = FlagsController(memoriesViewController: self)
+        self.eventListController = EventsController(memoriesViewController: self)
+        self.flagListController = FlagsController(memoriesViewController: self)
         self.rephotoController = RephotoController(photoAlbum: photoAlbum, memoryAlbum: memoryAlbum)
         self.rememberController = RememberController(album: photoAlbum, memoriesController: self)
         self.zoomController = ZoomSwipeController()
         self.shapeController = ShapeController(map: map, memories: self)
-        self.shareController = ShareController(memories: self)
+//        self.shareController = ShareController(memories: self)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
         self.newUserText.delegate = self
         self.searchText.delegate = self
+  
         updateButtonStates()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"nameTaken:", name: "NameTaken", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"nameAccepted:", name: "NameAccepted", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"eventListChange:", name: "EventListChange", object: nil)
+   
+        Utils.addObserver(self, selector: "nameTaken:", event: "NameTaken")
+        Utils.addObserver(self, selector: "nameAccepted:", event: "NameAccepted")
+        Utils.addObserver(self, selector: "eventListChange:", event: "EventListChange")
     }
     
     func nameTaken(note: NSNotification) {
@@ -130,7 +132,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         self.navigationController?.navigationBarHidden = true
         self.navigationController?.pushViewController(rememberController, animated: false)
     }
-    
     
     @IBAction func currentLocation(sender: AnyObject) {
         if here != nil {
@@ -156,7 +157,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     @IBAction func friends(sender: AnyObject) {
-        shareController.editFriends()
+//        shareController.editFriends()
     }
     
     // Callback for button on the callout
@@ -191,9 +192,8 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
             checkForImminentEvents()
         }
         
-        downloadNewShares()
+//        downloadNewShares()
         updateButtonStates()
-        
         
         self.lastTimeAppUsed = NSDate()
     }
@@ -201,7 +201,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func checkForImminentEvents() {
         let imminentEvents = memoryAlbum.getImminentEvents()
         if imminentEvents.count > 0 && imminentEvents[0].daysToGo() < 2 {
-            eventController.showEvents()
+            eventListController.showEvents()
         }
     }
     
@@ -226,71 +226,71 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         }
     }
     
-    func downloadNewShares() {
-        var delaySeconds1: Double = 0
-        var delaySeconds2: Double = 0
-        
-        for oldDownload in downloadingMessages.values {
-            oldDownload.slideUpFromTop(self.view)
-        }
-        downloadingMessages.removeAll()
-        
-        memoryAlbum.downloadNewShares(
-            {memory in
-                print("onStart callback for downloading \(memory.asString())")
-                let color = CategoryController.getColorForCategory(memory.type)
-                let title = "Downloading " + memory.type
-                self.delay(delaySeconds1) {
-                    let message = self.showMessage(title, color: color, time: nil)
-                    let oldModal = self.downloadingMessages[memory.id]
-                    if oldModal != nil {
-                        oldModal?.slideUpFromTop(self.view)
-                    }
-                    self.downloadingMessages[memory.id] = message
-                }
-                
-                delaySeconds1 += 1.5
-            },
-            onComplete: {memory in
-                let color = CategoryController.getColorForCategory(memory.type)
-                let title = "Downloaded " + memory.type + " from " + memory.originator
-                self.delay(delaySeconds2) {
-                    let downloadingMessage = self.downloadingMessages[memory.id]
-                    print("onComplete callback for downloading \(memory.asString()).  Will dismiss modal \(downloadingMessage) from outstanding modals \(self.downloadingMessages)")
-                    if downloadingMessage != nil {
-                        print("Dismissing modal")
-                        downloadingMessage?.slideUpFromTop(self.view)
-                    }
-                    self.showMessage(title, color: color, time: 2)
-                    self.updateButtonStates()
-                }
-                
-                delaySeconds2 += 1.5
-            },
-            onAckReceipt: {memory in
-                print("onAckReceipt callback for \(memory.asString())")
-                let pin = self.getPin(memory)
-                if pin != nil {
-                    self.map!.removeAnnotation(pin!)
-                    self.map!.addAnnotation(pin!)
-                }
-                let response = memory.isAccepted() ? "accepted" : "declined"
-                let color = CategoryController.getColorForCategory(memory.type)
-                let title = "\(memory.originator) \(response) \(memory.summary())"
-                self.delay(delaySeconds1) {
-                    self.showMessage(title, color: color, time: 2)
-                }
-                if memory.isAccepted() {
-                    self.memoryAlbum.inviteeAccepted(memory.originator, memoryId: memory.id)
-                } else {
-                    self.memoryAlbum.inviteeDeclined(memory.originator, memoryId: memory.id)
-                }
-                self.memoryAlbum.save()
-                
-                delaySeconds1 += 1.5
-            }
-        )
-    }
+//    func downloadNewShares() {
+//        var delaySeconds1: Double = 0
+//        var delaySeconds2: Double = 0
+//        
+//        for oldDownload in downloadingMessages.values {
+//            oldDownload.slideUpFromTop(self.view)
+//        }
+//        downloadingMessages.removeAll()
+//        
+//        memoryAlbum.downloadNewShares(
+//            {memory in
+//                print("onStart callback for downloading \(memory.asString())")
+//                let color = CategoryController.getColorForCategory(memory.type)
+//                let title = "Downloading " + memory.type
+//                self.delay(delaySeconds1) {
+//                    let message = self.showMessage(title, color: color, time: nil)
+//                    let oldModal = self.downloadingMessages[memory.id]
+//                    if oldModal != nil {
+//                        oldModal?.slideUpFromTop(self.view)
+//                    }
+//                    self.downloadingMessages[memory.id] = message
+//                }
+//                
+//                delaySeconds1 += 1.5
+//            },
+//            onComplete: {memory in
+//                let color = CategoryController.getColorForCategory(memory.type)
+//                let title = "Downloaded " + memory.type + " from " + memory.originator
+//                self.delay(delaySeconds2) {
+//                    let downloadingMessage = self.downloadingMessages[memory.id]
+//                    print("onComplete callback for downloading \(memory.asString()).  Will dismiss modal \(downloadingMessage) from outstanding modals \(self.downloadingMessages)")
+//                    if downloadingMessage != nil {
+//                        print("Dismissing modal")
+//                        downloadingMessage?.slideUpFromTop(self.view)
+//                    }
+//                    self.showMessage(title, color: color, time: 2)
+//                    self.updateButtonStates()
+//                }
+//                
+//                delaySeconds2 += 1.5
+//            },
+//            onAckReceipt: {memory in
+//                print("onAckReceipt callback for \(memory.asString())")
+//                let pin = self.getPin(memory)
+//                if pin != nil {
+//                    self.map!.removeAnnotation(pin!)
+//                    self.map!.addAnnotation(pin!)
+//                }
+//                let response = memory.isAccepted() ? "accepted" : "declined"
+//                let color = CategoryController.getColorForCategory(memory.type)
+//                let title = "\(memory.originator) \(response) \(memory.summary())"
+//                self.delay(delaySeconds1) {
+//                    self.showMessage(title, color: color, time: 2)
+//                }
+//                if memory.isAccepted() {
+//                    self.memoryAlbum.inviteeAccepted(memory.originator, memoryId: memory.id)
+//                } else {
+//                    self.memoryAlbum.inviteeDeclined(memory.originator, memoryId: memory.id)
+//                }
+//                self.memoryAlbum.save()
+//                
+//                delaySeconds1 += 1.5
+//            }
+//        )
+//    }
 
     func getPin(memory: Memory) -> MapPin? {
         for pin in self.map.annotations {
@@ -301,14 +301,6 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
        return nil
     }
     
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
-    }
     
     private func ensureUserKnown() {
         if (!Global.userDefined()) {
@@ -332,7 +324,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         messageModal.slideDownFromTop(self.view)
         
         if time != nil {
-            delay(time!) {
+            Utils.delay(time!) {
                 messageModal.slideUpFromTop(self.view)
             }
         }
@@ -387,6 +379,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         let actualLocation = location == nil ? here.coordinate : location!
         let memory = Memory(id: id, type: type, description: description, location: actualLocation, user: Global.getUser(), orientation: orientation, when: when)
         memoryAlbum.add(memory)
+        // todo
         updateButtonStates()
     }
     
@@ -411,38 +404,38 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     }
     
     func acceptRecentShare(memory: Memory) {
-        memory.accept()
-        memoryAlbum!.oldMemories[memory.id] = memory
-        memoryAlbum!.newMemories.removeValueForKey(memory.id)
-        photoAlbum.acceptRecentShare(memory)
-        if memory.isEvent() {
-            print("Accepting event")
-            shareController.acceptRecentShare(memory)
-            memory.resetState()
-        }
-        memoryAlbum!.save()
-        updateButtonStates()
+//        memory.accept()
+//        memoryAlbum!.oldMemories[memory.id] = memory
+//        memoryAlbum!.newMemories.removeValueForKey(memory.id)
+//        photoAlbum.acceptRecentShare(memory)
+//        if memory.isEvent() {
+//            print("Accepting event")
+//            shareController.acceptRecentShare(memory)
+//            memory.resetState()
+//        }
+//        memoryAlbum!.save()
+//        updateButtonStates()
     }
-    
-    func declineRecentShare(memory: Memory) {
-        memory.decline()
-        memoryAlbum!.newMemories.removeValueForKey(memory.id)
 
-        if memory.isEvent() {
-            print("Declining event")
-            shareController.declineRecentShare(memory)
-        }
-        let oldMemory = memoryAlbum!.oldMemories[memory.id]
-        if oldMemory != nil {
-            map!.addAnnotation(oldMemory!.asMapPin())
-        }
-        memoryAlbum!.save()
-        updateButtonStates()
+    func declineRecentShare(memory: Memory) {
+//        memory.decline()
+//        memoryAlbum!.newMemories.removeValueForKey(memory.id)
+//
+//        if memory.isEvent() {
+//            print("Declining event")
+//            shareController.declineRecentShare(memory)
+//        }
+//        let oldMemory = memoryAlbum!.oldMemories[memory.id]
+//        if oldMemory != nil {
+//            map!.addAnnotation(oldMemory!.asMapPin())
+//        }
+//        memoryAlbum!.save()
+//        updateButtonStates()
     }
-    
+
     func shareMemory(pin: MapPinView) {
-        shareController.shareMemory([pin])
-        memoryAlbum!.save()
+//        shareController.shareMemory([pin])
+//        memoryAlbum!.save()
     }
 
     // Callback for button on the callout
@@ -481,7 +474,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         
             if (pinView == nil) {
                 let imageUrl = photoAlbum.getMainPhoto(pinData.memory)?.imagePath
-                pinView = MapPinView(memoriesController: self, memory: pinData.memory, imageUrl: imageUrl)
+                pinView = MapPinView(memoriesController: self, memory: pinData.memory)
             }
         
             return pinView
@@ -595,7 +588,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
                 } else {
                     Global.getUser().addFriend(textView.text)
                     newUserText.resignFirstResponder()
-                    shareController.shareWith(textView.text)
+//                    shareController.shareWith(textView.text)
                 }
             }
             

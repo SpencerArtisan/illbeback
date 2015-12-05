@@ -43,6 +43,10 @@ class Flag {
         return _token.type() == "Blank"
     }
     
+    func id() -> String {
+        return _token.id()
+    }
+    
     func invitees() -> [Invitee2] {
         return _token.invitees()
     }
@@ -66,6 +70,10 @@ class Flag {
     func daysToGo() -> Int {
         let fromNow = when()!.timeIntervalSinceDate(Utils.today())
         return Int(fromNow) / (60*60*24)
+    }
+    
+    func isPast() -> Bool {
+        return when() != nil && when()!.timeIntervalSinceDate(Utils.today()) < 0
     }
     
     func whenFormatted() -> String {

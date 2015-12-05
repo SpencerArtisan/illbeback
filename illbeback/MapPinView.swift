@@ -43,12 +43,12 @@ class MapPinView: MKAnnotationView {
     
     static var lastSelectionChange: NSDate?
     
-    init(memoriesController: MemoriesController, memory: Memory, imageUrl: String?) {
+    init(memoriesController: MemoriesController, memory: Memory) {
         super.init(annotation: nil, reuseIdentifier: nil)
 
         self.memory = memory
         self.memoriesController = memoriesController
-        self.imageUrl = imageUrl
+        self.imageUrl = memoriesController.photoAlbum.getMainPhoto(memory)?.imagePath
 
         canShowCallout = false
         annotation = annotation
@@ -387,7 +387,7 @@ class MapPinView: MKAnnotationView {
         if selected && MapPinView.lastSelectionChange != nil && NSDate().timeIntervalSinceDate(MapPinView.lastSelectionChange!) < 0.7 {
             print("IGNORE SELECTION")
             
-            self.memoriesController?.delay(0.3) {
+            Utils.delay(0.3) {
                 self.memoriesController?.map.deselectAnnotation(self.annotation, animated: false)
             }
             

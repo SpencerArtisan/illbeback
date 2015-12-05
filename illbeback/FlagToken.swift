@@ -85,6 +85,10 @@ class FlagToken {
         _whenUpdate = nil
     }
     
+    func id() -> String {
+        return _id
+    }
+    
     func type() -> String {
         return _type
     }

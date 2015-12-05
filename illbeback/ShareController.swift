@@ -68,112 +68,112 @@ class ShareController : UIViewController {
     
     // Callback for button on the callout
     func shareMemory(pins: [MapPinView]) {
-        pinsToShare = pins
-
-        shareModal?.slideOutFromLeft(memories.view)
-        let shareImage = UIImage(named: "share")!
-       
-        var tag = 3
-        let friends: [String] = Global.getUser().getFriends()
-        for friend in friends {
-            let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
-            shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
-            shareButton.hidden = false
-            shareButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
-            shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
-            shareButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-            shareButton.enabled = false
-            shareButton.setImage(shareImage, forState: UIControlState.Normal)
-            delay(0.5) { shareButton.enabled = true }
-        }
-        while (tag <= 15) {
-            let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
-            shareButton.hidden = true
-        }
-        
-        let newFriendButton = shareModal?.findElementByTag(2) as! UIButton
-        if (friends.count > 12) {
-            newFriendButton.hidden = true
-        } else {
-            newFriendButton.hidden = false
-            newFriendButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
-            newFriendButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
-            newFriendButton.enabled = false
-            newFriendButton.setImage(shareImage, forState: UIControlState.Normal)
-            delay(0.5) { newFriendButton.enabled = true }
-        }
-        
-        let cancelButton = shareModal?.findElementByTag(99) as! UIButton
-        cancelButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
-        cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
-        cancelButton.enabled = false
-        delay(0.5) { cancelButton.enabled = true }
+//        pinsToShare = pins
+//
+//        shareModal?.slideOutFromLeft(memories.view)
+//        let shareImage = UIImage(named: "share")!
+//       
+//        var tag = 3
+//        let friends: [String] = Global.getUser().getFriends()
+//        for friend in friends {
+//            let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
+//            shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
+//            shareButton.hidden = false
+//            shareButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
+//            shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
+//            shareButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+//            shareButton.enabled = false
+//            shareButton.setImage(shareImage, forState: UIControlState.Normal)
+//            delay(0.5) { shareButton.enabled = true }
+//        }
+//        while (tag <= 15) {
+//            let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
+//            shareButton.hidden = true
+//        }
+//        
+//        let newFriendButton = shareModal?.findElementByTag(2) as! UIButton
+//        if (friends.count > 12) {
+//            newFriendButton.hidden = true
+//        } else {
+//            newFriendButton.hidden = false
+//            newFriendButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
+//            newFriendButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
+//            newFriendButton.enabled = false
+//            newFriendButton.setImage(shareImage, forState: UIControlState.Normal)
+//            delay(0.5) { newFriendButton.enabled = true }
+//        }
+//        
+//        let cancelButton = shareModal?.findElementByTag(99) as! UIButton
+//        cancelButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
+//        cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
+//        cancelButton.enabled = false
+//        delay(0.5) { cancelButton.enabled = true }
     }
     
 
     func shareWith(friend: String) {
-        if pinsToShare.count == 0 {
-            editFriends()
-            return
-        }
-     
-        let title = pinsToShare.count == 1 ? "Sending \(pinsToShare[0].memory!.type) to \(friend)" : "Sending \(pinsToShare.count) flags to \(friend)"
-        let color = CategoryController.getColorForCategory(pinsToShare.count == 1 ? pinsToShare[0].memory!.type : "Memory")
-        var message = memories.showMessage(title, color: color, time: nil)
-
-        let total = pinsToShare.count
-        var remaining = total
-        var failed = 0
-        
-        for pin in pinsToShare {
-            memories.memoryAlbum.share(pin, from: Global.getUser().getName(), to: friend, onComplete: {
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    self.memories.delay(0.4) {
-                        self.memories.dismissMessage(message)
-                        if remaining == 1 && total == 1 {
-                            self.memories.showMessage("Sent", color: UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0), time: 1.6)
-                        } else if remaining == 1 {
-                            self.memories.showMessage("Sent all", color: UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0), time: 1.6)
-                        } else {
-                            remaining--
-                            message = self.memories.showMessage("Sent \(total - remaining) of \(total)", color: color, time: nil)
-                        }
-                        self.memories.memoryAlbum.save()
-                        self.memories.map.deselectAnnotation(pin.annotation, animated: false)
-                        pin.refresh()
-                    }
-                }
-            }, onError: {
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    self.memories.delay(0.4) {
-                        self.memories.dismissMessage(message)
-                        if remaining == 1  && total == 1 {
-                            self.memories.showMessage("Failed", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: 2.0)
-                        } else if remaining == 1 {
-                            failed++
-                            message = self.memories.showMessage("Failed sending \(failed) out of \(total) flags", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: 2.6)
-                        } else {
-                            remaining--
-                            failed++
-                            message = self.memories.showMessage("Failed sending \(failed) out of \(total) flags", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: nil)
-                        }
-                    }
-                }
-            })
-        }
-        
-        pinsToShare = []
-        memories.shapeModal?.slideUpFromTop(view)
-        memories.shapeController.clear()
-        memories.showPinsInShape()
+//        if pinsToShare.count == 0 {
+//            editFriends()
+//            return
+//        }
+//     
+//        let title = pinsToShare.count == 1 ? "Sending \(pinsToShare[0].memory!.type) to \(friend)" : "Sending \(pinsToShare.count) flags to \(friend)"
+//        let color = CategoryController.getColorForCategory(pinsToShare.count == 1 ? pinsToShare[0].memory!.type : "Memory")
+//        var message = memories.showMessage(title, color: color, time: nil)
+//
+//        let total = pinsToShare.count
+//        var remaining = total
+//        var failed = 0
+//        
+//        for pin in pinsToShare {
+//            memories.memoryAlbum.share(pin, from: Global.getUser().getName(), to: friend, onComplete: {
+//                NSOperationQueue.mainQueue().addOperationWithBlock {
+//                    Utils.delay(0.4) {
+//                        self.memories.dismissMessage(message)
+//                        if remaining == 1 && total == 1 {
+//                            self.memories.showMessage("Sent", color: UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0), time: 1.6)
+//                        } else if remaining == 1 {
+//                            self.memories.showMessage("Sent all", color: UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0), time: 1.6)
+//                        } else {
+//                            remaining--
+//                            message = self.memories.showMessage("Sent \(total - remaining) of \(total)", color: color, time: nil)
+//                        }
+//                        self.memories.memoryAlbum.save()
+//                        self.memories.map.deselectAnnotation(pin.annotation, animated: false)
+//                        pin.refresh()
+//                    }
+//                }
+//            }, onError: {
+//                NSOperationQueue.mainQueue().addOperationWithBlock {
+//                    Utils.delay(0.4) {
+//                        self.memories.dismissMessage(message)
+//                        if remaining == 1  && total == 1 {
+//                            self.memories.showMessage("Failed", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: 2.0)
+//                        } else if remaining == 1 {
+//                            failed++
+//                            message = self.memories.showMessage("Failed sending \(failed) out of \(total) flags", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: 2.6)
+//                        } else {
+//                            remaining--
+//                            failed++
+//                            message = self.memories.showMessage("Failed sending \(failed) out of \(total) flags", color: UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0), time: nil)
+//                        }
+//                    }
+//                }
+//            })
+//        }
+//        
+//        pinsToShare = []
+//        memories.shapeModal?.slideUpFromTop(view)
+//        memories.shapeController.clear()
+//        memories.showPinsInShape()
     }
     
     func acceptRecentShare(memory: Memory) {
-        memories.memoryAlbum.acceptRecentShare(memory, from: Global.getUser().getName())
+//        memories.memoryAlbum.acceptRecentShare(memory, from: Global.getUser().getName())
     }
     
     func declineRecentShare(memory: Memory) {
-        memories.memoryAlbum.declineRecentShare(memory, from: Global.getUser().getName())
+//        memories.memoryAlbum.declineRecentShare(memory, from: Global.getUser().getName())
     }
     
     func hideShareModal(sender: AnyObject?) {

@@ -14,7 +14,25 @@ class Utils {
         return cal.startOfDayForDate(NSDate())
     }
     
+    static func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+
+    
     static func runOnUiThread(closure:()->()) {
         dispatch_async(dispatch_get_main_queue(), closure)
+    }
+    
+    static func runOnUiThread2(closure:()->()) {
+        NSOperationQueue.mainQueue().addOperationWithBlock(closure)
+    }
+    
+    static func addObserver(observer: NSObject, selector: Selector, event: String) {
+        NSNotificationCenter.defaultCenter().addObserver(observer, selector: selector, name: event, object: nil)
     }
 }

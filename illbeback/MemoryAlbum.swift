@@ -151,39 +151,39 @@ public class MemoryAlbum {
     }
     
     func share(pin: MapPinView, from: String, to: String, onComplete: () -> Void, onError: () -> Void) {
-        let memory = oldMemories[pin.memory!.id]
-        
-        if (memory != nil) {
-            print("Sharing \(memory!.type)")
-            self.map.deselectAnnotation(pin.annotation, animated: false)
-            sharer().share(from, to: to, memory: memory!, onComplete: onComplete, onError: onError)
-        } else {
-            print("WARN: Failed to share unknown memory")
-        }
+//        let memory = oldMemories[pin.memory!.id]
+//        
+//        if (memory != nil) {
+//            print("Sharing \(memory!.type)")
+//            self.map.deselectAnnotation(pin.annotation, animated: false)
+//            sharer().share(from, to: to, memory: memory!, onComplete: onComplete, onError: onError)
+//        } else {
+//            print("WARN: Failed to share unknown memory")
+//        }
     }
-    
+
     func acceptRecentShare(memory: Memory, from: String) {
-        print("Accepting share \(memory.asString())")
-        sharer().uploadMemory(from, to: memory.originator, memory: memory)
+//        print("Accepting share \(memory.asString())")
+//        sharer().uploadMemory(from, to: memory.originator, memory: memory)
     }
-    
+
     func declineRecentShare(memory: Memory, from: String) {
-        print("Declining share \(memory.asString())")
-        sharer().uploadMemory(from, to: memory.originator, memory: memory)
+//        print("Declining share \(memory.asString())")
+//        sharer().uploadMemory(from, to: memory.originator, memory: memory)
     }
     
     func inviteeAccepted(invitee: String, memoryId: String) {
-        let memory = oldMemories[memoryId]
-        if memory != nil {
-            memory!.inviteeAccepted(invitee)
-        }
+//        let memory = oldMemories[memoryId]
+//        if memory != nil {
+//            memory!.inviteeAccepted(invitee)
+//        }
     }
 
     func inviteeDeclined(invitee: String, memoryId: String) {
-        let memory = oldMemories[memoryId]
-        if memory != nil {
-            memory!.inviteeDeclined(invitee)
-        }
+//        let memory = oldMemories[memoryId]
+//        if memory != nil {
+//            memory!.inviteeDeclined(invitee)
+//        }
     }
     
     func save() {
