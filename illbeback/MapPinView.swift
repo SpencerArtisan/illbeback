@@ -108,7 +108,7 @@ class MapPinView: MKAnnotationView {
         if (inShape) {
             let imageHighlight = UIImage(named: "share flag")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
-        } else if (flag!.state() == FlagState.ReceivedUpdate || flag!.state() == FlagState.ReceivedNew) {
+        } else if pendingAccept() {
             let imageHighlight = UIImage(named: "recent")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
         }
@@ -157,7 +157,6 @@ class MapPinView: MKAnnotationView {
             createDeclineButton()
             createLabelView()
             createCalloutView()
-            
         }
         return calloutView!
     }
@@ -168,7 +167,7 @@ class MapPinView: MKAnnotationView {
    
     func createLabelView() {
         labelView = UIView(frame: labelArea!)
-        labelView!.backgroundColor = UIColor.whiteColor()
+        labelView!.backgroundColor = pendingAccept() || flag!.isBlank() ? UIColor.lightGrayColor().colorWithAlphaComponent(0.3) : UIColor.whiteColor()
         labelView!.addSubview(titleView!)
         if (Global.getUser().getName() != flag?.originator()) {
          labelView!.addSubview(originatorView!)
@@ -181,7 +180,7 @@ class MapPinView: MKAnnotationView {
             labelView!.addSubview(dateView!)
         }
         
-        if (flag!.state() == FlagState.ReceivedUpdate || flag!.state() == FlagState.ReceivedNew || flag!.isBlank()) {
+        if pendingAccept()  || flag!.isBlank() {
             labelView?.addSubview(acceptButton!)
             labelView?.addSubview(declineButton!)
         } else {
@@ -347,7 +346,7 @@ class MapPinView: MKAnnotationView {
     
     func createSubtitleLabel() {
         subtitleView = UILabel(frame: CGRectMake(6, 40 + fromHeight, labelArea!.width - 12, labelArea!.height - 74 - fromHeight - whenHeight))
-        subtitleView!.backgroundColor = UIColor.whiteColor()
+        subtitleView!.backgroundColor = UIColor.clearColor()
         subtitleView!.layer.cornerRadius = 0
         subtitleView!.numberOfLines = 0
         subtitleView!.textAlignment = NSTextAlignment.Center
@@ -355,7 +354,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createAcceptButton() {
-        if flag!.state() == FlagState.ReceivedUpdate || flag!.state() == FlagState.ReceivedNew || flag!.isBlank() {
+        if pendingAccept()  || flag!.isBlank() {
             acceptButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
             acceptButton!.layer.cornerRadius = 0
             acceptButton!.numberOfLines = 0
@@ -369,7 +368,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeclineButton() {
-        if flag!.state() == FlagState.ReceivedUpdate || flag!.state() == FlagState.ReceivedNew || flag!.isBlank() {
+        if pendingAccept()  || flag!.isBlank() {
             declineButton = UILabel(frame: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
             declineButton!.layer.cornerRadius = 0
             declineButton!.numberOfLines = 0
@@ -386,11 +385,9 @@ class MapPinView: MKAnnotationView {
         super.setSelected(selected, animated: animated)
         if selected && MapPinView.lastSelectionChange != nil && NSDate().timeIntervalSinceDate(MapPinView.lastSelectionChange!) < 0.7 {
             print("IGNORE SELECTION")
-            
             Utils.delay(0.3) {
                 self.mapController?.map.deselectAnnotation(self.annotation, animated: false)
             }
-            
             return
         }
         
@@ -409,7 +406,11 @@ class MapPinView: MKAnnotationView {
             let rescrollCoord = CLLocationCoordinate2D(latitude: (pinCoord.latitude + coordsTopToBottom/5), longitude: pinCoord.longitude)
             
             self.mapController?.map.setCenterCoordinate(rescrollCoord, animated: true)
-            
+        } else if MapPinView.lastSelectionChange != nil && NSDate().timeIntervalSinceDate(MapPinView.lastSelectionChange!) < 1 {
+            print("IGNORE DESELECTION")
+            Utils.delay(0.1) {
+                self.mapController?.map.selectAnnotation(self.annotation!, animated: false)
+            }
         } else {
             getCalloutView().removeFromSuperview()
         }
@@ -417,39 +418,39 @@ class MapPinView: MKAnnotationView {
 
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         var hitView = super.hitTest(point, withEvent: event)
+
+        if hitButton(point, button: subtitleView) {
+            MapPinView.lastSelectionChange = NSDate()
+            print("Last selection")
+        }
         let system = NSProcessInfo.processInfo().systemUptime
         let elapsed = system - event!.timestamp
         if (elapsed < 0.1 && labelView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
             hitView = calloutView!.hitTest(point, withEvent: event)
             if acceptButton != nil && hitButton(point, button: acceptButton) {
-                MapPinView.lastSelectionChange = NSDate()
                 if flag!.isBlank() {
                     mapController?.unblankMemory(self)
-                } else if flag!.state() == .ReceivedUpdate || flag!.state() == .ReceivedNew {
+                } else if pendingAccept() {
                     mapController?.acceptRecentShare(flag!)
                 }
             } else if declineButton != nil && hitButton(point, button: declineButton) {
-                MapPinView.lastSelectionChange = NSDate()
                 if flag!.isBlank() {
                     mapController?.deleteMemory(self)
-                } else if flag!.state() == .ReceivedUpdate || flag!.state() == .ReceivedNew {
+                } else if pendingAccept() {
                     mapController?.removePin(self)
                     mapController?.declineRecentShare(flag!)
                 }
-            } else if (hitButton(point, button: dateView)) {
+            } else if !pendingAccept() && hitButton(point, button: dateView) {
                 mapController?.rescheduleMemory(self)
-            } else if (hitButton(point, button: deleteButton)) {
-                MapPinView.lastSelectionChange = NSDate()
+            } else if !pendingAccept() && hitButton(point, button: deleteButton) {
                 mapController?.deleteMemory(self)
-            } else if (hitButton(point, button: shareButton)) {
-                MapPinView.lastSelectionChange = NSDate()
+            } else if !pendingAccept() && hitButton(point, button: shareButton) {
                 mapController?.shareMemory(self)
-            } else if (hitButton(point, button: photoButton)) {
-                MapPinView.lastSelectionChange = NSDate()
+            } else if !pendingAccept() && hitButton(point, button: photoButton) {
                 mapController?.rephotoMemory(self)
-            } else if (hitButton(point, button: subtitleView)) {
+            } else if !pendingAccept() && hitButton(point, button: subtitleView) {
                 mapController?.rewordMemory(self)
-            } else if (photoView != nil && hitPicture(point)) {
+            } else if photoView != nil && hitPicture(point) {
                 mapController?.zoomPicture(self)
             }
         }
@@ -464,5 +465,9 @@ class MapPinView: MKAnnotationView {
 
     private func hitPicture(point: CGPoint) -> Bool {
         return photoView!.bounds.contains(self.convertPoint(point, toView: photoView))
+    }
+    
+    private func pendingAccept() -> Bool {
+        return flag!.state() == .ReceivedUpdate || flag!.state() == .ReceivedNew
     }
 }
