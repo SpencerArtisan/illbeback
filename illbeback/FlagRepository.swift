@@ -52,11 +52,13 @@ class FlagRepository {
     func add(flag: Flag) {
         _flags.append(flag)
         Utils.notifyObservers("FlagAdded", properties: ["flag": flag])
+        save()
     }
     
     func remove(flag: Flag) {
         _flags.removeObject(flag)
         Utils.notifyObservers("FlagRemoved", properties: ["flag": flag])
+        save()
     }
     
     func find(id: String) -> Flag? {
@@ -79,6 +81,7 @@ class FlagRepository {
     
     func purge() {
         _flags = _flags.filter {!$0.isPast()}
+        save()
     }
     
     func save() {
