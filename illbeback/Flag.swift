@@ -51,6 +51,10 @@ public class Flag {
         return _token.invitees()
     }
     
+    func findInvitee(name: String) -> Invitee2? {
+        return invitees().filter({$0.name() == name}).first
+    }
+    
     func state() -> FlagState {
         return _token.state()
     }
@@ -145,7 +149,7 @@ public class Flag {
                state() == .AcceptingNew
     }
     
-    func externalUpdate(flag: Flag) {
+    func markAsUpdate(flag: Flag) {
         _token.state(.UpdateOffered)
         _token.offerUpdate(flag._token)
     }

@@ -38,8 +38,9 @@ class InBox {
     
     func receive(givenFlag: FDataSnapshot) {
         let encoded = givenFlag.value["memory"] as! String
+        let from = givenFlag.value["from"] as! String
         let flag = Flag.decode(encoded)
-        flagRepository.receive(flag,
+        flagRepository.receive(from, flag: flag,
             onNew: {
                 self.downloadImages(flag, onComplete: {
                     print("All new flag photos downloaded.  Removing from firebase")

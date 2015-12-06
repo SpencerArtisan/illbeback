@@ -32,7 +32,7 @@ class FlagTest: XCTestCase {
     
     func testExternalUpdateNeutralBecomesUpdateOfferedAndChangesDescription() {
         let flag = createFlag()
-        flag.externalUpdate(createFlag("External description"))
+        flag.markAsUpdate(createFlag("External description"))
         XCTAssertEqual(flag.state(), FlagState.UpdateOffered)
         XCTAssertEqual(flag.description(), "External description")
     }
@@ -40,7 +40,7 @@ class FlagTest: XCTestCase {
     func testAcceptUpdateOfferedBecomesAcceptingAndRetainsDescription() {
         let flag = createFlag()
         try! flag.update("Original description")
-        flag.externalUpdate(createFlag("External description"))
+        flag.markAsUpdate(createFlag("External description"))
         try! flag.acceptUpdate()
         XCTAssertEqual(flag.state(), FlagState.AcceptingUpdate)
         XCTAssertEqual(flag.description(), "External description")
@@ -48,7 +48,7 @@ class FlagTest: XCTestCase {
     
     func testSuccessfulAcceptUpdateReturnsToNeutral() {
         let flag = createFlag()
-        flag.externalUpdate(createFlag())
+        flag.markAsUpdate(createFlag())
         try! flag.acceptUpdate()
         flag.acceptUpdateSuccess()
         XCTAssertEqual(flag.state(), FlagState.Neutral)
@@ -56,7 +56,7 @@ class FlagTest: XCTestCase {
     
     func testFailedAcceptUpdateRemainsInAccepting() {
         let flag = createFlag()
-        flag.externalUpdate(createFlag())
+        flag.markAsUpdate(createFlag())
         try! flag.acceptUpdate()
         flag.acceptUpdateFailure()
         XCTAssertEqual(flag.state(), FlagState.AcceptingUpdate)
@@ -65,7 +65,7 @@ class FlagTest: XCTestCase {
     func testDeclineUpdateOfferedBecomesDecliningAndRevertsDescription() {
         let flag = createFlag()
         try! flag.update("Original description")
-        flag.externalUpdate(createFlag("External description"))
+        flag.markAsUpdate(createFlag("External description"))
         try! flag.declineUpdate()
         XCTAssertEqual(flag.state(), FlagState.DecliningUpdate)
         XCTAssertEqual(flag.description(), "Original description")
@@ -73,7 +73,7 @@ class FlagTest: XCTestCase {
     
     func testSuccessfulDeclineUpdateReturnsToNeutral() {
         let flag = createFlag()
-        flag.externalUpdate(createFlag())
+        flag.markAsUpdate(createFlag())
         try! flag.declineUpdate()
         flag.declineUpdateSuccess()
         XCTAssertEqual(flag.state(), FlagState.Neutral)
@@ -81,7 +81,7 @@ class FlagTest: XCTestCase {
     
     func testFailedDeclineUpdateRemainsInDeclining() {
         let flag = createFlag()
-        flag.externalUpdate(createFlag())
+        flag.markAsUpdate(createFlag())
         try! flag.declineUpdate()
         flag.declineUpdateFailure()
         XCTAssertEqual(flag.state(), FlagState.DecliningUpdate)
@@ -169,7 +169,7 @@ class FlagTest: XCTestCase {
     
     func testCanUpdateAcceptingUpdateFlag() {
         let flag = createFlag()
-        flag.externalUpdate(createFlag())
+        flag.markAsUpdate(createFlag())
         try! flag.acceptUpdate()
         try! flag.update("New description")
         XCTAssertEqual(flag.description(), "New description")
@@ -177,7 +177,7 @@ class FlagTest: XCTestCase {
     
     func testCanUpdateDecliningUpdateFlag() {
         let flag = createFlag()
-        flag.externalUpdate(createFlag())
+        flag.markAsUpdate(createFlag())
         try! flag.declineUpdate()
         try! flag.update("New description")
         XCTAssertEqual(flag.description(), "New description")
