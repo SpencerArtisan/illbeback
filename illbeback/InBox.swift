@@ -64,6 +64,7 @@ class InBox {
                 })
             },
             onAck: {
+                print("Ack processed.  Removing from firebase")
                 givenFlag.ref.removeValue()
             })
     }

@@ -316,6 +316,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     func acceptRecentShare(flag: Flag) {
         do {
             try flag.acceptNew()
+            photoAlbum.acceptRecentShare(flag)
         } catch {
             flag.reset(FlagState.ReceivedNew)
         }

@@ -58,7 +58,7 @@ public class PhotoAlbum : NSObject {
     func photos(flag: Flag) -> [Photo] {
         let flagId = flag.id()
         var photos:[Photo] = []
-        let marker = flag.state() == .ReceivedUpdate ? ".recent" : ""
+        let marker = flag.state() == .ReceivedUpdate || flag.state() == .ReceivedNew ? ".recent" : ""
         var candidate = "\(folder)/Memory\(flagId).jpg\(marker)"
         if fileManager.fileExistsAtPath(candidate) {
             photos.append(Photo(imagePath: candidate))
