@@ -310,7 +310,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createInviteeLabel() {
-        if !flag!.isEvent() {
+        if !flag!.isEvent() || flag?.originator() != Global.getUser().getName() {
             return
         }
         

@@ -21,7 +21,7 @@ class FlagRepository {
             let flagState = flag.state()
             
             if originalFlag == nil {
-                try flag.receivingNew()
+                try flag.receivingNew(from)
                 add(flag)
                 onNew()
                 originalFlag = flag

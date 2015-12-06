@@ -136,8 +136,9 @@ public class Flag {
                state() == .AcceptingNew
     }
     
-    func receivingNew() throws {
+    func receivingNew(from: String) throws {
         _token.state(.ReceivingNew)
+        _token.originator(from)
     }
     
     func receivingUpdate(flag: Flag) {

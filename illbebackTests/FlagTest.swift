@@ -113,7 +113,7 @@ class FlagTest: XCTestCase {
     
     func testAcceptReceivedNewBecomesAcceptingAndRetainsDescription() {
         let flag = createFlag("External description")
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         try! flag.acceptNew()
         XCTAssertEqual(flag.state(), FlagState.AcceptingNew)
@@ -122,7 +122,7 @@ class FlagTest: XCTestCase {
     
     func testSuccessfulAcceptNewReturnsToNeutral() {
         let flag = createFlag("External description")
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         try! flag.acceptNew()
         try! flag.acceptNewSuccess()
@@ -131,7 +131,7 @@ class FlagTest: XCTestCase {
     
     func testFailedAcceptNewRemainsInAccepting() {
         let flag = createFlag("External description")
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         try! flag.acceptNew()
         try! flag.acceptNewFailure()
@@ -140,7 +140,7 @@ class FlagTest: XCTestCase {
     
     func testDeclineNewOfferedBecomesDeclining() {
         let flag = createFlag("External description")
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         try! flag.declineNew()
         XCTAssertEqual(flag.state(), FlagState.DecliningNew)
@@ -148,7 +148,7 @@ class FlagTest: XCTestCase {
     
     func testSuccessfulDeclineGoesToDead() {
         let flag = createFlag("External description")
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         try! flag.declineNew()
         try! flag.declineNewSuccess()
@@ -157,7 +157,7 @@ class FlagTest: XCTestCase {
     
     func testFailedDeclineNewRemainsInDeclining() {
         let flag = createFlag("External description")
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         try! flag.declineNew()
         try! flag.declineNewFailure()
@@ -182,7 +182,7 @@ class FlagTest: XCTestCase {
     
     func testCanUpdateAcceptingNewFlag() {
         let flag = createFlag()
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         try! flag.acceptNew()
         try! flag.update("New description")
@@ -210,14 +210,14 @@ class FlagTest: XCTestCase {
     
     func testCannotUpdateReceivedNewFlag() {
         let flag = createFlag("External description")
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         assertError({ try flag.update("New description") })
     }
     
     func testCannotUpdateDecliningNewFlag() {
         let flag = createFlag("External description")
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         try! flag.declineNew()
         assertError({ try flag.update("New description") })
@@ -225,7 +225,7 @@ class FlagTest: XCTestCase {
     
     func testCannotUpdateDeadFlag() {
         let flag = createFlag("External description")
-        try! flag.receivingNew()
+        try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
         try! flag.declineNew()
         try! flag.declineNewSuccess()

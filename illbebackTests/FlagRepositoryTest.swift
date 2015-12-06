@@ -81,6 +81,23 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(events.count, 0)
     }
     
+    func testReceiveNewForwardedChangesOriginator() {
+        let flag1 = flag("a flag")
+        repository.receive("Spencer", flag: flag1, onNew: { }, onUpdate: { }, onAck: { })
+        let flags = repository.flags()
+        XCTAssertEqual(flags[0].originator(), "Spencer")
+    }
+    
+    func testReceiveUpdateForwardedLeavesOriginator() {
+        let flag1 = flag("a flag")
+        repository.add(flag1)
+        let flag2 = flag("an updated flag")
+        flag2.invite("Madeleine")
+        repository.receive("Spencer", flag: flag2, onNew: { }, onUpdate: { }, onAck: { })
+        let flags = repository.flags()
+        XCTAssertEqual(flags[0].originator(), "originator")
+    }
+    
     func testReceiveNew() {
         var calledBack = false
         let flag1 = flag("a flag")
@@ -113,7 +130,7 @@ class FlagRepositoryTest : XCTestCase {
         repository.add(offeredFlag)
         offeredFlag.invite("Madeleine")
         let acceptedFlag = Flag.decode(offeredFlag.encode())
-        try! acceptedFlag.receivingNew()
+        try! acceptedFlag.receivingNew("Madeleine")
         try! acceptedFlag.receiveNewSuccess()
         try! acceptedFlag.acceptNew()
         repository.receive("Madeleine", flag: acceptedFlag, onNew: { XCTFail() }, onUpdate: { XCTFail() }, onAck: { calledBack = true })
@@ -133,7 +150,7 @@ class FlagRepositoryTest : XCTestCase {
         repository.add(offeredFlag)
         offeredFlag.invite("Madeleine")
         let declinedFlag = Flag.decode(offeredFlag.encode())
-        try! declinedFlag.receivingNew()
+        try! declinedFlag.receivingNew("Madeleine")
         try! declinedFlag.receiveNewSuccess()
         try! declinedFlag.declineNew()
         repository.receive("Madeleine", flag: declinedFlag, onNew: { XCTFail() }, onUpdate: { XCTFail() }, onAck: { calledBack = true })
@@ -194,7 +211,7 @@ class FlagRepositoryTest : XCTestCase {
         repository.add(offeredFlag)
         offeredFlag.invite("Madeleine")
         let acceptedFlag = Flag.decode(offeredFlag.encode())
-        try! acceptedFlag.receivingNew()
+        try! acceptedFlag.receivingNew("Madeleine")
         try! acceptedFlag.receiveNewSuccess()
         try! acceptedFlag.acceptNew()
         repository.remove(offeredFlag)

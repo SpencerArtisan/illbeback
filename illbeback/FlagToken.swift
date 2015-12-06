@@ -112,6 +112,10 @@ class FlagToken {
         return _originator
     }
     
+    func originator(originator: String) {
+        _originator = originator
+    }
+    
     func invitees() -> [Invitee2] {
         return _invitees
     }
