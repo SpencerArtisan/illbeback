@@ -10,10 +10,12 @@ import Foundation
 
 enum FlagState : String {
     case Neutral = "O"
-    case UpdateOffered = "U"
+    case ReceivingUpdate = "u"
+    case ReceivedUpdate = "U"
     case AcceptingUpdate = "AU"
     case DecliningUpdate = "DU"
-    case NewOffered = "N"
+    case ReceivingNew = "n"
+    case ReceivedNew = "N"
     case AcceptingNew = "AN"
     case DecliningNew = "DN"
     case Dead = "X"
@@ -25,15 +27,15 @@ enum FlagState : String {
     static func fromCode(code: String) -> FlagState {
         switch code {
         case "F":
-            return FlagState.Neutral
+            return .Neutral
         case "S":
-            return FlagState.Neutral
+            return .Neutral
         case "A":
-            return FlagState.Neutral
+            return .Neutral
         case "D":
-            return FlagState.Neutral
+            return .Neutral
         case "R":
-            return FlagState.UpdateOffered
+            return .ReceivedUpdate
         default:
             return FlagState(rawValue: code)!
         }

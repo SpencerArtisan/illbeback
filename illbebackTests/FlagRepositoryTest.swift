@@ -60,7 +60,7 @@ class FlagRepositoryTest : XCTestCase {
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.NewOffered)
+        XCTAssertEqual(flags[0].state(), FlagState.ReceivingNew)
         XCTAssertTrue(calledBack)
     }
     
@@ -74,7 +74,7 @@ class FlagRepositoryTest : XCTestCase {
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "an updated flag")
-        XCTAssertEqual(flags[0].state(), FlagState.UpdateOffered)
+        XCTAssertEqual(flags[0].state(), FlagState.ReceivingUpdate)
         XCTAssertTrue(calledBack)
     }
     
@@ -90,7 +90,7 @@ class FlagRepositoryTest : XCTestCase {
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.Neutral)
+        XCTAssertEqual(flags[0].state(), .Neutral)
         XCTAssertEqual(flags[0].invitees().count, 1)
         XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
         XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)
@@ -168,7 +168,7 @@ class FlagRepositoryTest : XCTestCase {
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.NewOffered)
+        XCTAssertEqual(flags[0].state(), FlagState.ReceivingNew)
         XCTAssertEqual(flags[0].invitees().count, 1)
         XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
         XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)
@@ -190,7 +190,7 @@ class FlagRepositoryTest : XCTestCase {
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.NewOffered)
+        XCTAssertEqual(flags[0].state(), FlagState.ReceivingNew)
         XCTAssertEqual(flags[0].invitees().count, 1)
         XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
         XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)

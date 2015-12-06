@@ -108,7 +108,7 @@ class MapPinView: MKAnnotationView {
         if (inShape) {
             let imageHighlight = UIImage(named: "share flag")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
-        } else if (flag!.state() == FlagState.UpdateOffered || flag!.state() == FlagState.NewOffered) {
+        } else if (flag!.state() == FlagState.ReceivedUpdate || flag!.state() == FlagState.ReceivedNew) {
             let imageHighlight = UIImage(named: "recent")!
             imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
         }
@@ -181,7 +181,7 @@ class MapPinView: MKAnnotationView {
             labelView!.addSubview(dateView!)
         }
         
-        if (flag!.state() == FlagState.UpdateOffered || flag!.state() == FlagState.NewOffered || flag!.isBlank()) {
+        if (flag!.state() == FlagState.ReceivedUpdate || flag!.state() == FlagState.ReceivedNew || flag!.isBlank()) {
             labelView?.addSubview(acceptButton!)
             labelView?.addSubview(declineButton!)
         } else {
@@ -355,7 +355,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createAcceptButton() {
-        if flag!.state() == FlagState.UpdateOffered || flag!.state() == FlagState.NewOffered || flag!.isBlank() {
+        if flag!.state() == FlagState.ReceivedUpdate || flag!.state() == FlagState.ReceivedNew || flag!.isBlank() {
             acceptButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
             acceptButton!.layer.cornerRadius = 0
             acceptButton!.numberOfLines = 0
@@ -369,7 +369,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createDeclineButton() {
-        if flag!.state() == FlagState.UpdateOffered || flag!.state() == FlagState.NewOffered || flag!.isBlank() {
+        if flag!.state() == FlagState.ReceivedUpdate || flag!.state() == FlagState.ReceivedNew || flag!.isBlank() {
             declineButton = UILabel(frame: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
             declineButton!.layer.cornerRadius = 0
             declineButton!.numberOfLines = 0
@@ -425,14 +425,14 @@ class MapPinView: MKAnnotationView {
                 MapPinView.lastSelectionChange = NSDate()
                 if flag!.isBlank() {
                     memoriesController?.unblankMemory(self)
-                } else if flag!.state() == .UpdateOffered || flag!.state() == .NewOffered {
+                } else if flag!.state() == .ReceivedUpdate || flag!.state() == .ReceivedNew {
                     memoriesController?.acceptRecentShare(flag!)
                 }
             } else if declineButton != nil && hitButton(point, button: declineButton) {
                 MapPinView.lastSelectionChange = NSDate()
                 if flag!.isBlank() {
                     memoriesController?.deleteMemory(self)
-                } else if flag!.state() == .UpdateOffered || flag!.state() == .NewOffered {
+                } else if flag!.state() == .ReceivedUpdate || flag!.state() == .ReceivedNew {
                     memoriesController?.removePin(self)
                     memoriesController?.declineRecentShare(flag!)
                 }

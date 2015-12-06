@@ -65,7 +65,7 @@ class FlagRepository {
     }
     
     func new() -> [Flag] {
-        return _flags.filter {$0.state() == FlagState.UpdateOffered}
+        return _flags.filter {$0.state() == FlagState.ReceivedNew}
     }
     
     func imminentEvents() -> [Flag] {
