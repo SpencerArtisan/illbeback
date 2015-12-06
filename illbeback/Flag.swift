@@ -18,11 +18,6 @@ public class Flag {
         return Flag(token: token)
     }
     
-//    static func offered(token: FlagToken) -> Flag {
-//        token.state(.ReceivingNew)
-//        return Flag(token: token)
-//    }
-    
     static func decode(encoded: String) -> Flag {
         return Flag(token: FlagToken(token: encoded))
     }
@@ -133,7 +128,7 @@ public class Flag {
         _token.addInvitee(invitee)
     }
     
-    func markAsNew() {
+    func receivingNew() {
         _token.state(.ReceivingNew)
     }
     
@@ -149,13 +144,39 @@ public class Flag {
                state() == .AcceptingNew
     }
     
-    func markAsUpdate(flag: Flag) {
+    func receivingUpdate(flag: Flag) {
         _token.state(.ReceivingUpdate)
         _token.offerUpdate(flag._token)
     }
     
-    func acceptUpdate() throws {
+    func receiveUpdateSuccess() throws {
         guard state() == .ReceivingUpdate else {
+            throw StateMachineError.InvalidTransition
+        }
+        state(.ReceivedUpdate)
+    }
+    
+    func receiveNewSuccess() throws {
+        guard state() == .ReceivingNew else {
+            throw StateMachineError.InvalidTransition
+        }
+        state(.ReceivedNew)
+    }
+    
+    func receiveUpdateFailure() throws {
+        guard state() == .ReceivingUpdate else {
+            throw StateMachineError.InvalidTransition
+        }
+    }
+    
+    func receiveNewFailure() throws {
+        guard state() == .ReceivingNew else {
+            throw StateMachineError.InvalidTransition
+        }
+    }
+    
+    func acceptUpdate() throws {
+        guard state() == .ReceivedUpdate else {
             throw StateMachineError.InvalidTransition
         }
         _token.acceptUpdate()

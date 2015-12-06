@@ -44,12 +44,14 @@ class InBox {
             onNew: {
                 self.downloadImages(flag, onComplete: {
                     print("All new flag photos downloaded.  Removing from firebase")
+                    try! flag.receiveNewSuccess()
                     givenFlag.ref.removeValue()
                 })
             },
             onUpdate: {
                 self.downloadImages(flag, onComplete: {
                     print("All udated flag photos downloaded.  Removing from firebase")
+                    try! flag.receiveUpdateSuccess()
                     givenFlag.ref.removeValue()
                 })
             },

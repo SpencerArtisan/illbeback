@@ -20,12 +20,12 @@ class FlagRepository {
         let flagState = flag.state()
         
         if originalFlag == nil {
-            flag.markAsNew()
+            flag.receivingNew()
             add(flag)
             onNew()
             originalFlag = flag
         } else if flagState == .Neutral {
-            originalFlag!.markAsUpdate(flag)
+            originalFlag!.receivingUpdate(flag)
             onUpdate()
         }
 

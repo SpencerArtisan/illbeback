@@ -22,7 +22,7 @@ class FlagStateTest: XCTestCase {
     }
     
     func testDecodeOldReceived() {
-        XCTAssertEqual(FlagState.UpdateOffered, FlagState.fromCode("R"))
+        XCTAssertEqual(FlagState.ReceivedUpdate, FlagState.fromCode("R"))
     }
     
     func testDecodeOldAccepted() {
