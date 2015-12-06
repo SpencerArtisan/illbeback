@@ -47,6 +47,7 @@ class InBox {
                         try flag.receiveNewSuccess()
                         print("All new flag photos downloaded.  Removing from firebase")
                         givenFlag.ref.removeValue()
+                        Utils.notifyObservers("FlagReceived", properties: ["flag": flag])
                     } catch {
                         flag.kill()
                         self.flagRepository.remove(flag)
@@ -59,6 +60,7 @@ class InBox {
                         try flag.receiveUpdateSuccess()
                         print("All udated flag photos downloaded.  Removing from firebase")
                         givenFlag.ref.removeValue()
+                        Utils.notifyObservers("FlagReceived", properties: ["flag": flag])
                     } catch {
                         flag.reset(FlagState.Neutral)
                     }
@@ -67,6 +69,7 @@ class InBox {
             onAck: {
                 print("Ack processed.  Removing from firebase")
                 givenFlag.ref.removeValue()
+                Utils.notifyObservers("FlagReceived", properties: ["flag": flag])
             })
     }
     

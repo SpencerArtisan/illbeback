@@ -20,6 +20,7 @@ class FlagRenderer: NSObject {
         Utils.addObserver(self, selector: "onFlagAdded:", event: "FlagAdded")
         Utils.addObserver(self, selector: "onFlagRemoved:", event: "FlagRemoved")
         Utils.addObserver(self, selector: "onFlagSent:", event: "FlagSent")
+        Utils.addObserver(self, selector: "onFlagReceived:", event: "FlagReceived")
     }
     
     func render(viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -61,7 +62,13 @@ class FlagRenderer: NSObject {
     func onFlagSent(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
         print("\(flag.type()) sent to someone.  Updating pin...")
-        remove(flag)
+        refresh(flag)
+    }
+    
+    func onFlagReceived(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        print("\(flag.type()) received from someone.  Updating pin...")
+        refresh(flag)
     }
     
     func add(flag: Flag) {
@@ -90,6 +97,12 @@ class FlagRenderer: NSObject {
         pin.refresh()
     }
 
+    func refresh(flag: Flag) {
+        if let pin = getPinView(flag) {
+            refresh(pin)
+        }
+    }
+    
     func updateEventPins(events: [Flag]) {
         for event in events {
             let pin = getPin(event)
@@ -111,10 +124,16 @@ class FlagRenderer: NSObject {
     func getPin(flag: Flag) -> MapPin? {
         for pin in self.map.annotations {
             if pin is MapPin && (pin as! MapPin).flag.id() == flag.id() {
-                return pin as? MapPin
+                let mapPin = pin as? MapPin
+                return mapPin
             }
         }
         return nil
+    }
+    
+    func getPinView(flag: Flag) -> MapPinView? {
+        let pin = getPin(flag)
+        return pin == nil ? nil : map.viewForAnnotation(pin!) as? MapPinView
     }
     
     func createPin(flag: Flag) -> MapPin {
