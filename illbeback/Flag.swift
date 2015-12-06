@@ -210,6 +210,16 @@ public class Flag {
     func declineNew() throws {
         try state(.ReceivedNew, targetState: .DecliningNew)
     }
+    
+    func kill() {
+        _token.state(.Dead)
+    }
+    
+    func reset(state: FlagState) {
+        print("< ** RESET PROBLEM FLAG TO \(state): \(self) ** >")
+        _token.declineUpdate()
+        _token.state(.Neutral)
+    }
 
     private func state(acceptableStartState: FlagState, targetState: FlagState) throws {
         guard state() == acceptableStartState else {

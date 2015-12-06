@@ -52,6 +52,22 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(flags.count, 0)
     }
     
+    func testDeadFlagsIgnored() {
+        let flag1 = flag("a flag")
+        repository.add(flag1)
+        flag1.kill()
+        let flags = repository.flags()
+        XCTAssertEqual(flags.count, 0)
+    }
+    
+    func testDeadEventsIgnored() {
+        let event1 = event("a flag")
+        repository.add(event1)
+        event1.kill()
+        let events = repository.events()
+        XCTAssertEqual(events.count, 0)
+    }
+    
     func testReceiveNew() {
         var calledBack = false
         let flag1 = flag("a flag")

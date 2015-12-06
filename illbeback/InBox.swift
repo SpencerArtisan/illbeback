@@ -43,16 +43,24 @@ class InBox {
         flagRepository.receive(from, flag: flag,
             onNew: {
                 self.downloadImages(flag, onComplete: {
-                    print("All new flag photos downloaded.  Removing from firebase")
-                    try! flag.receiveNewSuccess()
-                    givenFlag.ref.removeValue()
+                    do {
+                        try flag.receiveNewSuccess()
+                        print("All new flag photos downloaded.  Removing from firebase")
+                        givenFlag.ref.removeValue()
+                    } catch {
+                        flag.kill()
+                    }
                 })
             },
             onUpdate: {
                 self.downloadImages(flag, onComplete: {
-                    print("All udated flag photos downloaded.  Removing from firebase")
-                    try! flag.receiveUpdateSuccess()
-                    givenFlag.ref.removeValue()
+                    do {
+                        try flag.receiveUpdateSuccess()
+                        print("All udated flag photos downloaded.  Removing from firebase")
+                        givenFlag.ref.removeValue()
+                    } catch {
+                        flag.reset(FlagState.Neutral)
+                    }
                 })
             },
             onAck: {
@@ -60,7 +68,7 @@ class InBox {
             })
     }
     
-    private func downloadImages(flag: Flag, onComplete: () -> Void) {
+    private func downloadImages(flag: Flag, onComplete: () -> ()) {
         print("Downloading shared images for flag \(flag.id())")
         
         let imageUrls = photoAlbum.getFlagImageUrls(flag.id())

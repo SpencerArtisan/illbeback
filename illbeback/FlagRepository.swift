@@ -12,7 +12,7 @@ class FlagRepository {
     private var _flags = [Flag]()
     
     func flags() -> [Flag] {
-        return _flags
+        return _flags.filter {$0.state() != .Dead}
     }
     
     func receive(from: String, flag: Flag, onNew: () -> (), onUpdate: () -> (), onAck: () -> ()) {
@@ -64,12 +64,12 @@ class FlagRepository {
     }
     
     func events() -> [Flag] {
-        let all = _flags.filter {$0.when() != nil }
+        let all = flags().filter {$0.when() != nil }
         return all.sort {$0.daysToGo() < $1.daysToGo()}
     }
     
     func new() -> [Flag] {
-        return _flags.filter {$0.state() == FlagState.ReceivedNew || $0.state() == FlagState.ReceivedUpdate}
+        return flags().filter {$0.state() == FlagState.ReceivedNew || $0.state() == FlagState.ReceivedUpdate}
     }
     
     func imminentEvents() -> [Flag] {
@@ -95,6 +95,7 @@ class FlagRepository {
             do {
                 try fileManager.copyItemAtPath(bundle as String, toPath: path)
             } catch {
+                print("Failed to read local flag store")
             }
         }
         

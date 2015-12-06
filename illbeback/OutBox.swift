@@ -47,6 +47,7 @@ class OutBox {
             do {
                 try flag.acceptNewSuccess()
             } catch {
+                flag.reset(FlagState.Neutral)
             }
         }
     }
@@ -59,6 +60,7 @@ class OutBox {
             do {
                 try flag.declineNewSuccess()
             } catch {
+                flag.reset(FlagState.Neutral)
             }
         }
     }
