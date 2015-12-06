@@ -13,7 +13,7 @@ class EventView: UIView {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var when: UILabel!
     
-    var memories: MemoriesController!
+    var mapController: MapController!
     private var event: Flag?
     private var normalColor: UIColor?
     
@@ -29,7 +29,7 @@ class EventView: UIView {
     
     @IBAction func goto(sender: AnyObject) {
         print("go to \(event!.summary())")
-        memories.centerMap(event!.location())
+        mapController.centerMap(event!.location())
     }
     
     func setEvent(event: Flag) {

@@ -12,14 +12,14 @@ import MapKit
 
 class FlagsController: UIViewController, UITextViewDelegate {
     var flagsModal: Modal!
-    var memoriesController: MemoriesController!
+    var mapController: MapController!
     
     @IBOutlet weak var cancelButton: UIButton!
     
-    init(memoriesViewController: MemoriesController) {
+    init(mapController: MapController) {
         super.init(nibName: nil, bundle: nil)
         flagsModal = Modal(viewName: "FlagsView", owner: self)
-        memoriesController = memoriesViewController
+        self.mapController = mapController
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -39,7 +39,7 @@ class FlagsController: UIViewController, UITextViewDelegate {
         Utils.delay(1) {
             self.cancelButton.enabled = true
         }
-        let flags = memoriesController.flagRepository.new()
+        let flags = mapController.flagRepository.new()
         var tag = 1
         for flag in flags {
             let flagView = flagsModal.findElementByTag(tag) as? FlagView
@@ -47,7 +47,7 @@ class FlagsController: UIViewController, UITextViewDelegate {
                 break;
             }
             flagView!.setFlag(flag)
-            flagView!.memoriesController = memoriesController
+            flagView!.mapController = mapController
             flagView!.hidden = false
             tag++
         }
@@ -60,10 +60,10 @@ class FlagsController: UIViewController, UITextViewDelegate {
             tag++
         }
         
-        flagsModal.slideOutFromLeft(self.memoriesController.view)
+        flagsModal.slideOutFromLeft(self.mapController.view)
     }
     
     func hideFlags() {
-        flagsModal.slideInFromLeft(self.memoriesController.view)
+        flagsModal.slideInFromLeft(self.mapController.view)
     }
 }

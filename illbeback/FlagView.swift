@@ -15,7 +15,7 @@ class FlagView: UIView {
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var bkgView: UILabel!
     
-    var memoriesController: MemoriesController!
+    var mapController: MapController!
     private var flag: Flag?
     private var normalColor: UIColor?
     
@@ -31,7 +31,7 @@ class FlagView: UIView {
     
     @IBAction func goto(sender: AnyObject) {
         print("go to \(flag!.summary())")
-        memoriesController.centerMap(flag!.location())
+        mapController.centerMap(flag!.location())
     }
     
     func setFlag(flag: Flag) {

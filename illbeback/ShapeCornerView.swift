@@ -10,12 +10,12 @@ import MapKit
 
 
 class ShapeCornerView : MKAnnotationView {
-    var memoriesController:MemoriesController?
+    var mapController:MapController?
     
-    init(memoriesController: MemoriesController) {
+    init(mapController: MapController) {
         super.init(annotation: nil, reuseIdentifier: nil)
         
-        self.memoriesController = memoriesController
+        self.mapController = mapController
         
         canShowCallout = false
         annotation = annotation

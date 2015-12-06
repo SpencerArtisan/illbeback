@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class AddMemoryController: UIViewController, UITextViewDelegate {
+class AddFlagController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var desciptionTextArea: UITextView!
     var categoryModal: Modal!
     var descriptionModal: Modal!
@@ -17,20 +17,20 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     var flagId: String?
     var flagImage: String?
     var flagLocation: CLLocationCoordinate2D?
-    var memoriesController: MemoriesController?
+    var mapController: MapController?
     var callingViewController: UIViewController?
     var photoAlbum: PhotoAlbum?
     var rewordingPin: MapPinView?
     var when: NSDate?
     var categoryShownAt: NSDate?
 
-    init(album: PhotoAlbum, memoriesViewController: MemoriesController) {
+    init(album: PhotoAlbum, mapController: MapController) {
         super.init(nibName: nil, bundle: nil)
         categoryModal = Modal(viewName: "CategoryView", owner: self)
         descriptionModal = Modal(viewName: "DescriptionView", owner: self)
         desciptionTextArea.delegate = self
         photoAlbum = album
-        memoriesController = memoriesViewController
+        self.mapController = mapController
     }
     
     @IBAction func cancelDescription(sender: AnyObject) {
@@ -138,7 +138,7 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
     }
 
     func addBlank(controller: UIViewController, location: CLLocationCoordinate2D, description: String) {
-        memoriesController!.addFlagHere("Blank", id: NSUUID().UUIDString, description: description, location: location, orientation: self.orientation, when: nil)
+        mapController!.addFlagHere("Blank", id: NSUUID().UUIDString, description: description, location: location, orientation: self.orientation, when: nil)
     }
     
     func reword(controller: UIViewController, pin: MapPinView) {
@@ -236,13 +236,13 @@ class AddMemoryController: UIViewController, UITextViewDelegate {
                 rewordingPin?.flag?.description(textView.text)
                 rewordingPin?.flag?.when(when)
                 rewordingPin?.flag?.type(self.flagImage!)
-                memoriesController!.flagRepository.save()
+                mapController!.flagRepository.save()
                 let annotation = rewordingPin!.annotation!
-                rewordingPin?.memoriesController?.map?.deselectAnnotation(annotation, animated: false)
-                rewordingPin?.memoriesController?.map?.removeAnnotation(annotation)
-                rewordingPin?.memoriesController?.map?.addAnnotation(annotation)
+                rewordingPin?.mapController?.map?.deselectAnnotation(annotation, animated: false)
+                rewordingPin?.mapController?.map?.removeAnnotation(annotation)
+                rewordingPin?.mapController?.map?.addAnnotation(annotation)
             } else {
-                memoriesController!.addFlagHere(flagImage!, id: flagId!, description: textView.text, location: self.flagLocation, orientation: self.orientation, when: when)
+                mapController!.addFlagHere(flagImage!, id: flagId!, description: textView.text, location: self.flagLocation, orientation: self.orientation, when: when)
                 self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
             }
             descriptionModal.hide()

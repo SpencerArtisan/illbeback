@@ -12,7 +12,7 @@ import UIKit
 
 class RephotoController: UIViewController, UINavigationControllerDelegate {
     
-    let addMemory = AddMemoryController()
+    let addFlag = AddFlagController()
     var camera: Camera?
     var photoAlbum: PhotoAlbum?
     private var flagRepository: FlagRepository

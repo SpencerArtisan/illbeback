@@ -12,14 +12,14 @@ import MapKit
 
 class EventsController: UIViewController, UITextViewDelegate {
     var eventsModal: Modal!
-    var memories: MemoriesController!
+    var mapController: MapController!
     
     @IBOutlet weak var cancelButton: UIButton!
     
-    init(memoriesViewController: MemoriesController) {
+    init(mapController: MapController) {
         super.init(nibName: nil, bundle: nil)
         eventsModal = Modal(viewName: "Events", owner: self)
-        memories = memoriesViewController
+        self.mapController = mapController
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -34,7 +34,7 @@ class EventsController: UIViewController, UITextViewDelegate {
         delay(1) {
             self.cancelButton.enabled = true
         }
-        let events = memories.flagRepository.events()
+        let events = mapController.flagRepository.events()
         var tag = 1
         for event in events {
             let eventView = eventsModal.findElementByTag(tag) as? EventView
@@ -42,7 +42,7 @@ class EventsController: UIViewController, UITextViewDelegate {
                 break;
             }
             eventView!.setEvent(event)
-            eventView!.memories = memories
+            eventView!.mapController = mapController
             eventView!.hidden = false
             tag++
         }
@@ -55,11 +55,11 @@ class EventsController: UIViewController, UITextViewDelegate {
             tag++
         }
         
-        eventsModal.slideOutFromRight(self.memories.view)
+        eventsModal.slideOutFromRight(self.mapController.view)
     }
     
     func hideEvents() {
-        eventsModal.slideInFromRight(self.memories.view)
+        eventsModal.slideInFromRight(self.mapController.view)
     }
     
     @IBAction func cancel(sender: AnyObject) {

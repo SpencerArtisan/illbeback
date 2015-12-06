@@ -11,7 +11,7 @@ import CoreLocation
 import MapKit
 
 
-class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextViewDelegate {
+class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextViewDelegate {
     let HOUR: Double = 60 * 60
     
     @IBOutlet weak var map: MKMapView!
@@ -25,7 +25,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     let photoAlbum = PhotoAlbum()
     
     var shapeController: ShapeController!
-    var addFlag: AddMemoryController!
+    var addFlag: AddFlagController!
     var rephotoController: RephotoController!
     var rememberController: RememberController!
     var zoomController: ZoomSwipeController!
@@ -90,19 +90,19 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
         initMap()
         
         self.flagRepository = FlagRepository()
-        self.flagRenderer = FlagRenderer(map: map, memoriesController: self)
+        self.flagRenderer = FlagRenderer(map: map, mapController: self)
 
         self.newUserModal = Modal(viewName: "NewUser", owner: self)
         self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
-        self.addFlag = AddMemoryController(album: photoAlbum, memoriesViewController: self)
-        self.eventListController = EventsController(memoriesViewController: self)
-        self.flagListController = FlagsController(memoriesViewController: self)
+        self.addFlag = AddFlagController(album: photoAlbum, mapController: self)
+        self.eventListController = EventsController(mapController: self)
+        self.flagListController = FlagsController(mapController: self)
         self.rephotoController = RephotoController(photoAlbum: photoAlbum, flagRepository: flagRepository)
-        self.rememberController = RememberController(album: photoAlbum, memoriesController: self)
+        self.rememberController = RememberController(album: photoAlbum, mapController: self)
         self.zoomController = ZoomSwipeController()
-        self.shapeController = ShapeController(map: map, memories: self)
-        self.shareController = ShareController(memories: self)
+        self.shapeController = ShapeController(map: map, mapController: self)
+        self.shareController = ShareController(mapController: self)
         self.outBox = OutBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
@@ -170,7 +170,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     // Callback for button on the callout
     func rephotoMemory(pin: MapPinView) {
         if (self.navigationController?.topViewController != rephotoController) {
-            zoomController.memoriesController = self
+            zoomController.mapController = self
             zoomController.pinToRephoto = pin
             rephotoController.pinToRephoto = pin
             self.navigationController?.navigationBarHidden = true
@@ -183,7 +183,7 @@ class MemoriesController: UIViewController, CLLocationManagerDelegate, MKMapView
     func zoomPicture(pin: MapPinView) {
         if (self.navigationController?.topViewController != zoomController) {
             self.navigationController?.navigationBarHidden = true
-            zoomController.memoriesController = self
+            zoomController.mapController = self
             zoomController.pinToRephoto = pin
             self.navigationController?.pushViewController(zoomController, animated: true)
         }

@@ -19,14 +19,14 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     var deleteButton: UIButton?
     var created: Bool = false
     var pinToRephoto: MapPinView?
-    var memoriesController: MemoriesController?
+    var mapController: MapController?
     var dots: [UIImageView] = []
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.photos = memoriesController!.photoAlbum.photos(pinToRephoto!.flag!)
+        self.photos = mapController!.photoAlbum.photos(pinToRephoto!.flag!)
 
         if (!created) {
             created = true
@@ -57,7 +57,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     override func viewWillAppear(animated: Bool) {
         let previousPhotoPaths = self.photos.map { $0.imagePath }
         
-        self.photos = memoriesController!.photoAlbum.photos(pinToRephoto!.flag!)
+        self.photos = mapController!.photoAlbum.photos(pinToRephoto!.flag!)
         var i = 0
         for photo in self.photos {
             if !previousPhotoPaths.contains(photo.imagePath) {
@@ -181,10 +181,10 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     }
 
     func photo(sender : UIButton!) {
-        if (self.navigationController?.topViewController != self.memoriesController!.rephotoController) {
-            self.memoriesController!.rephotoController.pinToRephoto = pinToRephoto
+        if (self.navigationController?.topViewController != self.mapController!.rephotoController) {
+            self.mapController!.rephotoController.pinToRephoto = pinToRephoto
             self.navigationController?.navigationBarHidden = true
-            self.navigationController?.pushViewController(self.memoriesController!.rephotoController!, animated: false)
+            self.navigationController?.pushViewController(self.mapController!.rephotoController!, animated: false)
         }
     }
     

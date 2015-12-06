@@ -13,12 +13,12 @@ class ShapeController : UIViewController {
     var map: MKMapView!
     var corners: [ShapeCorner] = []
     var polyline: MKPolyline?
-    var memories: MemoriesController!
+    var mapController: MapController!
     
-    init(map: MKMapView, memories: MemoriesController) {
+    init(map: MKMapView, mapController: MapController) {
         super.init(nibName: nil, bundle: nil)
         self.map = map
-        self.memories = memories
+        self.mapController = mapController
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -37,7 +37,7 @@ class ShapeController : UIViewController {
     
     func move(corner: ShapeCorner) {
         drawShape()
-        print(shapeContains(memories.here.coordinate))
+        print(shapeContains(mapController.here.coordinate))
     }
     
     func beginShape() {

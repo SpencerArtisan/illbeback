@@ -10,12 +10,12 @@ import UIKit
 
 class RememberController: UIViewController, UINavigationControllerDelegate {
 
-    var addMemory: AddMemoryController?
+    var addFlag: AddFlagController?
     var camera: Camera?
     
-    init(album: PhotoAlbum, memoriesController: MemoriesController) {
+    init(album: PhotoAlbum, mapController: MapController) {
         super.init(nibName: nil, bundle: nil)
-        addMemory = AddMemoryController(album: PhotoAlbum(), memoriesViewController: memoriesController)
+        addFlag = AddFlagController(album: PhotoAlbum(), mapController: mapController)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -26,7 +26,7 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         camera = Camera(
             navigationController: self.navigationController!,
-            callback: {(controller, image, orientation) in self.addMemory!.add(controller.topViewController!, image: image, orientation: orientation)}
+            callback: {(controller, image, orientation) in self.addFlag!.add(controller.topViewController!, image: image, orientation: orientation)}
         )
     }
     
@@ -38,7 +38,7 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         camera!.stop()
-        addMemory?.viewWillDisappear(animated)
+        addFlag?.viewWillDisappear(animated)
     }
     
     func delay(delay:Double, closure:()->()) {

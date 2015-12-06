@@ -30,7 +30,7 @@ class MapPinView: MKAnnotationView {
     var declineButton: UILabel?
     var subtitleView: UILabel?
 
-    var memoriesController:MemoriesController?
+    var mapController:MapController?
     var flag: Flag?
     var hitOutside: Bool = true
     var imageUrl: String?
@@ -43,12 +43,12 @@ class MapPinView: MKAnnotationView {
     
     static var lastSelectionChange: NSDate?
     
-    init(memoriesController: MemoriesController, flag: Flag) {
+    init(mapController: MapController, flag: Flag) {
         super.init(annotation: nil, reuseIdentifier: nil)
 
         self.flag = flag
-        self.memoriesController = memoriesController
-        self.imageUrl = memoriesController.photoAlbum.getMainPhoto(flag)?.imagePath
+        self.mapController = mapController
+        self.imageUrl = mapController.photoAlbum.getMainPhoto(flag)?.imagePath
 
         canShowCallout = false
         annotation = annotation
@@ -77,7 +77,7 @@ class MapPinView: MKAnnotationView {
         acceptButton = nil
         declineButton = nil
         labelView = nil
-        self.imageUrl = memoriesController?.photoAlbum.getMainPhoto(flag!)?.imagePath
+        self.imageUrl = mapController?.photoAlbum.getMainPhoto(flag!)?.imagePath
     }
     
     func refreshImage() {
@@ -91,7 +91,7 @@ class MapPinView: MKAnnotationView {
         UIGraphicsBeginImageContext(finalSize)
         imageIcon.drawInRect(CGRectMake(0, 10, imageIcon.size.width, imageIcon.size.height))
         
-        let inShape: Bool = memoriesController!.shapeController.shapeContains(flag!.location())
+        let inShape: Bool = mapController!.shapeController.shapeContains(flag!.location())
 
         if flag!.when() != nil {
             let nearness = CGFloat(1.0 / (1.0 + log2(1.0 + CGFloat(flag!.daysToGo())/(61.0))))
@@ -241,7 +241,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func addDotsToPhoto() {
-        let count = memoriesController!.photoAlbum.photos(flag!).count
+        let count = mapController!.photoAlbum.photos(flag!).count
         
         if (count > 1) {
             let left = photoView!.frame.width / 2 - (CGFloat(count-1)) * 6
@@ -388,7 +388,7 @@ class MapPinView: MKAnnotationView {
             print("IGNORE SELECTION")
             
             Utils.delay(0.3) {
-                self.memoriesController?.map.deselectAnnotation(self.annotation, animated: false)
+                self.mapController?.map.deselectAnnotation(self.annotation, animated: false)
             }
             
             return
@@ -401,14 +401,14 @@ class MapPinView: MKAnnotationView {
             addSubview(callout)
             self.superview?.bringSubviewToFront(callout)
             
-            let map = self.memoriesController!.map
+            let map = self.mapController!.map
             let pinCoord = flag!.location()
             let mapTopCoord = map.convertPoint(CGPointMake(0, 0), toCoordinateFromView: map)
             let mapBottomCoord = map.convertPoint(CGPointMake(0, map.frame.height), toCoordinateFromView: map)
             let coordsTopToBottom = mapTopCoord.latitude - mapBottomCoord.latitude
             let rescrollCoord = CLLocationCoordinate2D(latitude: (pinCoord.latitude + coordsTopToBottom/5), longitude: pinCoord.longitude)
             
-            self.memoriesController?.map.setCenterCoordinate(rescrollCoord, animated: true)
+            self.mapController?.map.setCenterCoordinate(rescrollCoord, animated: true)
             
         } else {
             getCalloutView().removeFromSuperview()
@@ -424,33 +424,33 @@ class MapPinView: MKAnnotationView {
             if acceptButton != nil && hitButton(point, button: acceptButton) {
                 MapPinView.lastSelectionChange = NSDate()
                 if flag!.isBlank() {
-                    memoriesController?.unblankMemory(self)
+                    mapController?.unblankMemory(self)
                 } else if flag!.state() == .ReceivedUpdate || flag!.state() == .ReceivedNew {
-                    memoriesController?.acceptRecentShare(flag!)
+                    mapController?.acceptRecentShare(flag!)
                 }
             } else if declineButton != nil && hitButton(point, button: declineButton) {
                 MapPinView.lastSelectionChange = NSDate()
                 if flag!.isBlank() {
-                    memoriesController?.deleteMemory(self)
+                    mapController?.deleteMemory(self)
                 } else if flag!.state() == .ReceivedUpdate || flag!.state() == .ReceivedNew {
-                    memoriesController?.removePin(self)
-                    memoriesController?.declineRecentShare(flag!)
+                    mapController?.removePin(self)
+                    mapController?.declineRecentShare(flag!)
                 }
             } else if (hitButton(point, button: dateView)) {
-                memoriesController?.rescheduleMemory(self)
+                mapController?.rescheduleMemory(self)
             } else if (hitButton(point, button: deleteButton)) {
                 MapPinView.lastSelectionChange = NSDate()
-                memoriesController?.deleteMemory(self)
+                mapController?.deleteMemory(self)
             } else if (hitButton(point, button: shareButton)) {
                 MapPinView.lastSelectionChange = NSDate()
-                memoriesController?.shareMemory(self)
+                mapController?.shareMemory(self)
             } else if (hitButton(point, button: photoButton)) {
                 MapPinView.lastSelectionChange = NSDate()
-                memoriesController?.rephotoMemory(self)
+                mapController?.rephotoMemory(self)
             } else if (hitButton(point, button: subtitleView)) {
-                memoriesController?.rewordMemory(self)
+                mapController?.rewordMemory(self)
             } else if (photoView != nil && hitPicture(point)) {
-                memoriesController?.zoomPicture(self)
+                mapController?.zoomPicture(self)
             }
         }
         

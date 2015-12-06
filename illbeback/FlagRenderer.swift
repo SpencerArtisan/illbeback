@@ -11,11 +11,11 @@ import MapKit
 
 class FlagRenderer: NSObject {
     private let map: MKMapView
-    private let memoriesController: MemoriesController
+    private let mapController: MapController
     
-    init(map: MKMapView, memoriesController: MemoriesController) {
+    init(map: MKMapView, mapController: MapController) {
         self.map = map
-        self.memoriesController = memoriesController
+        self.mapController = mapController
         super.init()
         Utils.addObserver(self, selector: "onFlagAdded:", event: "FlagAdded")
         Utils.addObserver(self, selector: "onFlagRemoved:", event: "FlagRemoved")
@@ -27,7 +27,7 @@ class FlagRenderer: NSObject {
             var pinView = map.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
             
             if pinView == nil {
-                pinView = MapPinView(memoriesController: memoriesController, flag: pinData.flag)
+                pinView = MapPinView(mapController: mapController, flag: pinData.flag)
             }
             
             return pinView
@@ -35,7 +35,7 @@ class FlagRenderer: NSObject {
             var pinView = map.dequeueReusableAnnotationViewWithIdentifier("corner") as! ShapeCornerView!
             
             if pinView == nil {
-                pinView = ShapeCornerView(memoriesController: memoriesController)
+                pinView = ShapeCornerView(mapController: mapController)
             }
             
             pinView.setSelected(true, animated: true)
