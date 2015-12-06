@@ -242,7 +242,7 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		973F251D1C0B77E20034A235 /* StateMachine */ = {
+		973F251D1C0B77E20034A235 /* CleanCode */ = {
 			isa = PBXGroup;
 			children = (
 				973F25211C0B7A2D0034A235 /* Flag.swift */,
@@ -256,7 +256,7 @@
 				97D34ABA1C12F5BB00118819 /* OutBox.swift */,
 				97FA73F41C135D5A00E9A57A /* InBox.swift */,
 			);
-			name = StateMachine;
+			name = CleanCode;
 			sourceTree = "<group>";
 		};
 		973F251E1C0B79D80034A235 /* StateMachine */ = {
@@ -398,7 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				97D34AAD1C12451F00118819 /* Util */,
-				973F251D1C0B77E20034A235 /* StateMachine */,
+				973F251D1C0B77E20034A235 /* CleanCode */,
 				97FC86651C00EE6300C30C56 /* NewFlags */,
 				97A353461A800B9500973CAC /* Supporting Files */,
 				97A3536A1A800EF500973CAC /* Media.xcassets */,

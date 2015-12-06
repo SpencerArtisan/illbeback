@@ -38,31 +38,23 @@ class InBox {
     
     func receive(givenFlag: FDataSnapshot) {
         let encoded = givenFlag.value["memory"] as! String
-        let flag = Flag.offered(FlagToken(token: encoded))
-    
-        if flag.state() == FlagState.AcceptingNew {
-            print("Received accept of new flag \(flag.id())")
-            let originalFlag = flagRepository.find(flag.id())
-            if originalFlag == nil {
-                print("ORIGINAL FLAG GONE.  RECREATING...")
-                receiveNew(givenFlag, flag: flag)
-            } else {
-//                originalFlag.findInvitee
-            }
-            
-        } else {
-            receiveNew(givenFlag, flag: flag)
-        }
-    }
-    
-    private func receiveNew(givenFlag : FDataSnapshot, flag: Flag) {
-        print("Received new flag \(flag.id())")
-        self.downloadImages(flag, onComplete: {
-            print("All shared photos downloaded.  Removing from firebase")
-            givenFlag.ref.removeValue()
-            self.flagRepository.add(flag)
-        })
-        
+        let flag = Flag.decode(encoded)
+        flagRepository.receive(flag,
+            onNew: {
+                self.downloadImages(flag, onComplete: {
+                    print("All new flag photos downloaded.  Removing from firebase")
+                    givenFlag.ref.removeValue()
+                })
+            },
+            onUpdate: {
+                self.downloadImages(flag, onComplete: {
+                    print("All udated flag photos downloaded.  Removing from firebase")
+                    givenFlag.ref.removeValue()
+                })
+            },
+            onAck: {
+                givenFlag.ref.removeValue()
+            })
     }
     
     private func downloadImages(flag: Flag, onComplete: () -> Void) {

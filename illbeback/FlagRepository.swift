@@ -15,6 +15,19 @@ class FlagRepository {
         return _flags
     }
     
+    func receive(flag: Flag, onNew: () -> (), onUpdate: () -> (), onAck: () -> ()) {
+        let originalFlag = find(flag.id())
+        if originalFlag == nil {
+            flag.markAsNew()
+            add(flag)
+            onNew()
+        } else {
+            originalFlag!.externalUpdate(flag)
+            onUpdate()
+        }
+        
+    }
+    
     func add(flag: Flag) {
         _flags.append(flag)
         Utils.notifyObservers("FlagAdded", properties: ["flag": flag])

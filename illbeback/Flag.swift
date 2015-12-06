@@ -129,6 +129,10 @@ public class Flag {
         _token.addInvitee(invitee)
     }
     
+    func markAsNew() {
+        _token.state(.NewOffered)
+    }
+    
     func update(description: String) throws {
         guard canUpdate() else {
             throw StateMachineError.InvalidTransition
@@ -141,9 +145,9 @@ public class Flag {
                state() == .AcceptingNew
     }
     
-    func externalUpdate(token: FlagToken) {
+    func externalUpdate(flag: Flag) {
         _token.state(.UpdateOffered)
-        _token.offerUpdate(token)
+        _token.offerUpdate(flag._token)
     }
     
     func acceptUpdate() throws {

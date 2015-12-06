@@ -32,17 +32,15 @@ class FlagTest: XCTestCase {
     
     func testExternalUpdateNeutralBecomesUpdateOfferedAndChangesDescription() {
         let flag = createFlag()
-        let token = createToken("External description")
-        flag.externalUpdate(token)
+        flag.externalUpdate(createFlag("External description"))
         XCTAssertEqual(flag.state(), FlagState.UpdateOffered)
         XCTAssertEqual(flag.description(), "External description")
     }
     
     func testAcceptUpdateOfferedBecomesAcceptingAndRetainsDescription() {
         let flag = createFlag()
-        let token = createToken("External description")
         try! flag.update("Original description")
-        flag.externalUpdate(token)
+        flag.externalUpdate(createFlag("External description"))
         try! flag.acceptUpdate()
         XCTAssertEqual(flag.state(), FlagState.AcceptingUpdate)
         XCTAssertEqual(flag.description(), "External description")
@@ -50,8 +48,7 @@ class FlagTest: XCTestCase {
     
     func testSuccessfulAcceptUpdateReturnsToNeutral() {
         let flag = createFlag()
-        let token = createToken()
-        flag.externalUpdate(token)
+        flag.externalUpdate(createFlag())
         try! flag.acceptUpdate()
         flag.acceptUpdateSuccess()
         XCTAssertEqual(flag.state(), FlagState.Neutral)
@@ -59,8 +56,7 @@ class FlagTest: XCTestCase {
     
     func testFailedAcceptUpdateRemainsInAccepting() {
         let flag = createFlag()
-        let token = createToken()
-        flag.externalUpdate(token)
+        flag.externalUpdate(createFlag())
         try! flag.acceptUpdate()
         flag.acceptUpdateFailure()
         XCTAssertEqual(flag.state(), FlagState.AcceptingUpdate)
@@ -68,9 +64,8 @@ class FlagTest: XCTestCase {
     
     func testDeclineUpdateOfferedBecomesDecliningAndRevertsDescription() {
         let flag = createFlag()
-        let token = createToken("External description")
         try! flag.update("Original description")
-        flag.externalUpdate(token)
+        flag.externalUpdate(createFlag("External description"))
         try! flag.declineUpdate()
         XCTAssertEqual(flag.state(), FlagState.DecliningUpdate)
         XCTAssertEqual(flag.description(), "Original description")
@@ -78,8 +73,7 @@ class FlagTest: XCTestCase {
     
     func testSuccessfulDeclineUpdateReturnsToNeutral() {
         let flag = createFlag()
-        let token = createToken()
-        flag.externalUpdate(token)
+        flag.externalUpdate(createFlag())
         try! flag.declineUpdate()
         flag.declineUpdateSuccess()
         XCTAssertEqual(flag.state(), FlagState.Neutral)
@@ -87,8 +81,7 @@ class FlagTest: XCTestCase {
     
     func testFailedDeclineUpdateRemainsInDeclining() {
         let flag = createFlag()
-        let token = createToken()
-        flag.externalUpdate(token)
+        flag.externalUpdate(createFlag())
         try! flag.declineUpdate()
         flag.declineUpdateFailure()
         XCTAssertEqual(flag.state(), FlagState.DecliningUpdate)
@@ -176,7 +169,7 @@ class FlagTest: XCTestCase {
     
     func testCanUpdateAcceptingUpdateFlag() {
         let flag = createFlag()
-        flag.externalUpdate(createToken())
+        flag.externalUpdate(createFlag())
         try! flag.acceptUpdate()
         try! flag.update("New description")
         XCTAssertEqual(flag.description(), "New description")
@@ -184,7 +177,7 @@ class FlagTest: XCTestCase {
     
     func testCanUpdateDecliningUpdateFlag() {
         let flag = createFlag()
-        flag.externalUpdate(createToken())
+        flag.externalUpdate(createFlag())
         try! flag.declineUpdate()
         try! flag.update("New description")
         XCTAssertEqual(flag.description(), "New description")
@@ -231,8 +224,12 @@ class FlagTest: XCTestCase {
         }
     }
     
+    private func createFlag(description: String) -> Flag {
+        return Flag.create("id", type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate())
+    }
+    
     private func createFlag() -> Flag {
-        return Flag.create("id", type: "type", description: "desctiption", location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate())
+        return createFlag("description")
     }
     
     private func createReceivedFlag() -> Flag {
