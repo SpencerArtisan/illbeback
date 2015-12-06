@@ -450,6 +450,7 @@ class MapPinView: MKAnnotationView {
                 mapController?.rephotoMemory(self)
             } else if !pendingAccept() && hitButton(point, button: subtitleView) {
                 mapController?.rewordMemory(self)
+                MapPinView.lastSelectionChange = nil
             } else if photoView != nil && hitPicture(point) {
                 mapController?.zoomPicture(self)
             }

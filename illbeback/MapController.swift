@@ -117,6 +117,19 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         Utils.addObserver(self, selector: "nameTaken:", event: "NameTaken")
         Utils.addObserver(self, selector: "nameAccepted:", event: "NameAccepted")
         Utils.addObserver(self, selector: "eventListChange:", event: "EventListChange")
+//        Utils.addObserver(self, selector: "onFlagSending:", event: "FlagSending")
+//        Utils.addObserver(self, selector: "onFlagSent:", event: "FlagSent")
+//        Utils.addObserver(self, selector: "onFlagReceiving:", event: "FlagReceiving")
+//        Utils.addObserver(self, selector: "onFlagReceived:", event: "FlagReceived")
+    }
+    
+    func onFlagSent(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        let to = note.userInfo!["to"] as! String
+        
+        let title = "Sending \(flag.type()) to \(to)"
+        let color = CategoryController.getColorForCategory(flag.type())
+        showMessage(title, color: color, time: 2)
     }
     
     func nameTaken(note: NSNotification) {

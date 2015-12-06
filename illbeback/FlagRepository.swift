@@ -10,6 +10,7 @@ import Foundation
 
 class FlagRepository {
     private var _flags = [Flag]()
+    private var _reading = false
     
     func flags() -> [Flag] {
         return _flags.filter {$0.state() != .Dead}
@@ -81,19 +82,25 @@ class FlagRepository {
     
     func purge() {
         _flags = _flags.filter {!$0.isPast()}
-        save()
+        Utils.delay(0.5) {
+            self.save()
+        }
     }
     
     func save() {
+        if _reading {
+            return
+        }
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
         let encodedFlags = _flags.map {flag in flag.encode()}
-        let props: NSDictionary = NSDictionary()
+        let props: NSMutableDictionary = NSMutableDictionary()
         props.setValue(encodedFlags, forKey: "Memories")
         props.writeToFile(path, atomically: true)
     }
     
     func read() {
+        _reading = true
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
         let fileManager = NSFileManager.defaultManager()
@@ -111,5 +118,6 @@ class FlagRepository {
         let encodedFlags = (props.valueForKey("Memories") ?? []) as! [String]
         encodedFlags.map {encodedFlag in Flag.decode(encodedFlag)}
                     .forEach {flag in self.add(flag)}
+        _reading = false
     }
 }

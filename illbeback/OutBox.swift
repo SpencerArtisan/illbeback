@@ -142,7 +142,7 @@ class OutBox {
         newNode.setValue(["from": Global.getUser().getName(), "memory": flag.encode()])
         // todo - handle failure
         
-        Utils.notifyObservers("FlagSent", properties: ["flag": flag])
+        Utils.notifyObservers("FlagSent", properties: ["flag": flag, "to": to])
     }
     
     private func shareRoot(to: String) -> Firebase {
