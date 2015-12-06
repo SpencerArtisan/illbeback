@@ -255,7 +255,7 @@
 			name = CleanCode;
 			sourceTree = "<group>";
 		};
-		973F251E1C0B79D80034A235 /* StateMachine */ = {
+		973F251E1C0B79D80034A235 /* CleanCode */ = {
 			isa = PBXGroup;
 			children = (
 				973F251F1C0B7A160034A235 /* FlagTest.swift */,
@@ -265,7 +265,7 @@
 				97D34AAB1C12414400118819 /* InviteeStateTest.swift */,
 				97D34AB21C124AFD00118819 /* FlagRepositoryTest.swift */,
 			);
-			name = StateMachine;
+			name = CleanCode;
 			path = ../illbebackTests;
 			sourceTree = "<group>";
 		};
@@ -418,7 +418,7 @@
 		97C732581C0E5A70002B5214 /* BackmapUITests */ = {
 			isa = PBXGroup;
 			children = (
-				973F251E1C0B79D80034A235 /* StateMachine */,
+				973F251E1C0B79D80034A235 /* CleanCode */,
 				97C7325B1C0E5A70002B5214 /* Info.plist */,
 			);
 			path = BackmapUITests;

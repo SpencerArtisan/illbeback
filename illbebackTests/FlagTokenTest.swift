@@ -126,7 +126,7 @@ class FlagTokenTest: XCTestCase {
         token = createTokenWithoutUpdates()
         let updateToken = createTokenWithoutUpdates()
         updateToken.description("")
-        token?.offerUpdate(updateToken)
+        token?.pendingUpdate(updateToken)
         let encoded = token!.encode()
         decoded = FlagToken(token: encoded)
         XCTAssertEqual(token!.descriptionUpdate(), decoded!.descriptionUpdate())
@@ -148,7 +148,7 @@ class FlagTokenTest: XCTestCase {
         let token = createTokenWithoutUpdates()
         let updateToken = FlagToken(id: "id", state: FlagState.Neutral, type: "type", description: "updated description", location: CLLocationCoordinate2D(latitude: 3.0, longitude: 4.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate.distantFuture())
         updateToken.addInvitee(Invitee2(name: "Spencer"))
-        token.offerUpdate(updateToken)
+        token.pendingUpdate(updateToken)
         return token
     }
 

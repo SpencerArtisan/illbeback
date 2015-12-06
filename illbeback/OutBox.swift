@@ -44,7 +44,10 @@ class OutBox {
         for flag in accepting {
             print("Accepting \(flag.type())")
             self.uploadFlagDetails(flag.originator(), flag: flag)
-            flag.acceptNewSuccess()
+            do {
+                try flag.acceptNewSuccess()
+            } catch {
+            }
         }
     }
     
@@ -53,7 +56,10 @@ class OutBox {
         for flag in declining {
             print("Declining \(flag.type())")
             self.uploadFlagDetails(flag.originator(), flag: flag)
-            flag.declineNewSuccess()
+            do {
+                try flag.declineNewSuccess()
+            } catch {
+            }
         }
     }
     

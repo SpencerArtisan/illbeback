@@ -47,7 +47,7 @@ class FlagRenderer: NSObject {
 
     func onFlagAdded(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
-        print("\(flag.type()) added to repo.  Adding it to map...")
+        print("\(flag.type()) (\(flag.state())) added to repo.  Adding it to map...")
         add(flag)
     }
 

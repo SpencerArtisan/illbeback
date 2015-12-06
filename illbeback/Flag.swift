@@ -54,10 +54,6 @@ public class Flag {
         return _token.state()
     }
     
-    func state(state: FlagState) {
-        _token.state(state)
-    }
-    
     func description() -> String {
         return _token.descriptionUpdate() ?? _token.description()
     }
@@ -128,10 +124,6 @@ public class Flag {
         _token.addInvitee(invitee)
     }
     
-    func receivingNew() {
-        _token.state(.ReceivingNew)
-    }
-    
     func update(description: String) throws {
         guard canUpdate() else {
             throw StateMachineError.InvalidTransition
@@ -144,93 +136,87 @@ public class Flag {
                state() == .AcceptingNew
     }
     
+    func receivingNew() throws {
+        _token.state(.ReceivingNew)
+    }
+    
     func receivingUpdate(flag: Flag) {
+        _token.pendingUpdate(flag._token)
         _token.state(.ReceivingUpdate)
-        _token.offerUpdate(flag._token)
     }
     
     func receiveUpdateSuccess() throws {
-        guard state() == .ReceivingUpdate else {
-            throw StateMachineError.InvalidTransition
-        }
-        state(.ReceivedUpdate)
+        try state(.ReceivingUpdate, targetState: .ReceivedUpdate)
     }
     
     func receiveNewSuccess() throws {
-        guard state() == .ReceivingNew else {
-            throw StateMachineError.InvalidTransition
-        }
-        state(.ReceivedNew)
+        try state(.ReceivingNew, targetState: .ReceivedNew)
     }
     
     func receiveUpdateFailure() throws {
-        guard state() == .ReceivingUpdate else {
-            throw StateMachineError.InvalidTransition
-        }
+        try state(.ReceivingUpdate, targetState: .ReceivingUpdate)
     }
     
     func receiveNewFailure() throws {
-        guard state() == .ReceivingNew else {
-            throw StateMachineError.InvalidTransition
-        }
+        try state(.ReceivingNew, targetState: .ReceivingNew)
     }
     
     func acceptUpdate() throws {
-        guard state() == .ReceivedUpdate else {
-            throw StateMachineError.InvalidTransition
-        }
+        try state(.ReceivedUpdate, targetState: .AcceptingUpdate)
         _token.acceptUpdate()
-        state(.AcceptingUpdate)
     }
     
-    func acceptUpdateSuccess() {
-        state(.Neutral)
+    func acceptUpdateSuccess() throws {
+        try state(.AcceptingUpdate, targetState: .Neutral)
     }
     
-    func acceptUpdateFailure() {
+    func acceptUpdateFailure() throws {
+        try state(.AcceptingUpdate, targetState: .AcceptingUpdate)
     }
     
-    func declineUpdateSuccess() {
-        state(.Neutral)
+    func declineUpdateSuccess() throws {
+        try state(.DecliningUpdate, targetState: .Neutral)
     }
     
-    func declineUpdateFailure() {
+    func declineUpdateFailure() throws {
+        try state(.DecliningUpdate, targetState: .DecliningUpdate)
     }
     
     func declineUpdate() throws {
-        guard state() == .ReceivedUpdate else {
-            throw StateMachineError.InvalidTransition
-        }
+        try state(.ReceivedUpdate, targetState: .DecliningUpdate)
         _token.declineUpdate()
-        state(.DecliningUpdate)
     }
 
     func acceptNew() throws {
-        guard state() == .ReceivedNew else {
-            throw StateMachineError.InvalidTransition
-        }
-        state(.AcceptingNew)
+        try state(.ReceivedNew, targetState: .AcceptingNew)
     }
     
-    func acceptNewSuccess() {
-        state(.Neutral)
+    func acceptNewSuccess() throws {
+        try state(.AcceptingNew, targetState: .Neutral)
     }
     
-    func acceptNewFailure() {
+    func acceptNewFailure() throws {
+        try state(.AcceptingNew, targetState: .AcceptingNew)
     }
     
-    func declineNewSuccess() {
-        state(.Dead)
+    func declineNewSuccess() throws {
+        try state(.DecliningNew, targetState: .Dead)
     }
     
-    func declineNewFailure() {
+    func declineNewFailure() throws {
+        try state(.DecliningNew, targetState: .DecliningNew)
     }
     
     func declineNew() throws {
-        guard state() == .ReceivedNew else {
+        try state(.ReceivedNew, targetState: .DecliningNew)
+    }
+
+    private func state(acceptableStartState: FlagState, targetState: FlagState) throws {
+        guard state() == acceptableStartState else {
+            print("< ** INVALID FLAG State transition \(type()) from \(state()) to \(targetState) ** >")
             throw StateMachineError.InvalidTransition
         }
-        state(.DecliningNew)
+        _token.state(targetState)
     }
 
 }

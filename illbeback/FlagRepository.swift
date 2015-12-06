@@ -16,32 +16,36 @@ class FlagRepository {
     }
     
     func receive(from: String, flag: Flag, onNew: () -> (), onUpdate: () -> (), onAck: () -> ()) {
-        var originalFlag = find(flag.id())
-        let flagState = flag.state()
-        
-        if originalFlag == nil {
-            flag.receivingNew()
-            add(flag)
-            onNew()
-            originalFlag = flag
-        } else if flagState == .Neutral {
-            originalFlag!.receivingUpdate(flag)
-            onUpdate()
-        }
-
-        let invitee = originalFlag!.findInvitee(from)
-        if flagState == FlagState.AcceptingNew {
-            invitee!.accepted()
-            onAck()
-        } else if flagState == FlagState.DecliningNew {
-            invitee!.declined()
-            onAck()
-        } else if flagState == FlagState.AcceptingUpdate {
-            invitee!.accepted()
-            onAck()
-        } else if flagState == FlagState.DecliningUpdate {
-            invitee!.declined()
-            onAck()
+        do {
+            var originalFlag = find(flag.id())
+            let flagState = flag.state()
+            
+            if originalFlag == nil {
+                try flag.receivingNew()
+                add(flag)
+                onNew()
+                originalFlag = flag
+            } else if flagState == .Neutral {
+                originalFlag!.receivingUpdate(flag)
+                onUpdate()
+            }
+            
+            let invitee = originalFlag!.findInvitee(from)
+            if flagState == FlagState.AcceptingNew {
+                invitee!.accepted()
+                onAck()
+            } else if flagState == FlagState.DecliningNew {
+                invitee!.declined()
+                onAck()
+            } else if flagState == FlagState.AcceptingUpdate {
+                invitee!.accepted()
+                onAck()
+            } else if flagState == FlagState.DecliningUpdate {
+                invitee!.declined()
+                onAck()
+            }
+        } catch {
+            print("** Failed to receive flag: \(flag)")
         }
     }
     
@@ -65,7 +69,7 @@ class FlagRepository {
     }
     
     func new() -> [Flag] {
-        return _flags.filter {$0.state() == FlagState.ReceivedNew}
+        return _flags.filter {$0.state() == FlagState.ReceivedNew || $0.state() == FlagState.ReceivedUpdate}
     }
     
     func imminentEvents() -> [Flag] {

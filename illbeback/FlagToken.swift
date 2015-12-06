@@ -72,7 +72,7 @@ class FlagToken {
         }
     }
     
-    func offerUpdate(token: FlagToken) {
+    func pendingUpdate(token: FlagToken) {
         _descriptionUpdate = token.description()
         _locationUpdate = token.location()
         _whenUpdate = token.when()
