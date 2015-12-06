@@ -28,6 +28,19 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(events[0].description(), "today event")
     }
     
+    func testPurgeRemovesOldEvents() {
+        repository.add(flag(nil, description: "non event"))
+        repository.add(flag(NSDate(), description: "today event"))
+        repository.add(flag(NSDate.distantPast(), description: "past event"))
+        repository.add(flag(NSDate.distantFuture(), description: "future event"))
+        repository.purge()
+        let flags = repository.flags()
+        XCTAssertEqual(flags.count, 3)
+        XCTAssertEqual(flags[0].description(), "non event")
+        XCTAssertEqual(flags[1].description(), "today event")
+        XCTAssertEqual(flags[2].description(), "future event")
+    }
+    
     func testFind() {
         repository.add(flag("a flag"))
         XCTAssertEqual(repository.find("id")?.description(), "a flag")

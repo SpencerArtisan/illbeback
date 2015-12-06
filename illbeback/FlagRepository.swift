@@ -77,13 +77,17 @@ class FlagRepository {
         return imminent.sort {$0.daysToGo() < $1.daysToGo()}
     }
     
+    func purge() {
+        _flags = _flags.filter {!$0.isPast()}
+    }
+    
     func save() {
-//        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-//        let path = paths.stringByAppendingPathComponent("memories.plist")
-//        let encodedFlags = _flags.map {flag in flag.encode()}
-//        let props: NSDictionary = NSDictionary()
-//        props.setValue(encodedFlags, forKey: "Memories")
-//        props.writeToFile(path, atomically: true)
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        let path = paths.stringByAppendingPathComponent("memories.plist")
+        let encodedFlags = _flags.map {flag in flag.encode()}
+        let props: NSDictionary = NSDictionary()
+        props.setValue(encodedFlags, forKey: "Memories")
+        props.writeToFile(path, atomically: true)
     }
     
     func read() {

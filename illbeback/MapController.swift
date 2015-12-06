@@ -195,7 +195,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         ensureUserKnown()
         
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
-            updateEventPins()
+            updatePins()
             checkForImminentEvents()
         }
         
@@ -216,7 +216,8 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         }
     }
     
-    private func updateEventPins() {
+    private func updatePins() {
+        flagRepository.purge()
         flagRenderer.updateEventPins(flagRepository.events())
     }
     
@@ -315,7 +316,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     
     func acceptRecentShare(flag: Flag) {
         do {
-            try flag.acceptNew()
+            if flag.state() == .ReceivedNew {
+                try flag.acceptNew()
+            } else {
+                try flag.acceptUpdate()
+            }
             photoAlbum.acceptRecentShare(flag)
         } catch {
             flag.reset(FlagState.ReceivedNew)
@@ -326,7 +331,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
 
     func declineRecentShare(flag: Flag) {
         do {
-            try flag.declineNew()
+            if flag.state() == .ReceivedNew {
+                try flag.declineNew()
+            } else {
+                try flag.declineUpdate()
+            }
         } catch {
             flag.reset(FlagState.ReceivedNew)
         }
