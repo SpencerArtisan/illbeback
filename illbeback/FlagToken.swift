@@ -19,7 +19,6 @@ class FlagToken {
     private var _locationUpdate: CLLocationCoordinate2D?
     private var _originator: String
     private var _state: FlagState
-    private var _orientation: UIDeviceOrientation
     private var _when: NSDate?
     private var _whenUpdate: NSDate?
     private var _invitees: [Invitee2]
@@ -32,7 +31,6 @@ class FlagToken {
         self._location = location
         self._originator = originator
         self._state = state
-        self._orientation = orientation ?? UIDeviceOrientation.FaceUp
         self._when = when
         self._invitees = []
     }
@@ -54,7 +52,6 @@ class FlagToken {
         }
         self._originator = parts[5]
         self._state = FlagState.fromCode(parts[6])
-        self._orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
 
         if parts.count > 9 {
             let inviteeParts = parts[9].componentsSeparatedByString("|")
@@ -180,7 +177,7 @@ class FlagToken {
         let latitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.latitude)"
         let longitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.longitude)"
         let descriptionUpdateString = _descriptionUpdate == nil ? "" : ",\(_descriptionUpdate!)"
-        return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator):\(_state.code()):\(_orientation.rawValue):\(whenString),\(whenUpdateString):\(inviteesString)\(inviteesUpdateString)"
+        return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator):\(_state.code()):UNUSED:\(whenString),\(whenUpdateString):\(inviteesString)\(inviteesUpdateString)"
     }
     
     func whenFormatted() -> String {
