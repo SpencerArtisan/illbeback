@@ -19,6 +19,11 @@ class FlagTokenTest: XCTestCase {
         XCTAssertEqual(token!.invitees()[0].name(), decoded!.invitees()[0].name())
     }
     
+    func testEncodesInviteesUpdate() {
+        setUpWithUpdate()
+        XCTAssertEqual(token!.inviteesUpdate()![0].name(), decoded!.inviteesUpdate()![0].name())
+    }
+    
     func testEncodesOriginator() {
         setUpWithUpdate()
         XCTAssertEqual(token!.originator(), decoded!.originator())
@@ -66,6 +71,16 @@ class FlagTokenTest: XCTestCase {
         XCTAssertEqualWithAccuracy(token!.whenUpdate()!.timeIntervalSince1970, decoded!.whenUpdate()!.timeIntervalSince1970, accuracy: 0.01)
     }
     
+    func testEncodesInviteesWhenNoUpdate() {
+        setUpWithoutUpdate()
+        XCTAssertEqual(token!.invitees()[0].name(), decoded!.invitees()[0].name())
+    }
+    
+    func testEncodesInviteesUpdateWhenNoUpdate() {
+        setUpWithoutUpdate()
+        XCTAssertTrue(token!.inviteesUpdate() == nil)
+        XCTAssertTrue(decoded!.inviteesUpdate() == nil)
+    }
     
     func testEncodesDescriptionWhenNoUpdate() {
         setUpWithoutUpdate()
@@ -117,7 +132,6 @@ class FlagTokenTest: XCTestCase {
         XCTAssertEqual(token!.descriptionUpdate(), decoded!.descriptionUpdate())
     }
     
-    
     private func setUpWithUpdate() {
         token = createTokenWithUpdates()
         let encoded = token!.encode()
@@ -133,6 +147,7 @@ class FlagTokenTest: XCTestCase {
     private func createTokenWithUpdates() -> FlagToken {
         let token = createTokenWithoutUpdates()
         let updateToken = FlagToken(id: "id", state: FlagState.Neutral, type: "type", description: "updated description", location: CLLocationCoordinate2D(latitude: 3.0, longitude: 4.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate.distantFuture())
+        updateToken.addInvitee(Invitee2(name: "Spencer"))
         token.offerUpdate(updateToken)
         return token
     }

@@ -2762,11 +2762,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagToken.swift"
-            timestampString = "470878164.575794"
+            timestampString = "471097540.870267"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
             landmarkName = "init(id:state:type:description:location:originator:orientation:when:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2934,11 +2934,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagToken.swift"
-            timestampString = "471014006.601812"
+            timestampString = "471098113.485699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "whenFormatted()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2950,11 +2950,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagToken.swift"
-            timestampString = "471014006.601812"
+            timestampString = "471098113.485699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "encode()"
             landmarkType = "5">
             <Locations>
@@ -2998,11 +2998,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagToken.swift"
-            timestampString = "471014006.601812"
+            timestampString = "471098113.485699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "whenFormatted()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3014,11 +3014,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagToken.swift"
-            timestampString = "470976214.440844"
+            timestampString = "471098113.485699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "when()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3030,11 +3030,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagToken.swift"
-            timestampString = "470955653.15898"
+            timestampString = "471098008.886064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "init(token:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3046,11 +3046,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagToken.swift"
-            timestampString = "471014006.601812"
+            timestampString = "471098113.485699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "encode()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3062,11 +3062,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbebackTests/FlagTokenTest.swift"
-            timestampString = "470956519.227479"
+            timestampString = "471097540.870267"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "testEncodesDescriptionUpdate()"
             landmarkType = "5">
             <Locations>
@@ -3125,11 +3125,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbebackTests/FlagTokenTest.swift"
-            timestampString = "470956564.308183"
+            timestampString = "471097540.870267"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "testEncodesDescriptionUpdateWhenNoUpdate()"
             landmarkType = "5">
             <Locations>
@@ -3204,11 +3204,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagRepository.swift"
-            timestampString = "471095488.674614"
+            timestampString = "471096285.926571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "events()"
             landmarkType = "5">
             <Locations>
@@ -3284,11 +3284,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagToken.swift"
-            timestampString = "471014104.979722"
+            timestampString = "471098113.485699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "state(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3348,11 +3348,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagRepository.swift"
-            timestampString = "471095488.674614"
+            timestampString = "471096285.926571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "read()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3380,11 +3380,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/FlagRepository.swift"
-            timestampString = "471095488.674614"
+            timestampString = "471096285.926571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "remove(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3435,6 +3435,305 @@
             endingLineNumber = "12"
             landmarkName = "InBoxTest"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbebackTests/FlagRepositoryTest.swift"
+            timestampString = "471096116.649353"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "testReceiveAcceptNewAckWhenOriginalFlagHasBeenRemoved()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagRepositoryTest.testReceiveAcceptNewAckWhenOriginalFlagHasBeenRemoved (BackmapUITests.FlagRepositoryTest)() -&gt; ()"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagRepositoryTest.swift"
+                  timestampString = "471096287.251259"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "167"
+                  endingLineNumber = "167"
+                  offsetFromSymbolStart = "581">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagRepositoryTest.(testReceiveAcceptNewAckWhenOriginalFlagHasBeenRemoved (BackmapUITests.FlagRepositoryTest) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagRepositoryTest.swift"
+                  timestampString = "471096287.251511"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "167"
+                  endingLineNumber = "167"
+                  offsetFromSymbolStart = "15">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagRepositoryTest.(testReceiveAcceptNewAckWhenOriginalFlagHasBeenRemoved (BackmapUITests.FlagRepositoryTest) -&gt; () -&gt; ()).(closure #2)"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagRepositoryTest.swift"
+                  timestampString = "471096287.2521"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "167"
+                  endingLineNumber = "167"
+                  offsetFromSymbolStart = "3">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagRepositoryTest.(testReceiveAcceptNewAckWhenOriginalFlagHasBeenRemoved (BackmapUITests.FlagRepositoryTest) -&gt; () -&gt; ()).(closure #3)"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagRepositoryTest.swift"
+                  timestampString = "471096287.252303"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "167"
+                  endingLineNumber = "167"
+                  offsetFromSymbolStart = "15">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbeback/FlagRepository.swift"
+            timestampString = "471096323.001961"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "receive(_:flag:onNew:onUpdate:onAck:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbebackTests/FlagRepositoryTest.swift"
+            timestampString = "471096370.267876"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "testReceiveAcceptUpdateAck()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbebackTests/FlagRepositoryTest.swift"
+            timestampString = "471096577.926675"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "testReceiveAcceptUpdateAckWhenOriginalFlagHasBeenRemoved()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagRepositoryTest.testReceiveAcceptUpdateAckWhenOriginalFlagHasBeenRemoved (BackmapUITests.FlagRepositoryTest)() -&gt; ()"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagRepositoryTest.swift"
+                  timestampString = "471098018.697539"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "683">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagRepositoryTest.(testReceiveAcceptUpdateAckWhenOriginalFlagHasBeenRemoved (BackmapUITests.FlagRepositoryTest) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagRepositoryTest.swift"
+                  timestampString = "471098018.697802"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "15">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagRepositoryTest.(testReceiveAcceptUpdateAckWhenOriginalFlagHasBeenRemoved (BackmapUITests.FlagRepositoryTest) -&gt; () -&gt; ()).(closure #2)"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagRepositoryTest.swift"
+                  timestampString = "471098018.698175"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "3">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagRepositoryTest.(testReceiveAcceptUpdateAckWhenOriginalFlagHasBeenRemoved (BackmapUITests.FlagRepositoryTest) -&gt; () -&gt; ()).(closure #3)"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagRepositoryTest.swift"
+                  timestampString = "471098018.698388"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "15">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbebackTests/FlagTokenTest.swift"
+            timestampString = "471097866.507887"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "testEncodesInviteesUpdate()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagTokenTest.testEncodesInviteesUpdate (BackmapUITests.FlagTokenTest)() -&gt; ()"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagTokenTest.swift"
+                  timestampString = "471097878.709365"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "38">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagTokenTest.(testEncodesInviteesUpdate (BackmapUITests.FlagTokenTest) -&gt; () -&gt; ()).(implicit closure #1)"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagTokenTest.swift"
+                  timestampString = "471097878.709623"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagTokenTest.(testEncodesInviteesUpdate (BackmapUITests.FlagTokenTest) -&gt; () -&gt; ()).(implicit closure #2)"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagTokenTest.swift"
+                  timestampString = "471097878.709845"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "illbebackTests/FlagTokenTest.swift"
+            timestampString = "471097966.991021"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "testEncodesInviteesUpdateWhenNoUpdate()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagTokenTest.testEncodesInviteesUpdateWhenNoUpdate (BackmapUITests.FlagTokenTest)() -&gt; ()"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagTokenTest.swift"
+                  timestampString = "471098010.218308"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81"
+                  offsetFromSymbolStart = "35">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BackmapUITests.FlagTokenTest.(testEncodesInviteesUpdateWhenNoUpdate (BackmapUITests.FlagTokenTest) -&gt; () -&gt; ()).(implicit closure #1)"
+                  moduleName = "BackmapUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencerward/code/madeleine/illbeback/illbebackTests/FlagTokenTest.swift"
+                  timestampString = "471098010.218485"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

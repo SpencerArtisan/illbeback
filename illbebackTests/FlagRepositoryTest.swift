@@ -153,7 +153,52 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Declined)
         XCTAssertTrue(calledBack)
     }
+
+    func testReceiveAcceptNewAckWhenOriginalFlagHasBeenRemoved() {
+        var calledBackForNew = false
+        var calledBackForAck = false
+        let offeredFlag = flag("a flag")
+        repository.add(offeredFlag)
+        offeredFlag.invite("Madeleine")
+        let acceptedFlag = Flag.decode(offeredFlag.encode())
+        acceptedFlag.markAsNew()
+        try! acceptedFlag.acceptNew()
+        repository.remove(offeredFlag)
+        repository.receive("Madeleine", flag: acceptedFlag, onNew: {  calledBackForNew = true }, onUpdate: { XCTFail() }, onAck: { calledBackForAck = true })
+        let flags = repository.flags()
+        XCTAssertEqual(flags.count, 1)
+        XCTAssertEqual(flags[0].description(), "a flag")
+        XCTAssertEqual(flags[0].state(), FlagState.NewOffered)
+        XCTAssertEqual(flags[0].invitees().count, 1)
+        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
+        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertTrue(calledBackForNew)
+        XCTAssertTrue(calledBackForAck)
+    }
     
+    func testReceiveAcceptUpdateAckWhenOriginalFlagHasBeenRemoved() {
+        var calledBackForNew = false
+        var calledBackForAck = false
+        let offeredFlag = flag("a flag")
+        repository.add(offeredFlag)
+        offeredFlag.invite("Madeleine")
+        let acceptedFlag = flag("original flag")
+        acceptedFlag.markAsUpdate(Flag.decode(offeredFlag.encode()))
+        try! acceptedFlag.acceptUpdate()
+        repository.remove(offeredFlag)
+        repository.receive("Madeleine", flag: acceptedFlag, onNew: { calledBackForNew = true }, onUpdate: { XCTFail() }, onAck: { calledBackForAck = true })
+        let flags = repository.flags()
+        XCTAssertEqual(flags.count, 1)
+        XCTAssertEqual(flags[0].description(), "a flag")
+        XCTAssertEqual(flags[0].state(), FlagState.NewOffered)
+        XCTAssertEqual(flags[0].invitees().count, 1)
+        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
+        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertTrue(calledBackForNew)
+        XCTAssertTrue(calledBackForAck)
+    }
+    
+
     private func event(description: String) -> Flag {
         return flag(NSDate(), description: description)
     }

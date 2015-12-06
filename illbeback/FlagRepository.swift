@@ -16,33 +16,32 @@ class FlagRepository {
     }
     
     func receive(from: String, flag: Flag, onNew: () -> (), onUpdate: () -> (), onAck: () -> ()) {
-        let originalFlag = find(flag.id())
+        var originalFlag = find(flag.id())
+        let flagState = flag.state()
+        
+        if originalFlag == nil {
+            flag.markAsNew()
+            add(flag)
+            onNew()
+            originalFlag = flag
+        } else if flagState == .Neutral {
+            originalFlag!.markAsUpdate(flag)
+            onUpdate()
+        }
 
-        if flag.state() == FlagState.AcceptingNew {
-            let invitee = originalFlag!.findInvitee(from)
+        let invitee = originalFlag!.findInvitee(from)
+        if flagState == FlagState.AcceptingNew {
             invitee!.accepted()
             onAck()
-        } else if flag.state() == FlagState.DecliningNew {
-            let invitee = originalFlag!.findInvitee(from)
+        } else if flagState == FlagState.DecliningNew {
             invitee!.declined()
             onAck()
-        } else if flag.state() == FlagState.AcceptingUpdate {
-            let invitee = originalFlag!.findInvitee(from)
+        } else if flagState == FlagState.AcceptingUpdate {
             invitee!.accepted()
             onAck()
-        } else if flag.state() == FlagState.DecliningUpdate {
-            let invitee = originalFlag!.findInvitee(from)
+        } else if flagState == FlagState.DecliningUpdate {
             invitee!.declined()
             onAck()
-        } else {
-            if originalFlag == nil {
-                flag.markAsNew()
-                add(flag)
-                onNew()
-            } else {
-                originalFlag!.markAsUpdate(flag)
-                onUpdate()
-            }
         }
     }
     

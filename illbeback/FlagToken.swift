@@ -23,6 +23,7 @@ class FlagToken {
     private var _when: NSDate?
     private var _whenUpdate: NSDate?
     private var _invitees: [Invitee2]
+    private var _inviteesUpdate: [Invitee2]?
     
     init(id: String, state: FlagState, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) {
         self._id = id
@@ -54,7 +55,17 @@ class FlagToken {
         self._originator = parts[5]
         self._state = FlagState.fromCode(parts[6])
         self._orientation = parts.count > 7 ? (UIDeviceOrientation(rawValue: (parts[7] as NSString).integerValue))! : UIDeviceOrientation.Portrait
-        self._invitees = parts.count > 9 && parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee2(code: $0)} : []
+
+        if parts.count > 9 {
+            let inviteeParts = parts[9].componentsSeparatedByString("|")
+            self._invitees = inviteeParts[0] != "" ? inviteeParts[0].componentsSeparatedByString(";").map{Invitee2(code: $0)} : []
+            if inviteeParts.count == 2 {
+                self._inviteesUpdate = inviteeParts[1] != "" ? inviteeParts[1].componentsSeparatedByString(";").map{Invitee2(code: $0)} : []
+            }
+        } else {
+            self._invitees = []
+        }
+        
         if parts.count > 8 {
             let whenParts = parts[8].componentsSeparatedByString(",")
             self._when = whenParts[0] != "" ? formatter().dateFromString(whenParts[0]) : nil
@@ -68,15 +79,18 @@ class FlagToken {
         _descriptionUpdate = token.description()
         _locationUpdate = token.location()
         _whenUpdate = token.when()
+        _inviteesUpdate = token.invitees()
     }
     
     func acceptUpdate() {
         _description = _descriptionUpdate!
         _location = _locationUpdate!
         _when = _whenUpdate
+        _invitees = _inviteesUpdate!
         _descriptionUpdate = nil
         _locationUpdate = nil
         _whenUpdate = nil
+        _inviteesUpdate = nil
     }
     
     func declineUpdate() {
@@ -103,6 +117,10 @@ class FlagToken {
     
     func invitees() -> [Invitee2] {
         return _invitees
+    }
+    
+    func inviteesUpdate() -> [Invitee2]? {
+        return _inviteesUpdate
     }
     
     func addInvitee(invitee: Invitee2) {
@@ -158,10 +176,11 @@ class FlagToken {
         let whenString = _when != nil ? formatter().stringFromDate(_when!) : ""
         let whenUpdateString = _whenUpdate != nil ? formatter().stringFromDate(_whenUpdate!) : ""
         let inviteesString = _invitees.map{$0.encode()}.joinWithSeparator(";")
+        let inviteesUpdateString = _inviteesUpdate == nil ? "" : ("|" + _inviteesUpdate!.map{$0.encode()}.joinWithSeparator(";"))
         let latitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.latitude)"
         let longitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.longitude)"
         let descriptionUpdateString = _descriptionUpdate == nil ? "" : ",\(_descriptionUpdate!)"
-        return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator):\(_state.code()):\(_orientation.rawValue):\(whenString),\(whenUpdateString):\(inviteesString)"
+        return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator):\(_state.code()):\(_orientation.rawValue):\(whenString),\(whenUpdateString):\(inviteesString)\(inviteesUpdateString)"
     }
     
     func whenFormatted() -> String {
