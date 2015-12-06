@@ -19,6 +19,7 @@ class FlagRenderer: NSObject {
         super.init()
         Utils.addObserver(self, selector: "onFlagAdded:", event: "FlagAdded")
         Utils.addObserver(self, selector: "onFlagRemoved:", event: "FlagRemoved")
+        Utils.addObserver(self, selector: "onFlagSent:", event: "FlagSent")
     }
     
     func render(viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -54,6 +55,12 @@ class FlagRenderer: NSObject {
     func onFlagRemoved(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
         print("\(flag.type()) removed from repo.  Removing from map...")
+        remove(flag)
+    }
+    
+    func onFlagSent(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        print("\(flag.type()) sent to someone.  Updating pin...")
         remove(flag)
     }
     

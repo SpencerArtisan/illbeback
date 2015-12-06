@@ -141,6 +141,8 @@ class OutBox {
         let newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": Global.getUser().getName(), "memory": flag.encode()])
         // todo - handle failure
+        
+        Utils.notifyObservers("FlagSent", properties: ["flag": flag])
     }
     
     private func shareRoot(to: String) -> Firebase {

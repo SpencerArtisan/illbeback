@@ -165,7 +165,6 @@ class ShareController : UIViewController {
         hideShareModal(sender)
     }
     
-    
     func shareMemoryCancelled(sender: AnyObject?) {
         pinsToShare = []
         shareModal?.slideInFromLeft(mapController.view)

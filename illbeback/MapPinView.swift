@@ -310,7 +310,7 @@ class MapPinView: MKAnnotationView {
     }
     
     func createInviteeLabel() {
-        if !flag!.isEvent() || flag?.originator() != Global.getUser().getName() {
+        if !flag!.isEvent() {
             return
         }
         
@@ -330,7 +330,7 @@ class MapPinView: MKAnnotationView {
             inviteeView.textAlignment = NSTextAlignment.Center
             inviteeView.font = UIFont.italicSystemFontOfSize(fontSize)
             let state = invitee.state() == InviteeState.Accepted ? "accepted" : (invitee.state() == InviteeState.Declined ? "declined" : "invited")
-            inviteeView.text = "\(invitee.name) \(state)"
+            inviteeView.text = "\(invitee.name()) \(state)"
             inviteeView.backgroundColor = invitee.state() == InviteeState.Accepted ? UIColor.greenColor().colorWithAlphaComponent(0.6) : (invitee.state() == InviteeState.Declined ? UIColor.redColor().colorWithAlphaComponent(0.6) : UIColor.lightGrayColor().colorWithAlphaComponent(0.6))
             inviteeView.textColor = invitee.state() == InviteeState.Accepted ? UIColor.blackColor() : (invitee.state() == InviteeState.Declined ? UIColor.whiteColor() : UIColor.darkGrayColor())
             inviteeView.layer.borderWidth = 0.5

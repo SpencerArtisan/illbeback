@@ -49,6 +49,7 @@ class InBox {
                         givenFlag.ref.removeValue()
                     } catch {
                         flag.kill()
+                        self.flagRepository.remove(flag)
                     }
                 })
             },
