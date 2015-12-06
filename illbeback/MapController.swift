@@ -48,6 +48,8 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var flagRepository: FlagRepository!
     var outBox: OutBox!
     
+    var activeModals = [String: Modal] ()
+    
     func getView() -> UIView {
         return self.view
     }
@@ -117,18 +119,85 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         Utils.addObserver(self, selector: "nameTaken:", event: "NameTaken")
         Utils.addObserver(self, selector: "nameAccepted:", event: "NameAccepted")
         Utils.addObserver(self, selector: "eventListChange:", event: "EventListChange")
-//        Utils.addObserver(self, selector: "onFlagSending:", event: "FlagSending")
-//        Utils.addObserver(self, selector: "onFlagSent:", event: "FlagSent")
-//        Utils.addObserver(self, selector: "onFlagReceiving:", event: "FlagReceiving")
-//        Utils.addObserver(self, selector: "onFlagReceived:", event: "FlagReceived")
+        Utils.addObserver(self, selector: "onFlagSending:", event: "FlagSending")
+        Utils.addObserver(self, selector: "onFlagSendSuccess:", event: "FlagSendSuccess")
+        Utils.addObserver(self, selector: "onFlagSendFailed:", event: "FlagSendFailed")
+        Utils.addObserver(self, selector: "onFlagReceiving:", event: "FlagReceiving")
+        Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
+        Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveFailed")
     }
     
-    func onFlagSent(note: NSNotification) {
+    func onFlagSending(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
         let to = note.userInfo!["to"] as! String
         
         let title = "Sending \(flag.type()) to \(to)"
         let color = CategoryController.getColorForCategory(flag.type())
+        let modal = showMessage(title, color: color, time: nil)
+        activeModals[flag.id()+to] = modal
+    }
+    
+    func onFlagSendSuccess(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        let to = note.userInfo!["to"] as! String
+        
+        let title = "Sent \(flag.type()) to \(to)"
+        let color = UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0)
+        if let sendingModal = activeModals[flag.id()+to] {
+            activeModals.removeValueForKey(flag.id()+to)
+            dismissMessage(sendingModal)
+        }
+        
+        showMessage(title, color: color, time: 2)
+    }
+    
+    func onFlagSendFailed(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        let to = note.userInfo!["to"] as! String
+        
+        let title = "Failed sending \(flag.type()) to \(to)"
+        let color = UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0)
+        if let sendingModal = activeModals[flag.id()+to] {
+            activeModals.removeValueForKey(flag.id()+to)
+            dismissMessage(sendingModal)
+        }
+        
+        showMessage(title, color: color, time: 2)
+    }
+    
+    func onFlagReceiving(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        
+        let title = "Downloading \(flag.type())"
+        let color = CategoryController.getColorForCategory(flag.type())
+        let modal = showMessage(title, color: color, time: nil)
+        activeModals[flag.id()] = modal
+    }
+    
+    func onFlagReceiveSuccess(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        let from = note.userInfo!["from"] as! String
+        
+        let title = "Downloaded \(flag.type()) from \(from)"
+        let color = UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0)
+        if let receivingModal = activeModals[flag.id()] {
+            activeModals.removeValueForKey(flag.id())
+            dismissMessage(receivingModal)
+        }
+        
+        showMessage(title, color: color, time: 2)
+    }
+    
+    func onFlagReceiveFailed(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        
+        let title = "Failed downloading \(flag.type())"
+        let color = UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0)
+        if let receivingModal = activeModals[flag.id()] {
+            activeModals.removeValueForKey(flag.id())
+            dismissMessage(receivingModal)
+        }
+        
         showMessage(title, color: color, time: 2)
     }
     
@@ -244,7 +313,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     func showMessage(text: String, color: UIColor, time: Double?) -> Modal {
-        return showMessage(text, color: color, fontColor: UIColor.blackColor(), time: time)
+        return self.showMessage(text, color: color, fontColor: UIColor.blackColor(), time: time)
     }
     
     func showMessage(text: String, color: UIColor, fontColor: UIColor, time: Double?) -> Modal {
@@ -253,7 +322,9 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         message.backgroundColor = color.colorWithAlphaComponent(1)
         message.setTitleColor(fontColor, forState: UIControlState.Normal)
         message.setTitle(text, forState: UIControlState.Normal)
-        messageModal.slideDownFromTop(self.view)
+        Utils.runOnUiThread() {
+            messageModal.slideDownFromTop(self.view)
+        }
         
         if time != nil {
             Utils.delay(time!) {
@@ -264,12 +335,16 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
 
     func dismissMessage(messageModal: Modal) {
-        messageModal.slideUpFromTop(self.view)
+        Utils.runOnUiThread() {
+            messageModal.slideUpFromTop(self.view)
+        }
     }
     
     func dismissMessage(sender: AnyObject?) {
-        let messageModal = messageModals.removeLast()
-        messageModal.slideUpFromTop(self.view)
+        Utils.runOnUiThread() {
+            let messageModal = self.messageModals.removeLast()
+            messageModal.slideUpFromTop(self.view)
+        }
     }
     
     func initLocationManager() {

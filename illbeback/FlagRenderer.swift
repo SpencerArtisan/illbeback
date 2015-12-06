@@ -20,7 +20,7 @@ class FlagRenderer: NSObject {
         Utils.addObserver(self, selector: "onFlagAdded:", event: "FlagAdded")
         Utils.addObserver(self, selector: "onFlagRemoved:", event: "FlagRemoved")
         Utils.addObserver(self, selector: "onFlagSent:", event: "FlagSent")
-        Utils.addObserver(self, selector: "onFlagReceived:", event: "FlagReceived")
+        Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
     }
     
     func render(viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -65,7 +65,7 @@ class FlagRenderer: NSObject {
         refresh(flag)
     }
     
-    func onFlagReceived(note: NSNotification) {
+    func onFlagReceiveSuccess(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
         print("\(flag.type()) received from someone.  Updating pin...")
         refresh(flag)

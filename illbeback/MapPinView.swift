@@ -409,7 +409,9 @@ class MapPinView: MKAnnotationView {
         } else if MapPinView.lastSelectionChange != nil && NSDate().timeIntervalSinceDate(MapPinView.lastSelectionChange!) < 1 {
             print("IGNORE DESELECTION")
             Utils.delay(0.1) {
-                self.mapController?.map.selectAnnotation(self.annotation!, animated: false)
+                if self.annotation != nil {
+                    self.mapController?.map.selectAnnotation(self.annotation!, animated: false)
+                }
             }
         } else {
             getCalloutView().removeFromSuperview()
@@ -442,6 +444,7 @@ class MapPinView: MKAnnotationView {
                 }
             } else if !pendingAccept() && hitButton(point, button: dateView) {
                 mapController?.rescheduleMemory(self)
+                MapPinView.lastSelectionChange = nil
             } else if !pendingAccept() && hitButton(point, button: deleteButton) {
                 mapController?.deleteMemory(self)
             } else if !pendingAccept() && hitButton(point, button: shareButton) {

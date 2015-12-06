@@ -34,6 +34,7 @@ class OutBox {
         for flag in flagRepository.flags() {
             let inviting = flag.invitees().filter {$0.state() == InviteeState.Inviting}
             for invitee in inviting {
+                Utils.notifyObservers("FlagSending", properties: ["flag": flag, "to": invitee.name()])
                 invite(invitee, flag: flag)
             }
         }
@@ -74,7 +75,7 @@ class OutBox {
             },
             onError: {
                 invitee.invitingFailure()
-                // hint failed
+                Utils.notifyObservers("FlagSendFailed", properties: ["flag": flag, "to": invitee.name()])
             })
     }
     
@@ -142,7 +143,7 @@ class OutBox {
         newNode.setValue(["from": Global.getUser().getName(), "memory": flag.encode()])
         // todo - handle failure
         
-        Utils.notifyObservers("FlagSent", properties: ["flag": flag, "to": to])
+        Utils.notifyObservers("FlagSendSuccess", properties: ["flag": flag, "to": to])
     }
     
     private func shareRoot(to: String) -> Firebase {

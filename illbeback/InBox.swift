@@ -40,6 +40,8 @@ class InBox {
         let encoded = givenFlag.value["memory"] as! String
         let from = givenFlag.value["from"] as! String
         let flag = Flag.decode(encoded)
+        Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
+
         flagRepository.receive(from, flag: flag,
             onNew: {
                 self.downloadImages(flag, onComplete: {
@@ -47,10 +49,11 @@ class InBox {
                         try flag.receiveNewSuccess()
                         print("All new flag photos downloaded.  Removing from firebase")
                         givenFlag.ref.removeValue()
-                        Utils.notifyObservers("FlagReceived", properties: ["flag": flag])
+                        Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
                     } catch {
                         flag.kill()
                         self.flagRepository.remove(flag)
+                        Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": flag, "from": from])
                     }
                 })
             },
@@ -60,16 +63,17 @@ class InBox {
                         try flag.receiveUpdateSuccess()
                         print("All udated flag photos downloaded.  Removing from firebase")
                         givenFlag.ref.removeValue()
-                        Utils.notifyObservers("FlagReceived", properties: ["flag": flag])
+                        Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
                     } catch {
                         flag.reset(FlagState.Neutral)
+                        Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": flag, "from": from])
                     }
                 })
             },
             onAck: {
                 print("Ack processed.  Removing from firebase")
                 givenFlag.ref.removeValue()
-                Utils.notifyObservers("FlagReceived", properties: ["flag": flag])
+                Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
             })
     }
     
