@@ -41,22 +41,22 @@ class OutBox {
     }
     
     private func sendAccepts() {
-        let accepting = flagRepository.flags().filter {$0.state() == FlagState.AcceptingNew}
+        let accepting = flagRepository.flags().filter {$0.state() == FlagState.Accepting}
         for flag in accepting {
             print("Accepting \(flag.type())")
             self.uploadFlagDetails(flag.originator(), flag: flag,
                 onComplete: {
                     do {
-                        try flag.acceptNewSuccess()
+                        try flag.acceptSuccess()
                     } catch {
                         flag.reset(FlagState.Neutral)
                     }
                 },
                 onError: {
                     do {
-                        try flag.acceptNewFailure()
+                        try flag.acceptFailure()
                     } catch {
-                        flag.reset(FlagState.AcceptingNew)
+                        flag.reset(FlagState.Accepting)
                     }
                 }
             )
@@ -64,22 +64,22 @@ class OutBox {
     }
     
     private func sendDeclines() {
-        let declining = flagRepository.flags().filter {$0.state() == FlagState.DecliningNew}
+        let declining = flagRepository.flags().filter {$0.state() == FlagState.Declining}
         for flag in declining {
             print("Declining \(flag.type())")
             self.uploadFlagDetails(flag.originator(), flag: flag,
                 onComplete: {
                     do {
-                        try flag.declineNewSuccess()
+                        try flag.declineSuccess()
                     } catch {
                         flag.reset(FlagState.Neutral)
                     }
                 },
                 onError: {
                     do {
-                        try flag.declineNewFailure()
+                        try flag.declineFailure()
                     } catch {
-                        flag.reset(FlagState.DecliningNew)
+                        flag.reset(FlagState.Declining)
                     }
                 }
             )

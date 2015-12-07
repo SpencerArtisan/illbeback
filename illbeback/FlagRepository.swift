@@ -32,19 +32,13 @@ class FlagRepository {
             }
             
             let invitee = originalFlag!.findInvitee(from)
-            if flagState == FlagState.AcceptingNew {
+            if flagState == FlagState.Accepting {
                 invitee!.accepted()
                 onAck()
-            } else if flagState == FlagState.DecliningNew {
+            } else if flagState == FlagState.Declining {
                 invitee!.declined()
                 onAck()
-            } else if flagState == FlagState.AcceptingUpdate {
-                invitee!.accepted()
-                onAck()
-            } else if flagState == FlagState.DecliningUpdate {
-                invitee!.declined()
-                onAck()
-            }
+            } 
         } catch {
             print("** Failed to receive flag: \(flag)")
         }

@@ -12,6 +12,7 @@ import UIKit
 
 public class Flag {
     private var _token: FlagToken
+    private var dead = false
     
     static func create(id: String, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) -> Flag {
         let token = FlagToken(id: id, state: .Neutral, type: type, description: description, location: location, originator: originator, orientation: orientation, when: when)
@@ -132,8 +133,7 @@ public class Flag {
     }
     
     func canUpdate() -> Bool {
-        return state() == .Neutral || state() == .AcceptingUpdate || state() == .DecliningUpdate ||
-               state() == .AcceptingNew
+        return state() == .Neutral || state() == .Accepting || (state() == .Declining && !dead)
     }
     
     func receivingNew(from: String) throws {
@@ -147,69 +147,57 @@ public class Flag {
     }
     
     func receiveUpdateSuccess() throws {
-        try state(.ReceivingUpdate, targetState: .ReceivedUpdate)
+        try state([.ReceivingUpdate], targetState: .ReceivedUpdate)
     }
     
     func receiveNewSuccess() throws {
-        try state(.ReceivingNew, targetState: .ReceivedNew)
+        try state([.ReceivingNew], targetState: .ReceivedNew)
     }
     
     func receiveUpdateFailure() throws {
-        try state(.ReceivingUpdate, targetState: .ReceivingUpdate)
+        try state([.ReceivingUpdate], targetState: .ReceivingUpdate)
     }
     
     func receiveNewFailure() throws {
-        try state(.ReceivingNew, targetState: .ReceivingNew)
+        try state([.ReceivingNew], targetState: .ReceivingNew)
     }
     
-    func acceptUpdate() throws {
-        try state(.ReceivedUpdate, targetState: .AcceptingUpdate)
-        _token.acceptUpdate()
+    func accept() throws {
+        let startState = state()
+        try state([.ReceivedNew, .ReceivedUpdate], targetState: .Accepting)
+        if startState == .ReceivedUpdate {
+            _token.acceptUpdate()
+        }
     }
     
-    func acceptUpdateSuccess() throws {
-        try state(.AcceptingUpdate, targetState: .Neutral)
+    func decline() throws {
+        let startState = state()
+        try state([.ReceivedNew, .ReceivedUpdate], targetState: .Declining)
+        if startState == .ReceivedUpdate {
+            _token.declineUpdate()
+        } else {
+            dead = true
+        }
     }
     
-    func acceptUpdateFailure() throws {
-        try state(.AcceptingUpdate, targetState: .AcceptingUpdate)
+    func acceptSuccess() throws {
+        try state([.Accepting], targetState: .Neutral)
     }
     
-    func declineUpdateSuccess() throws {
-        try state(.DecliningUpdate, targetState: .Neutral)
+    func acceptFailure() throws {
+        try state([.Accepting], targetState: .Accepting)
     }
     
-    func declineUpdateFailure() throws {
-        try state(.DecliningUpdate, targetState: .DecliningUpdate)
+    func declineSuccess() throws {
+        if dead {
+            try state([.Declining], targetState: .Dead)
+        } else {
+            try state([.Declining], targetState: .Neutral)
+        }
     }
     
-    func declineUpdate() throws {
-        try state(.ReceivedUpdate, targetState: .DecliningUpdate)
-        _token.declineUpdate()
-    }
-
-    func acceptNew() throws {
-        try state(.ReceivedNew, targetState: .AcceptingNew)
-    }
-    
-    func acceptNewSuccess() throws {
-        try state(.AcceptingNew, targetState: .Neutral)
-    }
-    
-    func acceptNewFailure() throws {
-        try state(.AcceptingNew, targetState: .AcceptingNew)
-    }
-    
-    func declineNewSuccess() throws {
-        try state(.DecliningNew, targetState: .Dead)
-    }
-    
-    func declineNewFailure() throws {
-        try state(.DecliningNew, targetState: .DecliningNew)
-    }
-    
-    func declineNew() throws {
-        try state(.ReceivedNew, targetState: .DecliningNew)
+    func declineFailure() throws {
+        try state([.Declining], targetState: .Declining)
     }
     
     func kill() {
@@ -222,14 +210,13 @@ public class Flag {
         _token.state(.Neutral)
     }
 
-    private func state(acceptableStartState: FlagState, targetState: FlagState) throws {
-        guard state() == acceptableStartState else {
+    private func state(acceptableStartStates: [FlagState], targetState: FlagState) throws {
+        guard  acceptableStartStates.contains(state()) else {
             print("< ** INVALID FLAG State transition \(type()) from \(state()) to \(targetState) ** >")
             throw StateMachineError.InvalidTransition
         }
         _token.state(targetState)
     }
-
 }
 
 extension Flag: Equatable {}
