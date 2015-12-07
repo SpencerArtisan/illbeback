@@ -66,6 +66,7 @@
 		97C732691C0E5B73002B5214 /* InviteeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25301C0BA8D60034A235 /* InviteeState.swift */; };
 		97C7326A1C0E5BA0002B5214 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667F1A9A19570007FC2C /* User.swift */; };
 		97C7326C1C0E608D002B5214 /* FlagStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C7326B1C0E608D002B5214 /* FlagStateTest.swift */; };
+		97CF12831C164E3200A74398 /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CF12821C164E3200A74398 /* MessageController.swift */; };
 		97D34AAA1C12244A00118819 /* FlagTokenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AA91C12244A00118819 /* FlagTokenTest.swift */; };
 		97D34AAC1C12414400118819 /* InviteeStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AAB1C12414400118819 /* InviteeStateTest.swift */; };
 		97D34AAF1C12453100118819 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AAE1C12453100118819 /* Util.swift */; };
@@ -165,6 +166,7 @@
 		97C732571C0E5A70002B5214 /* BackmapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BackmapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C7325B1C0E5A70002B5214 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C7326B1C0E608D002B5214 /* FlagStateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagStateTest.swift; sourceTree = "<group>"; };
+		97CF12821C164E3200A74398 /* MessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
 		97D34AA91C12244A00118819 /* FlagTokenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagTokenTest.swift; sourceTree = "<group>"; };
 		97D34AAB1C12414400118819 /* InviteeStateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeStateTest.swift; sourceTree = "<group>"; };
 		97D34AAE1C12453100118819 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				97D34AB61C126C9100118819 /* FlagRenderer.swift */,
 				97D34ABA1C12F5BB00118819 /* OutBox.swift */,
 				97FA73F41C135D5A00E9A57A /* InBox.swift */,
+				97CF12821C164E3200A74398 /* MessageController.swift */,
 			);
 			name = CleanCode;
 			sourceTree = "<group>";
@@ -663,6 +666,7 @@
 				97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */,
 				97FE66801A9A19570007FC2C /* User.swift in Sources */,
 				97A3534B1A800B9500973CAC /* RememberController.swift in Sources */,
+				97CF12831C164E3200A74398 /* MessageController.swift in Sources */,
 				976696ED1A8A9EF4004CB60D /* CategoryController.swift in Sources */,
 				973F25281C0B7EC50034A235 /* FlagToken.swift in Sources */,
 				97FC866B1C00F44D00C30C56 /* FlagView.swift in Sources */,
