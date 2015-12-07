@@ -47,6 +47,10 @@ public class Flag {
         return _token.invitees()
     }
     
+    func clearInvitees() {
+        _token.clearInvitees()
+    }
+    
     func findInvitee(name: String) -> Invitee2? {
         return invitees().filter({$0.name() == name}).first
     }

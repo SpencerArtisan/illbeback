@@ -119,9 +119,13 @@ class FlagToken {
     func invitees() -> [Invitee2] {
         return _invitees
     }
-    
+
     func inviteesUpdate() -> [Invitee2]? {
         return _inviteesUpdate
+    }
+    
+    func clearInvitees() {
+        _invitees = []
     }
     
     func addInvitee(invitee: Invitee2) {

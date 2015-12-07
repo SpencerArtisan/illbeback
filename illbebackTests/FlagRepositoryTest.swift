@@ -98,6 +98,26 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(flags[0].originator(), "originator")
     }
     
+    func testReceiveNewForwardedBlanksInvitees() {
+        let flag1 = flag("a flag")
+        flag1.invite("Madeleine")
+        repository.receive("Spencer", flag: flag1, onNew: { }, onUpdate: { }, onAck: { })
+        let flags = repository.flags()
+        XCTAssertEqual(flags[0].invitees().count, 0)
+    }
+    
+    func testReceiveUpdateForwardedLeavesInvitees() {
+        let flag1 = flag("a flag")
+        flag1.invite("Madeleine")
+        repository.add(flag1)
+        let flag2 = flag("an updated flag")
+        flag2.invite("Leon")
+        repository.receive("Spencer", flag: flag2, onNew: { }, onUpdate: { }, onAck: { })
+        let flags = repository.flags()
+        XCTAssertEqual(flags[0].invitees().count, 1)
+        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
+    }
+    
     func testReceiveNew() {
         var calledBack = false
         let flag1 = flag("a flag")

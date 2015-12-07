@@ -24,6 +24,11 @@ class FlagRepository {
             if originalFlag == nil {
                 try flag.receivingNew(from)
                 add(flag)
+                
+                if flagState != FlagState.Accepting && flagState != FlagState.Declining {
+                    flag.clearInvitees()
+                }
+                
                 onNew()
                 originalFlag = flag
             } else if flagState == .Neutral {
@@ -32,13 +37,18 @@ class FlagRepository {
             }
             
             let invitee = originalFlag!.findInvitee(from)
+            
             if flagState == FlagState.Accepting {
-                invitee!.accepted()
+                if invitee != nil {
+                    invitee!.accepted()
+                }
                 onAck()
             } else if flagState == FlagState.Declining {
-                invitee!.declined()
+                if invitee != nil {
+                    invitee!.declined()
+                }
                 onAck()
-            } 
+            }
         } catch {
             print("** Failed to receive flag: \(flag)")
         }
