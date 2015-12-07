@@ -44,12 +44,22 @@ class OutBox {
         let accepting = flagRepository.flags().filter {$0.state() == FlagState.AcceptingNew}
         for flag in accepting {
             print("Accepting \(flag.type())")
-            self.uploadFlagDetails(flag.originator(), flag: flag)
-            do {
-                try flag.acceptNewSuccess()
-            } catch {
-                flag.reset(FlagState.Neutral)
-            }
+            self.uploadFlagDetails(flag.originator(), flag: flag,
+                onComplete: {
+                    do {
+                        try flag.acceptNewSuccess()
+                    } catch {
+                        flag.reset(FlagState.Neutral)
+                    }
+                },
+                onError: {
+                    do {
+                        try flag.acceptNewFailure()
+                    } catch {
+                        flag.reset(FlagState.AcceptingNew)
+                    }
+                }
+            )
         }
     }
     
@@ -57,12 +67,22 @@ class OutBox {
         let declining = flagRepository.flags().filter {$0.state() == FlagState.DecliningNew}
         for flag in declining {
             print("Declining \(flag.type())")
-            self.uploadFlagDetails(flag.originator(), flag: flag)
-            do {
-                try flag.declineNewSuccess()
-            } catch {
-                flag.reset(FlagState.Neutral)
-            }
+            self.uploadFlagDetails(flag.originator(), flag: flag,
+                onComplete: {
+                    do {
+                        try flag.declineNewSuccess()
+                    } catch {
+                        flag.reset(FlagState.Neutral)
+                    }
+                },
+                onError: {
+                    do {
+                        try flag.declineNewFailure()
+                    } catch {
+                        flag.reset(FlagState.DecliningNew)
+                    }
+                }
+            )
         }
     }
     
@@ -70,8 +90,16 @@ class OutBox {
         Utils.notifyObservers("Inviting", properties: ["name": invitee.name(), "flag": flag])
         uploadPhotos(invitee, flag: flag,
             onComplete: {
-                self.uploadFlagDetails(invitee.name(), flag: flag)
-                invitee.invitingSuccess()
+                self.uploadFlagDetails(invitee.name(), flag: flag,
+                    onComplete: {
+                        invitee.invitingSuccess()
+                        Utils.notifyObservers("FlagSendSuccess", properties: ["flag": flag, "to": invitee.name()])
+                   },
+                    onError: {
+                        invitee.invitingFailure()
+                        Utils.notifyObservers("FlagSendFailed", properties: ["flag": flag, "to": invitee.name()])
+                    }
+                )
             },
             onError: {
                 invitee.invitingFailure()
@@ -116,7 +144,7 @@ class OutBox {
         }
     }
     
-    private func uploadImage(imagePath: String?, key: String, onComplete: () -> Void, onError: () -> Void) {
+    private func uploadImage(imagePath: String?, key: String, onComplete: () -> (), onError: () -> ()) {
         let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.bucket = BUCKET
         uploadRequest.key = key
@@ -126,7 +154,7 @@ class OutBox {
         let task = transferManager.upload(uploadRequest)
         task.continueWithBlock { (task) -> AnyObject! in
             if task.error != nil {
-                print("    Umage upload FAILED! \(key)")
+                print("    Image upload FAILED! \(key)")
                 onError()
             } else {
                 print("    Image uploaded \(key)")
@@ -137,17 +165,22 @@ class OutBox {
         }
     }
     
-    private func uploadFlagDetails(to: String, flag: Flag) {
+    private func uploadFlagDetails(to: String, flag: Flag, onComplete: () -> (), onError: () -> ()) {
         print("FIREBASE OP: Uploading flag " + flag.encode())
         let newNode = shareRoot(to).childByAutoId()
-        newNode.setValue(["from": Global.getUser().getName(), "memory": flag.encode()])
-        // todo - handle failure
-        
-        Utils.notifyObservers("FlagSendSuccess", properties: ["flag": flag, "to": to])
+        newNode.setValue(["from": Global.getUser().getName(), "memory": flag.encode()], withCompletionBlock: {
+            (error:NSError?, ref:Firebase!) in
+            if (error != nil) {
+                print("     Flag upload FAILED! \(flag.type())")
+                onError()
+            } else {
+                print("     Flag uploaded \(flag.type())")
+                onComplete()
+            }
+        })
     }
     
     private func shareRoot(to: String) -> Firebase {
         return root.childByAppendingPath("users/" + to + "/given")
     }
-
 }
