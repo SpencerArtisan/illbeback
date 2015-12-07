@@ -162,7 +162,7 @@ public class Flag {
         try state([.ReceivingNew], targetState: .ReceivingNew)
     }
     
-    func accept() throws {
+    func accepting() throws {
         let startState = state()
         try state([.ReceivedNew, .ReceivedUpdate], targetState: .Accepting)
         if startState == .ReceivedUpdate {
@@ -170,7 +170,7 @@ public class Flag {
         }
     }
     
-    func decline() throws {
+    func declining() throws {
         let startState = state()
         try state([.ReceivedNew, .ReceivedUpdate], targetState: .Declining)
         if startState == .ReceivedUpdate {
