@@ -38,9 +38,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var searchModal: Modal?
     var shapeModal: Modal?
 
-
     let queue = dispatch_queue_create("com.artisan.cachequeue", DISPATCH_QUEUE_CONCURRENT);
-    var downloadingMessages = [String:Modal]()
     var newUserLabel: UILabel!
     var newUserText: UITextView!
     var lastTimeAppUsed: NSDate?
@@ -48,7 +46,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var flagRenderer: FlagRenderer!
     var flagRepository: FlagRepository!
     var outBox: OutBox!
-    
     
     func getView() -> UIView {
         return self.view
@@ -328,7 +325,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             if view.annotation is MapPin {
                 let pinData = view.annotation as! MapPin
                 pinData.setCoordinate2(pinData.coordinate)
-                self.flagRepository.save()
             } else if view.annotation is ShapeCorner {
                 let pinData = view.annotation as! ShapeCorner
                 shapeController.move(pinData)

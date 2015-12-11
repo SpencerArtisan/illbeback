@@ -472,6 +472,6 @@ class MapPinView: MKAnnotationView {
     }
     
     private func pendingAccept() -> Bool {
-        return flag!.state() == .ReceivedUpdate || flag!.state() == .ReceivedNew
+        return flag!.state() == .ReceivedUpdate || flag!.state() == .ReceivedNew ||  flag!.state() == .ReceivingUpdate || flag!.state() == .ReceivingNew
     }
 }

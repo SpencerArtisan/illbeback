@@ -221,6 +221,10 @@ public class Flag {
         }
         _token.state(targetState)
     }
+    
+    private func fireChangeEvent() {
+        Utils.notifyObservers("FlagChanged", properties: ["flag": self])
+    }
 }
 
 extension Flag: Equatable {}

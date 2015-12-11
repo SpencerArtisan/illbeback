@@ -29,16 +29,16 @@ class InBox {
         }
         
         shareRoot(Global.getUser().getName()).observeSingleEventOfType(.Value, withBlock: { snapshot in
-            let givenFlags = snapshot.children
-            while let givenFlag: FDataSnapshot = givenFlags.nextObject() as? FDataSnapshot {
-                self.receive(givenFlag)
+            let firebaseFlags = snapshot.children
+            while let firebaseFlag: FDataSnapshot = firebaseFlags.nextObject() as? FDataSnapshot {
+                self.receive(firebaseFlag)
             }
         })
     }
     
-    func receive(givenFlag: FDataSnapshot) {
-        let encoded = givenFlag.value["memory"] as! String
-        let from = givenFlag.value["from"] as! String
+    func receive(firebaseFlag: FDataSnapshot) {
+        let encoded = firebaseFlag.value["memory"] as! String
+        let from = firebaseFlag.value["from"] as! String
         let flag = Flag.decode(encoded)
         Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
 
@@ -48,7 +48,7 @@ class InBox {
                     do {
                         try flag.receiveNewSuccess()
                         print("All new flag photos downloaded.  Removing from firebase")
-                        givenFlag.ref.removeValue()
+                        firebaseFlag.ref.removeValue()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
                     } catch {
                         flag.kill()
@@ -62,7 +62,7 @@ class InBox {
                     do {
                         try flag.receiveUpdateSuccess()
                         print("All udated flag photos downloaded.  Removing from firebase")
-                        givenFlag.ref.removeValue()
+                        firebaseFlag.ref.removeValue()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
                     } catch {
                         flag.reset(FlagState.Neutral)
@@ -72,7 +72,7 @@ class InBox {
             },
             onAck: {
                 print("Ack processed.  Removing from firebase")
-                givenFlag.ref.removeValue()
+                firebaseFlag.ref.removeValue()
                 Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
             })
     }
@@ -116,5 +116,4 @@ class InBox {
     private func shareRoot(to: String) -> Firebase {
         return root.childByAppendingPath("users/" + to + "/given")
     }
-    
 }

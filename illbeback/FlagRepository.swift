@@ -8,9 +8,14 @@
 
 import Foundation
 
-class FlagRepository {
+class FlagRepository : NSObject {
     private var _flags = [Flag]()
     private var _reading = false
+    
+    override init() {
+        super.init()
+        Utils.addObserver(self, selector: "save:", event: "FlagChanged")
+    }
     
     func flags() -> [Flag] {
         return _flags.filter {$0.state() != .Dead}
