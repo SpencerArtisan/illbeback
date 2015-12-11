@@ -78,13 +78,14 @@ class MapPinView: MKAnnotationView {
         declineButton = nil
         labelView = nil
         self.imageUrl = mapController?.photoAlbum.getMainPhoto(flag!)?.imagePath
+        refreshImage()
     }
     
     func refreshImage() {
         initImage()
     }
     
-    func initImage() {
+    private func initImage() {
         let imageIcon = UIImage(named: flag!.type() + " Flag")!
 
         let finalSize = CGSizeMake(imageIcon.size.width + 10, imageIcon.size.height + 10)

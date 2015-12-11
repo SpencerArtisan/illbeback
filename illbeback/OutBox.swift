@@ -24,7 +24,6 @@ class OutBox {
     }
     
     func send() {
-        print("SENDING...")
         sendInvites()
         sendAccepts()
         sendDeclines()
@@ -34,6 +33,7 @@ class OutBox {
         for flag in flagRepository.flags() {
             let inviting = flag.invitees().filter {$0.state() == InviteeState.Inviting}
             for invitee in inviting {
+                print("SENDING INVITE for \(flag.type()) to \(invitee)...")
                 Utils.notifyObservers("FlagSending", properties: ["flag": flag, "to": invitee.name()])
                 invite(invitee, flag: flag)
             }
@@ -43,7 +43,7 @@ class OutBox {
     private func sendAccepts() {
         let accepting = flagRepository.flags().filter {$0.state() == FlagState.Accepting}
         for flag in accepting {
-            print("Accepting \(flag.type())")
+            print("SENDING ACCEPT \(flag.type())")
             self.uploadFlagDetails(flag.originator(), flag: flag,
                 onComplete: {
                     do {
@@ -66,7 +66,7 @@ class OutBox {
     private func sendDeclines() {
         let declining = flagRepository.flags().filter {$0.state() == FlagState.Declining}
         for flag in declining {
-            print("Declining \(flag.type())")
+            print("SENDING DECLINE \(flag.type())")
             self.uploadFlagDetails(flag.originator(), flag: flag,
                 onComplete: {
                     do {

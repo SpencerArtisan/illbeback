@@ -21,6 +21,7 @@ class FlagRenderer: NSObject {
         Utils.addObserver(self, selector: "onFlagRemoved:", event: "FlagRemoved")
         Utils.addObserver(self, selector: "onFlagSent:", event: "FlagSent")
         Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
+        Utils.addObserver(self, selector: "onFlagChanged:", event: "FlagChanged")
     }
     
     func render(viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -47,6 +48,11 @@ class FlagRenderer: NSObject {
         return nil
     }
 
+    func onFlagChanged(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        refresh(flag)
+    }
+    
     func onFlagAdded(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
         print("\(flag.type()) (\(flag.state())) added to repo.  Adding it to map...")

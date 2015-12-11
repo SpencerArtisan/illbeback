@@ -54,5 +54,6 @@ class Invitee2 {
     private func state(state: InviteeState) {
         print("< INVITEE State transition \(_name) from \(_state) to \(state) >")
         _state = state
+        Utils.notifyObservers("InviteeChanged", properties: [:])
     }
 }

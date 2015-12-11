@@ -49,6 +49,7 @@ public class Flag {
     
     func clearInvitees() {
         _token.clearInvitees()
+        fireChangeEvent()
     }
     
     func findInvitee(name: String) -> Invitee2? {
@@ -65,6 +66,7 @@ public class Flag {
     
     func description(description: String) {
         _token.description(description)
+        fireChangeEvent()
     }
     
     func when() -> NSDate? {
@@ -73,6 +75,7 @@ public class Flag {
     
     func when(when: NSDate?) {
         _token.when(when)
+        fireChangeEvent()
     }
     
     func daysToGo() -> Int {
@@ -101,6 +104,7 @@ public class Flag {
     
     func location(location: CLLocationCoordinate2D) {
         _token.location(location)
+        fireChangeEvent()
     }
     
     func type() -> String {
@@ -109,6 +113,7 @@ public class Flag {
     
     func type(type: String) {
         _token.type(type)
+        fireChangeEvent()
     }
     
     func originator() -> String {
@@ -127,13 +132,7 @@ public class Flag {
     func invite(friend: String) {
         let invitee = Invitee2(name: friend)
         _token.addInvitee(invitee)
-    }
-    
-    func update(description: String) throws {
-        guard canUpdate() else {
-            throw StateMachineError.InvalidTransition
-        }
-        _token.description(description)
+        fireChangeEvent()
     }
     
     func canUpdate() -> Bool {
@@ -143,11 +142,13 @@ public class Flag {
     func receivingNew(from: String) throws {
         _token.state(.ReceivingNew)
         _token.originator(from)
+        fireChangeEvent()
     }
     
     func receivingUpdate(flag: Flag) {
         _token.pendingUpdate(flag._token)
         _token.state(.ReceivingUpdate)
+        fireChangeEvent()
     }
     
     func receiveUpdateSuccess() throws {
@@ -171,6 +172,7 @@ public class Flag {
         try state([.ReceivedNew, .ReceivedUpdate], targetState: .Accepting)
         if startState == .ReceivedUpdate {
             _token.acceptUpdate()
+            fireChangeEvent()
         }
     }
     
@@ -179,6 +181,7 @@ public class Flag {
         try state([.ReceivedNew, .ReceivedUpdate], targetState: .Declining)
         if startState == .ReceivedUpdate {
             _token.declineUpdate()
+            fireChangeEvent()
         } else {
             dead = true
         }
@@ -206,12 +209,14 @@ public class Flag {
     
     func kill() {
         _token.state(.Dead)
+        fireChangeEvent()
     }
     
     func reset(state: FlagState) {
         print("< ** RESET PROBLEM FLAG TO \(state): \(self) ** >")
         _token.declineUpdate()
         _token.state(.Neutral)
+        fireChangeEvent()
     }
 
     private func state(acceptableStartStates: [FlagState], targetState: FlagState) throws {
@@ -220,6 +225,7 @@ public class Flag {
             throw StateMachineError.InvalidTransition
         }
         _token.state(targetState)
+        fireChangeEvent()
     }
     
     private func fireChangeEvent() {

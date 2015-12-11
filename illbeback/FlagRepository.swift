@@ -14,7 +14,12 @@ class FlagRepository : NSObject {
     
     override init() {
         super.init()
-        Utils.addObserver(self, selector: "save:", event: "FlagChanged")
+        Utils.addObserver(self, selector: "onFlagChanged:", event: "FlagChanged")
+        Utils.addObserver(self, selector: "onFlagChanged:", event: "InviteeChanged")
+    }
+    
+    func onFlagChanged(note: NSNotification) {
+        save()
     }
     
     func flags() -> [Flag] {
@@ -27,13 +32,11 @@ class FlagRepository : NSObject {
             let flagState = flag.state()
             
             if originalFlag == nil {
-                try flag.receivingNew(from)
-                add(flag)
-                
                 if flagState != FlagState.Accepting && flagState != FlagState.Declining {
                     flag.clearInvitees()
                 }
-                
+                try flag.receivingNew(from)
+                add(flag)
                 onNew()
                 originalFlag = flag
             } else if flagState == .Neutral {
@@ -60,12 +63,14 @@ class FlagRepository : NSObject {
     }
     
     func add(flag: Flag) {
+        print("Adding flag to repo: \(flag.encode())")
         _flags.append(flag)
         Utils.notifyObservers("FlagAdded", properties: ["flag": flag])
         save()
     }
     
     func remove(flag: Flag) {
+        print("Removing \(flag.type()) from repo")
         _flags.removeObject(flag)
         Utils.notifyObservers("FlagRemoved", properties: ["flag": flag])
         save()

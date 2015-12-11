@@ -269,7 +269,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             try flag.accepting()
             photoAlbum.acceptRecentShare(flag)
         } catch {
-            flag.reset(FlagState.ReceivedNew)
+            flag.reset(FlagState.Accepting)
         }
         updateButtonStates()
         outBox.send()
@@ -279,7 +279,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         do {
             try flag.declining()
         } catch {
-            flag.reset(FlagState.ReceivedNew)
+            flag.reset(FlagState.Declining)
         }
         updateButtonStates()
         outBox.send()
