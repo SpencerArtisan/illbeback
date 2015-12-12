@@ -233,8 +233,8 @@ class AddFlagController: UIViewController, UITextViewDelegate {
             
             let when = datePicker().hidden ? nil as NSDate? : datePicker().date
             if (rewordingPin != nil) {
-                rewordingPin?.flag?.description(textView.text)
-                rewordingPin?.flag?.when(when)
+                try! rewordingPin?.flag?.description(textView.text)
+                try! rewordingPin?.flag?.when(when)
                 rewordingPin?.flag?.type(self.flagImage!)
                 mapController!.flagRepository.save()
                 let annotation = rewordingPin!.annotation!

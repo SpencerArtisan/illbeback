@@ -64,7 +64,10 @@ public class Flag {
         return _token.descriptionUpdate() ?? _token.description()
     }
     
-    func description(description: String) {
+    func description(description: String) throws {
+        guard canUpdate() else {
+            throw StateMachineError.InvalidTransition
+        }
         _token.description(description)
         fireChangeEvent()
     }
@@ -73,7 +76,10 @@ public class Flag {
         return _token.whenUpdate() ?? _token.when()
     }
     
-    func when(when: NSDate?) {
+    func when(when: NSDate?) throws{
+        guard canUpdate() else {
+            throw StateMachineError.InvalidTransition
+        }
         _token.when(when)
         fireChangeEvent()
     }
