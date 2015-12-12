@@ -15,7 +15,7 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
     
     init(album: PhotoAlbum, mapController: MapController) {
         super.init(nibName: nil, bundle: nil)
-        addFlag = AddFlagController(album: PhotoAlbum(), mapController: mapController)
+        addFlag = AddFlagController(album: mapController.photoAlbum, mapController: mapController)
     }
     
     required init(coder aDecoder: NSCoder) {

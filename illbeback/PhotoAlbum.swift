@@ -102,7 +102,6 @@ public class PhotoAlbum : NSObject {
     }
     
     func onFlagRemoved(note: NSNotification) {
-        print("Flag removed to repo.  Delting photos...")
         let flag = note.userInfo!["flag"] as! Flag
         delete(flag)
     }

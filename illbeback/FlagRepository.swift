@@ -32,9 +32,7 @@ class FlagRepository : NSObject {
             let flagState = flag.state()
             
             if originalFlag == nil {
-                if flagState != FlagState.Accepting && flagState != FlagState.Declining {
-                    flag.clearInvitees()
-                }
+
                 try flag.receivingNew(from)
                 add(flag)
                 onNew()
@@ -107,10 +105,11 @@ class FlagRepository : NSObject {
         }
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
-        let encodedFlags = _flags.map {flag in flag.encode()}
+        let encodedFlags = flags().map {flag in flag.encode()}
         let props: NSMutableDictionary = NSMutableDictionary()
         props.setValue(encodedFlags, forKey: "Memories")
         props.writeToFile(path, atomically: true)
+        _flags = flags()
     }
     
     func read() {

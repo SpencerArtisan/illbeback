@@ -89,7 +89,7 @@ class FlagRenderer: NSObject {
     }
     
     func remove(flag: Flag) {
-        print("Removed pin for \(flag.encode())")
+        print("Removed pin for \(flag.type())")
         map.removeAnnotation(getPin(flag)!)
     }
     

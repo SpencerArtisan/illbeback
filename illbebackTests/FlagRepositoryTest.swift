@@ -98,14 +98,6 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(flags[0].originator(), "originator")
     }
     
-    func testReceiveNewForwardedBlanksInvitees() {
-        let flag1 = flag("a flag")
-        flag1.invite("Madeleine")
-        repository.receive("Spencer", flag: flag1, onNew: { }, onUpdate: { }, onAck: { })
-        let flags = repository.flags()
-        XCTAssertEqual(flags[0].invitees().count, 0)
-    }
-    
     func testReceiveUpdateForwardedLeavesInvitees() {
         let flag1 = flag("a flag")
         flag1.invite("Madeleine")
@@ -127,6 +119,8 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
         XCTAssertEqual(flags[0].state(), FlagState.ReceivingNew)
+        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
+        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.fromCode(<#T##code: String##String#>))
         XCTAssertTrue(calledBack)
     }
     
@@ -228,20 +222,25 @@ class FlagRepositoryTest : XCTestCase {
         var calledBackForNew = false
         var calledBackForAck = false
         let offeredFlag = flag("a flag")
-        repository.add(offeredFlag)
-        offeredFlag.invite("Madeleine")
-        let acceptedFlag = Flag.decode(offeredFlag.encode())
-        try! acceptedFlag.receivingNew("Madeleine")
-        try! acceptedFlag.receiveNewSuccess()
-        try! acceptedFlag.accepting()
-        repository.remove(offeredFlag)
-        repository.receive("Madeleine", flag: acceptedFlag, onNew: {  calledBackForNew = true }, onUpdate: { XCTFail() }, onAck: { calledBackForAck = true })
-        let flags = repository.flags()
+        let offeringRepository = FlagRepository()
+        offeredFlag.invite("Receiver")
+        offeringRepository.add(offeredFlag)
+        offeringRepository.remove(offeredFlag)
+        
+        let receivingRepository = FlagRepository()
+        let receivedFlag = Flag.decode(offeredFlag.encode())
+        receivingRepository.receive("Offererer", flag: receivedFlag, onNew: {}, onUpdate: {}, onAck: {})
+        try! receivedFlag.receiveNewSuccess()
+        try! receivedFlag.accepting()
+        
+        offeringRepository.receive("Receiver", flag: Flag.decode(receivedFlag.encode()), onNew: {  calledBackForNew = true }, onUpdate: { XCTFail() }, onAck: { calledBackForAck = true })
+
+        let flags = offeringRepository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
         XCTAssertEqual(flags[0].state(), FlagState.ReceivingNew)
         XCTAssertEqual(flags[0].invitees().count, 1)
-        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
+        XCTAssertEqual(flags[0].invitees()[0].name(), "Receiver")
         XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)
         XCTAssertTrue(calledBackForNew)
         XCTAssertTrue(calledBackForAck)

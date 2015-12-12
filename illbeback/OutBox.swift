@@ -33,7 +33,7 @@ class OutBox {
         for flag in flagRepository.flags() {
             let inviting = flag.invitees().filter {$0.state() == InviteeState.Inviting}
             for invitee in inviting {
-                print("SENDING INVITE for \(flag.type()) to \(invitee)...")
+                print("SENDING INVITE for \(flag.type()) to \(invitee.name())...")
                 Utils.notifyObservers("FlagSending", properties: ["flag": flag, "to": invitee.name()])
                 invite(invitee, flag: flag)
             }
