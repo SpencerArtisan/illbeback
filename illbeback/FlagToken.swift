@@ -79,11 +79,15 @@ class FlagToken {
         _inviteesUpdate = token.invitees()
     }
     
+    func hasPendingUpdate() -> Bool {
+        return _locationUpdate != nil
+    }
+    
     func acceptUpdate() {
         _description = _descriptionUpdate!
         _location = _locationUpdate!
         _when = _whenUpdate
-        _invitees = _inviteesUpdate!
+//        _invitees = _inviteesUpdate!
         _descriptionUpdate = nil
         _locationUpdate = nil
         _whenUpdate = nil

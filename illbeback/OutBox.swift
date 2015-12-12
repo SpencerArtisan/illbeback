@@ -29,6 +29,40 @@ class OutBox {
         sendDeclines()
     }
     
+    private func sendAccepts() {
+        for flag in flagRepository.flags() {
+            let accepting = flag.invitees().filter {$0.state() == InviteeState.Accepting && $0.name() == Global.getUser().getName()}
+            for invitee in accepting {
+                print("SENDING ACCEPT for \(flag.type()) to \(flag.originator())...")
+                self.uploadFlagDetails(flag.originator(), flag: flag,
+                    onComplete: {
+                        invitee.acceptSuccess()
+                    },
+                    onError: {
+                        invitee.acceptFailure()
+                    }
+                )
+            }
+        }
+    }
+    
+    private func sendDeclines() {
+        for flag in flagRepository.flags() {
+            let declining = flag.invitees().filter {$0.state() == InviteeState.Declining && $0.name() == Global.getUser().getName()}
+            for invitee in declining {
+                print("SENDING DECLINE for \(flag.type()) to \(flag.originator())...")
+                self.uploadFlagDetails(flag.originator(), flag: flag,
+                    onComplete: {
+                        invitee.declineSuccess()
+                    },
+                    onError: {
+                        invitee.declineFailure()
+                    }
+                )
+            }
+        }
+    }
+    
     private func sendInvites() {
         for flag in flagRepository.flags() {
             let inviting = flag.invitees().filter {$0.state() == InviteeState.Inviting}
@@ -40,69 +74,23 @@ class OutBox {
         }
     }
     
-    private func sendAccepts() {
-        let accepting = flagRepository.flags().filter {$0.state() == FlagState.Accepting}
-        for flag in accepting {
-            print("SENDING ACCEPT \(flag.type())")
-            self.uploadFlagDetails(flag.originator(), flag: flag,
-                onComplete: {
-                    do {
-                        try flag.acceptSuccess()
-                    } catch {
-                        flag.reset(FlagState.Neutral)
-                    }
-                },
-                onError: {
-                    do {
-                        try flag.acceptFailure()
-                    } catch {
-                        flag.reset(FlagState.Accepting)
-                    }
-                }
-            )
-        }
-    }
-    
-    private func sendDeclines() {
-        let declining = flagRepository.flags().filter {$0.state() == FlagState.Declining}
-        for flag in declining {
-            print("SENDING DECLINE \(flag.type())")
-            self.uploadFlagDetails(flag.originator(), flag: flag,
-                onComplete: {
-                    do {
-                        try flag.declineSuccess()
-                    } catch {
-                        flag.reset(FlagState.Neutral)
-                    }
-                },
-                onError: {
-                    do {
-                        try flag.declineFailure()
-                    } catch {
-                        flag.reset(FlagState.Declining)
-                    }
-                }
-            )
-        }
-    }
-    
     func invite(invitee: Invitee2, flag: Flag) {
         Utils.notifyObservers("Inviting", properties: ["name": invitee.name(), "flag": flag])
         uploadPhotos(invitee, flag: flag,
             onComplete: {
                 self.uploadFlagDetails(invitee.name(), flag: flag,
                     onComplete: {
-                        invitee.invitingSuccess()
+                        invitee.inviteSuccess()
                         Utils.notifyObservers("FlagSendSuccess", properties: ["flag": flag, "to": invitee.name()])
                    },
                     onError: {
-                        invitee.invitingFailure()
+                        invitee.inviteFailure()
                         Utils.notifyObservers("FlagSendFailed", properties: ["flag": flag, "to": invitee.name()])
                     }
                 )
             },
             onError: {
-                invitee.invitingFailure()
+                invitee.inviteFailure()
                 Utils.notifyObservers("FlagSendFailed", properties: ["flag": flag, "to": invitee.name()])
             })
     }

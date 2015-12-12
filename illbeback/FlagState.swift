@@ -14,8 +14,6 @@ enum FlagState : String {
     case ReceivedUpdate = "U"
     case ReceivingNew = "n"
     case ReceivedNew = "N"
-    case Accepting = "a"
-    case Declining = "d"
     case Dead = "X"
     
     func code() -> String {

@@ -31,20 +31,33 @@ public class Invitee2 {
         return _state
     }
     
-    func invitingSuccess() {
+    func inviteSuccess() {
         state(.Invited)
     }
     
-    func invitingFailure() {
-        
+    func inviteFailure() {
     }
     
-    func accepted() {
+    func accepting() {
+        state(.Accepting)
+    }
+    
+    func declining() {
+        state(.Declining)
+    }
+    
+    func acceptSuccess() {
         state(.Accepted)
     }
     
-    func declined() {
+    func acceptFailure() {
+    }
+    
+    func declineSuccess() {
         state(.Declined)
+    }
+    
+    func declineFailure() {
     }
     
     func encode() -> String {

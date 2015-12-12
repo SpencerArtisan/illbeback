@@ -10,7 +10,7 @@ import XCTest
 
 class FlagStateTest: XCTestCase {
     func testDecode() {
-        XCTAssertEqual(FlagState.Accepting, FlagState.fromCode(FlagState.Accepting.code()))
+        XCTAssertEqual(FlagState.ReceivedNew, FlagState.fromCode(FlagState.ReceivedNew.code()))
     }
     
     func testDecodeOldNormal() {

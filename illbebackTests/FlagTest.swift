@@ -45,133 +45,14 @@ class FlagTest: XCTestCase {
         XCTAssertEqual(flag.state(), FlagState.ReceivedUpdate)
     }
     
-    func testAcceptUpdateBecomesAcceptingAndRetainsDescription() {
-        let flag = createFlag()
-        try! flag.description("Original description")
-        flag.receivingUpdate(createFlag("External description"))
-        try! flag.receiveUpdateSuccess()
-        try! flag.accepting()
-        XCTAssertEqual(flag.state(), FlagState.Accepting)
-        XCTAssertEqual(flag.description(), "External description")
-    }
-    
-    func testSuccessfulAcceptUpdateReturnsToNeutral() {
-        let flag = createFlag()
-        flag.receivingUpdate(createFlag())
-        try! flag.receiveUpdateSuccess()
-        try! flag.accepting()
-        try! flag.acceptSuccess()
-        XCTAssertEqual(flag.state(), FlagState.Neutral)
-    }
-    
-    func testFailedAcceptUpdateRemainsInAccepting() {
-        let flag = createFlag()
-        flag.receivingUpdate(createFlag())
-        try! flag.receiveUpdateSuccess()
-        try! flag.accepting()
-        try! flag.acceptFailure()
-        XCTAssertEqual(flag.state(), FlagState.Accepting)
-    }
-    
     func testDeclineUpdateOfferedBecomesDecliningAndRevertsDescription() {
         let flag = createFlag()
         try! flag.description("Original description")
+        flag.invite("Madeleine")
         flag.receivingUpdate(createFlag("External description"))
         try! flag.receiveUpdateSuccess()
-        try! flag.declining()
-        XCTAssertEqual(flag.state(), FlagState.Declining)
+        flag.declining("Madeleine")
         XCTAssertEqual(flag.description(), "Original description")
-    }
-    
-    func testSuccessfulDeclineUpdateReturnsToNeutral() {
-        let flag = createFlag()
-        flag.receivingUpdate(createFlag())
-        try! flag.receiveUpdateSuccess()
-        try! flag.declining()
-        try! flag.declineSuccess()
-        XCTAssertEqual(flag.state(), FlagState.Neutral)
-    }
-    
-    func testFailedDeclineUpdateRemainsInDeclining() {
-        let flag = createFlag()
-        flag.receivingUpdate(createFlag())
-        try! flag.receiveUpdateSuccess()
-        try! flag.declining()
-        try! flag.declineFailure()
-        XCTAssertEqual(flag.state(), FlagState.Declining)
-    }
-    
-    func testCannotAcceptANeutralFlag() {
-        let flag = createFlag()
-        assertError({ try flag.accepting() })
-    }
-    
-    func testCannotDeclineANeutralFlag() {
-        let flag = createFlag()
-        assertError({ try flag.declining() })
-    }
-    
-    func testAcceptReceivedNewBecomesAcceptingAndRetainsDescription() {
-        let flag = createFlag("External description")
-        try! flag.receivingNew("originator")
-        try! flag.receiveNewSuccess()
-        try! flag.accepting()
-        XCTAssertEqual(flag.state(), FlagState.Accepting)
-        XCTAssertEqual(flag.description(), "External description")
-    }
-    
-    func testSuccessfulAcceptNewReturnsToNeutral() {
-        let flag = createFlag("External description")
-        try! flag.receivingNew("originator")
-        try! flag.receiveNewSuccess()
-        try! flag.accepting()
-        try! flag.acceptSuccess()
-        XCTAssertEqual(flag.state(), FlagState.Neutral)
-    }
-    
-    func testFailedAcceptNewRemainsInAccepting() {
-        let flag = createFlag("External description")
-        try! flag.receivingNew("originator")
-        try! flag.receiveNewSuccess()
-        try! flag.accepting()
-        try! flag.acceptFailure()
-        XCTAssertEqual(flag.state(), FlagState.Accepting)
-    }
-    
-    func testDeclineNewOfferedBecomesDeclining() {
-        let flag = createFlag("External description")
-        try! flag.receivingNew("originator")
-        try! flag.receiveNewSuccess()
-        try! flag.declining()
-        XCTAssertEqual(flag.state(), FlagState.Declining)
-    }
-    
-    func testSuccessfulDeclineGoesToDead() {
-        let flag = createFlag("External description")
-        try! flag.receivingNew("originator")
-        try! flag.receiveNewSuccess()
-        try! flag.declining()
-        try! flag.declineSuccess()
-        XCTAssertEqual(flag.state(), FlagState.Dead)
-    }
-    
-    func testFailedDeclineNewRemainsInDeclining() {
-        let flag = createFlag("External description")
-        try! flag.receivingNew("originator")
-        try! flag.receiveNewSuccess()
-        try! flag.declining()
-        try! flag.declineFailure()
-        XCTAssertEqual(flag.state(), FlagState.Declining)
-    }
-    
-    func testCannotAcceptNewANeutralFlag() {
-        let flag = createFlag()
-        assertError({ try flag.accepting() })
-    }
-    
-    func testCannotDeclineNewANeutralFlag() {
-        let flag = createFlag()
-        assertError({ try flag.declining() })
     }
     
     func testCanUpdateNeutralFlag() {
@@ -180,55 +61,10 @@ class FlagTest: XCTestCase {
         XCTAssertEqual(flag.description(), "New description")
     }
     
-    func testCanUpdateAcceptingNewFlag() {
-        let flag = createFlag()
-        try! flag.receivingNew("originator")
-        try! flag.receiveNewSuccess()
-        try! flag.accepting()
-        try! flag.description("New description")
-        XCTAssertEqual(flag.description(), "New description")
-    }
-    
-    func testCanUpdateAcceptedUpdateFlag() {
-        let flag = createFlag()
-        flag.receivingUpdate(createFlag())
-        try! flag.receiveUpdateSuccess()
-        try! flag.accepting()
-        try! flag.description("New description")
-        XCTAssertEqual(flag.description(), "New description")
-    }
-    
-    func testCanUpdateDeclinedUpdateFlag() {
-        let flag = createFlag()
-        flag.receivingUpdate(createFlag())
-        try! flag.receiveUpdateSuccess()
-        try! flag.declining()
-        try! flag.declineSuccess()
-        try! flag.description("New description")
-        XCTAssertEqual(flag.description(), "New description")
-    }
-    
     func testCannotUpdateReceivedNewFlag() {
         let flag = createFlag("External description")
         try! flag.receivingNew("originator")
         try! flag.receiveNewSuccess()
-        assertError({ try flag.description("New description") })
-    }
-    
-    func testCannotUpdateDecliningNewFlag() {
-        let flag = createFlag("External description")
-        try! flag.receivingNew("originator")
-        try! flag.receiveNewSuccess()
-        try! flag.declining()
-        assertError({ try flag.description("New description") })
-    }
-    
-    func testCannotUpdateDeadFlag() {
-        let flag = createFlag("External description")
-        try! flag.receivingNew("originator")
-        try! flag.receiveNewSuccess()
-        try! flag.declining()
-        try! flag.declineSuccess()
         assertError({ try flag.description("New description") })
     }
     

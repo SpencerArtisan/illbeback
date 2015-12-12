@@ -265,22 +265,14 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     func acceptRecentShare(flag: Flag) {
-        do {
-            try flag.accepting()
-            photoAlbum.acceptRecentShare(flag)
-        } catch {
-            flag.reset(FlagState.Accepting)
-        }
+        flag.accepting(Global.getUser().getName())
+        photoAlbum.acceptRecentShare(flag)
         updateButtonStates()
         outBox.send()
     }
 
     func declineRecentShare(flag: Flag) {
-        do {
-            try flag.declining()
-        } catch {
-            flag.reset(FlagState.Declining)
-        }
+        flag.declining(Global.getUser().getName())
         updateButtonStates()
         outBox.send()
     }

@@ -120,7 +120,7 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(flags[0].description(), "a flag")
         XCTAssertEqual(flags[0].state(), FlagState.ReceivingNew)
         XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
-        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.fromCode(<#T##code: String##String#>))
+        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Invited)
         XCTAssertTrue(calledBack)
     }
     
@@ -146,7 +146,7 @@ class FlagRepositoryTest : XCTestCase {
         let acceptedFlag = Flag.decode(offeredFlag.encode())
         try! acceptedFlag.receivingNew("Madeleine")
         try! acceptedFlag.receiveNewSuccess()
-        try! acceptedFlag.accepting()
+        acceptedFlag.accepting("Madeleine")
         repository.receive("Madeleine", flag: acceptedFlag, onNew: { XCTFail() }, onUpdate: { XCTFail() }, onAck: { calledBack = true })
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
@@ -166,47 +166,7 @@ class FlagRepositoryTest : XCTestCase {
         let declinedFlag = Flag.decode(offeredFlag.encode())
         try! declinedFlag.receivingNew("Madeleine")
         try! declinedFlag.receiveNewSuccess()
-        try! declinedFlag.declining()
-        repository.receive("Madeleine", flag: declinedFlag, onNew: { XCTFail() }, onUpdate: { XCTFail() }, onAck: { calledBack = true })
-        let flags = repository.flags()
-        XCTAssertEqual(flags.count, 1)
-        XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.Neutral)
-        XCTAssertEqual(flags[0].invitees().count, 1)
-        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
-        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Declined)
-        XCTAssertTrue(calledBack)
-    }
-    
-    func testReceiveAcceptUpdateAck() {
-        var calledBack = false
-        let offeredFlag = flag("a flag")
-        repository.add(offeredFlag)
-        offeredFlag.invite("Madeleine")
-        let acceptedFlag = flag("original flag")
-        acceptedFlag.receivingUpdate(Flag.decode(offeredFlag.encode()))
-        try! acceptedFlag.receiveUpdateSuccess()
-        try! acceptedFlag.accepting()
-        repository.receive("Madeleine", flag: acceptedFlag, onNew: { XCTFail() }, onUpdate: { XCTFail() }, onAck: { calledBack = true })
-        let flags = repository.flags()
-        XCTAssertEqual(flags.count, 1)
-        XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.Neutral)
-        XCTAssertEqual(flags[0].invitees().count, 1)
-        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
-        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)
-        XCTAssertTrue(calledBack)
-    }
-    
-    func testReceiveDeclineUpdateAck() {
-        var calledBack = false
-        let offeredFlag = flag("a flag")
-        repository.add(offeredFlag)
-        offeredFlag.invite("Madeleine")
-        let declinedFlag = flag("original flag")
-        declinedFlag.receivingUpdate(Flag.decode(offeredFlag.encode()))
-        try! declinedFlag.receiveUpdateSuccess()
-        try! declinedFlag.declining()
+        declinedFlag.declining("Madeleine")
         repository.receive("Madeleine", flag: declinedFlag, onNew: { XCTFail() }, onUpdate: { XCTFail() }, onAck: { calledBack = true })
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
@@ -231,7 +191,7 @@ class FlagRepositoryTest : XCTestCase {
         let receivedFlag = Flag.decode(offeredFlag.encode())
         receivingRepository.receive("Offererer", flag: receivedFlag, onNew: {}, onUpdate: {}, onAck: {})
         try! receivedFlag.receiveNewSuccess()
-        try! receivedFlag.accepting()
+        receivedFlag.accepting("Receiver")
         
         offeringRepository.receive("Receiver", flag: Flag.decode(receivedFlag.encode()), onNew: {  calledBackForNew = true }, onUpdate: { XCTFail() }, onAck: { calledBackForAck = true })
 
@@ -255,7 +215,7 @@ class FlagRepositoryTest : XCTestCase {
         let acceptedFlag = Flag.decode(offeredFlag.encode())
         acceptedFlag.receivingUpdate(Flag.decode(offeredFlag.encode()))
         try! acceptedFlag.receiveUpdateSuccess()
-        try! acceptedFlag.accepting()
+        acceptedFlag.accepting("Madeleine")
         repository.remove(offeredFlag)
         repository.receive("Madeleine", flag: acceptedFlag, onNew: { calledBackForNew = true }, onUpdate: { XCTFail() }, onAck: { calledBackForAck = true })
         let flags = repository.flags()

@@ -29,35 +29,39 @@ class FlagRepository : NSObject {
     func receive(from: String, flag: Flag, onNew: () -> (), onUpdate: () -> (), onAck: () -> ()) {
         do {
             var originalFlag = find(flag.id())
-            let flagState = flag.state()
             
             if originalFlag == nil {
-
                 try flag.receivingNew(from)
                 add(flag)
                 onNew()
                 originalFlag = flag
-            } else if flagState == .Neutral {
+            } else if !isAck(from, flag: flag) {
                 originalFlag!.receivingUpdate(flag)
                 onUpdate()
             }
             
-            let invitee = originalFlag!.findInvitee(from)
-            
-            if flagState == FlagState.Accepting {
-                if invitee != nil {
-                    invitee!.accepted()
+            let invitee = originalFlag!.findInvitee2(from)
+            if invitee != nil {
+                let inviteeState = flag.findInvitee2(from)!.state()
+                
+                if inviteeState == .Inviting {
+                    invitee!.inviteSuccess()
+                } else if inviteeState == .Accepting {
+                    invitee!.acceptSuccess()
+                    onAck()
+                } else if inviteeState == .Declining {
+                    invitee!.declineSuccess()
+                    onAck()
                 }
-                onAck()
-            } else if flagState == FlagState.Declining {
-                if invitee != nil {
-                    invitee!.declined()
-                }
-                onAck()
             }
         } catch {
             print("** Failed to receive flag: \(flag)")
         }
+    }
+    
+    private func isAck(from: String, flag: Flag) -> Bool {
+        let inviteeState = flag.findInvitee2(from)?.state()
+        return inviteeState != nil && (inviteeState! == .Accepting || inviteeState! == .Declining);
     }
     
     func add(flag: Flag) {

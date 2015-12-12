@@ -11,7 +11,9 @@ import Foundation
 enum InviteeState: String {
     case Inviting = "i"
     case Invited = "I"
+    case Accepting = "a"
     case Accepted = "A"
+    case Declining = "d"
     case Declined = "D"
     
     func code() -> String {

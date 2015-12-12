@@ -52,7 +52,7 @@ public class Flag {
         fireChangeEvent()
     }
     
-    func findInvitee(name: String) -> Invitee2? {
+    func findInvitee2(name: String) -> Invitee2? {
         return _token.findInvitee(name)
     }
     
@@ -141,8 +141,24 @@ public class Flag {
         fireChangeEvent()
     }
     
+    func accepting(friend: String) {
+        let invitee = _token.findInvitee(friend)
+        if _token.hasPendingUpdate() {
+            _token.acceptUpdate()
+        }
+        invitee!.accepting()
+    }
+    
+    func declining(friend: String) {
+        let invitee = _token.findInvitee(friend)
+        if _token.hasPendingUpdate() {
+            _token.declineUpdate()
+        }
+        invitee!.declining()
+    }
+    
     func canUpdate() -> Bool {
-        return state() == .Neutral || state() == .Accepting || (state() == .Declining && !dead)
+        return state() == .Neutral && !dead
     }
     
     func receivingNew(from: String) throws {
@@ -171,46 +187,6 @@ public class Flag {
     
     func receiveNewFailure() throws {
         try state([.ReceivingNew], targetState: .ReceivingNew)
-    }
-    
-    func accepting() throws {
-        let startState = state()
-        try state([.ReceivedNew, .ReceivedUpdate], targetState: .Accepting)
-        if startState == .ReceivedUpdate {
-            _token.acceptUpdate()
-            fireChangeEvent()
-        }
-    }
-    
-    func declining() throws {
-        let startState = state()
-        try state([.ReceivedNew, .ReceivedUpdate], targetState: .Declining)
-        if startState == .ReceivedUpdate {
-            _token.declineUpdate()
-            fireChangeEvent()
-        } else {
-            dead = true
-        }
-    }
-    
-    func acceptSuccess() throws {
-        try state([.Accepting], targetState: .Neutral)
-    }
-    
-    func acceptFailure() throws {
-        try state([.Accepting], targetState: .Accepting)
-    }
-    
-    func declineSuccess() throws {
-        if dead {
-            try state([.Declining], targetState: .Dead)
-        } else {
-            try state([.Declining], targetState: .Neutral)
-        }
-    }
-    
-    func declineFailure() throws {
-        try state([.Declining], targetState: .Declining)
     }
     
     func kill() {

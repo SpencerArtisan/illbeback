@@ -21,24 +21,24 @@ class InviteeTest: XCTestCase {
     }
     
     func testSuccessfulInvitingBecomesInvited() {
-        invitee!.invitingSuccess()
+        invitee!.inviteSuccess()
         XCTAssertEqual(invitee!.state(), InviteeState.Invited)
     }
     
     func testFailedInvitingRemainsInviting() {
-        invitee!.invitingFailure()
+        invitee!.inviteFailure()
         XCTAssertEqual(invitee!.state(), InviteeState.Inviting)
     }
     
     func testAcceptFromSuccessfullyInvited() {
-        invitee!.invitingSuccess()
-        invitee!.accepted()
-        XCTAssertEqual(invitee!.state(), InviteeState.Accepted)
+        invitee!.inviteSuccess()
+        invitee!.accepting()
+        XCTAssertEqual(invitee!.state(), InviteeState.Accepting)
     }
 
     func testDeclineFromSuccessfullyInvited() {
-        invitee!.invitingSuccess()
-        invitee!.declined()
-        XCTAssertEqual(invitee!.state(), InviteeState.Declined)
+        invitee!.inviteSuccess()
+        invitee!.declining()
+        XCTAssertEqual(invitee!.state(), InviteeState.Declining)
     }
 }
