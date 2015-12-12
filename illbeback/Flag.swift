@@ -53,7 +53,7 @@ public class Flag {
     }
     
     func findInvitee(name: String) -> Invitee2? {
-        return invitees().filter({$0.name() == name}).first
+        return _token.findInvitee(name)
     }
     
     func state() -> FlagState {

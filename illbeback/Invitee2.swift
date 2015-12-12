@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Invitee2 {
+public class Invitee2 {
     private var _name: String
     private var _state: InviteeState
     
@@ -56,4 +56,11 @@ class Invitee2 {
         _state = state
         Utils.notifyObservers("InviteeChanged", properties: [:])
     }
+}
+
+
+extension Invitee2: Equatable {}
+
+public func ==(lhs: Invitee2, rhs: Invitee2) -> Bool {
+    return lhs.name() == rhs.name()
 }

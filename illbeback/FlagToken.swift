@@ -128,7 +128,16 @@ class FlagToken {
         _invitees = []
     }
     
+    func findInvitee(name: String) -> Invitee2? {
+        return invitees().filter({$0.name() == name}).first
+    }
+    
     func addInvitee(invitee: Invitee2) {
+        let oldInvitee = findInvitee(invitee.name())
+        if oldInvitee != nil {
+            _invitees.removeObject(oldInvitee!)
+        }
+        
         _invitees.append(invitee)
     }
     

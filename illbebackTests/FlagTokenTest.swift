@@ -132,6 +132,13 @@ class FlagTokenTest: XCTestCase {
         XCTAssertEqual(token!.descriptionUpdate(), decoded!.descriptionUpdate())
     }
     
+    func testAddSameInviteeOverwrites() {
+        token = createTokenWithoutUpdates()
+        XCTAssertEqual(token!.invitees().count, 1)
+        token?.addInvitee(Invitee2(name: "Madeleine"))
+        XCTAssertEqual(token!.invitees().count, 1)
+    }
+    
     private func setUpWithUpdate() {
         token = createTokenWithUpdates()
         let encoded = token!.encode()
