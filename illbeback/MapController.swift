@@ -112,6 +112,22 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         updateButtonStates()
         flagRepository.read()
         outBox.send()
+        
+        Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
+        Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
+        Utils.addObserver(self, selector: "onDeclining:", event: "Declining")
+    }
+    
+    func onFlagReceiveSuccess(note: NSNotification) {
+        updateButtonStates()
+    }
+    
+    func onAcceptSuccess(note: NSNotification) {
+        updateButtonStates()
+    }
+    
+    func onDeclining(note: NSNotification) {
+        updateButtonStates()
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
@@ -267,14 +283,12 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     func acceptRecentShare(flag: Flag) {
         flag.accepting(Global.getUser().getName())
         photoAlbum.acceptRecentShare(flag)
-        updateButtonStates()
         outBox.send()
     }
 
     func declineRecentShare(flag: Flag) {
         print("Clicked DECLINE")
         flag.declining(Global.getUser().getName())
-        updateButtonStates()
         outBox.send()
     }
 

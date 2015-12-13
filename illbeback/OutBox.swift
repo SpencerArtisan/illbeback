@@ -35,12 +35,15 @@ class OutBox {
             let accepting = flag.invitees().filter {$0.state() == InviteeState.Accepting && $0.name() == Global.getUser().getName()}
             for invitee in accepting {
                 print("SENDING ACCEPT for \(flag.type()) to \(flag.originator())...")
+                Utils.notifyObservers("Accepting", properties: ["flag": flag])
                 self.uploadFlagDetails(flag.originator(), flag: flag,
                     onComplete: {
-                        invitee.acceptSuccess()
+                        flag.acceptSuccess(invitee)
+                        Utils.notifyObservers("AcceptSuccess", properties: ["flag": flag])
                     },
                     onError: {
-                        invitee.acceptFailure()
+                        flag.acceptFailure(invitee)
+                        Utils.notifyObservers("AcceptFailed", properties: ["flag": flag])
                     }
                 )
             }
@@ -52,13 +55,16 @@ class OutBox {
             let declining = flag.invitees().filter {$0.state() == InviteeState.Declining && $0.name() == Global.getUser().getName()}
             for invitee in declining {
                 print("SENDING DECLINE for \(flag.type()) to \(flag.originator())...")
+                Utils.notifyObservers("Declining", properties: ["flag": flag])
                 self.uploadFlagDetails(flag.originator(), flag: flag,
                     onComplete: {
-                        invitee.declineSuccess()
+                        flag.declineSuccess(invitee)
                         self.flagRepository.remove(flag)
+                        Utils.notifyObservers("DeclineSuccess", properties: ["flag": flag])
                     },
                     onError: {
-                        invitee.declineFailure()
+                        flag.declineFailure(invitee)
+                        Utils.notifyObservers("DeclineFailed", properties: ["flag": flag])
                     }
                 )
             }

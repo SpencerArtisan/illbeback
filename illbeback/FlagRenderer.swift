@@ -89,8 +89,11 @@ class FlagRenderer: NSObject {
     }
     
     func remove(flag: Flag) {
-        print("Removed pin for \(flag.type())")
-        map.removeAnnotation(getPin(flag)!)
+        let pin = getPin(flag)
+        if pin != nil {
+            print("Removed pin for \(flag.type())")
+            map.removeAnnotation(pin!)
+        }
     }
     
     func update(pin: MapPinView) {
@@ -101,7 +104,7 @@ class FlagRenderer: NSObject {
     func refresh(pin: MapPinView) {
 //        print("Refreshing pin")
 //        map.deselectAnnotation(pin.annotation, animated: false)
-//        pin.refresh()
+        pin.refresh()
     }
 
     func refresh(flag: Flag) {

@@ -73,11 +73,12 @@ public class PhotoAlbum : NSObject {
         return photos
     }
     
-    func addFlagImage(image: UIImage?, flagId: String) {
-        let imagePath = getNewImagePath(flagId)
+    func addFlagImage(image: UIImage?, flag: Flag) {
+        let imagePath = getNewImagePath(flag.id())
         print("Saving image \(imagePath)")
         let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
         fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
+        Utils.notifyObservers("FlagChanged", properties: ["flag": flag])
     }
     
     private func getNewImagePath(flagId: String) -> String {

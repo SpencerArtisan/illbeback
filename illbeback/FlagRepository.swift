@@ -108,10 +108,11 @@ class FlagRepository : NSObject {
     }
     
     func purge() {
-        _flags = _flags.filter {!$0.isPast() || $0.state() == .Dead}
-        Utils.delay(0.5) {
-            self.save()
-        }
+        _flags.filter({self.isPurgable($0)}).forEach {self.remove($0)}
+    }
+    
+    private func isPurgable(flag: Flag) -> Bool {
+        return flag.isPast() || flag.state() == .Dead
     }
     
     func save() {
@@ -145,7 +146,9 @@ class FlagRepository : NSObject {
         
         let encodedFlags = (props.valueForKey("Memories") ?? []) as! [String]
         encodedFlags.map {encodedFlag in Flag.decode(encodedFlag)}
-                    .forEach {flag in self.add(flag)}
+                    .forEach {flag in
+                        if !self.isPurgable(flag) { self.add(flag) }
+                    }
         _reading = false
     }
 }

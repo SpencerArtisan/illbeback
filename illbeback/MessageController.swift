@@ -24,7 +24,13 @@ class MessageController : NSObject {
         Utils.addObserver(self, selector: "onFlagSendFailed:", event: "FlagSendFailed")
         Utils.addObserver(self, selector: "onFlagReceiving:", event: "FlagReceiving")
         Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
-        Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveFailed")
+        Utils.addObserver(self, selector: "onFlagReceiveFailed:", event: "FlagReceiveFailed")
+        Utils.addObserver(self, selector: "onDeclining:", event: "Declining")
+        Utils.addObserver(self, selector: "onDeclineSuccess:", event: "DeclineSuccess")
+        Utils.addObserver(self, selector: "onDeclineFailed:", event: "DeclineFailed")
+        Utils.addObserver(self, selector: "onAccepting:", event: "Accepting")
+        Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
+        Utils.addObserver(self, selector: "onAcceptFailed:", event: "AcceptFailed")
     }
     
     func onFlagSending(note: NSNotification) {
@@ -103,6 +109,88 @@ class MessageController : NSObject {
             let flag = note.userInfo!["flag"] as! Flag
             
             let title = "Failed downloading \(flag.type())"
+            let color = UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0)
+            if let receivingModal = self.activeModals[flag.id()] {
+                self.activeModals.removeValueForKey(flag.id())
+                self.dismissMessage(receivingModal)
+            }
+            
+            self.showMessage(title, color: color, time: 2)
+        }
+    }
+    
+    func onAccepting(note: NSNotification) {
+        Utils.runOnUiThread {
+            let flag = note.userInfo!["flag"] as! Flag
+            
+            let title = "Sending accept for \(flag.type())"
+            let color = CategoryController.getColorForCategory(flag.type())
+            let modal = self.showMessage(title, color: color, time: nil)
+            self.activeModals[flag.id()] = modal
+        }
+    }
+    
+    func onAcceptSuccess(note: NSNotification) {
+        Utils.runOnUiThread {
+            let flag = note.userInfo!["flag"] as! Flag
+            
+            let title = "Sent accept"
+            let color = UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0)
+            if let receivingModal = self.activeModals[flag.id()] {
+                self.activeModals.removeValueForKey(flag.id())
+                self.dismissMessage(receivingModal)
+            }
+            
+            self.showMessage(title, color: color, time: 2)
+        }
+    }
+    
+    func onAcceptFailed(note: NSNotification) {
+        Utils.runOnUiThread {
+            let flag = note.userInfo!["flag"] as! Flag
+            
+            let title = "Failed sending accept"
+            let color = UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0)
+            if let receivingModal = self.activeModals[flag.id()] {
+                self.activeModals.removeValueForKey(flag.id())
+                self.dismissMessage(receivingModal)
+            }
+            
+            self.showMessage(title, color: color, time: 2)
+        }
+    }
+    
+    func onDeclining(note: NSNotification) {
+        Utils.runOnUiThread {
+            let flag = note.userInfo!["flag"] as! Flag
+            
+            let title = "Sending decline for \(flag.type())"
+            let color = CategoryController.getColorForCategory(flag.type())
+            let modal = self.showMessage(title, color: color, time: nil)
+            self.activeModals[flag.id()] = modal
+        }
+    }
+    
+    func onDeclineSuccess(note: NSNotification) {
+        Utils.runOnUiThread {
+            let flag = note.userInfo!["flag"] as! Flag
+            
+            let title = "Sent decline"
+            let color = UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0)
+            if let receivingModal = self.activeModals[flag.id()] {
+                self.activeModals.removeValueForKey(flag.id())
+                self.dismissMessage(receivingModal)
+            }
+            
+            self.showMessage(title, color: color, time: 2)
+        }
+    }
+    
+    func onDeclineFailed(note: NSNotification) {
+        Utils.runOnUiThread {
+            let flag = note.userInfo!["flag"] as! Flag
+            
+            let title = "Failed sending decline"
             let color = UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0)
             if let receivingModal = self.activeModals[flag.id()] {
                 self.activeModals.removeValueForKey(flag.id())

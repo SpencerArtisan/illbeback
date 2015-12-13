@@ -60,12 +60,13 @@ class MapPinView: MKAnnotationView {
     }
     
     func refreshAndReopen() {
-        setSelected(false, animated: false)
         refresh()
         setSelected(true, animated: false)
     }
 
     func refresh() {
+        setSelected(false, animated: false)
+        print("Refreshing pin view")
         fromHeight = 0
         whenHeight = 0
         calloutView = nil
@@ -118,8 +119,6 @@ class MapPinView: MKAnnotationView {
         UIGraphicsEndImageContext()
         centerOffset = CGPointMake(17, -20)
     }
-    
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -231,7 +230,6 @@ class MapPinView: MKAnnotationView {
         }
     }
     
-
     func createPhotoButton() {
         if photoView == nil && !flag!.isBlank() {
             photoButton = UIButton(frame: CGRectMake(labelArea!.width / 2 - 17, labelArea!.height - 38 - whenHeight, 40, 40))
@@ -394,7 +392,7 @@ class MapPinView: MKAnnotationView {
         }
         
         if (self.selected) {
-            //topLeft = [mapView convertPoint:CGPointMake(0, 0) toCoordinateFromView:mapView];
+            print("Opening pin view")
 
             let callout = getCalloutView()
             addSubview(callout)
@@ -416,9 +414,8 @@ class MapPinView: MKAnnotationView {
                 }
             }
         } else {
-            Utils.runOnUiThread {
-                self.getCalloutView().removeFromSuperview()
-            }
+            print("Closing pin view")
+            self.getCalloutView().removeFromSuperview()
         }
     }
 

@@ -135,15 +135,16 @@ public class Flag {
         }
     }
     
-    func invite(friend: String) {
+    func invite(friend: String) -> Invitee2 {
         let invitee = Invitee2(name: friend)
         _token.addInvitee(invitee)
         if _token.invitees().count > 1 {
-            print("Too many invitees")
+            print("**Too many invitees")
             let a = 1
         }
         print("Added invitee.  Invitees now \(_token.invitees())")
         fireChangeEvent()
+        return invitee
     }
     
     func accepting(friend: String) {
@@ -151,7 +152,35 @@ public class Flag {
         if _token.hasPendingUpdate() {
             _token.acceptUpdate()
         }
-        invitee!.accepting()
+        if invitee != nil {
+            invitee!.accepting()
+        } else {
+            print("Warning.  Accepting invitee can't find themselves in the invitee list")
+            let invitee = invite(friend)
+            invitee.accepting()
+        }
+    }
+    
+    func acceptSuccess(invitee: Invitee2) {
+        invitee.acceptSuccess()
+        _token.state(.Neutral)
+        fireChangeEvent()
+    }
+    
+    func acceptFailure(invitee: Invitee2) {
+        invitee.acceptFailure()
+    }
+    
+    func declineSuccess(invitee: Invitee2) {
+        invitee.declineSuccess()
+        if state() != .Dead {
+            _token.state(.Neutral)
+            fireChangeEvent()
+        }
+    }
+    
+    func declineFailure(invitee: Invitee2) {
+        invitee.declineFailure()
     }
     
     func declining(friend: String) {
