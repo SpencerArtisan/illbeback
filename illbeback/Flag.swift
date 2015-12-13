@@ -188,7 +188,13 @@ public class Flag {
         if _token.hasPendingUpdate() {
             _token.declineUpdate()
         }
-        invitee!.declining()
+        if invitee != nil {
+            invitee!.declining()
+        } else {
+            print("Warning.  Declining invitee can't find themselves in the invitee list")
+            let invitee = invite(friend)
+            invitee.declining()
+        }
     }
     
     func canUpdate() -> Bool {

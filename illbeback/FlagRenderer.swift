@@ -41,8 +41,8 @@ class FlagRenderer: NSObject {
                 pinView = ShapeCornerView(mapController: mapController)
             }
             
-            pinView.setSelected(true, animated: true)
-            
+            self.mapController.map.selectAnnotation(pinView.annotation!, animated: false)
+
             return pinView
         }
         return nil
@@ -97,6 +97,7 @@ class FlagRenderer: NSObject {
     }
     
     func update(pin: MapPinView) {
+        print("Replace pin")
         map.removeAnnotation(pin.annotation!)
         map.addAnnotation(createPin(pin.flag!))
     }
@@ -124,6 +125,7 @@ class FlagRenderer: NSObject {
                         self.map.removeAnnotation(pin!)
                     }
                 } else {
+                    print("Update event pin")
                     map.removeAnnotation(pin!)
                     map.addAnnotation(pin!)
                 }

@@ -74,7 +74,7 @@ class InBox {
             onAck: {
                 print("Ack processed.  Removing from firebase")
                 firebaseFlag.ref.removeValue()
-                Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
+                Utils.notifyObservers("AckReceiveSuccess", properties: ["flag": flag, "from": from])
             })
     }
     

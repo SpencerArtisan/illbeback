@@ -281,13 +281,12 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     func acceptRecentShare(flag: Flag) {
-        flag.accepting(Global.getUser().getName())
         photoAlbum.acceptRecentShare(flag)
+        flag.accepting(Global.getUser().getName())
         outBox.send()
     }
 
     func declineRecentShare(flag: Flag) {
-        print("Clicked DECLINE")
         flag.declining(Global.getUser().getName())
         outBox.send()
     }
@@ -315,6 +314,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     private func deselect(pin: MapPinView) {
+        print("Deselect pin")
         map.deselectAnnotation(pin.annotation, animated: false)
         pin.refresh()
     }

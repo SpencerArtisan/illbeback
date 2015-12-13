@@ -39,7 +39,7 @@ class FlagToken {
         var parts = token.componentsSeparatedByString(":")
         self._id = parts[4]
         self._type = parts[0]
-        let descriptionParts = parts[1].componentsSeparatedByString(",")
+        let descriptionParts = parts[1].componentsSeparatedByString("|")
         self._description = descriptionParts[0]
         if descriptionParts.count == 2 {
             self._descriptionUpdate = descriptionParts[1]
@@ -197,7 +197,7 @@ class FlagToken {
         let inviteesUpdateString = _inviteesUpdate == nil ? "" : ("|" + _inviteesUpdate!.map{$0.encode()}.joinWithSeparator(";"))
         let latitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.latitude)"
         let longitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.longitude)"
-        let descriptionUpdateString = _descriptionUpdate == nil ? "" : ",\(_descriptionUpdate!)"
+        let descriptionUpdateString = _descriptionUpdate == nil ? "" : "|\(_descriptionUpdate!)"
         return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator):\(_state.code()):UNUSED:\(whenString),\(whenUpdateString):\(inviteesString)\(inviteesUpdateString)"
     }
     

@@ -61,11 +61,12 @@ class MapPinView: MKAnnotationView {
     
     func refreshAndReopen() {
         refresh()
-        setSelected(true, animated: false)
+        self.mapController?.map.selectAnnotation(self.annotation!, animated: false)
     }
 
     func refresh() {
-        setSelected(false, animated: false)
+        self.mapController?.map.deselectAnnotation(self.annotation!, animated: false)
+        Utils.runOnUiThread { self.getCalloutView().removeFromSuperview() }
         print("Refreshing pin view")
         fromHeight = 0
         whenHeight = 0
@@ -383,14 +384,23 @@ class MapPinView: MKAnnotationView {
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        if selected && MapPinView.lastSelectionChange != nil && NSDate().timeIntervalSinceDate(MapPinView.lastSelectionChange!) < 0.7 {
-            print("IGNORE SELECTION")
-            Utils.delay(0.3) {
-                self.mapController?.map.deselectAnnotation(self.annotation, animated: false)
+
+        if MapPinView.lastSelectionChange != nil && NSDate().timeIntervalSinceDate(MapPinView.lastSelectionChange!) < 0.5 {
+            print("IGNORE set selected to \(selected)")
+            Utils.delay(0.1) {
+                if self.annotation != nil {
+                    if selected {
+                        self.mapController?.map.deselectAnnotation(self.annotation!, animated: false)
+                    } else {
+                        self.mapController?.map.selectAnnotation(self.annotation!, animated: false)
+                    }
+                }
             }
             return
         }
-        
+
+        print("Set selected to \(selected)")
+
         if (self.selected) {
             print("Opening pin view")
 
@@ -406,21 +416,21 @@ class MapPinView: MKAnnotationView {
             let rescrollCoord = CLLocationCoordinate2D(latitude: (pinCoord.latitude + coordsTopToBottom/5), longitude: pinCoord.longitude)
             
             self.mapController?.map.setCenterCoordinate(rescrollCoord, animated: true)
-        } else if MapPinView.lastSelectionChange != nil && NSDate().timeIntervalSinceDate(MapPinView.lastSelectionChange!) < 1 {
-            print("IGNORE DESELECTION")
-            Utils.delay(0.1) {
-                if self.annotation != nil {
-                    self.mapController?.map.selectAnnotation(self.annotation!, animated: false)
-                }
-            }
         } else {
             print("Closing pin view")
             self.getCalloutView().removeFromSuperview()
         }
+
+        MapPinView.lastSelectionChange = NSDate()
     }
 
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         var hitView = super.hitTest(point, withEvent: event)
+        if selected == false && hitView != nil && self.annotation != nil {
+            print("Treating hittest as pin selection on \(flag?.summary())")
+            self.mapController?.map.selectAnnotation(self.annotation!, animated: false)
+            return hitView
+        }
 
         if hitButton(point, button: subtitleView) {
             MapPinView.lastSelectionChange = NSDate()
