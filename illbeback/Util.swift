@@ -24,11 +24,15 @@ class Utils {
     }
     
     static func runOnUiThread(closure:()->()) {
+//        delay(0.5, closure: closure)
+//        runOnUiThread2(closure)
         dispatch_async(dispatch_get_main_queue(), closure)
     }
     
     static func runOnUiThread2(closure:()->()) {
+//        runOnUiThread(closure)
         NSOperationQueue.mainQueue().addOperationWithBlock(closure)
+//        delay(0.5, closure: closure)
     }
     
     static func addObserver(observer: NSObject, selector: Selector, event: String) {

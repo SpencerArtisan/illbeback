@@ -81,6 +81,35 @@ class FlagTest: XCTestCase {
         XCTAssertEqual(flag.invitees()[0].state(), InviteeState.Inviting)
     }
     
+//    func testUpdateOldFlag() {
+//        let flag1 = createFlag()
+//        let flag2 = Flag.create("id", type: "type", description: "new description", location: CLLocationCoordinate2D(latitude: 3.0, longitude: 4.0), originator: "new originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate.distantFuture())
+//        flag1.invite("Leon")
+//        flag2.update(flag1)
+//        XCTAssertEqual(flag2.invitees().count, 1)
+//        XCTAssertEqual(flag2.invitees()[0].name(), "Leon")
+//        XCTAssertEqual(flag2.location().latitude, 3.0)
+//        XCTAssertEqual(flag2.originator(), "originator")
+//        XCTAssertEqual(flag2.state(), FlagState.ReceivingUpdate)
+//        XCTAssertEqual(flag2.description(), "new description")
+//        XCTAssertEqual(flag2.when(), NSDate.distantFuture())
+//    }
+//    
+//    func testUpdateOldFlagThenDecline() {
+//        let flag1 = createFlag()
+//        let flag2 = Flag.create("id", type: "type", description: "new description", location: CLLocationCoordinate2D(latitude: 3.0, longitude: 4.0), originator: "new originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate.distantFuture())
+//        flag1.invite("Leon")
+//        flag2.update(flag1)
+//        flag2.declining("Madeleine")
+//        XCTAssertEqual(flag2.invitees().count, 1)
+//        XCTAssertEqual(flag2.invitees()[0].name(), "Leon")
+//        XCTAssertEqual(flag2.location().latitude, 1.0)
+//        XCTAssertEqual(flag2.originator(), "originator")
+//        XCTAssertEqual(flag2.state(), FlagState.Neutral)
+//        XCTAssertEqual(flag2.description(), "description")
+//        XCTAssertEqual(flag2.when(), flag1.when())
+//    }
+    
     private func assertError(code: () throws -> Void) {
         do {
             try code()

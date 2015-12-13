@@ -138,6 +138,11 @@ public class Flag {
     func invite(friend: String) {
         let invitee = Invitee2(name: friend)
         _token.addInvitee(invitee)
+        if _token.invitees().count > 1 {
+            print("Too many invitees")
+            let a = 1
+        }
+        print("Added invitee.  Invitees now \(_token.invitees())")
         fireChangeEvent()
     }
     
@@ -202,12 +207,15 @@ public class Flag {
     }
 
     private func state(acceptableStartStates: [FlagState], targetState: FlagState) throws {
-        guard  acceptableStartStates.contains(state()) else {
-            print("< ** INVALID FLAG State transition \(type()) from \(state()) to \(targetState) ** >")
-            throw StateMachineError.InvalidTransition
+        if !acceptableStartStates.contains(state()) {
+            print("< ** INVALID FLAG State transition \(type()) from \(state()) to \(targetState) ** >")            
         }
-        _token.state(targetState)
-        fireChangeEvent()
+//        guard  acceptableStartStates.contains(state()) else {
+//            print("< ** INVALID FLAG State transition \(type()) from \(state()) to \(targetState) ** >")
+////            throw StateMachineError.InvalidTransition
+//        }
+            self._token.state(targetState)
+            self.fireChangeEvent()
     }
     
     private func fireChangeEvent() {

@@ -31,7 +31,9 @@ class InBox {
         shareRoot(Global.getUser().getName()).observeSingleEventOfType(.Value, withBlock: { snapshot in
             let firebaseFlags = snapshot.children
             while let firebaseFlag: FDataSnapshot = firebaseFlags.nextObject() as? FDataSnapshot {
-                self.receive(firebaseFlag)
+                Utils.runOnUiThread {
+                    self.receive(firebaseFlag)
+                }
             }
         })
     }
@@ -40,7 +42,6 @@ class InBox {
         let encoded = firebaseFlag.value["memory"] as! String
         let from = firebaseFlag.value["from"] as! String
         let flag = Flag.decode(encoded)
-        Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
 
         flagRepository.receive(from, flag: flag,
             onNew: {
@@ -57,16 +58,16 @@ class InBox {
                     }
                 })
             },
-            onUpdate: {
-                self.downloadImages(flag, onComplete: {
+            onUpdate: { updatedFlag in
+                self.downloadImages(updatedFlag, onComplete: {
                     do {
-                        try flag.receiveUpdateSuccess()
+                        try updatedFlag.receiveUpdateSuccess()
                         print("All udated flag photos downloaded.  Removing from firebase")
                         firebaseFlag.ref.removeValue()
-                        Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
+                        Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": updatedFlag, "from": from])
                     } catch {
-                        flag.reset(FlagState.Neutral)
-                        Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": flag, "from": from])
+                        updatedFlag.reset(FlagState.Neutral)
+                        Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": updatedFlag, "from": from])
                     }
                 })
             },
@@ -94,7 +95,9 @@ class InBox {
                 self.postPhotoDownload(imageUrl, task: task)
                 leftToDownload--
                 if leftToDownload == 0 {
-                    onComplete()
+                    Utils.runOnUiThread {
+                        onComplete()
+                    }
                 }
                 return nil
             }

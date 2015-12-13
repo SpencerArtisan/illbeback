@@ -42,6 +42,7 @@ class MapPinView: MKAnnotationView {
     var fromHeight: CGFloat = 0.0
     
     static var lastSelectionChange: NSDate?
+    var lastHitTestPoint: CGPoint?
     
     init(mapController: MapController, flag: Flag) {
         super.init(annotation: nil, reuseIdentifier: nil)
@@ -415,7 +416,9 @@ class MapPinView: MKAnnotationView {
                 }
             }
         } else {
-            getCalloutView().removeFromSuperview()
+            Utils.runOnUiThread {
+                self.getCalloutView().removeFromSuperview()
+            }
         }
     }
 
@@ -428,7 +431,9 @@ class MapPinView: MKAnnotationView {
         }
         let system = NSProcessInfo.processInfo().systemUptime
         let elapsed = system - event!.timestamp
-        if (elapsed < 0.1 && labelView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
+        let duplicate = lastHitTestPoint != nil && lastHitTestPoint! == point
+        if (!duplicate && elapsed < 0.1 && labelView != nil && hitView == nil && self.selected && event!.type == UIEventType.Touches) {
+            lastHitTestPoint = point
             hitView = calloutView!.hitTest(point, withEvent: event)
             if acceptButton != nil && hitButton(point, button: acceptButton) {
                 if flag!.isBlank() {
@@ -438,16 +443,15 @@ class MapPinView: MKAnnotationView {
                 }
             } else if declineButton != nil && hitButton(point, button: declineButton) {
                 if flag!.isBlank() {
-                    mapController?.deleteMemory(self)
+                    mapController?.deleteFlag(self)
                 } else if pendingAccept() {
-                    mapController?.removePin(self)
                     mapController?.declineRecentShare(flag!)
                 }
             } else if !pendingAccept() && hitButton(point, button: dateView) {
                 mapController?.rescheduleMemory(self)
                 MapPinView.lastSelectionChange = nil
             } else if !pendingAccept() && hitButton(point, button: deleteButton) {
-                mapController?.deleteMemory(self)
+                mapController?.deleteFlag(self)
             } else if !pendingAccept() && hitButton(point, button: shareButton) {
                 mapController?.shareMemory(self)
             } else if !pendingAccept() && hitButton(point, button: photoButton) {

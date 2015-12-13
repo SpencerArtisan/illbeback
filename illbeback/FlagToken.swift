@@ -186,8 +186,8 @@ class FlagToken {
     }
     
     func state(state: FlagState) {
-        print("< FLAG State transition \(_type) from \(_state) to \(state) >")
-        _state = state
+        print("< FLAG State transition \(self._type) from \(self._state) to \(state) >")
+        self._state = state
     }
     
     func encode() -> String {

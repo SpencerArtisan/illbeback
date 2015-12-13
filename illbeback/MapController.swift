@@ -110,8 +110,8 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.searchText.delegate = self
   
         updateButtonStates()
-        
         flagRepository.read()
+        outBox.send()
     }
     
     @IBAction func takePhoto(sender: AnyObject) {
@@ -247,12 +247,12 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     // Callback for button on the callout
-    func deleteMemory(pin: MapPinView) {
+    func deleteFlag(pin: MapPinView) {
         flagRepository.remove(pin.flag!)
     }
     
     func removePin(pin: MapPinView) {
-        Utils.runOnUiThread2 {
+        Utils.runOnUiThread {
             if pin.annotation != nil {
                 self.map.removeAnnotation(pin.annotation!)
             }
@@ -272,6 +272,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
 
     func declineRecentShare(flag: Flag) {
+        print("Clicked DECLINE")
         flag.declining(Global.getUser().getName())
         updateButtonStates()
         outBox.send()

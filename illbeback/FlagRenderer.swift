@@ -99,8 +99,9 @@ class FlagRenderer: NSObject {
     }
     
     func refresh(pin: MapPinView) {
-        map.deselectAnnotation(pin.annotation, animated: false)
-        pin.refresh()
+//        print("Refreshing pin")
+//        map.deselectAnnotation(pin.annotation, animated: false)
+//        pin.refresh()
     }
 
     func refresh(flag: Flag) {

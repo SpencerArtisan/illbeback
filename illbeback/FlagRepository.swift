@@ -26,32 +26,38 @@ class FlagRepository : NSObject {
         return _flags.filter {$0.state() != .Dead}
     }
     
-    func receive(from: String, flag: Flag, onNew: () -> (), onUpdate: () -> (), onAck: () -> ()) {
+    func receive(from: String, flag: Flag, onNew: () -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: () -> ()) {
         do {
             var originalFlag = find(flag.id())
             
-            if originalFlag == nil {
+            if originalFlag == nil && !isDecline(from, flag: flag) {
+                print("Receiving new flag")
+                Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
                 try flag.receivingNew(from)
                 add(flag)
                 onNew()
                 originalFlag = flag
             } else if !isAck(from, flag: flag) {
+                print("Receiving updated flag")
                 originalFlag!.receivingUpdate(flag)
-                onUpdate()
+                Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
+                onUpdate(updatedFlag: originalFlag!)
             }
             
-            let invitee = originalFlag!.findInvitee2(from)
-            if invitee != nil {
-                let inviteeState = flag.findInvitee2(from)!.state()
-                
-                if inviteeState == .Inviting {
-                    invitee!.inviteSuccess()
-                } else if inviteeState == .Accepting {
-                    invitee!.acceptSuccess()
-                    onAck()
-                } else if inviteeState == .Declining {
-                    invitee!.declineSuccess()
-                    onAck()
+            if originalFlag != nil {
+                let invitee = originalFlag!.findInvitee2(from)
+                if invitee != nil {
+                    let inviteeState = flag.findInvitee2(from)!.state()
+                    
+                    if inviteeState == .Inviting {
+                        invitee!.inviteSuccess()
+                    } else if inviteeState == .Accepting {
+                        invitee!.acceptSuccess()
+                        onAck()
+                    } else if inviteeState == .Declining {
+                        invitee!.declineSuccess()
+                        onAck()
+                    }
                 }
             }
         } catch {
@@ -61,7 +67,12 @@ class FlagRepository : NSObject {
     
     private func isAck(from: String, flag: Flag) -> Bool {
         let inviteeState = flag.findInvitee2(from)?.state()
-        return inviteeState != nil && (inviteeState! == .Accepting || inviteeState! == .Declining);
+        return inviteeState != nil && (inviteeState! == .Accepting || inviteeState! == .Declining)
+    }
+    
+    private func isDecline(from: String, flag: Flag) -> Bool {
+        let inviteeState = flag.findInvitee2(from)?.state()
+        return inviteeState != nil && inviteeState! == .Declining
     }
     
     func add(flag: Flag) {
@@ -79,7 +90,7 @@ class FlagRepository : NSObject {
     }
     
     func find(id: String) -> Flag? {
-        return _flags.filter {$0.id() == id}.first
+        return flags().filter {$0.id() == id}.first
     }
     
     func events() -> [Flag] {
@@ -92,12 +103,12 @@ class FlagRepository : NSObject {
     }
     
     func imminentEvents() -> [Flag] {
-        let imminent = _flags.filter {$0.when() != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0}
+        let imminent = flags().filter {$0.when() != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0}
         return imminent.sort {$0.daysToGo() < $1.daysToGo()}
     }
     
     func purge() {
-        _flags = _flags.filter {!$0.isPast()}
+        _flags = _flags.filter {!$0.isPast() || $0.state() == .Dead}
         Utils.delay(0.5) {
             self.save()
         }

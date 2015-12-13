@@ -33,7 +33,7 @@ enum FlagState : String {
         case "R":
             return .ReceivedUpdate
         default:
-            return FlagState(rawValue: code)!
+            return FlagState(rawValue: code) ?? .Neutral
         }
     }
 }

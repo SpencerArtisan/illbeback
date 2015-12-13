@@ -24,6 +24,7 @@ class OutBox {
     }
     
     func send() {
+        print("Send triggered")
         sendInvites()
         sendAccepts()
         sendDeclines()
@@ -54,6 +55,7 @@ class OutBox {
                 self.uploadFlagDetails(flag.originator(), flag: flag,
                     onComplete: {
                         invitee.declineSuccess()
+                        self.flagRepository.remove(flag)
                     },
                     onError: {
                         invitee.declineFailure()
@@ -141,12 +143,14 @@ class OutBox {
         
         let task = transferManager.upload(uploadRequest)
         task.continueWithBlock { (task) -> AnyObject! in
-            if task.error != nil {
-                print("    Image upload FAILED! \(key)")
-                onError()
-            } else {
-                print("    Image uploaded \(key)")
-                onComplete()
+            Utils.runOnUiThread {
+                if task.error != nil {
+                    print("    Image upload FAILED! \(key)")
+                    onError()
+                } else {
+                    print("    Image uploaded \(key)")
+                    onComplete()
+                }
             }
             
             return nil
@@ -158,12 +162,14 @@ class OutBox {
         let newNode = shareRoot(to).childByAutoId()
         newNode.setValue(["from": Global.getUser().getName(), "memory": flag.encode()], withCompletionBlock: {
             (error:NSError?, ref:Firebase!) in
-            if (error != nil) {
-                print("     Flag upload FAILED! \(flag.type())")
-                onError()
-            } else {
-                print("     Flag uploaded \(flag.type())")
-                onComplete()
+            Utils.runOnUiThread {
+                if (error != nil) {
+                    print("     Flag upload FAILED! \(flag.type())")
+                    onError()
+                } else {
+                    print("     Flag uploaded \(flag.type())")
+                    onComplete()
+                }
             }
         })
     }

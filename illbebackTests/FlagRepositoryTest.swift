@@ -83,7 +83,7 @@ class FlagRepositoryTest : XCTestCase {
     
     func testReceiveNewForwardedChangesOriginator() {
         let flag1 = flag("a flag")
-        repository.receive("Spencer", flag: flag1, onNew: { }, onUpdate: { }, onAck: { })
+        repository.receive("Spencer", flag: flag1, onNew: { }, onUpdate: { _ in }, onAck: { })
         let flags = repository.flags()
         XCTAssertEqual(flags[0].originator(), "Spencer")
     }
@@ -93,7 +93,7 @@ class FlagRepositoryTest : XCTestCase {
         repository.add(flag1)
         let flag2 = flag("an updated flag")
         flag2.invite("Madeleine")
-        repository.receive("Spencer", flag: flag2, onNew: { }, onUpdate: { }, onAck: { })
+        repository.receive("Spencer", flag: flag2, onNew: { }, onUpdate: { _ in }, onAck: { })
         let flags = repository.flags()
         XCTAssertEqual(flags[0].originator(), "originator")
     }
@@ -104,7 +104,7 @@ class FlagRepositoryTest : XCTestCase {
         repository.add(flag1)
         let flag2 = flag("an updated flag")
         flag2.invite("Leon")
-        repository.receive("Spencer", flag: flag2, onNew: { }, onUpdate: { }, onAck: { })
+        repository.receive("Spencer", flag: flag2, onNew: { }, onUpdate: { _ in }, onAck: { })
         let flags = repository.flags()
         XCTAssertEqual(flags[0].invitees().count, 1)
         XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
@@ -114,7 +114,7 @@ class FlagRepositoryTest : XCTestCase {
         var calledBack = false
         let flag1 = flag("a flag")
         flag1.invite("Madeleine")
-        repository.receive("Madeleine", flag: flag1, onNew: { calledBack = true }, onUpdate: { XCTFail() }, onAck: { XCTFail() })
+        repository.receive("Madeleine", flag: flag1, onNew: { calledBack = true }, onUpdate: { _ in XCTFail() }, onAck: { XCTFail() })
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
@@ -130,7 +130,7 @@ class FlagRepositoryTest : XCTestCase {
         repository.add(flag1)
         let flag2 = flag("an updated flag")
         flag2.invite("Madeleine")
-        repository.receive("Madeleine", flag: flag2, onNew: { XCTFail() }, onUpdate: { calledBack = true }, onAck: { XCTFail() })
+        repository.receive("Madeleine", flag: flag2, onNew: { XCTFail() }, onUpdate: { _ in calledBack = true }, onAck: { XCTFail() })
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "an updated flag")
@@ -147,7 +147,7 @@ class FlagRepositoryTest : XCTestCase {
         try! acceptedFlag.receivingNew("Madeleine")
         try! acceptedFlag.receiveNewSuccess()
         acceptedFlag.accepting("Madeleine")
-        repository.receive("Madeleine", flag: acceptedFlag, onNew: { XCTFail() }, onUpdate: { XCTFail() }, onAck: { calledBack = true })
+        repository.receive("Madeleine", flag: acceptedFlag, onNew: { XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { calledBack = true })
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
@@ -167,7 +167,7 @@ class FlagRepositoryTest : XCTestCase {
         try! declinedFlag.receivingNew("Madeleine")
         try! declinedFlag.receiveNewSuccess()
         declinedFlag.declining("Madeleine")
-        repository.receive("Madeleine", flag: declinedFlag, onNew: { XCTFail() }, onUpdate: { XCTFail() }, onAck: { calledBack = true })
+        repository.receive("Madeleine", flag: declinedFlag, onNew: { XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { calledBack = true })
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
@@ -189,11 +189,11 @@ class FlagRepositoryTest : XCTestCase {
         
         let receivingRepository = FlagRepository()
         let receivedFlag = Flag.decode(offeredFlag.encode())
-        receivingRepository.receive("Offererer", flag: receivedFlag, onNew: {}, onUpdate: {}, onAck: {})
+        receivingRepository.receive("Offererer", flag: receivedFlag, onNew: {}, onUpdate: {_ in }, onAck: {})
         try! receivedFlag.receiveNewSuccess()
         receivedFlag.accepting("Receiver")
         
-        offeringRepository.receive("Receiver", flag: Flag.decode(receivedFlag.encode()), onNew: {  calledBackForNew = true }, onUpdate: { XCTFail() }, onAck: { calledBackForAck = true })
+        offeringRepository.receive("Receiver", flag: Flag.decode(receivedFlag.encode()), onNew: {  calledBackForNew = true }, onUpdate: { _ in XCTFail() }, onAck: { calledBackForAck = true })
 
         let flags = offeringRepository.flags()
         XCTAssertEqual(flags.count, 1)
@@ -217,7 +217,7 @@ class FlagRepositoryTest : XCTestCase {
         try! acceptedFlag.receiveUpdateSuccess()
         acceptedFlag.accepting("Madeleine")
         repository.remove(offeredFlag)
-        repository.receive("Madeleine", flag: acceptedFlag, onNew: { calledBackForNew = true }, onUpdate: { XCTFail() }, onAck: { calledBackForAck = true })
+        repository.receive("Madeleine", flag: acceptedFlag, onNew: { calledBackForNew = true }, onUpdate: { _ in XCTFail() }, onAck: { calledBackForAck = true })
         let flags = repository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
