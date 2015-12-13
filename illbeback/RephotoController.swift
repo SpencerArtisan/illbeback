@@ -47,7 +47,6 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     func addPhoto(image: UIImage, orientation: UIDeviceOrientation) {
         flagRepository.save()
         photoAlbum!.addFlagImage(image, flag: pinToRephoto!.flag!)
-//        navigationController?.popToRootViewControllerAnimated(true)
         navigationController?.popViewControllerAnimated(false)
         pinToRephoto!.refreshAndReopen()
     }

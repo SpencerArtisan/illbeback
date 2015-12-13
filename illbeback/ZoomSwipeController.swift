@@ -58,6 +58,10 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         let previousPhotoPaths = self.photos.map { $0.imagePath }
         
         self.photos = mapController!.photoAlbum.photos(pinToRephoto!.flag!)
+        if self.photos.count == 0 {
+            goBack(nil)
+            return
+        }
         var i = 0
         for photo in self.photos {
             if !previousPhotoPaths.contains(photo.imagePath) {
@@ -190,7 +194,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     
     func goBack(sender : UIButton!) {
         pinToRephoto!.refreshAndReopen()
-        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController!.popViewControllerAnimated(false)
     }
     
     func showScreen(i: Int) {
