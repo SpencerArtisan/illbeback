@@ -349,16 +349,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             }
         }
     }
-//
-//    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-//       view.layer.zPosition = 2
-//    }
-//    
-//    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
-//        if !(view is MapPinView) || !(view as! MapPinView).flag!.isEvent() {
-//                view.layer.zPosition = 0
-//        }
-//    }
     
     func showPinsInShape() {
         let allPins = map.annotations

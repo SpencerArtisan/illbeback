@@ -59,7 +59,6 @@ class OutBox {
                 self.uploadFlagDetails(flag.originator(), flag: flag,
                     onComplete: {
                         flag.declineSuccess(invitee)
-                        self.flagRepository.remove(flag)
                         Utils.notifyObservers("DeclineSuccess", properties: ["flag": flag])
                     },
                     onError: {

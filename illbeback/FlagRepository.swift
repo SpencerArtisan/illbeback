@@ -39,7 +39,7 @@ class FlagRepository : NSObject {
                 originalFlag = flag
             } else if !isAck(from, flag: flag) {
                 print("Receiving updated flag")
-                originalFlag!.receivingUpdate(flag)
+                originalFlag!.receivingUpdate(from, flag: flag)
                 Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
                 onUpdate(updatedFlag: originalFlag!)
             }
@@ -119,6 +119,7 @@ class FlagRepository : NSObject {
         if _reading {
             return
         }
+        purge()
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
         let encodedFlags = flags().map {flag in flag.encode()}
