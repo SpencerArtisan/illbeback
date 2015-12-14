@@ -23,7 +23,6 @@ class FlagToken {
     private var _when: NSDate?
     private var _whenUpdate: NSDate?
     private var _invitees: [Invitee2]
-    private var _inviteesUpdate: [Invitee2]?
     
     init(id: String, state: FlagState, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) {
         self._id = id
@@ -63,11 +62,7 @@ class FlagToken {
         self._state = FlagState.fromCode(parts[6])
 
         if parts.count > 9 {
-            let inviteeParts = parts[9].componentsSeparatedByString("|")
-            self._invitees = inviteeParts[0] != "" ? inviteeParts[0].componentsSeparatedByString(";").map{Invitee2(code: $0)} : []
-            if inviteeParts.count == 2 {
-                self._inviteesUpdate = inviteeParts[1] != "" ? inviteeParts[1].componentsSeparatedByString(";").map{Invitee2(code: $0)} : []
-            }
+            self._invitees = parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee2(code: $0)} : []
         } else {
             self._invitees = []
         }
@@ -85,7 +80,6 @@ class FlagToken {
         _descriptionUpdate = token.description()
         _locationUpdate = token.location()
         _whenUpdate = token.when()
-        _inviteesUpdate = token.invitees()
     }
     
     func hasPendingUpdate() -> Bool {
@@ -96,11 +90,9 @@ class FlagToken {
         _description = _descriptionUpdate!
         _location = _locationUpdate!
         _when = _whenUpdate
-//        _invitees = _inviteesUpdate!
         _descriptionUpdate = nil
         _locationUpdate = nil
         _whenUpdate = nil
-        _inviteesUpdate = nil
     }
     
     func declineUpdate() {
@@ -139,10 +131,6 @@ class FlagToken {
     
     func invitees() -> [Invitee2] {
         return _invitees
-    }
-
-    func inviteesUpdate() -> [Invitee2]? {
-        return _inviteesUpdate
     }
     
     func clearInvitees() {
@@ -211,12 +199,11 @@ class FlagToken {
         let whenString = _when != nil ? formatter().stringFromDate(_when!) : ""
         let whenUpdateString = _whenUpdate != nil ? formatter().stringFromDate(_whenUpdate!) : ""
         let inviteesString = _invitees.map{$0.encode()}.joinWithSeparator(";")
-        let inviteesUpdateString = _inviteesUpdate == nil ? "" : ("|" + _inviteesUpdate!.map{$0.encode()}.joinWithSeparator(";"))
         let latitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.latitude)"
         let longitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.longitude)"
         let descriptionUpdateString = _descriptionUpdate == nil ? "" : "|\(_descriptionUpdate!)"
         let senderString = _sender == nil ? "" : "|\(_sender!)"
-        return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator)\(senderString):\(_state.code()):UNUSED:\(whenString),\(whenUpdateString):\(inviteesString)\(inviteesUpdateString)"
+        return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator)\(senderString):\(_state.code()):UNUSED:\(whenString),\(whenUpdateString):\(inviteesString)"
     }
     
     func whenFormatted() -> String {

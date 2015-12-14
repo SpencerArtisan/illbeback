@@ -81,6 +81,24 @@ class FlagTest: XCTestCase {
         XCTAssertEqual(flag.invitees()[0].state(), InviteeState.Inviting)
     }
     
+    func testInviteDifferentPeopleCreatesInvitingInvitees() {
+        let flag = createFlag()
+        flag.invite("Leon")
+        flag.invite("Madeleine")
+        XCTAssertEqual(flag.invitees().count, 2)
+        XCTAssertEqual(flag.invitees()[0].name(), "Leon")
+        XCTAssertEqual(flag.invitees()[1].name(), "Madeleine")
+    }
+    
+    func testInviteOverwirtesExistingInvitee() {
+        let flag = createFlag()
+        flag.invite("Friend")
+        flag.invite("Friend")
+        XCTAssert(flag.invitees().count == 1)
+        XCTAssertEqual(flag.invitees()[0].name(), "Friend")
+        XCTAssertEqual(flag.invitees()[0].state(), InviteeState.Inviting)
+    }
+    
     private func assertError(code: () throws -> Void) {
         do {
             try code()
