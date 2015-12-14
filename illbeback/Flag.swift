@@ -126,6 +126,10 @@ public class Flag {
         return _token.originator()
     }
     
+    func sender() -> String? {
+        return _token.sender()
+    }
+    
     func summary() -> String {
         if description() == "" {
             return type()
@@ -203,13 +207,13 @@ public class Flag {
     
     func receivingNew(from: String) throws {
         _token.state(.ReceivingNew)
-        _token.originator(from)
+        _token.sender(from)
         fireChangeEvent()
     }
     
     func receivingUpdate(from: String, flag: Flag) {
         _token.pendingUpdate(flag._token)
-        _token.originator(from)
+        _token.sender(from)
         _token.state(.ReceivingUpdate)
         fireChangeEvent()
     }

@@ -81,21 +81,23 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(events.count, 0)
     }
     
-    func testReceiveNewForwardedChangesOriginator() {
+    func testReceiveNewForwardedLeavesOriginator() {
         let flag1 = flag("a flag")
         repository.receive("Spencer", flag: flag1, onNew: { }, onUpdate: { _ in }, onAck: { })
         let flags = repository.flags()
-        XCTAssertEqual(flags[0].originator(), "Spencer")
+        XCTAssertEqual(flags[0].originator(), "originator")
+        XCTAssertEqual(flags[0].sender(), "Spencer")
     }
     
-    func testReceiveUpdateForwardedChangesOriginator() {
+    func testReceiveUpdateForwardedLeavesOriginator() {
         let flag1 = flag("a flag")
         repository.add(flag1)
         let flag2 = flag("an updated flag")
         flag2.invite("Madeleine")
         repository.receive("Spencer", flag: flag2, onNew: { }, onUpdate: { _ in }, onAck: { })
         let flags = repository.flags()
-        XCTAssertEqual(flags[0].originator(), "Spencer")
+        XCTAssertEqual(flags[0].originator(), "originator")
+        XCTAssertEqual(flags[0].sender(), "Spencer")
     }
     
     func testReceiveUpdateForwardedLeavesInvitees() {

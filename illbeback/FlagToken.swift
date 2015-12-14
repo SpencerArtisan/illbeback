@@ -18,6 +18,7 @@ class FlagToken {
     private var _location: CLLocationCoordinate2D
     private var _locationUpdate: CLLocationCoordinate2D?
     private var _originator: String
+    private var _sender: String?
     private var _state: FlagState
     private var _when: NSDate?
     private var _whenUpdate: NSDate?
@@ -38,19 +39,27 @@ class FlagToken {
     init(token: String) {
         var parts = token.componentsSeparatedByString(":")
         self._id = parts[4]
+        
         self._type = parts[0]
         let descriptionParts = parts[1].componentsSeparatedByString("|")
         self._description = descriptionParts[0]
         if descriptionParts.count == 2 {
             self._descriptionUpdate = descriptionParts[1]
         }
+        
         let latParts = parts[2].componentsSeparatedByString(",")
         let longParts = parts[3].componentsSeparatedByString(",")
         self._location = CLLocationCoordinate2D(latitude: (latParts[0] as NSString).doubleValue, longitude: (longParts[0] as NSString).doubleValue)
         if latParts.count == 2 && latParts[1] != "" && longParts.count == 2 && longParts[1] != "" {
             self._locationUpdate = CLLocationCoordinate2D(latitude: (latParts[1] as NSString).doubleValue, longitude: (longParts[1] as NSString).doubleValue)
         }
-        self._originator = parts[5]
+        
+        let originatorAndSender = parts[5].componentsSeparatedByString("|")
+        self._originator = originatorAndSender[0]
+        if originatorAndSender.count == 2 {
+            self._sender = originatorAndSender[1]
+        }
+        
         self._state = FlagState.fromCode(parts[6])
 
         if parts.count > 9 {
@@ -118,6 +127,14 @@ class FlagToken {
     
     func originator(originator: String) {
         _originator = originator
+    }
+    
+    func sender() -> String? {
+        return _sender
+    }
+    
+    func sender(sender: String) {
+        _sender = sender
     }
     
     func invitees() -> [Invitee2] {
@@ -198,7 +215,8 @@ class FlagToken {
         let latitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.latitude)"
         let longitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.longitude)"
         let descriptionUpdateString = _descriptionUpdate == nil ? "" : "|\(_descriptionUpdate!)"
-        return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator):\(_state.code()):UNUSED:\(whenString),\(whenUpdateString):\(inviteesString)\(inviteesUpdateString)"
+        let senderString = _sender == nil ? "" : "|\(_sender!)"
+        return "\(_type):\(_description)\(descriptionUpdateString):\(_location.latitude),\(latitudeUpdateString):\(_location.longitude),\(longitudeUpdateString):\(_id):\(_originator)\(senderString):\(_state.code()):UNUSED:\(whenString),\(whenUpdateString):\(inviteesString)\(inviteesUpdateString)"
     }
     
     func whenFormatted() -> String {

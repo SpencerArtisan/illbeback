@@ -34,9 +34,9 @@ class OutBox {
         for flag in flagRepository.flags() {
             let accepting = flag.invitees().filter {$0.state() == InviteeState.Accepting && $0.name() == Global.getUser().getName()}
             for invitee in accepting {
-                print("SENDING ACCEPT for \(flag.type()) to \(flag.originator())...")
+                print("SENDING ACCEPT for \(flag.type()) to \(flag.sender())...")
                 Utils.notifyObservers("Accepting", properties: ["flag": flag])
-                self.uploadFlagDetails(flag.originator(), flag: flag,
+                self.uploadFlagDetails(flag.sender()!, flag: flag,
                     onComplete: {
                         flag.acceptSuccess(invitee)
                         Utils.notifyObservers("AcceptSuccess", properties: ["flag": flag])
@@ -54,9 +54,9 @@ class OutBox {
         for flag in flagRepository.flags() {
             let declining = flag.invitees().filter {$0.state() == InviteeState.Declining && $0.name() == Global.getUser().getName()}
             for invitee in declining {
-                print("SENDING DECLINE for \(flag.type()) to \(flag.originator())...")
+                print("SENDING DECLINE for \(flag.type()) to \(flag.sender())...")
                 Utils.notifyObservers("Declining", properties: ["flag": flag])
-                self.uploadFlagDetails(flag.originator(), flag: flag,
+                self.uploadFlagDetails(flag.sender()!, flag: flag,
                     onComplete: {
                         flag.declineSuccess(invitee)
                         Utils.notifyObservers("DeclineSuccess", properties: ["flag": flag])
