@@ -19,11 +19,6 @@ class FlagTokenTest: XCTestCase {
         XCTAssertEqual(token!.invitees()[0].name(), decoded!.invitees()[0].name())
     }
     
-    func testEncodesInviteesUpdate() {
-        setUpWithUpdate()
-        XCTAssertEqual(token!.inviteesUpdate()![0].name(), decoded!.inviteesUpdate()![0].name())
-    }
-    
     func testEncodesOriginator() {
         setUpWithUpdate()
         XCTAssertEqual(token!.originator(), decoded!.originator())
@@ -74,12 +69,6 @@ class FlagTokenTest: XCTestCase {
     func testEncodesInviteesWhenNoUpdate() {
         setUpWithoutUpdate()
         XCTAssertEqual(token!.invitees()[0].name(), decoded!.invitees()[0].name())
-    }
-    
-    func testEncodesInviteesUpdateWhenNoUpdate() {
-        setUpWithoutUpdate()
-        XCTAssertTrue(token!.inviteesUpdate() == nil)
-        XCTAssertTrue(decoded!.inviteesUpdate() == nil)
     }
     
     func testEncodesDescriptionWhenNoUpdate() {

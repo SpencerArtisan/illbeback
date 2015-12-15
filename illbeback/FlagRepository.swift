@@ -34,7 +34,6 @@ class FlagRepository : NSObject {
                 print("Receiving new flag")
                 Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
                 try flag.receivingNew(from)
-                add(flag)
                 onNew()
                 originalFlag = flag
             } else if !isAck(from, flag: flag) {

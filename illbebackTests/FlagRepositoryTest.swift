@@ -83,10 +83,10 @@ class FlagRepositoryTest : XCTestCase {
     
     func testReceiveNewForwardedLeavesOriginator() {
         let flag1 = flag("a flag")
-        repository.receive("Spencer", flag: flag1, onNew: { }, onUpdate: { _ in }, onAck: { })
-        let flags = repository.flags()
-        XCTAssertEqual(flags[0].originator(), "originator")
-        XCTAssertEqual(flags[0].sender(), "Spencer")
+        let decodedFlag = Flag.decode(flag1.encode())
+        repository.receive("Spencer", flag: decodedFlag, onNew: { }, onUpdate: { _ in }, onAck: { })
+        XCTAssertEqual(decodedFlag.originator(), "originator")
+        XCTAssertEqual(decodedFlag.sender(), "Spencer")
     }
     
     func testReceiveUpdateForwardedLeavesOriginator() {
@@ -116,13 +116,12 @@ class FlagRepositoryTest : XCTestCase {
         var calledBack = false
         let flag1 = flag("a flag")
         flag1.invite("Madeleine")
-        repository.receive("Madeleine", flag: flag1, onNew: { calledBack = true }, onUpdate: { _ in XCTFail() }, onAck: { XCTFail() })
-        let flags = repository.flags()
-        XCTAssertEqual(flags.count, 1)
-        XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.ReceivingNew)
-        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
-        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Invited)
+        let decodedFlag = Flag.decode(flag1.encode())
+        repository.receive("Madeleine", flag: decodedFlag, onNew: { calledBack = true }, onUpdate: { _ in XCTFail() }, onAck: { XCTFail() })
+        XCTAssertEqual(decodedFlag.description(), "a flag")
+        XCTAssertEqual(decodedFlag.state(), FlagState.ReceivingNew)
+        XCTAssertEqual(decodedFlag.invitees()[0].name(), "Madeleine")
+        XCTAssertEqual(decodedFlag.invitees()[0].state(), InviteeState.Invited)
         XCTAssertTrue(calledBack)
     }
     
@@ -195,15 +194,14 @@ class FlagRepositoryTest : XCTestCase {
         try! receivedFlag.receiveNewSuccess()
         receivedFlag.accepting("Receiver")
         
-        offeringRepository.receive("Receiver", flag: Flag.decode(receivedFlag.encode()), onNew: {  calledBackForNew = true }, onUpdate: { _ in XCTFail() }, onAck: { calledBackForAck = true })
+        let decodedFlag = Flag.decode(receivedFlag.encode())
+        offeringRepository.receive("Receiver", flag: decodedFlag, onNew: {  calledBackForNew = true }, onUpdate: { _ in XCTFail() }, onAck: { calledBackForAck = true })
 
-        let flags = offeringRepository.flags()
-        XCTAssertEqual(flags.count, 1)
-        XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.ReceivingNew)
-        XCTAssertEqual(flags[0].invitees().count, 1)
-        XCTAssertEqual(flags[0].invitees()[0].name(), "Receiver")
-        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(decodedFlag.description(), "a flag")
+        XCTAssertEqual(decodedFlag.state(), FlagState.ReceivingNew)
+        XCTAssertEqual(decodedFlag.invitees().count, 1)
+        XCTAssertEqual(decodedFlag.invitees()[0].name(), "Receiver")
+        XCTAssertEqual(decodedFlag.invitees()[0].state(), InviteeState.Accepted)
         XCTAssertTrue(calledBackForNew)
         XCTAssertTrue(calledBackForAck)
     }
@@ -219,14 +217,14 @@ class FlagRepositoryTest : XCTestCase {
         try! acceptedFlag.receiveUpdateSuccess()
         acceptedFlag.accepting("Madeleine")
         repository.remove(offeredFlag)
-        repository.receive("Madeleine", flag: acceptedFlag, onNew: { calledBackForNew = true }, onUpdate: { _ in XCTFail() }, onAck: { calledBackForAck = true })
+        let decodedFlag = Flag.decode(acceptedFlag.encode())
+        repository.receive("Madeleine", flag: decodedFlag, onNew: { calledBackForNew = true }, onUpdate: { _ in XCTFail() }, onAck: { calledBackForAck = true })
         let flags = repository.flags()
-        XCTAssertEqual(flags.count, 1)
-        XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.ReceivingNew)
-        XCTAssertEqual(flags[0].invitees().count, 1)
-        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
-        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(decodedFlag.description(), "a flag")
+        XCTAssertEqual(decodedFlag.state(), FlagState.ReceivingNew)
+        XCTAssertEqual(decodedFlag.invitees().count, 1)
+        XCTAssertEqual(decodedFlag.invitees()[0].name(), "Madeleine")
+        XCTAssertEqual(decodedFlag.invitees()[0].state(), InviteeState.Accepted)
         XCTAssertTrue(calledBackForNew)
         XCTAssertTrue(calledBackForAck)
     }

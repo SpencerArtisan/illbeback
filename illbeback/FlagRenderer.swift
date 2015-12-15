@@ -22,6 +22,7 @@ class FlagRenderer: NSObject {
         Utils.addObserver(self, selector: "onFlagSent:", event: "FlagSent")
         Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
         Utils.addObserver(self, selector: "onFlagChanged:", event: "FlagChanged")
+        Utils.addObserver(self, selector: "onAckReceiveSuccess:", event: "AckReceiveSuccess")
     }
     
     func render(viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -55,25 +56,26 @@ class FlagRenderer: NSObject {
     
     func onFlagAdded(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
-        print("\(flag.type()) (\(flag.state())) added to repo.  Adding it to map...")
         add(flag)
     }
 
     func onFlagRemoved(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
-        print("\(flag.type()) removed from repo.  Removing from map...")
         remove(flag)
     }
     
     func onFlagSent(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
-        print("\(flag.type()) sent to someone.  Updating pin...")
         refresh(flag)
     }
     
     func onFlagReceiveSuccess(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
-        print("\(flag.type()) received from someone.  Updating pin...")
+        refresh(flag)
+    }
+    
+    func onAckReceiveSuccess(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
     }
     
@@ -103,8 +105,6 @@ class FlagRenderer: NSObject {
     }
     
     func refresh(pin: MapPinView) {
-//        print("Refreshing pin")
-//        map.deselectAnnotation(pin.annotation, animated: false)
         pin.refresh()
     }
 

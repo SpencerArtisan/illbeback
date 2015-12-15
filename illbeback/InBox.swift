@@ -50,10 +50,10 @@ class InBox {
                         try flag.receiveNewSuccess()
                         print("All new flag photos downloaded.  Removing from firebase")
                         firebaseFlag.ref.removeValue()
+                        self.flagRepository.add(flag)
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
                     } catch {
                         flag.kill()
-                        self.flagRepository.remove(flag)
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": flag, "from": from])
                     }
                 })
