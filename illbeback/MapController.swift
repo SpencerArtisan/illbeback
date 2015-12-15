@@ -46,6 +46,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var flagRenderer: FlagRenderer!
     var flagRepository: FlagRepository!
     var outBox: OutBox!
+    var inBox: InBox!
     
     func getView() -> UIView {
         return self.view
@@ -103,6 +104,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.shareController = ShareController(mapController: self)
         self.messageControlller = MessageController(mapController: self)
         self.outBox = OutBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
+        self.inBox = InBox(flagRepository: flagRepository, photoAlbum: photoAlbum).receive()
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
@@ -111,7 +113,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
   
         updateButtonStates()
         flagRepository.read()
-        outBox.send()
         
         Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
         Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
@@ -194,14 +195,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             checkForImminentEvents()
         }
         
-        downloadNewShares()
+        inBox.receive()
+        outBox.send()
         updateButtonStates()
         
         self.lastTimeAppUsed = NSDate()
-    }
-    
-    private func downloadNewShares() {
-        InBox(flagRepository: flagRepository, photoAlbum: photoAlbum).receive()
     }
     
     private func checkForImminentEvents() {

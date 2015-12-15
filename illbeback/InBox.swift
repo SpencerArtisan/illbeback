@@ -43,7 +43,7 @@ class InBox {
         let from = firebaseFlag.value["from"] as! String
         let flag = Flag.decode(encoded)
 
-        flagRepository.receive(from, flag: flag,
+        flagRepository.receive(from, to: Global.getUser().getName(), flag: flag,
             onNew: {
                 self.downloadImages(flag, onComplete: {
                     do {

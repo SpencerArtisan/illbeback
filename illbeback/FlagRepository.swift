@@ -26,27 +26,27 @@ class FlagRepository : NSObject {
         return _flags.filter {$0.state() != .Dead}
     }
     
-    func receive(from: String, flag: Flag, onNew: () -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: () -> ()) {
+    func receive(from: String, to: String, flag: Flag, onNew: () -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: () -> ()) {
         do {
             var originalFlag = find(flag.id())
             
             if originalFlag == nil && !isDecline(from, flag: flag) {
-                print("Receiving new flag")
+                print("Receiving new flag from \(from) to \(to)")
                 Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
                 try flag.receivingNew(from)
                 onNew()
                 originalFlag = flag
             } else if !isAck(from, flag: flag) {
-                print("Receiving updated flag")
+                print("Receiving updated flag from \(from) to \(to)")
                 originalFlag!.receivingUpdate(from, flag: flag)
                 Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
                 onUpdate(updatedFlag: originalFlag!)
             }
             
             if originalFlag != nil {
-                let invitee = originalFlag!.findInvitee2(from)
+                let invitee = originalFlag!.findInvitee2(to)
                 if invitee != nil {
-                    let inviteeState = flag.findInvitee2(from)!.state()
+                    let inviteeState = flag.findInvitee2(to)!.state()
                     
                     if inviteeState == .Inviting {
                         invitee!.inviteSuccess()
