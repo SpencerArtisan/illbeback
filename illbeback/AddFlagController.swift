@@ -238,6 +238,7 @@ class AddFlagController: UIViewController, UITextViewDelegate {
                 rewordingPin?.flag?.type(self.flagImage!)
                 mapController!.flagRepository.save()
                 let annotation = rewordingPin!.annotation!
+                print("add flag controller replacing pin")
                 rewordingPin?.mapController?.map?.deselectAnnotation(annotation, animated: false)
                 rewordingPin?.mapController?.map?.removeAnnotation(annotation)
                 rewordingPin?.mapController?.map?.addAnnotation(annotation)
