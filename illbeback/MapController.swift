@@ -14,6 +14,7 @@ import MapKit
 class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextViewDelegate {
     let HOUR: Double = 60 * 60
     
+
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var alarmButton: UIButton!
@@ -37,6 +38,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var newUserModal: Modal?
     var searchModal: Modal?
     var shapeModal: Modal?
+    var hintModal: Modal?
 
     let queue = dispatch_queue_create("com.artisan.cachequeue", DISPATCH_QUEUE_CONCURRENT);
     var newUserLabel: UILabel!
@@ -94,6 +96,9 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.newUserModal = Modal(viewName: "NewUser", owner: self)
         self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
+        self.hintModal = Modal(viewName: "Hint", owner: self, preserveHeight: true, fromBottom: 80.0)
+        let cancelHint = hintModal!.findElementByTag(2) as! UIButton
+        cancelHint.addTarget(self, action: "onClickHint:", forControlEvents: UIControlEvents.TouchUpInside)
         self.addFlag = AddFlagController(album: photoAlbum, mapController: self)
         self.eventListController = EventsController(mapController: self)
         self.flagListController = FlagsController(mapController: self)
@@ -118,6 +123,37 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
         Utils.addObserver(self, selector: "onDeclining:", event: "Declining")
     }
+    
+    private func hint(text: String) {
+        let message = hintModal!.findElementByTag(1) as! UILabel
+        message.text = text
+        hintModal!.slideOutFromRight(self.view)
+    }
+    
+    func onClickHint(sender : UIButton!) {
+        hintModal?.slideInFromRight(self.view)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+        
+        ensureUserKnown()
+        
+        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
+            updatePins()
+            checkForImminentEvents()
+            if flagRepository.flags().count == 0 {
+                hint("Take a photo and it will pin it to the map")
+            }
+        }
+        
+        inBox.receive()
+        outBox.send()
+        updateButtonStates()
+        
+        self.lastTimeAppUsed = NSDate()
+    }
+
     
     func onFlagReceiveSuccess(note: NSNotification) {
         updateButtonStates()
@@ -184,23 +220,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             self.navigationController?.pushViewController(zoomController, animated: true)
         }
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
-        
-        ensureUserKnown()
-        
-        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
-            updatePins()
-            checkForImminentEvents()
-        }
-        
-        inBox.receive()
-        outBox.send()
-        updateButtonStates()
-        
-        self.lastTimeAppUsed = NSDate()
-    }
+
     
     private func checkForImminentEvents() {
         let imminentEvents = flagRepository.imminentEvents()

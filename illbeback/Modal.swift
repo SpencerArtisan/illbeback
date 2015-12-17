@@ -10,9 +10,19 @@ import Foundation
 
 class Modal {
     private var view: UIView!
+    private var preserveHeight: Bool
+    private var fromBottom: CGFloat
+    
+    init(viewName: String, owner: UIViewController, preserveHeight: Bool, fromBottom: CGFloat) {
+        self.view = NSBundle.mainBundle().loadNibNamed(viewName, owner: owner, options: nil)[0] as? UIView
+        self.preserveHeight = preserveHeight
+        self.fromBottom = fromBottom
+    }
     
     init(viewName: String, owner: UIViewController) {
         self.view = NSBundle.mainBundle().loadNibNamed(viewName, owner: owner, options: nil)[0] as? UIView
+        self.preserveHeight = false
+        self.fromBottom = 0
     }
     
     func slideDownFromTop(parentView: UIView) {
@@ -50,7 +60,12 @@ class Modal {
     private func slideHorizontally(parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
         if self.view.superview == nil {
             parentView.addSubview(self.view)
-            self.view.frame = parentView.frame
+            if preserveHeight {
+                self.view.frame = CGRectMake(0, parentView.frame.height - self.view.frame.height - fromBottom,
+                                                                    parentView.frame.width, self.view.frame.height)
+            } else {
+                self.view.frame = parentView.frame
+            }
         }
         self.view.frame.origin.x = start
         
