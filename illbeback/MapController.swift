@@ -104,7 +104,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.shareController = ShareController(mapController: self)
         self.messageControlller = MessageController(mapController: self)
         self.outBox = OutBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
-        self.inBox = InBox(flagRepository: flagRepository, photoAlbum: photoAlbum).receive()
+        self.inBox = InBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
