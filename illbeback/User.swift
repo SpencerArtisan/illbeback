@@ -18,17 +18,17 @@ class User {
     }
     
     func getName() -> String {
-        return name!
+        return name!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
     }
     
     func setName(name: String) {
-        self.name = name
-        print("Setting user name to \(name)")
+        self.name = name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        print("Setting user name to \(self.name)")
         write()
     }
     
     func hasName() -> Bool {
-        return name != nil && name != ""
+        return name != nil && getName() != ""
     }
     
     func getFriends() -> [String] {
