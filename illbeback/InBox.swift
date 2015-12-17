@@ -29,16 +29,20 @@ class InBox {
         }
         
         shareRoot(Global.getUser().getName()).observeSingleEventOfType(.Value, withBlock: { snapshot in
-            let firebaseFlags = snapshot.children
-            while let firebaseFlag: FDataSnapshot = firebaseFlags.nextObject() as? FDataSnapshot {
-                Utils.runOnUiThread {
-                    self.receive(firebaseFlag)
-                }
-            }
+            self.receiveNextFlag(snapshot.children)
         })
     }
     
-    func receive(firebaseFlag: FDataSnapshot) {
+    private func receiveNextFlag(firebaseFlags:NSEnumerator) {
+        let firebaseFlag = firebaseFlags.nextObject() as? FDataSnapshot
+        if firebaseFlag != nil {
+            self.receive(firebaseFlag!, onComplete: {
+                self.receiveNextFlag(firebaseFlags)
+            })
+        }
+    }
+    
+    func receive(firebaseFlag: FDataSnapshot, onComplete: () -> ()) {
         let encoded = firebaseFlag.value["memory"] as! String
         let from = firebaseFlag.value["from"] as! String
         let flag = Flag.decode(encoded)
