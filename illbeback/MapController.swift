@@ -34,11 +34,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var eventListController: EventsController!
     var flagListController: FlagsController!
     var messageControlller: MessageController!
-
+    var hintControlller: HintController!
+    
     var newUserModal: Modal?
     var searchModal: Modal?
     var shapeModal: Modal?
-    var hintModal: Modal?
 
     let queue = dispatch_queue_create("com.artisan.cachequeue", DISPATCH_QUEUE_CONCURRENT);
     var newUserLabel: UILabel!
@@ -49,6 +49,8 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var flagRepository: FlagRepository!
     var outBox: OutBox!
     var inBox: InBox!
+    
+    var pressHintGiven = false
     
     func getView() -> UIView {
         return self.view
@@ -96,9 +98,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.newUserModal = Modal(viewName: "NewUser", owner: self)
         self.searchModal = Modal(viewName: "SearchView", owner: self)
         self.shapeModal = Modal(viewName: "ShapeOptions", owner: self)
-        self.hintModal = Modal(viewName: "Hint", owner: self, preserveHeight: true, fromBottom: 80.0)
-        let cancelHint = hintModal!.findElementByTag(2) as! UIButton
-        cancelHint.addTarget(self, action: "onClickHint:", forControlEvents: UIControlEvents.TouchUpInside)
         self.addFlag = AddFlagController(album: photoAlbum, mapController: self)
         self.eventListController = EventsController(mapController: self)
         self.flagListController = FlagsController(mapController: self)
@@ -108,6 +107,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.shapeController = ShapeController(map: map, mapController: self)
         self.shareController = ShareController(mapController: self)
         self.messageControlller = MessageController(mapController: self)
+        self.hintControlller = HintController(mapController: self)
         self.outBox = OutBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
         self.inBox = InBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
 
@@ -124,16 +124,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         Utils.addObserver(self, selector: "onDeclining:", event: "Declining")
     }
     
-    private func hint(text: String) {
-        let message = hintModal!.findElementByTag(1) as! UILabel
-        message.text = text
-        hintModal!.slideOutFromRight(self.view)
-    }
-    
-    func onClickHint(sender : UIButton!) {
-        hintModal?.slideInFromRight(self.view)
-    }
-    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true
         
@@ -142,9 +132,14 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
             updatePins()
             checkForImminentEvents()
-            if flagRepository.flags().count == 0 {
-                hint("Take a photo and it will pin it to the map")
+            if flagRepository.flags().count == 0 && hintControlller != nil && Global.userDefined() {
+                hintControlller.photoHint()
             }
+        }
+        
+        if flagRepository.flags().count == 1 && !pressHintGiven && hintControlller != nil {
+            hintControlller.pressMapHint()
+            pressHintGiven = true
         }
         
         inBox.receive()
@@ -274,7 +269,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
 
     // Callback for button on the UI
     func addFlagHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation?, when: NSDate?) {
-        let actualLocation = location == nil ? here.coordinate : location!
+        let actualLocation = location == nil ? (here == nil ? map.centerCoordinate : here.coordinate) : location!
         let flag = Flag.create(id, type: type, description: description, location: actualLocation, originator: Global.getUser().getName(), orientation: orientation, when: when)
         flagRepository.add(flag)
         updateButtonStates()
@@ -417,6 +412,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                 
                 if !Global.userDefined() {
                     Global.setUserName(textView.text)
+                    hintControlller.photoHint()
                 } else {
                     Global.getUser().addFriend(textView.text)
                     shareController.shareWith(textView.text)

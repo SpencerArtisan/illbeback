@@ -11,18 +11,20 @@ import Foundation
 class Modal {
     private var view: UIView!
     private var preserveHeight: Bool
-    private var fromBottom: CGFloat
+    private var _fromBottom: CGFloat = 0
     
-    init(viewName: String, owner: UIViewController, preserveHeight: Bool, fromBottom: CGFloat) {
+    init(viewName: String, owner: UIViewController, preserveHeight: Bool) {
         self.view = NSBundle.mainBundle().loadNibNamed(viewName, owner: owner, options: nil)[0] as? UIView
         self.preserveHeight = preserveHeight
-        self.fromBottom = fromBottom
     }
     
     init(viewName: String, owner: UIViewController) {
         self.view = NSBundle.mainBundle().loadNibNamed(viewName, owner: owner, options: nil)[0] as? UIView
         self.preserveHeight = false
-        self.fromBottom = 0
+    }
+    
+    func fromBottom(value: CGFloat) {
+        _fromBottom = value
     }
     
     func slideDownFromTop(parentView: UIView) {
@@ -61,10 +63,15 @@ class Modal {
         if self.view.superview == nil {
             parentView.addSubview(self.view)
             if preserveHeight {
-                self.view.frame = CGRectMake(0, parentView.frame.height - self.view.frame.height - fromBottom,
+                self.view.frame = CGRectMake(0, parentView.frame.height - self.view.frame.height - _fromBottom,
                                                                     parentView.frame.width, self.view.frame.height)
             } else {
                 self.view.frame = parentView.frame
+            }
+        } else {
+            if preserveHeight {
+                self.view.frame = CGRectMake(0, parentView.frame.height - self.view.frame.height - _fromBottom,
+                    parentView.frame.width, self.view.frame.height)
             }
         }
         self.view.frame.origin.x = start
