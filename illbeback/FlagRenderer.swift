@@ -25,10 +25,10 @@ class FlagRenderer: NSObject {
         Utils.addObserver(self, selector: "onAckReceiveSuccess:", event: "AckReceiveSuccess")
     }
     
-    func render(viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func render(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MapPin {
             let pinData = annotation as! MapPin
-            var pinView = map.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
+            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
             
             if pinView == nil {
                 pinView = MapPinView(mapController: mapController, flag: pinData.flag)
@@ -36,13 +36,13 @@ class FlagRenderer: NSObject {
             
             return pinView
         } else if annotation is ShapeCorner {
-            var pinView = map.dequeueReusableAnnotationViewWithIdentifier("corner") as! ShapeCornerView!
+            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("corner") as! ShapeCornerView!
             
             if pinView == nil {
                 pinView = ShapeCornerView(mapController: mapController)
             }
             
-            self.mapController.map.selectAnnotation(pinView.annotation!, animated: false)
+            pinView.selected = true
 
             return pinView
         }

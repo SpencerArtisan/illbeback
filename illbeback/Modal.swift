@@ -76,7 +76,7 @@ class Modal {
         }
         self.view.frame.origin.x = start
         
-        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             var sliderFrame = self.view.frame
             sliderFrame.origin.x = end
             self.view.frame = sliderFrame
@@ -90,7 +90,7 @@ class Modal {
         }
         self.view.frame.origin.y = start
         
-        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             var sliderFrame = self.view.frame
             sliderFrame.origin.y = end
             self.view.frame = sliderFrame

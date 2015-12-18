@@ -138,7 +138,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         }
         
         if flagRepository.flags().count == 1 && !pressHintGiven && hintControlller != nil {
-            hintControlller.pressMapHint()
+            hintControlller.dismissHint()
+            Utils.delay(3) {
+                self.hintControlller.pressMapHint()
+            }
             pressHintGiven = true
         }
         
@@ -235,6 +238,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             newUserText.becomeFirstResponder()
             newUserText.text = ""
             newUserModal?.slideOutFromRight(self.view)
+            hintControlller.sharingNameHint()
         }
     }
     
@@ -334,7 +338,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     
     // Callback for display pins on map
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        return flagRenderer.render(viewForAnnotation: annotation)
+        return flagRenderer.render(mapView, viewForAnnotation: annotation)
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
@@ -359,7 +363,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                 if (aView as! MapPinView).flag!.isEvent() {
                     aView.layer.zPosition = 1
                 }
-            }
+            } 
         }
     }
     
@@ -412,7 +416,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                 
                 if !Global.userDefined() {
                     Global.setUserName(textView.text)
-                    hintControlller.photoHint()
+                    hintControlller.dismissHint()
+                    Utils.delay(2) {
+                        self.hintControlller.photoHint()
+                    }
                 } else {
                     Global.getUser().addFriend(textView.text)
                     shareController.shareWith(textView.text)

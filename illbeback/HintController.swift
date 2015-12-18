@@ -20,6 +20,11 @@ class HintController : NSObject {
         cancelHint.addTarget(self, action: "onClickHint:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
+    func sharingNameHint() {
+        image(4).hidden = true
+        hint("Your friends will need this", fromBottom: mapController.view.frame.height - 200)
+    }
+    
     func photoHint() {
         image(4).hidden = false
         hint("Take a photo and it will pin it to the map", fromBottom: 74)
@@ -27,7 +32,7 @@ class HintController : NSObject {
     
     func pressMapHint() {
         image(4).hidden = true
-        hint("You can also add flags by pressing on the map for a couple of seconds", fromBottom: 250)
+        hint("You can also add flags by pressing on the map for a couple of seconds", fromBottom: mapController.view.frame.height - 300)
     }
     
     private func image(tag: Int) -> UIImageView {
@@ -38,11 +43,14 @@ class HintController : NSObject {
         hintModal.fromBottom(fromBottom)
         let message = hintModal!.findElementByTag(1) as! UILabel
         message.text = text
-        hintModal!.slideOutFromRight(mapController.view)
+        hintModal!.slideOutFromLeft(mapController.view)
     }
     
     func onClickHint(sender : UIButton!) {
-        hintModal?.slideInFromRight(mapController.view)
+        dismissHint()
     }
 
+    func dismissHint() {
+        hintModal?.slideInFromLeft(mapController.view)
+    }
 }

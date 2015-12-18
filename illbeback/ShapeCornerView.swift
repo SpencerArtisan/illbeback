@@ -18,7 +18,6 @@ class ShapeCornerView : MKAnnotationView {
         self.mapController = mapController
         
         canShowCallout = false
-        annotation = annotation
         enabled = true
         draggable = true
         initImage()
