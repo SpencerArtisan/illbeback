@@ -26,16 +26,18 @@ class FlagRepository : NSObject {
         return _flags.filter {$0.state() != .Dead}
     }
     
-    func receive(from: String, to: String, flag: Flag, onNew: () -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: () -> ()) {
+    func receive(from: String, to: String, flag: Flag, onNew: (newFlag: Flag) -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: (ackedFlag: Flag) -> ()) {
         do {
             var originalFlag = find(flag.id())
             
-            if originalFlag == nil && !isDecline(from, flag: flag) {
-                print("Receiving new flag from \(from) to \(to)")
-                Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
-                try flag.receivingNew(from)
-                onNew()
-                originalFlag = flag
+            if originalFlag == nil {
+                if !isDecline(from, flag: flag) {
+                    print("Receiving new flag from \(from) to \(to)")
+                    Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
+                    try flag.receivingNew(from)
+                    onNew(newFlag: flag)
+                    originalFlag = flag
+                }
             } else if !isAck(from, flag: flag) {
                 print("Receiving updated flag from \(from) to \(to)")
                 originalFlag!.receivingUpdate(from, flag: flag)
@@ -44,18 +46,23 @@ class FlagRepository : NSObject {
             }
             
             if originalFlag != nil {
-                let invitee = originalFlag!.findInvitee2(to)
-                if invitee != nil {
-                    let inviteeState = flag.findInvitee2(to)!.state()
-                    
-                    if inviteeState == .Inviting {
+                if isAck(from, flag: flag) {
+                    let invitee = originalFlag!.findInvitee2(from)
+                    if invitee != nil {
+                        let inviteeState = flag.findInvitee2(from)!.state()
+                        
+                        if inviteeState == .Accepting {
+                            invitee!.acceptSuccess()
+                            onAck(ackedFlag: originalFlag!)
+                        } else if inviteeState == .Declining {
+                            invitee!.declineSuccess()
+                            onAck(ackedFlag: originalFlag!)
+                        }
+                    }
+                } else {
+                    let invitee = originalFlag!.findInvitee2(to)
+                    if invitee != nil {
                         invitee!.inviteSuccess()
-                    } else if inviteeState == .Accepting {
-                        invitee!.acceptSuccess()
-                        onAck()
-                    } else if inviteeState == .Declining {
-                        invitee!.declineSuccess()
-                        onAck()
                     }
                 }
             }

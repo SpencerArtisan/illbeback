@@ -14,6 +14,7 @@ import MapKit
 class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextViewDelegate {
     let HOUR: Double = 60 * 60
     
+
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var alarmButton: UIButton!
@@ -33,7 +34,8 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var eventListController: EventsController!
     var flagListController: FlagsController!
     var messageControlller: MessageController!
-
+    var hintControlller: HintController!
+    
     var newUserModal: Modal?
     var searchModal: Modal?
     var shapeModal: Modal?
@@ -47,6 +49,8 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var flagRepository: FlagRepository!
     var outBox: OutBox!
     var inBox: InBox!
+    
+    var pressHintGiven = false
     
     func getView() -> UIView {
         return self.view
@@ -103,6 +107,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.shapeController = ShapeController(map: map, mapController: self)
         self.shareController = ShareController(mapController: self)
         self.messageControlller = MessageController(mapController: self)
+        self.hintControlller = HintController(mapController: self)
         self.outBox = OutBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
         self.inBox = InBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
 
@@ -118,6 +123,35 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
         Utils.addObserver(self, selector: "onDeclining:", event: "Declining")
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+        
+        ensureUserKnown()
+        
+        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
+            updatePins()
+            checkForImminentEvents()
+            if flagRepository.flags().count == 0 && hintControlller != nil && Global.userDefined() {
+                hintControlller.photoHint()
+            }
+        }
+        
+        if flagRepository.flags().count == 1 && !pressHintGiven && hintControlller != nil {
+            hintControlller.dismissHint()
+            Utils.delay(3) {
+                self.hintControlller.pressMapHint()
+            }
+            pressHintGiven = true
+        }
+        
+        inBox.receive()
+        outBox.send()
+        updateButtonStates()
+        
+        self.lastTimeAppUsed = NSDate()
+    }
+
     
     func onFlagReceiveSuccess(note: NSNotification) {
         updateButtonStates()
@@ -184,23 +218,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             self.navigationController?.pushViewController(zoomController, animated: true)
         }
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
-        
-        ensureUserKnown()
-        
-        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
-            updatePins()
-            checkForImminentEvents()
-        }
-        
-        inBox.receive()
-        outBox.send()
-        updateButtonStates()
-        
-        self.lastTimeAppUsed = NSDate()
-    }
+
     
     private func checkForImminentEvents() {
         let imminentEvents = flagRepository.imminentEvents()
@@ -220,6 +238,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             newUserText.becomeFirstResponder()
             newUserText.text = ""
             newUserModal?.slideOutFromRight(self.view)
+            hintControlller.sharingNameHint()
         }
     }
     
@@ -254,7 +273,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
 
     // Callback for button on the UI
     func addFlagHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation?, when: NSDate?) {
-        let actualLocation = location == nil ? here.coordinate : location!
+        let actualLocation = location == nil ? (here == nil ? map.centerCoordinate : here.coordinate) : location!
         let flag = Flag.create(id, type: type, description: description, location: actualLocation, originator: Global.getUser().getName(), orientation: orientation, when: when)
         flagRepository.add(flag)
         updateButtonStates()
@@ -319,7 +338,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     
     // Callback for display pins on map
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        return flagRenderer.render(viewForAnnotation: annotation)
+        return flagRenderer.render(mapView, viewForAnnotation: annotation)
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
@@ -344,7 +363,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                 if (aView as! MapPinView).flag!.isEvent() {
                     aView.layer.zPosition = 1
                 }
-            }
+            } 
         }
     }
     
@@ -397,6 +416,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                 
                 if !Global.userDefined() {
                     Global.setUserName(textView.text)
+                    hintControlller.dismissHint()
+                    Utils.delay(2) {
+                        self.hintControlller.photoHint()
+                    }
                 } else {
                     Global.getUser().addFriend(textView.text)
                     shareController.shareWith(textView.text)

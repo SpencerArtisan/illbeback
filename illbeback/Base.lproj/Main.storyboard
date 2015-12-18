@@ -215,7 +215,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="alarmButton" destination="fbX-Mm-eun" id="Fh2-AA-56G"/>
-                        <outlet property="map" destination="dG8-Di-Pbv" id="94p-Wb-CrR"/>
+                        <outlet property="map" destination="dG8-Di-Pbv" id="4Nk-kH-bTH"/>
                         <outlet property="newButton" destination="KPX-1B-P6g" id="soz-Qz-czE"/>
                     </connections>
                 </viewController>

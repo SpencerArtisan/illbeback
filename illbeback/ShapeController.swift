@@ -74,6 +74,12 @@ class ShapeController : UIViewController {
         for i in 0...corners.count - 1 {
             let corner = corners[i]
             map!.addAnnotation(corner)
+            
+            
+//            Utils.runOnUiThread {
+//                self.mapController.map.selectAnnotation(corner, animated: false)
+//            }
+
         }
     }
 

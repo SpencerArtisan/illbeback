@@ -62,15 +62,15 @@ class MapPinView: MKAnnotationView {
     
     func refreshAndReopen() {
         refresh()
-        print("Select B")
+//        print("Select B")
         self.mapController?.map.selectAnnotation(self.annotation!, animated: false)
     }
 
     func refresh() {
-        print("Deselect A")
+//        print("Deselect A")
         self.mapController?.map.deselectAnnotation(self.annotation!, animated: false)
         Utils.runOnUiThread { self.closeCallout() }
-        print("Refreshing pin view")
+//        print("Refreshing pin view")
         fromHeight = 0
         whenHeight = 0
         calloutView = nil
@@ -389,23 +389,23 @@ class MapPinView: MKAnnotationView {
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        if lastSelectionChange != nil { print("this: \(flag!.type()) : \(NSDate().timeIntervalSinceDate(lastSelectionChange!))") }
+//        if lastSelectionChange != nil { print("this: \(flag!.type()) : \(NSDate().timeIntervalSinceDate(lastSelectionChange!))") }
         if MapPinView.lastCalloutAction != nil { print("all: \(flag!.type()) : \(NSDate().timeIntervalSinceDate(MapPinView.lastCalloutAction!))") }
 //
         if selected && MapPinView.lastCalloutAction != nil && NSDate().timeIntervalSinceDate(MapPinView.lastCalloutAction!) < 0.3 {
-            print("all: IGNORE quickfire select on \(flag?.type())")
+//            print("all: IGNORE quickfire select on \(flag?.type())")
             return
         }
 
         if lastSelectionChange != nil && NSDate().timeIntervalSinceDate(lastSelectionChange!) < 0.3 {
-            print("this: IGNORE quickfire set selected to \(selected) on \(flag?.type())")
+//            print("this: IGNORE quickfire set selected to \(selected) on \(flag?.type())")
             return
         }
 
-        print("Set selected to \(selected)")
+//        print("Set selected to \(selected)")
 
         if (self.selected) {
-            print("Opening pin view")
+//            print("Opening pin view")
 
             let callout = getCalloutView()
             addSubview(callout)
@@ -432,7 +432,7 @@ class MapPinView: MKAnnotationView {
     }
     
     private func closeCallout() {
-        print("Closing pin view")
+//        print("Closing pin view")
         self.subviews.forEach { $0.removeFromSuperview() }
         self.layer.zPosition = 1
     }
@@ -440,7 +440,7 @@ class MapPinView: MKAnnotationView {
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         var hitView = super.hitTest(point, withEvent: event)
         if !isCalloutVisible() && hitView != nil && self.annotation != nil {
-            print("Treating hittest as pin selection of \(flag?.summary())")
+//            print("Treating hittest as pin selection of \(flag?.summary())")
             Utils.runOnUiThread {
                 self.setSelected(true, animated: false)
             }
@@ -451,7 +451,7 @@ class MapPinView: MKAnnotationView {
             let hitCalloutView = hitCallout(point)
 
             if isCalloutVisible() && !hitCalloutView && self.annotation != nil {
-                print("Treating hittest as pin DEselection of \(flag?.summary())")
+//                print("Treating hittest as pin DEselection of \(flag?.summary())")
                 Utils.runOnUiThread {
                     self.setSelected(false, animated: false)
                 }
@@ -462,7 +462,7 @@ class MapPinView: MKAnnotationView {
         if hitCallout(point) {
             lastSelectionChange = NSDate()
             MapPinView.lastCalloutAction = NSDate()
-            print("Callout action on \(flag!.type())")
+//            print("Callout action on \(flag!.type())")
         }
         let system = NSProcessInfo.processInfo().systemUptime
         let elapsed = system - event!.timestamp

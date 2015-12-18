@@ -10,9 +10,21 @@ import Foundation
 
 class Modal {
     private var view: UIView!
+    private var preserveHeight: Bool
+    private var _fromBottom: CGFloat = 0
+    
+    init(viewName: String, owner: UIViewController, preserveHeight: Bool) {
+        self.view = NSBundle.mainBundle().loadNibNamed(viewName, owner: owner, options: nil)[0] as? UIView
+        self.preserveHeight = preserveHeight
+    }
     
     init(viewName: String, owner: UIViewController) {
         self.view = NSBundle.mainBundle().loadNibNamed(viewName, owner: owner, options: nil)[0] as? UIView
+        self.preserveHeight = false
+    }
+    
+    func fromBottom(value: CGFloat) {
+        _fromBottom = value
     }
     
     func slideDownFromTop(parentView: UIView) {
@@ -50,11 +62,21 @@ class Modal {
     private func slideHorizontally(parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
         if self.view.superview == nil {
             parentView.addSubview(self.view)
-            self.view.frame = parentView.frame
+            if preserveHeight {
+                self.view.frame = CGRectMake(0, parentView.frame.height - self.view.frame.height - _fromBottom,
+                                                                    parentView.frame.width, self.view.frame.height)
+            } else {
+                self.view.frame = parentView.frame
+            }
+        } else {
+            if preserveHeight {
+                self.view.frame = CGRectMake(0, parentView.frame.height - self.view.frame.height - _fromBottom,
+                    parentView.frame.width, self.view.frame.height)
+            }
         }
         self.view.frame.origin.x = start
         
-        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             var sliderFrame = self.view.frame
             sliderFrame.origin.x = end
             self.view.frame = sliderFrame
@@ -68,7 +90,7 @@ class Modal {
         }
         self.view.frame.origin.y = start
         
-        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             var sliderFrame = self.view.frame
             sliderFrame.origin.y = end
             self.view.frame = sliderFrame

@@ -67,6 +67,8 @@
 		97C7326A1C0E5BA0002B5214 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667F1A9A19570007FC2C /* User.swift */; };
 		97C7326C1C0E608D002B5214 /* FlagStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C7326B1C0E608D002B5214 /* FlagStateTest.swift */; };
 		97CF12831C164E3200A74398 /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CF12821C164E3200A74398 /* MessageController.swift */; };
+		97D1A7A51C2336E000518831 /* Hint.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D1A7A41C2336E000518831 /* Hint.xib */; };
+		97D1A7A71C23495900518831 /* HintController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D1A7A61C23495900518831 /* HintController.swift */; };
 		97D34AAA1C12244A00118819 /* FlagTokenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AA91C12244A00118819 /* FlagTokenTest.swift */; };
 		97D34AAC1C12414400118819 /* InviteeStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AAB1C12414400118819 /* InviteeStateTest.swift */; };
 		97D34AAF1C12453100118819 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AAE1C12453100118819 /* Util.swift */; };
@@ -167,6 +169,8 @@
 		97C7325B1C0E5A70002B5214 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C7326B1C0E608D002B5214 /* FlagStateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagStateTest.swift; sourceTree = "<group>"; };
 		97CF12821C164E3200A74398 /* MessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
+		97D1A7A41C2336E000518831 /* Hint.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Hint.xib; sourceTree = "<group>"; };
+		97D1A7A61C23495900518831 /* HintController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintController.swift; sourceTree = "<group>"; };
 		97D34AA91C12244A00118819 /* FlagTokenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagTokenTest.swift; sourceTree = "<group>"; };
 		97D34AAB1C12414400118819 /* InviteeStateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeStateTest.swift; sourceTree = "<group>"; };
 		97D34AAE1C12453100118819 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -254,6 +258,8 @@
 				97D34ABA1C12F5BB00118819 /* OutBox.swift */,
 				97FA73F41C135D5A00E9A57A /* InBox.swift */,
 				97CF12821C164E3200A74398 /* MessageController.swift */,
+				97D1A7A41C2336E000518831 /* Hint.xib */,
+				97D1A7A61C23495900518831 /* HintController.swift */,
 			);
 			name = CleanCode;
 			sourceTree = "<group>";
@@ -566,6 +572,7 @@
 				97FE66841A9A50C60007FC2C /* MessageView.xib in Resources */,
 				97767D5C1B91DE2200B6A827 /* ShapeOptions.xib in Resources */,
 				97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */,
+				97D1A7A51C2336E000518831 /* Hint.xib in Resources */,
 				97B05E261BC4746100B24BEC /* ZoomPageControl.xib in Resources */,
 				9772846C1A8A818B00CE628D /* user.plist in Resources */,
 				97FE66821A9A1A400007FC2C /* memories.plist in Resources */,
@@ -662,6 +669,7 @@
 				97A3534D1A800B9500973CAC /* MapController.swift in Sources */,
 				973F25251C0B7C450034A235 /* FlagState.swift in Sources */,
 				97A353491A800B9500973CAC /* AppDelegate.swift in Sources */,
+				97D1A7A71C23495900518831 /* HintController.swift in Sources */,
 				975CD7441AFFD6E800662BFC /* ZoomController.swift in Sources */,
 				97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */,
 				97FE66801A9A19570007FC2C /* User.swift in Sources */,

@@ -10,20 +10,22 @@ import XCTest
 import CoreLocation
 
 class FlagRepositoryTest : XCTestCase {
-    private let repository = FlagRepository()
+    private let originatorRepository = FlagRepository()
+    private let inviteeRepository = FlagRepository()
+    private let invitee2Repository = FlagRepository()
 
     func testEvents() {
-        repository.add(event("an event"))
-        repository.add(flag("not an event"))
-        let events = repository.events()
+        originatorRepository.add(event("an event"))
+        originatorRepository.add(flag("not an event"))
+        let events = originatorRepository.events()
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0].description(), "an event")
     }
     
     func testImminentEvents() {
-        repository.add(flag(NSDate(), description: "today event"))
-        repository.add(flag(NSDate.distantFuture(), description: "distant event"))
-        let events = repository.imminentEvents()
+        originatorRepository.add(flag(NSDate(), description: "today event"))
+        originatorRepository.add(flag(NSDate.distantFuture(), description: "distant event"))
+        let events = originatorRepository.imminentEvents()
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0].description(), "today event")
     }
@@ -42,194 +44,383 @@ class FlagRepositoryTest : XCTestCase {
 //    }
     
     func testFind() {
-        repository.add(flag("a flag"))
-        XCTAssertEqual(repository.find("id")?.description(), "a flag")
+        originatorRepository.add(flag("a flag"))
+        XCTAssertEqual(originatorRepository.find("id")?.description(), "a flag")
     }
     
     func testFindFails() {
-        XCTAssertEqual(repository.find("unknown"), nil)
+        XCTAssertEqual(originatorRepository.find("unknown"), nil)
     }
     
     func testAdd() {
-        repository.add(flag("a flag"))
-        let flags = repository.flags()
+        originatorRepository.add(flag("a flag"))
+        let flags = originatorRepository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
     }
     
     func testRemove() {
         let flag1 = flag("a flag")
-        repository.add(flag1)
-        repository.remove(flag1)
-        let flags = repository.flags()
+        originatorRepository.add(flag1)
+        originatorRepository.remove(flag1)
+        let flags = originatorRepository.flags()
         XCTAssertEqual(flags.count, 0)
     }
     
     func testDeadFlagsIgnored() {
         let flag1 = flag("a flag")
-        repository.add(flag1)
+        originatorRepository.add(flag1)
         flag1.kill()
-        let flags = repository.flags()
+        let flags = originatorRepository.flags()
         XCTAssertEqual(flags.count, 0)
     }
     
     func testDeadEventsIgnored() {
         let event1 = event("a flag")
-        repository.add(event1)
+        originatorRepository.add(event1)
         event1.kill()
-        let events = repository.events()
+        let events = originatorRepository.events()
         XCTAssertEqual(events.count, 0)
     }
-    
-    func testReceiveNewForwardedLeavesOriginator() {
-        let flag1 = flag("a flag")
-        let decodedFlag = Flag.decode(flag1.encode())
-        repository.receive("Spencer", to: "originator", flag: decodedFlag, onNew: { }, onUpdate: { _ in }, onAck: { })
-        XCTAssertEqual(decodedFlag.originator(), "originator")
-        XCTAssertEqual(decodedFlag.sender(), "Spencer")
-    }
-    
-    func testReceiveUpdateForwardedLeavesOriginator() {
-        let flag1 = flag("a flag")
-        repository.add(flag1)
-        let flag2 = flag("an updated flag")
-        flag2.invite("Madeleine")
-        repository.receive("Spencer", to: "originator", flag: flag2, onNew: { }, onUpdate: { _ in }, onAck: { })
-        let flags = repository.flags()
-        XCTAssertEqual(flags[0].originator(), "originator")
-        XCTAssertEqual(flags[0].sender(), "Spencer")
-    }
-    
-    func testReceiveUpdateForwardedLeavesInvitees() {
-        let flag1 = flag("a flag")
-        flag1.invite("Madeleine")
-        repository.add(flag1)
-        let flag2 = flag("an updated flag")
-        flag2.invite("Leon")
-        repository.receive("Spencer", to: "Madeleine", flag: flag2, onNew: { }, onUpdate: { _ in }, onAck: { })
-        let flags = repository.flags()
-        XCTAssertEqual(flags[0].invitees().count, 1)
-        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
+
+    func testOfferNew() {
+        let originalFlag = offer()
+        
+        XCTAssertEqual(originalFlag.description(), "a flag")
+        XCTAssertEqual(originalFlag.state(), FlagState.Neutral)
+        XCTAssertTrue(originalFlag.invitees().count == 1)
+        XCTAssertEqual(originalFlag.invitees()[0].name(), "invitee")
+        XCTAssertEqual(originalFlag.invitees()[0].state(), InviteeState.Invited)
     }
     
     func testReceiveNew() {
-        var calledBack = false
-        let flag1 = flag("a flag")
-        flag1.invite("Madeleine")
-        let decodedFlag = Flag.decode(flag1.encode())
-        repository.receive("originator", to: "Madeleine", flag: decodedFlag, onNew: { calledBack = true }, onUpdate: { _ in XCTFail() }, onAck: { XCTFail() })
-        XCTAssertEqual(decodedFlag.description(), "a flag")
-        XCTAssertEqual(decodedFlag.state(), FlagState.ReceivingNew)
-        XCTAssertEqual(decodedFlag.invitees()[0].name(), "Madeleine")
-        XCTAssertEqual(decodedFlag.invitees()[0].state(), InviteeState.Invited)
-        XCTAssertTrue(calledBack)
+        let receivedFlag = receive(offer())
+        
+        XCTAssertEqual(receivedFlag.description(), "a flag")
+        XCTAssertEqual(receivedFlag.state(), FlagState.ReceivedNew)
+        XCTAssertTrue(receivedFlag.invitees().count == 1)
+        XCTAssertEqual(receivedFlag.invitees()[0].name(), "invitee")
+        XCTAssertEqual(receivedFlag.invitees()[0].state(), InviteeState.Invited)
+    }
+
+    func testReceiveNewAccepted() {
+        accept(receive(offer()))
+
+        XCTAssertEqual(originatorFlag().description(), "a flag")
+        XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(originatorFlag().invitees().count == 1)
+        XCTAssertEqual(originatorFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(originatorFlag().invitees()[0].state(), InviteeState.Accepted)
+        
+        XCTAssertEqual(inviteeFlag().description(), "a flag")
+        XCTAssertEqual(inviteeFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(inviteeFlag().invitees().count == 1)
+        XCTAssertEqual(inviteeFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(inviteeFlag().invitees()[0].state(), InviteeState.Accepted)
+    }
+    
+    func testTwoInviteesReceiveNewAccepted() {
+        accept(receive(offer()))
+        acceptByInvitee2(receiveByInvitee2(offerToInvitee2(originatorFlag())))
+        
+        XCTAssertEqual(originatorFlag().description(), "a flag")
+        XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(originatorFlag().invitees().count == 2)
+        XCTAssertEqual(originatorFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(originatorFlag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(originatorFlag().invitees()[1].name(), "invitee2")
+        XCTAssertEqual(originatorFlag().invitees()[1].state(), InviteeState.Accepted)
+        
+        XCTAssertEqual(inviteeFlag().description(), "a flag")
+        XCTAssertEqual(inviteeFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(inviteeFlag().invitees().count == 1)
+        XCTAssertEqual(inviteeFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(inviteeFlag().invitees()[0].state(), InviteeState.Accepted)
+        
+        XCTAssertEqual(invitee2Flag().description(), "a flag")
+        XCTAssertEqual(invitee2Flag().state(), FlagState.Neutral)
+        XCTAssertTrue(invitee2Flag().invitees().count == 2)
+        XCTAssertEqual(invitee2Flag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(invitee2Flag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(invitee2Flag().invitees()[1].name(), "invitee2")
+        XCTAssertEqual(invitee2Flag().invitees()[1].state(), InviteeState.Accepted)
+    }
+    
+    func testReceiveNewDeclined() {
+        decline(receive(offer()))
+        
+        XCTAssertEqual(originatorFlag().description(), "a flag")
+        XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(originatorFlag().invitees().count == 1)
+        XCTAssertEqual(originatorFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(originatorFlag().invitees()[0].state(), InviteeState.Declined)
+        
+        XCTAssertTrue(inviteeRepository.flags().count == 0)
+    }
+ 
+    func testOfferUpdate() {
+        let originalFlag = accept(receive(offer()))
+        try! originalFlag.description("an updated flag")
+        offer(originalFlag)
+        
+        XCTAssertEqual(originatorFlag().description(), "an updated flag")
+        XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(originatorFlag().invitees().count == 1)
+        XCTAssertEqual(originatorFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(originatorFlag().invitees()[0].state(), InviteeState.Invited)
     }
     
     func testReceiveUpdate() {
-        var calledBack = false
-        let flag1 = flag("a flag")
-        repository.add(flag1)
-        let flag2 = flag("an updated flag")
-        flag2.invite("Madeleine")
-        repository.receive("originator", to: "Madeleine", flag: flag2, onNew: { XCTFail() }, onUpdate: { _ in calledBack = true }, onAck: { XCTFail() })
-        let flags = repository.flags()
-        XCTAssertEqual(flags.count, 1)
-        XCTAssertEqual(flags[0].description(), "an updated flag")
-        XCTAssertEqual(flags[0].state(), FlagState.ReceivingUpdate)
-        XCTAssertTrue(calledBack)
-    }
-    
-    func testReceiveAcceptNewAck() {
-        var calledBack = false
-        let offeredFlag = flag("a flag")
-        repository.add(offeredFlag)
-        offeredFlag.invite("Madeleine")
-        let acceptedFlag = Flag.decode(offeredFlag.encode())
-        try! acceptedFlag.receivingNew("Madeleine")
-        try! acceptedFlag.receiveNewSuccess()
-        acceptedFlag.accepting("Madeleine")
-        repository.receive("Spencer", to: "Madeleine", flag: acceptedFlag, onNew: { XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { calledBack = true })
-        let flags = repository.flags()
-        XCTAssertEqual(flags.count, 1)
-        XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.Neutral)
-        XCTAssertEqual(flags[0].invitees().count, 1)
-        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
-        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Accepted)
-        XCTAssertTrue(calledBack)
-    }
-    
-    func testReceiveDeclineNewAck() {
-        var calledBack = false
-        let offeredFlag = flag("a flag")
-        repository.add(offeredFlag)
-        offeredFlag.invite("Madeleine")
-        let declinedFlag = Flag.decode(offeredFlag.encode())
-        try! declinedFlag.receivingNew("Madeleine")
-        try! declinedFlag.receiveNewSuccess()
-        declinedFlag.declining("Madeleine")
-        repository.receive("Spencer", to: "Madeleine", flag: declinedFlag, onNew: { XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { calledBack = true })
-        let flags = repository.flags()
-        XCTAssertEqual(flags.count, 1)
-        XCTAssertEqual(flags[0].description(), "a flag")
-        XCTAssertEqual(flags[0].state(), FlagState.Neutral)
-        XCTAssertEqual(flags[0].invitees().count, 1)
-        XCTAssertEqual(flags[0].invitees()[0].name(), "Madeleine")
-        XCTAssertEqual(flags[0].invitees()[0].state(), InviteeState.Declined)
-        XCTAssertTrue(calledBack)
-    }
-
-    func testReceiveAcceptNewAckWhenOriginalFlagHasBeenRemoved() {
-        var calledBackForNew = false
-        var calledBackForAck = false
-        let offeredFlag = flag("a flag")
-        let offeringRepository = FlagRepository()
-        offeredFlag.invite("Receiver")
-        offeringRepository.add(offeredFlag)
-        offeringRepository.remove(offeredFlag)
+        let originalFlag = accept(receive(offer()))
+        try! originalFlag.description("an updated flag")
+        receive(offer(originalFlag))
         
-        let receivingRepository = FlagRepository()
-        let receivedFlag = Flag.decode(offeredFlag.encode())
-        receivingRepository.receive("Offererer", to: "Receiver", flag: receivedFlag, onNew: {}, onUpdate: {_ in }, onAck: {})
-        try! receivedFlag.receiveNewSuccess()
-        receivedFlag.accepting("Receiver")
+        XCTAssertEqual(inviteeFlag().description(), "an updated flag")
+        XCTAssertEqual(inviteeFlag().state(), FlagState.ReceivedUpdate)
+        XCTAssertTrue(inviteeFlag().invitees().count == 1)
+        XCTAssertEqual(inviteeFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(inviteeFlag().invitees()[0].state(), InviteeState.Invited)
+    }
+
+    func testReceiveUpdateAccepted() {
+        let originalFlag = accept(receive(offer()))
+        try! originalFlag.description("an updated flag")
+        accept(receive(offer(originalFlag)))
         
-        let decodedFlag = Flag.decode(receivedFlag.encode())
-        offeringRepository.receive("Receiver",to: "Offerer", flag: decodedFlag, onNew: {  calledBackForNew = true }, onUpdate: { _ in XCTFail() }, onAck: { calledBackForAck = true })
+        XCTAssertEqual(originatorFlag().description(), "an updated flag")
+        XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(originatorFlag().invitees().count == 1)
+        XCTAssertEqual(originatorFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(originatorFlag().invitees()[0].state(), InviteeState.Accepted)
+        
+        XCTAssertEqual(inviteeFlag().description(), "an updated flag")
+        XCTAssertEqual(inviteeFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(inviteeFlag().invitees().count == 1)
+        XCTAssertEqual(inviteeFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(inviteeFlag().invitees()[0].state(), InviteeState.Accepted)
+    }
 
-        XCTAssertEqual(decodedFlag.description(), "a flag")
-        XCTAssertEqual(decodedFlag.state(), FlagState.ReceivingNew)
-        XCTAssertEqual(decodedFlag.invitees().count, 1)
-        XCTAssertEqual(decodedFlag.invitees()[0].name(), "Receiver")
-        XCTAssertEqual(decodedFlag.invitees()[0].state(), InviteeState.Accepted)
-        XCTAssertTrue(calledBackForNew)
-        XCTAssertTrue(calledBackForAck)
+    func testReceiveUpdateDeclined() {
+        let originalFlag = accept(receive(offer()))
+        try! originalFlag.description("an updated flag")
+        decline(receive(offer(originalFlag)))
+        
+        XCTAssertEqual(originatorFlag().description(), "an updated flag")
+        XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(originatorFlag().invitees().count == 1)
+        XCTAssertEqual(originatorFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(originatorFlag().invitees()[0].state(), InviteeState.Declined)
+    
+        XCTAssertEqual(inviteeFlag().description(), "a flag")
+        XCTAssertEqual(inviteeFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(inviteeFlag().invitees().count == 1)
+        XCTAssertEqual(inviteeFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(inviteeFlag().invitees()[0].state(), InviteeState.Declined)
     }
     
-    func testReceiveAcceptUpdateAckWhenOriginalFlagHasBeenRemoved() {
-        var calledBackForNew = false
-        var calledBackForAck = false
+    func testInviteeOffersUpdate() {
+        accept(receive(offer()))
+        try! inviteeFlag().description("an updated flag")
+        offerFromInvitee(inviteeFlag())
+        
+        XCTAssertEqual(inviteeFlag().description(), "an updated flag")
+        XCTAssertEqual(inviteeFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(inviteeFlag().invitees().count == 2)
+        XCTAssertEqual(inviteeFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(inviteeFlag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(inviteeFlag().invitees()[1].name(), "originator")
+        XCTAssertEqual(inviteeFlag().invitees()[1].state(), InviteeState.Invited)
+    }
+    
+    func testInviteeOfferedUpdateAccepted() {
+        accept(receive(offer()))
+        try! inviteeFlag().description("an updated flag")
+        acceptByOriginator(receiveByOriginator(offerFromInvitee(inviteeFlag())))
+        
+        XCTAssertEqual(originatorFlag().description(), "an updated flag")
+        XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(originatorFlag().invitees().count == 2)
+        XCTAssertEqual(originatorFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(originatorFlag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(originatorFlag().invitees()[1].name(), "originator")
+        XCTAssertEqual(originatorFlag().invitees()[1].state(), InviteeState.Accepted)
+        
+        XCTAssertEqual(inviteeFlag().description(), "an updated flag")
+        XCTAssertEqual(inviteeFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(inviteeFlag().invitees().count == 2)
+        XCTAssertEqual(inviteeFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(inviteeFlag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(inviteeFlag().invitees()[1].name(), "originator")
+        XCTAssertEqual(inviteeFlag().invitees()[1].state(), InviteeState.Accepted)
+    }
+    
+    
+    func testTwoInviteesReceiveNewAcceptedOneUpdatez() {
+        accept(receive(offer()))
+        acceptByInvitee2(receiveByInvitee2(offerToInvitee2(originatorFlag())))
+        try! inviteeFlag().description("an updated flag")
+        acceptByOriginator(receiveByOriginator(offerFromInvitee(inviteeFlag())))
+        
+        XCTAssertEqual(originatorFlag().description(), "an updated flag")
+        XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(originatorFlag().invitees().count == 3)
+        XCTAssertEqual(originatorFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(originatorFlag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(originatorFlag().invitees()[1].name(), "invitee2")
+        XCTAssertEqual(originatorFlag().invitees()[1].state(), InviteeState.Accepted)
+        XCTAssertEqual(originatorFlag().invitees()[2].name(), "originator")
+        XCTAssertEqual(originatorFlag().invitees()[2].state(), InviteeState.Accepted)
+        
+        XCTAssertEqual(inviteeFlag().description(), "an updated flag")
+        XCTAssertEqual(inviteeFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(inviteeFlag().invitees().count == 2)
+        XCTAssertEqual(inviteeFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(inviteeFlag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(inviteeFlag().invitees()[1].name(), "originator")
+        XCTAssertEqual(inviteeFlag().invitees()[1].state(), InviteeState.Accepted)
+        
+        XCTAssertEqual(invitee2Flag().description(), "a flag")
+        XCTAssertEqual(invitee2Flag().state(), FlagState.Neutral)
+        XCTAssertTrue(invitee2Flag().invitees().count == 2)
+        XCTAssertEqual(invitee2Flag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(invitee2Flag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(invitee2Flag().invitees()[1].name(), "invitee2")
+        XCTAssertEqual(invitee2Flag().invitees()[1].state(), InviteeState.Accepted)
+    }
+    
+    
+    
+    
+    func testInviteeOfferedUpdateDeclined() {
+        accept(receive(offer()))
+        try! inviteeFlag().description("an updated flag")
+        declineByOriginator(receiveByOriginator(offerFromInvitee(inviteeFlag())))
+        
+        XCTAssertEqual(originatorFlag().description(), "a flag")
+        XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(originatorFlag().invitees().count == 2)
+        XCTAssertEqual(originatorFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(originatorFlag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(originatorFlag().invitees()[1].name(), "originator")
+        XCTAssertEqual(originatorFlag().invitees()[1].state(), InviteeState.Declined)
+        
+        XCTAssertEqual(inviteeFlag().description(), "an updated flag")
+        XCTAssertEqual(inviteeFlag().state(), FlagState.Neutral)
+        XCTAssertTrue(inviteeFlag().invitees().count == 2)
+        XCTAssertEqual(inviteeFlag().invitees()[0].name(), "invitee")
+        XCTAssertEqual(inviteeFlag().invitees()[0].state(), InviteeState.Accepted)
+        XCTAssertEqual(inviteeFlag().invitees()[1].name(), "originator")
+        XCTAssertEqual(inviteeFlag().invitees()[1].state(), InviteeState.Declined)
+    }
+    
+    private func offer() -> Flag {
+        return offer("invitee")
+    }
+    
+    private func offerToInvitee2(offeredFlag: Flag) -> Flag {
+        return offer(offeredFlag, to: "invitee2")
+    }
+    
+    private func offer(to: String) -> Flag {
         let offeredFlag = flag("a flag")
-        repository.add(offeredFlag)
-        offeredFlag.invite("Madeleine")
-        let acceptedFlag = Flag.decode(offeredFlag.encode())
-        acceptedFlag.receivingUpdate("Spencer", flag: Flag.decode(offeredFlag.encode()))
-        try! acceptedFlag.receiveUpdateSuccess()
-        acceptedFlag.accepting("Madeleine")
-        repository.remove(offeredFlag)
-        let decodedFlag = Flag.decode(acceptedFlag.encode())
-        repository.receive("Spencer", to: "Madeleine", flag: decodedFlag, onNew: { calledBackForNew = true }, onUpdate: { _ in XCTFail() }, onAck: { calledBackForAck = true })
-        let flags = repository.flags()
-        XCTAssertEqual(decodedFlag.description(), "a flag")
-        XCTAssertEqual(decodedFlag.state(), FlagState.ReceivingNew)
-        XCTAssertEqual(decodedFlag.invitees().count, 1)
-        XCTAssertEqual(decodedFlag.invitees()[0].name(), "Madeleine")
-        XCTAssertEqual(decodedFlag.invitees()[0].state(), InviteeState.Accepted)
-        XCTAssertTrue(calledBackForNew)
-        XCTAssertTrue(calledBackForAck)
+        originatorRepository.add(offeredFlag)
+        return offer(offeredFlag, to: to)
+    }
+
+    private func offer(offeredFlag: Flag) -> Flag {
+        return offer(offeredFlag, to: "invitee")
     }
     
+    private func offer(offeredFlag: Flag, to: String) -> Flag {
+        offeredFlag.invite(to).inviteSuccess()
+        return originatorFlag()
+    }
+    
+    private func offerFromInvitee(offeredFlag: Flag) -> Flag {
+        offeredFlag.invite("originator").inviteSuccess()
+        return inviteeFlag()
+    }
+    
+    private func receive(offeredFlag: Flag) -> Flag {
+        return receive(offeredFlag, from: "originator", to: "invitee", toRepository: inviteeRepository)
+    }
+    
+    private func receiveByInvitee2(offeredFlag: Flag) -> Flag {
+        return receive(offeredFlag, from: "originator", to: "invitee2", toRepository: invitee2Repository)
+    }
+    
+    private func receiveByOriginator(offeredFlag: Flag) -> Flag {
+        return receive(offeredFlag, from: "invitee", to: "originator", toRepository: originatorRepository)
+    }
+    
+    private func receive(offeredFlag: Flag, from: String, to: String, toRepository: FlagRepository) -> Flag {
+        let receivedFlag = transfer(offeredFlag)
+        toRepository.receive(from, to: to, flag: receivedFlag, onNew: { flag in try! flag.receiveNewSuccess(); toRepository.add(flag) }, onUpdate: {flag in try! flag.receiveUpdateSuccess() }, onAck: { _ in XCTFail() })
+        return toRepository.flags()[0]
+    }
+    
+    private func accept(receivedFlag: Flag) -> Flag {
+        accept(receivedFlag, from: "invitee", to: "originator", toRepository: originatorRepository)
+        return originatorFlag()
+    }
+    
+    private func acceptByInvitee2(receivedFlag: Flag) -> Flag {
+        accept(receivedFlag, from: "invitee2", to: "originator", toRepository: originatorRepository)
+        return originatorFlag()
+    }
+    
+    private func acceptByOriginator(receivedFlag: Flag) -> Flag {
+        accept(receivedFlag, from: "originator", to: "invitee", toRepository: inviteeRepository)
+        return inviteeFlag()
+    }
+    
+    private func decline(receivedFlag: Flag) -> Flag {
+        decline(receivedFlag, from: "invitee", to: "originator", toRepository: originatorRepository)
+        return originatorFlag()
+    }
+    
+    private func declineByOriginator(receivedFlag: Flag) -> Flag {
+        decline(receivedFlag, from: "originator", to: "invitee", toRepository: inviteeRepository)
+        return inviteeFlag()
+    }
+    
+    private func decline(receivedFlag: Flag, from: String, to: String, toRepository: FlagRepository)  {
+        let invitee = receivedFlag.declining(from)
+        let returnedFlag = transfer(receivedFlag)
+        var calledBack = false
+        toRepository.receive(from, to: to, flag: returnedFlag, onNew: { _ in XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { _ in calledBack = true })
+        XCTAssertTrue(calledBack)
+        receivedFlag.declineSuccess(invitee)
+    }
+    
+    private func accept(receivedFlag: Flag, from: String, to: String, toRepository: FlagRepository) {
+        let invitee = receivedFlag.accepting(from)
+        let returnedFlag = transfer(receivedFlag)
+        var calledBack = false
+        toRepository.receive(from, to: to, flag: returnedFlag, onNew: { _ in XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { _ in calledBack = true })
+        XCTAssertTrue(calledBack)
+        receivedFlag.acceptSuccess(invitee)
+    }
 
+    private func originatorFlag() -> Flag {
+        XCTAssertTrue(originatorRepository.flags().count == 1)
+        return originatorRepository.flags()[0]
+    }
+    
+    private func inviteeFlag() -> Flag {
+        XCTAssertTrue(inviteeRepository.flags().count == 1)
+        return inviteeRepository.flags()[0]
+    }
+    
+    private func invitee2Flag() -> Flag {
+        XCTAssertTrue(invitee2Repository.flags().count == 1)
+        return invitee2Repository.flags()[0]
+    }
+    
+    private  func transfer(flag: Flag) -> Flag {
+        return Flag.decode(flag.encode())
+    }
+    
     private func event(description: String) -> Flag {
         return flag(NSDate(), description: description)
     }
