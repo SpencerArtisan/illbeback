@@ -217,7 +217,14 @@ public class Flag {
         _token.pendingUpdate(flag._token)
         _token.sender(from)
         _token.state(.ReceivingUpdate)
-        _token.invitees(flag.invitees())
+        
+        flag.invitees().forEach {invitee in
+                let existingInvitee = self._token.findInvitee(invitee.name())
+                if existingInvitee == nil {
+                    self._token.addInvitee(invitee)
+                }
+        }
+        
         fireChangeEvent()
     }
     
