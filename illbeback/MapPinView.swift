@@ -389,23 +389,23 @@ class MapPinView: MKAnnotationView {
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-//        if lastSelectionChange != nil { print("this: \(flag!.type()) : \(NSDate().timeIntervalSinceDate(lastSelectionChange!))") }
+        if lastSelectionChange != nil { print("this: \(flag!.type()) : \(NSDate().timeIntervalSinceDate(lastSelectionChange!))") }
         if MapPinView.lastCalloutAction != nil { print("all: \(flag!.type()) : \(NSDate().timeIntervalSinceDate(MapPinView.lastCalloutAction!))") }
 //
-        if selected && MapPinView.lastCalloutAction != nil && NSDate().timeIntervalSinceDate(MapPinView.lastCalloutAction!) < 0.3 {
-//            print("all: IGNORE quickfire select on \(flag?.type())")
+        if selected && MapPinView.lastCalloutAction != nil && NSDate().timeIntervalSinceDate(MapPinView.lastCalloutAction!) < 0.6 {
+            print("all: IGNORE quickfire select on \(flag?.type())")
             return
         }
 
-        if lastSelectionChange != nil && NSDate().timeIntervalSinceDate(lastSelectionChange!) < 0.3 {
-//            print("this: IGNORE quickfire set selected to \(selected) on \(flag?.type())")
+        if lastSelectionChange != nil && NSDate().timeIntervalSinceDate(lastSelectionChange!) < 0.6 {
+            print("this: IGNORE quickfire set selected to \(selected) on \(flag?.type())")
             return
         }
 
-//        print("Set selected to \(selected)")
+        print("Set selected to \(selected)")
 
         if (self.selected) {
-//            print("Opening pin view")
+            print("Opening pin view")
 
             let callout = getCalloutView()
             addSubview(callout)
@@ -440,7 +440,7 @@ class MapPinView: MKAnnotationView {
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         var hitView = super.hitTest(point, withEvent: event)
         if !isCalloutVisible() && hitView != nil && self.annotation != nil {
-//            print("Treating hittest as pin selection of \(flag?.summary())")
+            print("Treating hittest as pin selection of \(flag?.summary())")
             Utils.runOnUiThread {
                 self.setSelected(true, animated: false)
             }
@@ -451,7 +451,7 @@ class MapPinView: MKAnnotationView {
             let hitCalloutView = hitCallout(point)
 
             if isCalloutVisible() && !hitCalloutView && self.annotation != nil {
-//                print("Treating hittest as pin DEselection of \(flag?.summary())")
+                print("Treating hittest as pin DEselection of \(flag?.summary())")
                 Utils.runOnUiThread {
                     self.setSelected(false, animated: false)
                 }
@@ -462,7 +462,7 @@ class MapPinView: MKAnnotationView {
         if hitCallout(point) {
             lastSelectionChange = NSDate()
             MapPinView.lastCalloutAction = NSDate()
-//            print("Callout action on \(flag!.type())")
+            print("Callout action on \(flag!.type())")
         }
         let system = NSProcessInfo.processInfo().systemUptime
         let elapsed = system - event!.timestamp
@@ -472,7 +472,7 @@ class MapPinView: MKAnnotationView {
             hitView = calloutView!.hitTest(point, withEvent: event)
             if acceptButton != nil && hitButton(point, button: acceptButton) {
                 if flag!.isBlank() {
-                    mapController?.unblankMemory(self)
+                    mapController?.unblankFlag(self)
                 } else if pendingAccept() {
                     mapController?.acceptRecentShare(flag!)
                 }
@@ -483,16 +483,16 @@ class MapPinView: MKAnnotationView {
                     mapController?.declineRecentShare(flag!)
                 }
             } else if !pendingAccept() && hitButton(point, button: dateView) {
-                mapController?.rescheduleMemory(self)
+                mapController?.rescheduleFlag(self)
                 lastSelectionChange = nil
             } else if !pendingAccept() && hitButton(point, button: deleteButton) {
                 mapController?.deleteFlag(self)
             } else if !pendingAccept() && hitButton(point, button: shareButton) {
-                mapController?.shareMemory(self)
+                mapController?.shareFlag(self)
             } else if !pendingAccept() && hitButton(point, button: photoButton) {
                 mapController?.rephotoMemory(self)
             } else if !pendingAccept() && hitButton(point, button: subtitleView) {
-                mapController?.rewordMemory(self)
+                mapController?.rewordFlag(self)
                 lastSelectionChange = nil
             } else if photoView != nil && hitPicture(point) {
                 mapController?.zoomPicture(self)

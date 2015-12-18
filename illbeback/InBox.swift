@@ -62,6 +62,7 @@ class InBox {
                         flag.kill()
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": newFlag, "from": from])
                     }
+                    onComplete()
                 })
             },
             onUpdate: { updatedFlag in
@@ -75,12 +76,14 @@ class InBox {
                         updatedFlag.reset(FlagState.Neutral)
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": updatedFlag, "from": from])
                     }
+                    onComplete()
                 })
             },
             onAck: { ackedFlag in
                 print("Ack processed.  Removing from firebase")
                 firebaseFlag.ref.removeValue()
                 Utils.notifyObservers("AckReceiveSuccess", properties: ["flag": ackedFlag, "from": from])
+                onComplete()
             })
     }
     

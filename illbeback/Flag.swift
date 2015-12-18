@@ -188,10 +188,11 @@ public class Flag {
     
     func declining(friend: String) -> Invitee2 {
         var invitee = _token.findInvitee(friend)
+        if !_token.hasPendingUpdate() || state() == .ReceivedNew {
+            dead = true
+        }
         if _token.hasPendingUpdate() {
             _token.declineUpdate()
-        } else {
-            dead = true
         }
         if invitee != nil {
             invitee!.declining()
@@ -216,7 +217,11 @@ public class Flag {
     func receivingUpdate(from: String, flag: Flag) {
         _token.pendingUpdate(flag._token)
         _token.sender(from)
-        _token.state(.ReceivingUpdate)
+        if state() == .ReceivedNew {
+            _token.state(.ReceivingNew)
+        } else {
+            _token.state(.ReceivingUpdate)
+        }
         
         flag.invitees().forEach {invitee in
                 let existingInvitee = self._token.findInvitee(invitee.name())
@@ -229,7 +234,11 @@ public class Flag {
     }
     
     func receiveUpdateSuccess() throws {
-        try state([.ReceivingUpdate], targetState: .ReceivedUpdate)
+        if state() == .ReceivingNew {
+            _token.state(.ReceivedNew)
+        } else {
+            _token.state(.ReceivedUpdate)
+        }
     }
     
     func receiveNewSuccess() throws {

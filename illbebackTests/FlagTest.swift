@@ -30,6 +30,25 @@ class FlagTest: XCTestCase {
         XCTAssertEqual(flag.description(), "External description")
     }
     
+    func testUpdateReceivedNewBecomesReceivingNew() {
+        let flag = createFlag()
+        try! flag.receivingNew("from")
+        try! flag.receiveNewSuccess()
+        flag.receivingUpdate("from", flag: createFlag("External description"))
+        XCTAssertEqual(flag.state(), FlagState.ReceivingNew)
+        XCTAssertEqual(flag.description(), "External description")
+    }
+    
+    func testUpdateReceivedNewThenSuccessBecomesReceivedNew() {
+        let flag = createFlag()
+        try! flag.receivingNew("from")
+        try! flag.receiveNewSuccess()
+        flag.receivingUpdate("from", flag: createFlag("External description"))
+        try! flag.receiveUpdateSuccess()
+        XCTAssertEqual(flag.state(), FlagState.ReceivedNew)
+        XCTAssertEqual(flag.description(), "External description")
+    }
+
     func testUpdateSuccessChangesDescription() {
         let flag = createFlag()
         flag.receivingUpdate("from", flag: createFlag("External description"))

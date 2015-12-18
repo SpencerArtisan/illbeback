@@ -69,7 +69,7 @@ class ShareController : UIViewController {
     }
     
     // Callback for button on the callout
-    func shareMemory(pins: [MapPinView]) {
+    func shareFlag(pins: [MapPinView]) {
         pinsToShare = pins
 
         shareModal?.slideOutFromLeft(mapController.view)

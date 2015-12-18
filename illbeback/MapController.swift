@@ -84,7 +84,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             }
         }
 
-        shareController.shareMemory(sharing)
+        shareController.shareFlag(sharing)
     }
 
     override func viewDidLoad() {
@@ -308,24 +308,24 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         outBox.send()
     }
 
-    func shareMemory(pin: MapPinView) {
-        shareController.shareMemory([pin])
+    func shareFlag(pin: MapPinView) {
+        shareController.shareFlag([pin])
     }
     
     // Callback for button on the callout
-    func rewordMemory(pin: MapPinView) {
+    func rewordFlag(pin: MapPinView) {
         deselect(pin)
         addFlag.reword(self, pin: pin)
     }
     
     // Callback for button on the callout
-    func rescheduleMemory(pin: MapPinView) {
+    func rescheduleFlag(pin: MapPinView) {
         deselect(pin)
         addFlag.reschedule(self, pin: pin)
     }
     
     // Callback for button on the callout
-    func unblankMemory(pin: MapPinView) {
+    func unblankFlag(pin: MapPinView) {
         deselect(pin)
         addFlag.unblank(self, pin: pin)
     }
