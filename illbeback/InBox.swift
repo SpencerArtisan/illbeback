@@ -28,6 +28,8 @@ class InBox {
             return
         }
         
+        print("Resceive triggered")
+        
         shareRoot(Global.getUser().getName()).observeSingleEventOfType(.Value, withBlock: { snapshot in
             self.receiveNextFlag(snapshot.children)
         })
@@ -48,17 +50,17 @@ class InBox {
         let flag = Flag.decode(encoded)
 
         flagRepository.receive(from, to: Global.getUser().getName(), flag: flag,
-            onNew: {
-                self.downloadImages(flag, onComplete: {
+            onNew: { newFlag in
+                self.downloadImages(newFlag, onComplete: {
                     do {
-                        try flag.receiveNewSuccess()
+                        try newFlag.receiveNewSuccess()
                         print("All new flag photos downloaded.  Removing from firebase")
                         firebaseFlag.ref.removeValue()
-                        self.flagRepository.add(flag)
-                        Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": flag, "from": from])
+                        self.flagRepository.add(newFlag)
+                        Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": newFlag, "from": from])
                     } catch {
                         flag.kill()
-                        Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": flag, "from": from])
+                        Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": newFlag, "from": from])
                     }
                 })
             },
@@ -75,10 +77,10 @@ class InBox {
                     }
                 })
             },
-            onAck: {
+            onAck: { ackedFlag in
                 print("Ack processed.  Removing from firebase")
                 firebaseFlag.ref.removeValue()
-                Utils.notifyObservers("AckReceiveSuccess", properties: ["flag": flag, "from": from])
+                Utils.notifyObservers("AckReceiveSuccess", properties: ["flag": ackedFlag, "from": from])
             })
     }
     

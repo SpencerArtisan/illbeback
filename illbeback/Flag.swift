@@ -147,8 +147,8 @@ public class Flag {
         return invitee
     }
     
-    func accepting(friend: String) {
-        let invitee = _token.findInvitee(friend)
+    func accepting(friend: String) -> Invitee2 {
+        var invitee = _token.findInvitee(friend)
         if _token.hasPendingUpdate() {
             _token.acceptUpdate()
         }
@@ -156,9 +156,10 @@ public class Flag {
             invitee!.accepting()
         } else {
             print("Warning.  Accepting invitee can't find themselves in the invitee list")
-            let invitee = invite(friend)
-            invitee.accepting()
+            invitee = invite(friend)
+            invitee!.accepting()
         }
+        return invitee!
     }
     
     func acceptSuccess(invitee: Invitee2) {
@@ -185,8 +186,8 @@ public class Flag {
         invitee.declineFailure()
     }
     
-    func declining(friend: String) {
-        let invitee = _token.findInvitee(friend)
+    func declining(friend: String) -> Invitee2 {
+        var invitee = _token.findInvitee(friend)
         if _token.hasPendingUpdate() {
             _token.declineUpdate()
         } else {
@@ -196,9 +197,10 @@ public class Flag {
             invitee!.declining()
         } else {
             print("Warning.  Declining invitee can't find themselves in the invitee list")
-            let invitee = invite(friend)
-            invitee.declining()
+            invitee = invite(friend)
+            invitee!.declining()
         }
+        return invitee!
     }
     
     func canUpdate() -> Bool {
@@ -215,6 +217,7 @@ public class Flag {
         _token.pendingUpdate(flag._token)
         _token.sender(from)
         _token.state(.ReceivingUpdate)
+        _token.invitees(flag.invitees())
         fireChangeEvent()
     }
     

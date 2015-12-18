@@ -133,6 +133,10 @@ class FlagToken {
         return _invitees
     }
     
+    func invitees(invitees: [Invitee2]) {
+        _invitees = invitees
+    }
+    
     func clearInvitees() {
         _invitees = []
     }

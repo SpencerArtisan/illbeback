@@ -16,14 +16,14 @@
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Take a photo and it will pin it to the map" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ftI-xm-ZzQ">
                     <rect key="frame" x="40" y="4" width="437" height="67"/>
-                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="29"/>
+                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="26"/>
                     <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <size key="shadowOffset" width="2" height="2"/>
                 </label>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bEM-ah-Q8G" userLabel="cancel">
-                    <rect key="frame" x="25" y="0.0" width="476" height="155"/>
+                    <rect key="frame" x="20" y="0.0" width="476" height="155"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </button>
             </subviews>
@@ -34,18 +34,18 @@
             <constraints>
                 <constraint firstAttribute="bottomMargin" secondItem="bEM-ah-Q8G" secondAttribute="bottom" constant="27" id="9Le-a5-sVQ"/>
                 <constraint firstAttribute="bottom" secondItem="cGr-5t-d3i" secondAttribute="bottom" id="DPZ-0W-oei"/>
-                <constraint firstAttribute="trailingMargin" secondItem="bEM-ah-Q8G" secondAttribute="trailing" constant="8" id="LiI-YO-Xw9"/>
+                <constraint firstAttribute="trailingMargin" secondItem="bEM-ah-Q8G" secondAttribute="trailing" constant="4" id="LiI-YO-Xw9"/>
                 <constraint firstAttribute="trailingMargin" secondItem="bEM-ah-Q8G" secondAttribute="trailing" constant="70" id="S1N-Es-JfB"/>
                 <constraint firstItem="cGr-5t-d3i" firstAttribute="top" secondItem="ftI-xm-ZzQ" secondAttribute="bottom" constant="-10" id="Ul2-i1-6Yp"/>
                 <constraint firstItem="ftI-xm-ZzQ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="WVl-1q-qgf"/>
-                <constraint firstItem="ftI-xm-ZzQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="XMu-I3-0ZC"/>
+                <constraint firstItem="ftI-xm-ZzQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="XMu-I3-0ZC"/>
                 <constraint firstItem="bEM-ah-Q8G" firstAttribute="leading" secondItem="cGr-5t-d3i" secondAttribute="trailing" constant="84.5" id="f8Q-Ib-nBO"/>
-                <constraint firstItem="bEM-ah-Q8G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="8" id="jQK-45-kD4"/>
+                <constraint firstItem="bEM-ah-Q8G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="jQK-45-kD4"/>
                 <constraint firstItem="cGr-5t-d3i" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="mWz-nw-ak7"/>
                 <constraint firstItem="bEM-ah-Q8G" firstAttribute="top" secondItem="ftI-xm-ZzQ" secondAttribute="bottom" constant="35" id="pnK-ta-wH0"/>
-                <constraint firstItem="bEM-ah-Q8G" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" constant="17" id="t9H-Yl-KrD"/>
+                <constraint firstItem="bEM-ah-Q8G" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" constant="4" id="t9H-Yl-KrD"/>
                 <constraint firstAttribute="bottomMargin" secondItem="bEM-ah-Q8G" secondAttribute="bottom" constant="8" id="wss-5q-JCc"/>
-                <constraint firstAttribute="trailing" secondItem="ftI-xm-ZzQ" secondAttribute="trailing" constant="40" id="z9f-3g-l96"/>
+                <constraint firstAttribute="trailing" secondItem="ftI-xm-ZzQ" secondAttribute="trailing" constant="25" id="z9f-3g-l96"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">

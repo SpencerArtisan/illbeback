@@ -22,7 +22,7 @@ class HintController : NSObject {
     
     func sharingNameHint() {
         image(4).hidden = true
-        hint("Your friends will need this", fromBottom: mapController.view.frame.height - 200)
+        hint("Your friends will need this", fromBottom: mapController.view.frame.height - 180)
     }
     
     func photoHint() {
