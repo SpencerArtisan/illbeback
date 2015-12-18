@@ -355,7 +355,7 @@ class FlagRepositoryTest : XCTestCase {
     
     private func receive(offeredFlag: Flag, from: String, to: String, toRepository: FlagRepository) -> Flag {
         let receivedFlag = transfer(offeredFlag)
-        toRepository.receive(from, to: to, flag: receivedFlag, onNew: { flag in try! flag.receiveNewSuccess(); toRepository.add(flag) }, onUpdate: {flag in try! flag.receiveUpdateSuccess() }, onAck: { _ in XCTFail() })
+        toRepository.receive(from, to: to, flag: receivedFlag, onNew: { flag in try! flag.receiveNewSuccess(); toRepository.add(flag) }, onUpdate: {flag in try! flag.receiveUpdateSuccess() }, onAck: { _ in XCTFail() }, onComplete: {})
         return toRepository.flags()[0]
     }
     
@@ -388,7 +388,7 @@ class FlagRepositoryTest : XCTestCase {
         let invitee = receivedFlag.declining(from)
         let returnedFlag = transfer(receivedFlag)
         var calledBack = false
-        toRepository.receive(from, to: to, flag: returnedFlag, onNew: { _ in XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { _ in calledBack = true })
+        toRepository.receive(from, to: to, flag: returnedFlag, onNew: { _ in XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { _ in calledBack = true }, onComplete: {})
         XCTAssertTrue(calledBack)
         receivedFlag.declineSuccess(invitee)
     }
@@ -397,7 +397,7 @@ class FlagRepositoryTest : XCTestCase {
         let invitee = receivedFlag.accepting(from)
         let returnedFlag = transfer(receivedFlag)
         var calledBack = false
-        toRepository.receive(from, to: to, flag: returnedFlag, onNew: { _ in XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { _ in calledBack = true })
+        toRepository.receive(from, to: to, flag: returnedFlag, onNew: { _ in XCTFail() }, onUpdate: { _ in XCTFail() }, onAck: { _ in calledBack = true }, onComplete: {})
         XCTAssertTrue(calledBack)
         receivedFlag.acceptSuccess(invitee)
     }

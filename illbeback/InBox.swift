@@ -55,14 +55,12 @@ class InBox {
                     do {
                         try newFlag.receiveNewSuccess()
                         print("All new flag photos downloaded.  Removing from firebase")
-                        firebaseFlag.ref.removeValue()
                         self.flagRepository.add(newFlag)
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": newFlag, "from": from])
                     } catch {
                         flag.kill()
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": newFlag, "from": from])
                     }
-                    onComplete()
                 })
             },
             onUpdate: { updatedFlag in
@@ -70,21 +68,21 @@ class InBox {
                     do {
                         try updatedFlag.receiveUpdateSuccess()
                         print("All udated flag photos downloaded.  Removing from firebase")
-                        firebaseFlag.ref.removeValue()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": updatedFlag, "from": from])
                     } catch {
                         updatedFlag.reset(FlagState.Neutral)
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": updatedFlag, "from": from])
                     }
-                    onComplete()
                 })
             },
             onAck: { ackedFlag in
                 print("Ack processed.  Removing from firebase")
-                firebaseFlag.ref.removeValue()
                 Utils.notifyObservers("AckReceiveSuccess", properties: ["flag": ackedFlag, "from": from])
+            },
+            onComplete: {
+                firebaseFlag.ref.removeValue()
                 onComplete()
-            })
+        })
     }
     
     private func downloadImages(flag: Flag, onComplete: () -> ()) {

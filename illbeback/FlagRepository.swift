@@ -26,11 +26,12 @@ class FlagRepository : NSObject {
         return _flags.filter {$0.state() != .Dead}
     }
     
-    func receive(from: String, to: String, flag: Flag, onNew: (newFlag: Flag) -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: (ackedFlag: Flag) -> ()) {
+    func receive(from: String, to: String, flag: Flag, onNew: (newFlag: Flag) -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: (ackedFlag: Flag) -> (), onComplete: () -> ()) {
         do {
             var originalFlag = find(flag.id())
             
             if originalFlag == nil {
+                // todo - better handing for declining deleted flags
                 if !isDecline(from, flag: flag) {
                     print("Receiving new flag from \(from) to \(to)")
                     Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
@@ -66,6 +67,8 @@ class FlagRepository : NSObject {
                     }
                 }
             }
+            
+            onComplete()
         } catch {
             print("** Failed to receive flag: \(flag)")
         }
