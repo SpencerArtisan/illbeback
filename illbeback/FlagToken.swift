@@ -22,7 +22,7 @@ class FlagToken {
     private var _state: FlagState
     private var _when: NSDate?
     private var _whenUpdate: NSDate?
-    private var _invitees: [Invitee2]
+    private var _invitees: [Invitee]
     
     init(id: String, state: FlagState, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) {
         self._id = id
@@ -62,7 +62,7 @@ class FlagToken {
         self._state = FlagState.fromCode(parts[6])
 
         if parts.count > 9 {
-            self._invitees = parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee2(code: $0)} : []
+            self._invitees = parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee(code: $0)} : []
         } else {
             self._invitees = []
         }
@@ -129,11 +129,11 @@ class FlagToken {
         _sender = sender
     }
     
-    func invitees() -> [Invitee2] {
+    func invitees() -> [Invitee] {
         return _invitees
     }
     
-    func invitees(invitees: [Invitee2]) {
+    func invitees(invitees: [Invitee]) {
         _invitees = invitees
     }
     
@@ -141,11 +141,11 @@ class FlagToken {
         _invitees = []
     }
     
-    func findInvitee(name: String) -> Invitee2? {
+    func findInvitee(name: String) -> Invitee? {
         return invitees().filter({$0.name() == name}).first
     }
     
-    func addInvitee(invitee: Invitee2) {
+    func addInvitee(invitee: Invitee) {
         let oldInvitee = findInvitee(invitee.name())
         if oldInvitee != nil {
             _invitees.removeObject(oldInvitee!)

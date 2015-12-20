@@ -126,7 +126,7 @@ class MessageController : NSObject {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let from = note.userInfo!["from"] as! String
-            let inviteeState = flag.findInvitee2(from)?.state()
+            let inviteeState = flag.findInvitee(from)?.state()
             let accepted = inviteeState == InviteeState.Accepted || inviteeState == InviteeState.Accepting
             let message = "\(from) \(accepted ? "accepted" : "declined") \(flag.summary())"
             postMessage(message, key:  flag.id(), flag: flag, success: accepted)

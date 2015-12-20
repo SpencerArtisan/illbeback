@@ -43,7 +43,7 @@ public class Flag {
         return _token.id()
     }
     
-    func invitees() -> [Invitee2] {
+    func invitees() -> [Invitee] {
         return _token.invitees()
     }
     
@@ -52,7 +52,7 @@ public class Flag {
         fireChangeEvent()
     }
     
-    func findInvitee2(name: String) -> Invitee2? {
+    func findInvitee(name: String) -> Invitee? {
         return _token.findInvitee(name)
     }
     
@@ -139,15 +139,15 @@ public class Flag {
         }
     }
     
-    func invite(friend: String) -> Invitee2 {
-        let invitee = Invitee2(name: friend)
+    func invite(friend: String) -> Invitee {
+        let invitee = Invitee(name: friend)
         _token.addInvitee(invitee)
         print("Added invitee.  Invitees now \(_token.invitees())")
         fireChangeEvent()
         return invitee
     }
     
-    func accepting(friend: String) -> Invitee2 {
+    func accepting(friend: String) -> Invitee {
         var invitee = _token.findInvitee(friend)
         if _token.hasPendingUpdate() {
             _token.acceptUpdate()
@@ -162,17 +162,17 @@ public class Flag {
         return invitee!
     }
     
-    func acceptSuccess(invitee: Invitee2) {
+    func acceptSuccess(invitee: Invitee) {
         invitee.acceptSuccess()
         _token.state(.Neutral)
         fireChangeEvent()
     }
     
-    func acceptFailure(invitee: Invitee2) {
+    func acceptFailure(invitee: Invitee) {
         invitee.acceptFailure()
     }
     
-    func declineSuccess(invitee: Invitee2) {
+    func declineSuccess(invitee: Invitee) {
         invitee.declineSuccess()
         if dead {
             kill()
@@ -182,11 +182,11 @@ public class Flag {
         }
     }
     
-    func declineFailure(invitee: Invitee2) {
+    func declineFailure(invitee: Invitee) {
         invitee.declineFailure()
     }
     
-    func declining(friend: String) -> Invitee2 {
+    func declining(friend: String) -> Invitee {
         var invitee = _token.findInvitee(friend)
         if !_token.hasPendingUpdate() || state() == .ReceivedNew {
             dead = true

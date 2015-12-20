@@ -9,10 +9,10 @@
 import XCTest
 
 class InviteeTest: XCTestCase {
-    private var invitee: Invitee2?
+    private var invitee: Invitee?
     
     override func setUp() {
-        invitee = Invitee2(name: "Madeleine")
+        invitee = Invitee(name: "Madeleine")
         super.setUp()
     }
     

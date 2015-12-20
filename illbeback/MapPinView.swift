@@ -326,7 +326,7 @@ class MapPinView: MKAnnotationView {
             if invitee.name() == Global.getUser().getName() { continue }
             count++
             if count == 4 && flag?.invitees().count > 4 {
-                invitee = Invitee2(name: "others")
+                invitee = Invitee(name: "others")
             }
             
             let inviteeView = UILabel(frame: CGRectMake(0, 40 + fromHeight, labelArea!.width, barHeight))

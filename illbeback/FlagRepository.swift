@@ -48,9 +48,9 @@ class FlagRepository : NSObject {
             
             if originalFlag != nil {
                 if isAck(from, flag: flag) {
-                    let invitee = originalFlag!.findInvitee2(from)
+                    let invitee = originalFlag!.findInvitee(from)
                     if invitee != nil {
-                        let inviteeState = flag.findInvitee2(from)!.state()
+                        let inviteeState = flag.findInvitee(from)!.state()
                         
                         if inviteeState == .Accepting {
                             invitee!.acceptSuccess()
@@ -61,7 +61,7 @@ class FlagRepository : NSObject {
                         }
                     }
                 } else {
-                    let invitee = originalFlag!.findInvitee2(to)
+                    let invitee = originalFlag!.findInvitee(to)
                     if invitee != nil {
                         invitee!.inviteSuccess()
                     }
@@ -75,12 +75,12 @@ class FlagRepository : NSObject {
     }
     
     private func isAck(from: String, flag: Flag) -> Bool {
-        let inviteeState = flag.findInvitee2(from)?.state()
+        let inviteeState = flag.findInvitee(from)?.state()
         return inviteeState != nil && (inviteeState! == .Accepting || inviteeState! == .Declining)
     }
     
     private func isDecline(from: String, flag: Flag) -> Bool {
-        let inviteeState = flag.findInvitee2(from)?.state()
+        let inviteeState = flag.findInvitee(from)?.state()
         return inviteeState != nil && inviteeState! == .Declining
     }
     

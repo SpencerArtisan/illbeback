@@ -121,7 +121,7 @@ class FlagRepositoryTest : XCTestCase {
     
     func testTwoInviteesReceiveNewAccepted() {
         accept(receive(offer()))
-        acceptByInvitee2(receiveByInvitee2(offerToInvitee2(originatorFlag())))
+        acceptByInvitee(receiveByInvitee(offerToInvitee(originatorFlag())))
         
         XCTAssertEqual(originatorFlag().description(), "a flag")
         XCTAssertEqual(originatorFlag().state(), FlagState.Neutral)
@@ -257,7 +257,7 @@ class FlagRepositoryTest : XCTestCase {
     
     func testTwoInviteesReceiveNewAcceptedOneUpdatez() {
         accept(receive(offer()))
-        acceptByInvitee2(receiveByInvitee2(offerToInvitee2(originatorFlag())))
+        acceptByInvitee(receiveByInvitee(offerToInvitee(originatorFlag())))
         try! inviteeFlag().description("an updated flag")
         acceptByOriginator(receiveByOriginator(offerFromInvitee(inviteeFlag())))
         
@@ -317,7 +317,7 @@ class FlagRepositoryTest : XCTestCase {
         return offer("invitee")
     }
     
-    private func offerToInvitee2(offeredFlag: Flag) -> Flag {
+    private func offerToInvitee(offeredFlag: Flag) -> Flag {
         return offer(offeredFlag, to: "invitee2")
     }
     
@@ -345,7 +345,7 @@ class FlagRepositoryTest : XCTestCase {
         return receive(offeredFlag, from: "originator", to: "invitee", toRepository: inviteeRepository)
     }
     
-    private func receiveByInvitee2(offeredFlag: Flag) -> Flag {
+    private func receiveByInvitee(offeredFlag: Flag) -> Flag {
         return receive(offeredFlag, from: "originator", to: "invitee2", toRepository: invitee2Repository)
     }
     
@@ -364,7 +364,7 @@ class FlagRepositoryTest : XCTestCase {
         return originatorFlag()
     }
     
-    private func acceptByInvitee2(receivedFlag: Flag) -> Flag {
+    private func acceptByInvitee(receivedFlag: Flag) -> Flag {
         accept(receivedFlag, from: "invitee2", to: "originator", toRepository: originatorRepository)
         return originatorFlag()
     }
