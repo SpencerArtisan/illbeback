@@ -103,10 +103,11 @@ public class PhotoAlbum : NSObject {
     }
     
     func allImageFiles() -> [String] {
-        return try! fileManager.contentsOfDirectoryAtPath(folder)
+        let files = try! fileManager.contentsOfDirectoryAtPath(folder)
             .filter({$0.hasPrefix("Memory")})
             .map({"\(folder)/\($0)"})
             .filter({fileManager.fileExistsAtPath($0)})
+        return Array(files[0...1])
     }
     
     func onFlagRemoved(note: NSNotification) {

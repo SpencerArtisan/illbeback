@@ -1770,11 +1770,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/PhotoAlbum.swift"
-            timestampString = "472305801.67867"
+            timestampString = "472306346.700876"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "delete(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3348,11 +3348,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/PhotoAlbum.swift"
-            timestampString = "472305801.67867"
+            timestampString = "472306346.700876"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "onFlagRemoved(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3364,11 +3364,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/PhotoAlbum.swift"
-            timestampString = "472305801.67867"
+            timestampString = "472306346.700876"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "onFlagRemoved(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -4180,28 +4180,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "illbeback/Backup.swift"
-            timestampString = "472305491.263582"
+            timestampString = "472306346.700876"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "mailComposeController(_:didFinishWithResult:error:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "illbeback/Backup.swift"
-            timestampString = "472305491.263582"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "configuredMailComposeViewController()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

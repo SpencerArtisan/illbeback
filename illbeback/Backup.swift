@@ -37,10 +37,15 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         mailComposerVC.setSubject("Backmap backup")
         mailComposerVC.setMessageBody("This email is your backup.  Keep it somewhere safe!", isHTML: false)
         
-        let imageFiles = photoAlbum.allImageFiles()
-        
         let flagData: NSData = NSData.dataWithContentsOfMappedFile(flagRepository.filePath()) as! NSData
         mailComposerVC.addAttachmentData(flagData, mimeType: "text/plain", fileName: "backmap.txt")
+
+        let imageFiles = photoAlbum.allImageFiles()
+        imageFiles.forEach {imageFIle in
+            let imageData = UIImagePNGRepresentation(UIImage(contentsOfFile: imageFIle)!)
+            mailComposerVC.addAttachmentData(imageData!, mimeType: "image/png", fileName: imageFIle)
+        }
+        
         return mailComposerVC
     }
     
