@@ -18,6 +18,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var alarmButton: UIButton!
+    @IBOutlet weak var backupButton: UIButton!
     @IBOutlet weak var sharingName: UITextView!
     @IBOutlet weak var searchText: UITextView!
     
@@ -35,6 +36,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var flagListController: FlagsController!
     var messageControlller: MessageController!
     var hintControlller: HintController!
+    var backup: Backup?
     
     var newUserModal: Modal?
     var searchModal: Modal?
@@ -62,6 +64,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     
     @IBAction func showEvents(sender: AnyObject) {
         eventListController.showEvents()
+    }
+    
+    @IBAction func backup(sender: AnyObject) {
+        backup!.create()
     }
     
     @IBAction func cancel(sender: AnyObject) {
@@ -110,6 +116,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.hintControlller = HintController(mapController: self)
         self.outBox = OutBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
         self.inBox = InBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
+        self.backup = Backup(mapController: self)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!

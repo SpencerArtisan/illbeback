@@ -173,6 +173,13 @@
                                     <action selector="showNewStuff:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="I47-qk-AKe"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="33T-Bv-nuw">
+                                <rect key="frame" x="287.5" y="12.5" width="25" height="25"/>
+                                <state key="normal" image="Backup"/>
+                                <connections>
+                                    <action selector="backup:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="W54-jd-rFD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -180,6 +187,7 @@
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="SbP-CO-Ehi" secondAttribute="bottom" constant="10" id="3bN-po-SwR"/>
                             <constraint firstAttribute="trailing" secondItem="dG8-Di-Pbv" secondAttribute="trailing" id="9OA-Rd-N8G"/>
                             <constraint firstItem="ZNr-gZ-dda" firstAttribute="leading" secondItem="HH0-zd-1ZB" secondAttribute="trailing" constant="8" symbolic="YES" id="9Vv-XO-hJS"/>
+                            <constraint firstItem="33T-Bv-nuw" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="DQX-xG-4v5"/>
                             <constraint firstItem="DtY-Nv-kkq" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="Dlf-ik-2Fr"/>
                             <constraint firstItem="KPX-1B-P6g" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="HmD-5v-KBY"/>
                             <constraint firstItem="ZNr-gZ-dda" firstAttribute="width" secondItem="HH0-zd-1ZB" secondAttribute="width" id="JEf-qf-8mo"/>
@@ -199,6 +207,7 @@
                             <constraint firstItem="DtY-Nv-kkq" firstAttribute="leading" secondItem="SbP-CO-Ehi" secondAttribute="trailing" constant="8" symbolic="YES" id="e0Y-pi-cHW"/>
                             <constraint firstItem="fbX-Mm-eun" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="foE-Fa-72T"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="height" secondItem="fbX-Mm-eun" secondAttribute="height" id="gOA-D7-t5i"/>
+                            <constraint firstItem="33T-Bv-nuw" firstAttribute="centerY" secondItem="KPX-1B-P6g" secondAttribute="centerY" id="hvK-Jg-bpf"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="oSw-8q-NAR"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="ZNr-gZ-dda" secondAttribute="bottom" constant="30" id="pab-XA-2Zf"/>
                         </constraints>
@@ -215,6 +224,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="alarmButton" destination="fbX-Mm-eun" id="Fh2-AA-56G"/>
+                        <outlet property="backupButton" destination="33T-Bv-nuw" id="0JB-cQ-5z1"/>
                         <outlet property="map" destination="dG8-Di-Pbv" id="4Nk-kH-bTH"/>
                         <outlet property="newButton" destination="KPX-1B-P6g" id="soz-Qz-czE"/>
                     </connections>
@@ -241,6 +251,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Backup" width="25" height="25"/>
         <image name="Circle" width="75" height="75"/>
         <image name="Circle Small" width="50" height="50"/>
         <image name="Friend" width="32" height="32"/>
