@@ -12,9 +12,13 @@ import MessageUI
 
 class Backup: NSObject, MFMailComposeViewControllerDelegate {
     private var mapController: MapController
+    private var flagRepository: FlagRepository
+    private var photoAlbum: PhotoAlbum
     
-    init(mapController: MapController) {
+    init(mapController: MapController, flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.mapController = mapController
+        self.flagRepository = flagRepository
+        self.photoAlbum = photoAlbum
     }
     
     func create() {
@@ -29,10 +33,14 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
     func configuredMailComposeViewController() -> MFMailComposeViewController {
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.mailComposeDelegate = self
-        mailComposerVC.setToRecipients(["spencerkward@gmail.com"])
-        mailComposerVC.setSubject("Sending you an in-app e-mail...")
-        mailComposerVC.setMessageBody("Sending e-mail in-app is not so bad!", isHTML: false)
+        mailComposerVC.setToRecipients([""])
+        mailComposerVC.setSubject("Backmap backup")
+        mailComposerVC.setMessageBody("This email is your backup.  Keep it somewhere safe!", isHTML: false)
         
+        let imageFiles = photoAlbum.allImageFiles()
+        
+        let flagData: NSData = NSData.dataWithContentsOfMappedFile(flagRepository.filePath()) as! NSData
+        mailComposerVC.addAttachmentData(flagData, mimeType: "text/plain", fileName: "backmap.txt")
         return mailComposerVC
     }
     

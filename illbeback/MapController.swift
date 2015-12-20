@@ -116,7 +116,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.hintControlller = HintController(mapController: self)
         self.outBox = OutBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
         self.inBox = InBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
-        self.backup = Backup(mapController: self)
+        self.backup = Backup(mapController: self, flagRepository: flagRepository, photoAlbum: photoAlbum)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!

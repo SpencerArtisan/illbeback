@@ -140,8 +140,7 @@ class FlagRepository : NSObject {
     
     func read() {
         _reading = true
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let path = paths.stringByAppendingPathComponent("memories.plist")
+        let path = filePath()
         let fileManager = NSFileManager.defaultManager()
         if (!(fileManager.fileExistsAtPath(path))) {
             let bundle : NSString = NSBundle.mainBundle().pathForResource("memories", ofType: "plist")!
@@ -160,5 +159,10 @@ class FlagRepository : NSObject {
                         if !self.isPurgable(flag) { self.add(flag) }
                     }
         _reading = false
+    }
+    
+    func filePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        return paths.stringByAppendingPathComponent("memories.plist")
     }
 }
