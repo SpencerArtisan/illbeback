@@ -159,6 +159,9 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.lastTimeAppUsed = NSDate()
     }
 
+    func handleOpenURL(url: NSURL) {
+        backup!.importFromURL(url)
+    }
     
     func onFlagReceiveSuccess(note: NSNotification) {
         updateButtonStates()

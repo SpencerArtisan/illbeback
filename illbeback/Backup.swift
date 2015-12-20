@@ -37,19 +37,46 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         mailComposerVC.setSubject("Backmap backup")
         mailComposerVC.setMessageBody("This email is your backup.  Keep it somewhere safe!", isHTML: false)
         
-        let flagData: NSData = NSData.dataWithContentsOfMappedFile(flagRepository.filePath()) as! NSData
-        mailComposerVC.addAttachmentData(flagData, mimeType: "text/plain", fileName: "backmap.txt")
+        let data = exportToData()
 
-        let imageFiles = photoAlbum.allImageFiles()
-        imageFiles.forEach {imageFIle in
-            let imageData = UIImagePNGRepresentation(UIImage(contentsOfFile: imageFIle)!)
-            mailComposerVC.addAttachmentData(imageData!, mimeType: "image/png", fileName: imageFIle)
-        }
+//        let unarchiver = NSKeyedUnarchiver.init(forReadingWithData: data)
+//        let flagData = unarchiver.decodeObjectForKey("flags") as! NSData
+//        
+//        flagRepository.removeAll()
+//        flagData.writeToFile(flagRepository.filePath() , atomically: true)
+//        flagRepository.read()
+
+        mailComposerVC.addAttachmentData(data, mimeType: "application/backmap", fileName: "back.map")
+        
+//        let imageFiles = photoAlbum.allImageFiles()
+//        imageFiles.forEach {imageFIle in
+//            let imageData = UIImagePNGRepresentation(UIImage(contentsOfFile: imageFIle)!)
+//            mailComposerVC.addAttachmentData(imageData!, mimeType: "image/png", fileName: imageFIle)
+//        }
         
         return mailComposerVC
     }
     
-    // MARK: MFMailComposeViewControllerDelegate Method
+    func exportToData() -> NSData {
+        let flagData = NSData.dataWithContentsOfMappedFile(flagRepository.filePath()) as! NSData
+        
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver.init(forWritingWithMutableData: data)
+        archiver.encodeObject(flagData, forKey: "flags")
+        archiver.finishEncoding()
+        return data
+    }
+    
+    func importFromURL(url: NSURL) {
+        let data = NSData(contentsOfURL: url)
+        let unarchiver = NSKeyedUnarchiver.init(forReadingWithData: data!)
+        let flagData = unarchiver.decodeObjectForKey("flags") as! NSData
+        
+        flagRepository.removeAll()
+        flagData.writeToFile(flagRepository.filePath() , atomically: true)
+        flagRepository.read()
+    }
+
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: nil)
     }

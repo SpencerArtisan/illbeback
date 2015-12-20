@@ -98,6 +98,10 @@ class FlagRepository : NSObject {
         save()
     }
     
+    func removeAll() {
+        flags().forEach { remove($0) }
+    }
+    
     func find(id: String) -> Flag? {
         return flags().filter {$0.id() == id}.first
     }

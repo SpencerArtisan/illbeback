@@ -39,6 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         #endif
         
+        if launchOptions != nil {
+            let url = launchOptions![UIApplicationLaunchOptionsURLKey] as? NSURL
+            if url != nil {
+                self.application(application, openURL: url!, options: [:])
+            }
+        }
+        
         return true
     }
     
@@ -61,6 +68,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didReceiveLocalNotification notificaiton: UILocalNotification){
         print("Handle identifier")
         // Notificaiton has fired.  Insert your code here
+    }
+    
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+            print("Launching app from url \(url)")
+            let navigationController = window?.rootViewController as! UINavigationController
+            let mapController = navigationController.topViewController as? MapController
+            mapController!.handleOpenURL(url)
+          return true
     }
     
     func applicationWillResignActive(application: UIApplication) {

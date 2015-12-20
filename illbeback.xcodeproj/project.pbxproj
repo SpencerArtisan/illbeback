@@ -12,6 +12,8 @@
 		9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9717D3EE1B9254D3006455D8 /* ShareController.swift */; };
 		971DF36A1C26B5190051D47F /* Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3691C26B5190051D47F /* Backup.swift */; };
 		971DF36C1C26B6030051D47F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 971DF36B1C26B6030051D47F /* MessageUI.framework */; };
+		971DF36E1C26D68A0051D47F /* BackupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 971DF36D1C26D68A0051D47F /* BackupView.xib */; };
+		971DF3701C27677C0051D47F /* BackupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF36F1C27677C0051D47F /* BackupData.swift */; };
 		972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A01A90ECC100B5E74C /* MapPinView.swift */; };
 		972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A21A90ED2B00B5E74C /* MapPinCallout.swift */; };
 		972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A41A910E7500B5E74C /* PhotoAlbum.swift */; };
@@ -120,6 +122,8 @@
 		9717D3EE1B9254D3006455D8 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		971DF3691C26B5190051D47F /* Backup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backup.swift; sourceTree = "<group>"; };
 		971DF36B1C26B6030051D47F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		971DF36D1C26D68A0051D47F /* BackupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BackupView.xib; sourceTree = "<group>"; };
+		971DF36F1C27677C0051D47F /* BackupData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupData.swift; sourceTree = "<group>"; };
 		972006A01A90ECC100B5E74C /* MapPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
 		972006A21A90ED2B00B5E74C /* MapPinCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinCallout.swift; sourceTree = "<group>"; };
 		972006A41A910E7500B5E74C /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
@@ -266,6 +270,8 @@
 				97D1A7A41C2336E000518831 /* Hint.xib */,
 				97D1A7A61C23495900518831 /* HintController.swift */,
 				971DF3691C26B5190051D47F /* Backup.swift */,
+				971DF36D1C26D68A0051D47F /* BackupView.xib */,
+				971DF36F1C27677C0051D47F /* BackupData.swift */,
 			);
 			name = CleanCode;
 			sourceTree = "<group>";
@@ -580,6 +586,7 @@
 				97767D5C1B91DE2200B6A827 /* ShapeOptions.xib in Resources */,
 				97AA0CFB1AFFFBFB007199A8 /* NewUser.xib in Resources */,
 				97D1A7A51C2336E000518831 /* Hint.xib in Resources */,
+				971DF36E1C26D68A0051D47F /* BackupView.xib in Resources */,
 				97B05E261BC4746100B24BEC /* ZoomPageControl.xib in Resources */,
 				9772846C1A8A818B00CE628D /* user.plist in Resources */,
 				97FE66821A9A1A400007FC2C /* memories.plist in Resources */,
@@ -665,6 +672,7 @@
 				973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,
 				97FA73F51C135D5A00E9A57A /* InBox.swift in Sources */,
 				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
+				971DF3701C27677C0051D47F /* BackupData.swift in Sources */,
 				9749EE451BF749E300C1606B /* Global.swift in Sources */,
 				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,
 				97FC866D1C00F45D00C30C56 /* FlagController.swift in Sources */,
