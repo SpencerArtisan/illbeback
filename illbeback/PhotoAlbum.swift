@@ -139,4 +139,20 @@ public class PhotoAlbum : NSObject {
             }
         }
     }
+    
+    func purge(flagRepository: FlagRepository) {
+        let flagIds = flagRepository.flags().map { $0.id() }
+        allImageFiles().forEach { imageFile in
+            var purge = true
+            flagIds.forEach { flagId in
+                if imageFile.containsString(flagId) {
+                    purge = false
+                }
+            }
+            if purge {
+                print("Purging old image \(imageFile)")
+                try! fileManager.removeItemAtPath(imageFile)
+            }
+        }
+    }
 }

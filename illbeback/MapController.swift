@@ -123,6 +123,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
   
         updateButtonStates()
         flagRepository.read()
+        photoAlbum.purge(flagRepository)
         
         Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
         Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
