@@ -33,6 +33,15 @@ class Preferences {
         write()
     }
     
+    static func hintedPressMap() -> Bool {
+        return (properties().valueForKey("hintedPressMap") as? Bool) ?? false
+    }
+    
+    static func hintedPressMap(value: Bool) {
+        properties().setValue(value, forKey: "hintedPressMap")
+        write()
+    }
+    
     private static func properties() -> NSDictionary {
         if props == nil {
             let propsPath = path()

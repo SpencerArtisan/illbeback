@@ -52,8 +52,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var outBox: OutBox!
     var inBox: InBox!
     
-    var pressHintGiven = false
-    
     func getView() -> UIView {
         return self.view
     }
@@ -149,12 +147,12 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             }
         }
         
-        if flagRepository.flags().count == 1 && !pressHintGiven && hintControlller != nil {
+        if flagRepository.flags().count == 1 && !Preferences.hintedPressMap() && hintControlller != nil {
             hintControlller.dismissHint()
             Utils.delay(3) {
                 self.hintControlller.pressMapHint()
             }
-            pressHintGiven = true
+            Preferences.hintedPressMap(true)
         }
         
         inBox.receive()
@@ -310,6 +308,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     private func updateButtonStates() {
         alarmButton.hidden = flagRepository.events().count == 0
         newButton.hidden = flagRepository.new().count == 0
+        backupButton.hidden = flagRepository.flags().count <= 4
     }
     
     func acceptRecentShare(flag: Flag) {

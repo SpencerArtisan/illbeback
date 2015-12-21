@@ -157,12 +157,12 @@ class MessageController : NSObject {
         }
     }
     
-    func onFlagBackupPreparing(note: NSNotification) {
+    func onBackupPreparing(note: NSNotification) {
         let message = "Preparing backup"
-        preMessage(message, key: "backup", color: UIColor.grayColor())
+        preMessage(message, key: "backup", color: UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.8))
     }
     
-    func onFlagBackupPrepared(note: NSNotification) {
+    func onBackupPrepared(note: NSNotification) {
         dismissMessage("backup")
     }
     
