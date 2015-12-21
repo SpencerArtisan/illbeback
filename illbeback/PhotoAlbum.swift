@@ -102,12 +102,23 @@ public class PhotoAlbum : NSObject {
         return paths
     }
     
+    private func getImageFilenames(flagId: String) -> [String] {
+        var paths:[String] = []
+        var candidate = "Memory\(flagId).jpg"
+        paths.append(candidate)
+        for suffix in 2...10 {
+            candidate = "Memory\(flagId)-\(suffix).jpg"
+            paths.append(candidate)
+        }
+        return paths
+    }
+    
     func allImageFiles() -> [String] {
         let files = try! fileManager.contentsOfDirectoryAtPath(folder)
             .filter({$0.hasPrefix("Memory")})
             .map({"\(folder)/\($0)"})
             .filter({fileManager.fileExistsAtPath($0)})
-        return Array(files[0...1])
+        return files
     }
     
     func onFlagRemoved(note: NSNotification) {
