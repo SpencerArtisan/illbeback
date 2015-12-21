@@ -136,6 +136,8 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         
         ensureUserKnown()
         
+        hintControlller.backupHint()
+        
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
             updatePins()
             checkForImminentEvents()
@@ -432,6 +434,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                     }
                 } else {
                     Global.getUser().addFriend(textView.text)
+                    Preferences.write(Global.getUser())
                     shareController.shareWith(textView.text)
                 }
                 newUserText.resignFirstResponder()

@@ -12,6 +12,7 @@
 		9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9717D3EE1B9254D3006455D8 /* ShareController.swift */; };
 		971DF36A1C26B5190051D47F /* Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3691C26B5190051D47F /* Backup.swift */; };
 		971DF36C1C26B6030051D47F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 971DF36B1C26B6030051D47F /* MessageUI.framework */; };
+		971DF3721C28AC4B0051D47F /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3711C28AC4B0051D47F /* Preferences.swift */; };
 		972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A01A90ECC100B5E74C /* MapPinView.swift */; };
 		972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A21A90ED2B00B5E74C /* MapPinCallout.swift */; };
 		972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A41A910E7500B5E74C /* PhotoAlbum.swift */; };
@@ -120,6 +121,7 @@
 		9717D3EE1B9254D3006455D8 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		971DF3691C26B5190051D47F /* Backup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backup.swift; sourceTree = "<group>"; };
 		971DF36B1C26B6030051D47F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		971DF3711C28AC4B0051D47F /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		972006A01A90ECC100B5E74C /* MapPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
 		972006A21A90ED2B00B5E74C /* MapPinCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinCallout.swift; sourceTree = "<group>"; };
 		972006A41A910E7500B5E74C /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				97FE66831A9A50C60007FC2C /* MessageView.xib */,
 				97EA3FFE1AFE9A1C005507BF /* Black.xib */,
 				97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */,
+				971DF3711C28AC4B0051D47F /* Preferences.swift */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -660,6 +663,7 @@
 				973F25311C0BA8D60034A235 /* InviteeState.swift in Sources */,
 				97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */,
 				97D34AB91C127C1D00118819 /* Extensions.swift in Sources */,
+				971DF3721C28AC4B0051D47F /* Preferences.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				97FA33491BF7E52600248F67 /* EventView.swift in Sources */,
 				973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,

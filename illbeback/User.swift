@@ -9,12 +9,12 @@
 import Foundation
 
 class User {
-    private var props: NSDictionary?
     private var name: String?
-    private var friends: [String]?
+    private var friends: [String]
     
-    init() {
-        read()
+    init(name: String?, friends: [String]) {
+        self.name = name
+        self.friends = friends
     }
     
     func getName() -> String {
@@ -24,7 +24,6 @@ class User {
     func setName(name: String) {
         self.name = name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         print("Setting user name to \(self.name)")
-        write()
     }
     
     func hasName() -> Bool {
@@ -32,48 +31,15 @@ class User {
     }
     
     func getFriends() -> [String] {
-        return friends!
+        return friends
     }
     
     func addFriend(friend: String) {
-        friends?.append(friend)
-        write()
+        friends.append(friend)
     }
     
     func removeFriend(friend: String) {
-        let index = friends!.indexOf(friend)
-        friends?.removeAtIndex(index!)
-        write()
-    }
-    
-    private func write() {
-        let path = getPath()
-        props?.setValue(friends!, forKey: "Friends")
-        props?.setValue(name!, forKey: "Name")
-        props?.writeToFile(path, atomically: true)
-    }
-    
-    private func read() {
-        let path = getPath()
-        let fileManager = NSFileManager.defaultManager()
-        if (!(fileManager.fileExistsAtPath(path))) {
-            let bundle : NSString = NSBundle.mainBundle().pathForResource("user", ofType: "plist")!
-            do {
-                try fileManager.copyItemAtPath(bundle as String, toPath: path)
-            } catch {
-            }
-        }
-    
-        props = NSDictionary(contentsOfFile: path)?.mutableCopy() as? NSDictionary
-    
-        friends = props?.valueForKey("Friends") as? [String]
-        if props?.valueForKey("Name") != nil {
-            setName(props?.valueForKey("Name") as! String)
-        }
-    }
-    
-    private func getPath() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        return paths.stringByAppendingPathComponent("user.plist")
+        let index = friends.indexOf(friend)
+        friends.removeAtIndex(index!)
     }
 }
