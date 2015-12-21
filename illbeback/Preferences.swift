@@ -10,35 +10,52 @@ import Foundation
 
 class Preferences {
     private static var props: NSDictionary?
-
-    static func write(user: User) {
-        let path = getPath()
-        props?.setValue(user.getFriends(), forKey: "Friends")
-        props?.setValue(user.getName(), forKey: "Name")
-        props?.writeToFile(path, atomically: true)
+    
+    static func user(user: User) {
+        properties().setValue(user.getFriends(), forKey: "Friends")
+        properties().setValue(user.getName(), forKey: "Name")
+        write()
     }
     
-    static func readUser() -> User {
-        let path = getPath()
-        let fileManager = NSFileManager.defaultManager()
-        if (!(fileManager.fileExistsAtPath(path))) {
-            let bundle : NSString = NSBundle.mainBundle().pathForResource("user", ofType: "plist")!
-            do {
-                try fileManager.copyItemAtPath(bundle as String, toPath: path)
-            } catch {
-            }
-        }
-        
-        props = NSDictionary(contentsOfFile: path)?.mutableCopy() as? NSDictionary
-        
-        let friends = props?.valueForKey("Friends") as? [String]
-        let name = props?.valueForKey("Name") as? String
+    static func user() -> User {
+        let friends = properties().valueForKey("Friends") as? [String]
+        let name = properties().valueForKey("Name") as? String
         let user = User(name: name, friends: friends ?? [])
         return user
     }
     
-    private static func getPath() -> String {
+    static func hintedBackups() -> Bool {
+        return (properties().valueForKey("hintedBackups") as? Bool) ?? false
+    }
+    
+    static func hintedBackups(value: Bool) {
+        properties().setValue(value, forKey: "hintedBackups")
+        write()
+    }
+    
+    private static func properties() -> NSDictionary {
+        if props == nil {
+            let propsPath = path()
+            let fileManager = NSFileManager.defaultManager()
+            if (!(fileManager.fileExistsAtPath(propsPath))) {
+                let bundle : NSString = NSBundle.mainBundle().pathForResource("user", ofType: "plist")!
+                do {
+                    try fileManager.copyItemAtPath(bundle as String, toPath: propsPath)
+                } catch {
+                }
+            }
+            
+            props = NSDictionary(contentsOfFile: propsPath)?.mutableCopy() as? NSDictionary
+        }
+        return props!
+    }
+    
+    private static func path() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         return paths.stringByAppendingPathComponent("user.plist")
+    }
+    
+    private static func write() {
+        properties().writeToFile(path(), atomically: true)
     }
 }

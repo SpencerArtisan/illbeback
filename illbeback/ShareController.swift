@@ -181,7 +181,7 @@ class ShareController : UIViewController {
     func deleteFriendConfirmed(sender: AnyObject?) {
         let friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         Global.getUser().removeFriend(friend!)
-        Preferences.write(Global.getUser())
+        Preferences.user(Global.getUser())
         showEditFriends()
     }
     

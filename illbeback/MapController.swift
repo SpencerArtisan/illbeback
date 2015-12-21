@@ -136,7 +136,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         
         ensureUserKnown()
         
-        hintControlller.backupHint()
+        if flagRepository.flags().count > 4 && !Preferences.hintedBackups() {
+            hintControlller.backupHint()
+            Preferences.hintedBackups(true)
+        }
         
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
             updatePins()
@@ -434,7 +437,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                     }
                 } else {
                     Global.getUser().addFriend(textView.text)
-                    Preferences.write(Global.getUser())
+                    Preferences.user(Global.getUser())
                     shareController.shareWith(textView.text)
                 }
                 newUserText.resignFirstResponder()

@@ -9,7 +9,7 @@
 import Foundation
 
 class Global {
-    private static var user = Preferences.readUser()
+    private static var user = Preferences.user()
     private static var deviceToken: NSData?
     private static var tokenStored = false
     
@@ -31,7 +31,7 @@ class Global {
     static func setUserName(name: String) {
         user.setName(name)
         storeDeviceToken(false)
-        Preferences.write(user)
+        Preferences.user(user)
     }
     
     static func storeDeviceToken(allowOverwrite: Bool) {
