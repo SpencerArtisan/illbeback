@@ -10,6 +10,9 @@
 		351B950BBBC0C3C497174B4F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8214AFD7360B795E86E35A6 /* libPods.a */; };
 		97002F0E1BC91679002BF217 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97002F0D1BC91679002BF217 /* Photo.swift */; };
 		9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9717D3EE1B9254D3006455D8 /* ShareController.swift */; };
+		971DF36A1C26B5190051D47F /* Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3691C26B5190051D47F /* Backup.swift */; };
+		971DF36C1C26B6030051D47F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 971DF36B1C26B6030051D47F /* MessageUI.framework */; };
+		971DF3721C28AC4B0051D47F /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3711C28AC4B0051D47F /* Preferences.swift */; };
 		972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A01A90ECC100B5E74C /* MapPinView.swift */; };
 		972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A21A90ED2B00B5E74C /* MapPinCallout.swift */; };
 		972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A41A910E7500B5E74C /* PhotoAlbum.swift */; };
@@ -116,6 +119,9 @@
 		8D2932CC8DC9A55330BCF225 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		97002F0D1BC91679002BF217 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		9717D3EE1B9254D3006455D8 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
+		971DF3691C26B5190051D47F /* Backup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backup.swift; sourceTree = "<group>"; };
+		971DF36B1C26B6030051D47F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		971DF3711C28AC4B0051D47F /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		972006A01A90ECC100B5E74C /* MapPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
 		972006A21A90ED2B00B5E74C /* MapPinCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinCallout.swift; sourceTree = "<group>"; };
 		972006A41A910E7500B5E74C /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
@@ -210,6 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				971DF36C1C26B6030051D47F /* MessageUI.framework in Frameworks */,
 				97EA40011AFEA36B005507BF /* AVFoundation.framework in Frameworks */,
 				9725CD421A98D2C60081C1B3 /* SystemConfiguration.framework in Frameworks */,
 				9725CD401A98D2BE0081C1B3 /* Security.framework in Frameworks */,
@@ -260,6 +267,7 @@
 				97CF12821C164E3200A74398 /* MessageController.swift */,
 				97D1A7A41C2336E000518831 /* Hint.xib */,
 				97D1A7A61C23495900518831 /* HintController.swift */,
+				971DF3691C26B5190051D47F /* Backup.swift */,
 			);
 			name = CleanCode;
 			sourceTree = "<group>";
@@ -349,6 +357,7 @@
 				97FE66831A9A50C60007FC2C /* MessageView.xib */,
 				97EA3FFE1AFE9A1C005507BF /* Black.xib */,
 				97AA0CFA1AFFFBFB007199A8 /* NewUser.xib */,
+				971DF3711C28AC4B0051D47F /* Preferences.swift */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -469,6 +478,7 @@
 		EECFAABBC43934F677B29798 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				971DF36B1C26B6030051D47F /* MessageUI.framework */,
 				97EA40001AFEA36B005507BF /* AVFoundation.framework */,
 				973ABB2A1A99048300564820 /* libPods-AWSCognitoSync.a */,
 				973ABB2B1A99048300564820 /* libPods-AWSiOSSDKv2.a */,
@@ -637,6 +647,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */,
+				971DF36A1C26B5190051D47F /* Backup.swift in Sources */,
 				97FA33451BF7E18800248F67 /* EventController.swift in Sources */,
 				972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */,
 				97D34AB71C126C9100118819 /* FlagRenderer.swift in Sources */,
@@ -652,6 +663,7 @@
 				973F25311C0BA8D60034A235 /* InviteeState.swift in Sources */,
 				97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */,
 				97D34AB91C127C1D00118819 /* Extensions.swift in Sources */,
+				971DF3721C28AC4B0051D47F /* Preferences.swift in Sources */,
 				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				97FA33491BF7E52600248F67 /* EventView.swift in Sources */,
 				973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,

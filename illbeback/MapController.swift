@@ -18,6 +18,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var alarmButton: UIButton!
+    @IBOutlet weak var backupButton: UIButton!
     @IBOutlet weak var sharingName: UITextView!
     @IBOutlet weak var searchText: UITextView!
     
@@ -35,6 +36,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var flagListController: FlagsController!
     var messageControlller: MessageController!
     var hintControlller: HintController!
+    var backup: Backup?
     
     var newUserModal: Modal?
     var searchModal: Modal?
@@ -50,8 +52,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var outBox: OutBox!
     var inBox: InBox!
     
-    var pressHintGiven = false
-    
     func getView() -> UIView {
         return self.view
     }
@@ -62,6 +62,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     
     @IBAction func showEvents(sender: AnyObject) {
         eventListController.showEvents()
+    }
+    
+    @IBAction func backup(sender: AnyObject) {
+        backup!.create()
     }
     
     @IBAction func cancel(sender: AnyObject) {
@@ -84,7 +88,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             }
         }
 
-        shareController.shareMemory(sharing)
+        shareController.shareFlag(sharing)
     }
 
     override func viewDidLoad() {
@@ -110,6 +114,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.hintControlller = HintController(mapController: self)
         self.outBox = OutBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
         self.inBox = InBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
+        self.backup = Backup(mapController: self, flagRepository: flagRepository, photoAlbum: photoAlbum)
 
         self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
         self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
@@ -118,6 +123,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
   
         updateButtonStates()
         flagRepository.read()
+        photoAlbum.purge(flagRepository)
         
         Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
         Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
@@ -129,6 +135,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         
         ensureUserKnown()
         
+        if flagRepository.flags().count > 4 && !Preferences.hintedBackups() {
+            hintControlller.backupHint()
+            Preferences.hintedBackups(true)
+        }
+        
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
             updatePins()
             checkForImminentEvents()
@@ -137,12 +148,12 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             }
         }
         
-        if flagRepository.flags().count == 1 && !pressHintGiven && hintControlller != nil {
+        if flagRepository.flags().count == 1 && !Preferences.hintedPressMap() && hintControlller != nil {
             hintControlller.dismissHint()
             Utils.delay(3) {
                 self.hintControlller.pressMapHint()
             }
-            pressHintGiven = true
+            Preferences.hintedPressMap(true)
         }
         
         inBox.receive()
@@ -152,6 +163,9 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.lastTimeAppUsed = NSDate()
     }
 
+    func handleOpenURL(url: NSURL) {
+        backup!.importFromURL(url)
+    }
     
     func onFlagReceiveSuccess(note: NSNotification) {
         updateButtonStates()
@@ -295,6 +309,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     private func updateButtonStates() {
         alarmButton.hidden = flagRepository.events().count == 0
         newButton.hidden = flagRepository.new().count == 0
+        backupButton.hidden = flagRepository.flags().count <= 4
     }
     
     func acceptRecentShare(flag: Flag) {
@@ -308,24 +323,24 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         outBox.send()
     }
 
-    func shareMemory(pin: MapPinView) {
-        shareController.shareMemory([pin])
+    func shareFlag(pin: MapPinView) {
+        shareController.shareFlag([pin])
     }
     
     // Callback for button on the callout
-    func rewordMemory(pin: MapPinView) {
+    func rewordFlag(pin: MapPinView) {
         deselect(pin)
         addFlag.reword(self, pin: pin)
     }
     
     // Callback for button on the callout
-    func rescheduleMemory(pin: MapPinView) {
+    func rescheduleFlag(pin: MapPinView) {
         deselect(pin)
         addFlag.reschedule(self, pin: pin)
     }
     
     // Callback for button on the callout
-    func unblankMemory(pin: MapPinView) {
+    func unblankFlag(pin: MapPinView) {
         deselect(pin)
         addFlag.unblank(self, pin: pin)
     }
@@ -422,6 +437,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                     }
                 } else {
                     Global.getUser().addFriend(textView.text)
+                    Preferences.user(Global.getUser())
                     shareController.shareWith(textView.text)
                 }
                 newUserText.resignFirstResponder()

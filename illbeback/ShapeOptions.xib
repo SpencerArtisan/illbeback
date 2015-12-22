@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShapeController" customModule="I_ll_Be_Back" customModuleProvider="target"/>
@@ -12,7 +12,6 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GoS-LC-HLe" userLabel="cancel">
                     <rect key="frame" x="207.5" y="20" width="54" height="54"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="54" id="mHO-MJ-8MK"/>
                         <constraint firstAttribute="height" constant="54" id="vL3-TY-ywY"/>
@@ -26,7 +25,6 @@
                 </button>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3jE-gJ-aQI" userLabel="spacer">
                     <rect key="frame" x="177.5" y="36.5" width="20" height="20"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.68700228379999995" green="0.74112215910000001" blue="0.2032858716" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="J1t-aU-D5x"/>
@@ -35,7 +33,6 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ald-al-na5" userLabel="share">
                     <rect key="frame" x="113.5" y="20" width="54" height="54"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="54" id="5BU-QX-30X"/>
                         <constraint firstAttribute="height" constant="54" id="ktu-ff-NtC"/>
@@ -48,7 +45,6 @@
                     </connections>
                 </button>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="ald-al-na5" secondAttribute="centerY" id="KE2-e1-013"/>

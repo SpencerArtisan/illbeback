@@ -1,5 +1,5 @@
 //
-//  Invitee2StateTest.swift
+//  InviteeStateTest.swift
 //  illbeback
 //
 //  Created by Spencer Ward on 04/12/2015.

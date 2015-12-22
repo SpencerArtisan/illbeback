@@ -102,6 +102,25 @@ public class PhotoAlbum : NSObject {
         return paths
     }
     
+    private func getImageFilenames(flagId: String) -> [String] {
+        var paths:[String] = []
+        var candidate = "Memory\(flagId).jpg"
+        paths.append(candidate)
+        for suffix in 2...10 {
+            candidate = "Memory\(flagId)-\(suffix).jpg"
+            paths.append(candidate)
+        }
+        return paths
+    }
+    
+    func allImageFiles() -> [String] {
+        let files = try! fileManager.contentsOfDirectoryAtPath(folder)
+            .filter({$0.hasPrefix("Memory")})
+            .map({"\(folder)/\($0)"})
+            .filter({fileManager.fileExistsAtPath($0)})
+        return files
+    }
+    
     func onFlagRemoved(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
         delete(flag)
@@ -117,6 +136,22 @@ public class PhotoAlbum : NSObject {
                 } catch {
                     print("Failed to delete image \(path)")
                 }
+            }
+        }
+    }
+    
+    func purge(flagRepository: FlagRepository) {
+        let flagIds = flagRepository.flags().map { $0.id() }
+        allImageFiles().forEach { imageFile in
+            var purge = true
+            flagIds.forEach { flagId in
+                if imageFile.containsString(flagId) {
+                    purge = false
+                }
+            }
+            if purge {
+                print("Purging old image \(imageFile)")
+                try! fileManager.removeItemAtPath(imageFile)
             }
         }
     }

@@ -22,17 +22,26 @@ class HintController : NSObject {
     
     func sharingNameHint() {
         image(4).hidden = true
+        image(5).hidden = true
         hint("Your friends will need this", fromBottom: mapController.view.frame.height - 180)
     }
     
     func photoHint() {
         image(4).hidden = false
+        image(5).hidden = true
         hint("Take a photo and it will pin it to the map", fromBottom: 74)
     }
     
     func pressMapHint() {
         image(4).hidden = true
+        image(5).hidden = true
         hint("You can also add flags by pressing on the map for a couple of seconds", fromBottom: mapController.view.frame.height - 300)
+    }
+    
+    func backupHint() {
+        image(4).hidden = true
+        image(5).hidden = false
+        hint("Now you have a few flags, you might want to back them up from time to time", fromBottom: mapController.view.frame.height - 330)
     }
     
     private func image(tag: Int) -> UIImageView {

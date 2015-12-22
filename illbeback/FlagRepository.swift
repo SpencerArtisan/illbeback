@@ -26,11 +26,12 @@ class FlagRepository : NSObject {
         return _flags.filter {$0.state() != .Dead}
     }
     
-    func receive(from: String, to: String, flag: Flag, onNew: (newFlag: Flag) -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: (ackedFlag: Flag) -> ()) {
+    func receive(from: String, to: String, flag: Flag, onNew: (newFlag: Flag) -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: (ackedFlag: Flag) -> (), onComplete: () -> ()) {
         do {
             var originalFlag = find(flag.id())
             
             if originalFlag == nil {
+                // todo - better handing for declining deleted flags
                 if !isDecline(from, flag: flag) {
                     print("Receiving new flag from \(from) to \(to)")
                     Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
@@ -47,9 +48,9 @@ class FlagRepository : NSObject {
             
             if originalFlag != nil {
                 if isAck(from, flag: flag) {
-                    let invitee = originalFlag!.findInvitee2(from)
+                    let invitee = originalFlag!.findInvitee(from)
                     if invitee != nil {
-                        let inviteeState = flag.findInvitee2(from)!.state()
+                        let inviteeState = flag.findInvitee(from)!.state()
                         
                         if inviteeState == .Accepting {
                             invitee!.acceptSuccess()
@@ -60,24 +61,26 @@ class FlagRepository : NSObject {
                         }
                     }
                 } else {
-                    let invitee = originalFlag!.findInvitee2(to)
+                    let invitee = originalFlag!.findInvitee(to)
                     if invitee != nil {
                         invitee!.inviteSuccess()
                     }
                 }
             }
+            
+            onComplete()
         } catch {
             print("** Failed to receive flag: \(flag)")
         }
     }
     
     private func isAck(from: String, flag: Flag) -> Bool {
-        let inviteeState = flag.findInvitee2(from)?.state()
+        let inviteeState = flag.findInvitee(from)?.state()
         return inviteeState != nil && (inviteeState! == .Accepting || inviteeState! == .Declining)
     }
     
     private func isDecline(from: String, flag: Flag) -> Bool {
-        let inviteeState = flag.findInvitee2(from)?.state()
+        let inviteeState = flag.findInvitee(from)?.state()
         return inviteeState != nil && inviteeState! == .Declining
     }
     
@@ -93,6 +96,10 @@ class FlagRepository : NSObject {
         _flags.removeObject(flag)
         Utils.notifyObservers("FlagRemoved", properties: ["flag": flag])
         save()
+    }
+    
+    func removeAll() {
+        flags().forEach { remove($0) }
     }
     
     func find(id: String) -> Flag? {
@@ -137,8 +144,7 @@ class FlagRepository : NSObject {
     
     func read() {
         _reading = true
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let path = paths.stringByAppendingPathComponent("memories.plist")
+        let path = filePath()
         let fileManager = NSFileManager.defaultManager()
         if (!(fileManager.fileExistsAtPath(path))) {
             let bundle : NSString = NSBundle.mainBundle().pathForResource("memories", ofType: "plist")!
@@ -157,5 +163,10 @@ class FlagRepository : NSObject {
                         if !self.isPurgable(flag) { self.add(flag) }
                     }
         _reading = false
+    }
+    
+    func filePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        return paths.stringByAppendingPathComponent("memories.plist")
     }
 }

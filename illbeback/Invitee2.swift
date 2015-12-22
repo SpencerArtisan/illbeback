@@ -1,5 +1,5 @@
 //
-//  Invitee2.swift
+//  Invitee.swift
 //  illbeback
 //
 //  Created by Spencer Ward on 29/11/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Invitee2 {
+public class Invitee {
     private var _name: String
     private var _state: InviteeState
     
@@ -72,8 +72,8 @@ public class Invitee2 {
 }
 
 
-extension Invitee2: Equatable {}
+extension Invitee: Equatable {}
 
-public func ==(lhs: Invitee2, rhs: Invitee2) -> Bool {
+public func ==(lhs: Invitee, rhs: Invitee) -> Bool {
     return lhs.name() == rhs.name()
 }

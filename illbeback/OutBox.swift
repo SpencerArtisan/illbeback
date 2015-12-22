@@ -81,7 +81,7 @@ class OutBox {
         }
     }
     
-    func invite(invitee: Invitee2, flag: Flag) {
+    func invite(invitee: Invitee, flag: Flag) {
         Utils.notifyObservers("Inviting", properties: ["name": invitee.name(), "flag": flag])
         uploadPhotos(invitee, flag: flag,
             onComplete: {
@@ -102,7 +102,7 @@ class OutBox {
             })
     }
     
-    private func uploadPhotos(invitee: Invitee2, flag: Flag, onComplete: () -> Void, onError: () -> Void) {
+    private func uploadPhotos(invitee: Invitee, flag: Flag, onComplete: () -> Void, onError: () -> Void) {
         let photos = photoAlbum.photos(flag)
         print("Uploading \(photos.count) photos")
         var leftToUpload = photos.count

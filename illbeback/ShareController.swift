@@ -69,7 +69,7 @@ class ShareController : UIViewController {
     }
     
     // Callback for button on the callout
-    func shareMemory(pins: [MapPinView]) {
+    func shareFlag(pins: [MapPinView]) {
         pinsToShare = pins
 
         shareModal?.slideOutFromLeft(mapController.view)
@@ -181,6 +181,7 @@ class ShareController : UIViewController {
     func deleteFriendConfirmed(sender: AnyObject?) {
         let friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         Global.getUser().removeFriend(friend!)
+        Preferences.user(Global.getUser())
         showEditFriends()
     }
     

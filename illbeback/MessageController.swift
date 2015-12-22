@@ -32,6 +32,8 @@ class MessageController : NSObject {
         Utils.addObserver(self, selector: "onAccepting:", event: "Accepting")
         Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
         Utils.addObserver(self, selector: "onAcceptFailed:", event: "AcceptFailed")
+        Utils.addObserver(self, selector: "onBackupPreparing:", event: "BackupPreparing")
+        Utils.addObserver(self, selector: "onBackupPrepared:", event: "BackupPrepared")
     }
     
     func onFlagSending(note: NSNotification) {
@@ -126,7 +128,7 @@ class MessageController : NSObject {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let from = note.userInfo!["from"] as! String
-            let inviteeState = flag.findInvitee2(from)?.state()
+            let inviteeState = flag.findInvitee(from)?.state()
             let accepted = inviteeState == InviteeState.Accepted || inviteeState == InviteeState.Accepting
             let message = "\(from) \(accepted ? "accepted" : "declined") \(flag.summary())"
             postMessage(message, key:  flag.id(), flag: flag, success: accepted)
@@ -155,14 +157,24 @@ class MessageController : NSObject {
         }
     }
     
+    func onBackupPreparing(note: NSNotification) {
+        let message = "Preparing backup"
+        preMessage(message, key: "backup", color: UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.8))
+    }
+    
+    func onBackupPrepared(note: NSNotification) {
+        dismissMessage("backup")
+    }
+    
     private func preMessage(message: String, key: String, flag: Flag) {
+        let color = CategoryController.getColorForCategory(flag.type())
+        preMessage(message, key: key, color: color)
+    }
+    
+    private func preMessage(message: String, key: String, color: UIColor) {
         Utils.runOnUiThread {
-            let color = CategoryController.getColorForCategory(flag.type())
             let modal = self.showMessage(message, color: color, time: nil)
-            if let existingModal = self.activeModals[key] {
-                self.activeModals.removeValueForKey(key)
-                self.dismissMessage(existingModal)
-            }
+            self.dismissMessage(key)
             self.activeModals[key] = modal
         }
     }
@@ -170,11 +182,15 @@ class MessageController : NSObject {
     private func postMessage(message: String, key: String, flag: Flag, success: Bool) {
         Utils.delay(0.5) {
             let color = success ? UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0) : UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0)
-            if let sendingModal = self.activeModals[key] {
-                self.activeModals.removeValueForKey(key)
-                self.dismissMessage(sendingModal)
-            }
+            self.dismissMessage(key)
             self.showMessage(message, color: color, time: 2)
+        }
+    }
+    
+    private func dismissMessage(key: String) {
+        if let existingModal = self.activeModals[key] {
+            self.activeModals.removeValueForKey(key)
+            self.dismissMessage(existingModal)
         }
     }
     
