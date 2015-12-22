@@ -32,7 +32,7 @@ public class Flag {
     }
     
     func isEvent() -> Bool {
-        return _token.when() != nil
+        return _token.type() == "Event"
     }
     
     func isBlank() -> Bool {

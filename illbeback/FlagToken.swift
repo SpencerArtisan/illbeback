@@ -69,12 +69,13 @@ class FlagToken {
         
         if parts.count > 8 {
             let whenParts = parts[8].componentsSeparatedByString(",")
-            self._when = whenParts[0] != "" ? formatter().dateFromString(whenParts[0]) : nil
+            self._when = dateFromString(whenParts[0])
             if whenParts.count == 2 {
-                self._whenUpdate = whenParts[1] != "" ? formatter().dateFromString(whenParts[1]) : nil
+                self._whenUpdate = dateFromString(whenParts[1])
             }
         }
     }
+
     
     func pendingUpdate(token: FlagToken) {
         _descriptionUpdate = token.description()
@@ -221,6 +222,13 @@ class FlagToken {
         return formatter.stringFromDate(_when!)
     }
 
+    private func dateFromString(var value: String) -> NSDate? {
+        if value != "" && !value.containsString("-") {
+            value += "00-00-00-000"
+        }
+        return value != "" ? formatter().dateFromString(value) : nil
+    }
+    
     private func formatter() -> NSDateFormatter {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "dd MMMM yyyy HH-mm-ss-SSS"
