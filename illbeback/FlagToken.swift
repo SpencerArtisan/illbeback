@@ -224,7 +224,7 @@ class FlagToken {
 
     private func dateFromString(var value: String) -> NSDate? {
         if value != "" && !value.containsString("-") {
-            value += "00-00-00-000"
+            value += " 00-00-00-000"
         }
         return value != "" ? formatter().dateFromString(value) : nil
     }
