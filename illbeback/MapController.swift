@@ -138,9 +138,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
             updatePins()
             checkForImminentEvents()
-            if flagRepository.flags().count == 0 && hintControlller != nil && Global.userDefined() {
-                hintControlller.photoHint()
-            }
         }
         
         if flagRepository.flags().count == 1 && !Preferences.hintedPressMap() && hintControlller != nil {
@@ -429,11 +426,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                 newUserModal?.slideInFromRight(self.view)
                 
                 if !Global.userDefined() {
-                    Global.setUserName(textView.text)
-                    hintControlller.dismissHint()
-                    Utils.delay(2) {
-                        self.hintControlller.photoHint()
-                    }
+                    Global.setUserName(textView.text, allowOverwrite: false)
                 } else {
                     Global.getUser().addFriend(textView.text)
                     Preferences.user(Global.getUser())

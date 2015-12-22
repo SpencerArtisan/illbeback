@@ -64,7 +64,7 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         let data = NSData(contentsOfURL: url)!
         let unarchiver = NSKeyedUnarchiver.init(forReadingWithData: data)
         let user = unarchiver.decodeObjectForKey("user") as! String
-        Global.setUserName(user)
+        Global.setUserName(user, allowOverwrite: true)
         let flagData = unarchiver.decodeObjectForKey("flags") as! NSData
         flagRepository.removeAll()
         flagData.writeToFile(flagRepository.filePath() , atomically: true)

@@ -20,7 +20,7 @@ class Global {
     static func setDevice(deviceToken: NSData) {
         self.deviceToken = deviceToken
         if userDefined() {
-            storeDeviceToken(true)
+            storeDeviceToken(true, userName: user.getName(), onSuccess: {}, onFailure: {})
         }
     }
     
@@ -28,43 +28,47 @@ class Global {
         return user.hasName()
     }
     
-    static func setUserName(name: String) {
-        user.setName(name)
-        storeDeviceToken(false)
-        Preferences.user(user)
+    static func setUserName(name: String, allowOverwrite: Bool) {
+        storeDeviceToken(allowOverwrite, userName: name,
+            onSuccess: {
+                user.setName(name)
+                Preferences.user(user)
+                Utils.notifyObservers("NameAccepted", properties: ["name":user.getName()])
+            }, onFailure: {
+                user.setName("")
+                Preferences.user(user)
+                let takenName = user.getName()
+                tokenStored = false
+                Utils.notifyObservers("NameTaken", properties: ["name":takenName])
+        })
     }
     
-    static func storeDeviceToken(allowOverwrite: Bool) {
-        if !tokenStored && deviceToken != nil && userDefined() {
+    static func storeDeviceToken(allowOverwrite: Bool, userName: String?, onSuccess: () -> (), onFailure: () -> ()) {
+        if !tokenStored && deviceToken != nil && userName != nil && userName != "" {
             tokenStored = true
           
             let tokenString = getDeviceTokenString()
             
-            let url = "https://illbeback.firebaseio.com/users/\(self.user.getName())"
+            let url = "https://illbeback.firebaseio.com/users/\(userName!)"
             let node = Firebase(url: url)
             
-            node.observeSingleEventOfType(.Value, withBlock: {
-                snapshot in
-               
+            node.observeSingleEventOfType(.Value, withBlock: { snapshot in
                 if !snapshot.exists() || snapshot.value.objectForKey("iphone") == nil {
-                    print("FIREBASE OP: NO existing device token")
-                    Utils.notifyObservers("NameAccepted", properties: ["name":user.getName()])
-                    print("FIREBASE OP: Uploading device token \(tokenString) to \(url)")
+                    print("FIREBASE OP: Uploading new device token \(tokenString) to \(url)")
                     node.setValue(["iphone": tokenString])
+                    onSuccess()
                 } else {
                     let existingToken = snapshot.value.objectForKey("iphone")
-                    print("FIREBASE OP: Existing device token \(existingToken!)")
+                    print("FIREBASE OP: Existing device token \(existingToken!) at \(url)")
                     if existingToken! as! String != tokenString {
                         print("FIREBASE OP: Device token MISMATCH!")
                         if allowOverwrite {
                             print("FIREBASE OP: Overwriting old device token")
-                            Utils.notifyObservers("NameAccepted", properties: ["name":user.getName()])
                             node.setValue(["iphone": tokenString])
+                            onSuccess()
                         } else {
-                            let takenName = user.getName()
-                            user.setName("")
-                            tokenStored = false
-                            Utils.notifyObservers("NameTaken", properties: ["name":takenName])
+                            print("FIREBASE OP: Disallowing overwrite of old device token")
+                            onFailure()
                         }
                     }
                 }                

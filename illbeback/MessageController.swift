@@ -148,6 +148,11 @@ class MessageController : NSObject {
             let name = note.userInfo!["name"]
             self.showMessage("Weclome to Backmap \(name!)", color: UIColor.greenColor(), fontColor: UIColor.blackColor(), time: 3.0)
         }
+        
+        mapController.hintControlller.dismissHint()
+        Utils.delay(4) {
+            self.mapController.hintControlller.photoHint()
+        }
     }
     
     func onEventListChange(note: NSNotification) {
