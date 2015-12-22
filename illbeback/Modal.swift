@@ -59,6 +59,19 @@ class Modal {
         return view.viewWithTag(tag)
     }
     
+    func blurBackground() {
+        if !UIAccessibilityIsReduceTransparencyEnabled() {
+            view.backgroundColor = UIColor.clearColor()
+            
+            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView.frame = self.view.bounds
+            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            
+            self.view.insertSubview(blurEffectView, atIndex: 0)
+        }
+    }
+    
     private func slideHorizontally(parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
         if self.view.superview == nil {
             parentView.addSubview(self.view)

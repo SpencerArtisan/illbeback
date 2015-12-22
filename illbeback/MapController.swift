@@ -196,6 +196,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     @IBAction func shape(sender: AnyObject) {
         shapeController.beginShape()
         showPinsInShape()
+        shapeModal?.blurBackground()
         shapeModal?.slideDownFromTop(self.view)
     }
     
