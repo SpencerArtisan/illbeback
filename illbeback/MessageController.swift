@@ -163,7 +163,9 @@ class MessageController : NSObject {
     }
     
     func onBackupPrepared(note: NSNotification) {
-        dismissMessage("backup")
+        Utils.runOnUiThread {
+            self.dismissMessage("backup")
+        }
     }
     
     private func preMessage(message: String, key: String, flag: Flag) {
@@ -173,8 +175,8 @@ class MessageController : NSObject {
     
     private func preMessage(message: String, key: String, color: UIColor) {
         Utils.runOnUiThread {
-            let modal = self.showMessage(message, color: color, time: nil)
             self.dismissMessage(key)
+            let modal = self.showMessage(message, color: color, time: nil)
             self.activeModals[key] = modal
         }
     }

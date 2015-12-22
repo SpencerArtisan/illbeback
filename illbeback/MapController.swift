@@ -135,11 +135,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         
         ensureUserKnown()
         
-        if flagRepository.flags().count > 4 && !Preferences.hintedBackups() {
-            hintControlller.backupHint()
-            Preferences.hintedBackups(true)
-        }
-        
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
             updatePins()
             checkForImminentEvents()
@@ -310,6 +305,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         alarmButton.hidden = flagRepository.events().count == 0
         newButton.hidden = flagRepository.new().count == 0
         backupButton.hidden = flagRepository.flags().count <= 4
+        if flagRepository.flags().count > 4 && !Preferences.hintedBackups() {
+            hintControlller.backupHint()
+            Preferences.hintedBackups(true)
+        }
     }
     
     func acceptRecentShare(flag: Flag) {

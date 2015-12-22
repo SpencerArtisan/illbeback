@@ -36,7 +36,7 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         let mailComposer = MFMailComposeViewController()
         mailComposer.mailComposeDelegate = self
         mailComposer.setSubject("Backmap backup")
-        mailComposer.setMessageBody("This email is your backup.  Keep it somewhere safe!  To restore the backup, click on the attachment and choose 'Copy to Backmap'.", isHTML: false)
+        mailComposer.setMessageBody("This email is your backup.  Keep it somewhere safe!\r\nTo restore the backup, click on the attachment and choose 'Copy to Backmap'.", isHTML: false)
         let data = exportToData()
         mailComposer.addAttachmentData(data, mimeType: "application/backmap", fileName: "back.map")
         return mailComposer
@@ -47,6 +47,7 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         
         let data = NSMutableData()
         let archiver = NSKeyedArchiver.init(forWritingWithMutableData: data)
+        archiver.encodeObject(Global.getUser().getName(), forKey: "user")
         archiver.encodeObject(flagData, forKey: "flags")
         let imageFiles = photoAlbum.allImageFiles()
         imageFiles.forEach {imageFile in
@@ -62,6 +63,8 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
     func importFromURL(url: NSURL) {
         let data = NSData(contentsOfURL: url)!
         let unarchiver = NSKeyedUnarchiver.init(forReadingWithData: data)
+        let user = unarchiver.decodeObjectForKey("user") as! String
+        Global.setUserName(user)
         let flagData = unarchiver.decodeObjectForKey("flags") as! NSData
         flagRepository.removeAll()
         flagData.writeToFile(flagRepository.filePath() , atomically: true)
