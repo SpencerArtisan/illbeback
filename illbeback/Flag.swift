@@ -27,6 +27,10 @@ public class Flag {
         _token = token
     }
     
+    func isPendingAccept() -> Bool {
+        return state() == .ReceivedUpdate || state() == .ReceivedNew ||  state() == .ReceivingUpdate || state() == .ReceivingNew
+    }
+    
     func encode() -> String {
         return _token.encode()
     }

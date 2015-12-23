@@ -75,14 +75,14 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     @IBAction func share(sender: AnyObject) {
-        var sharing:[MapPinView] = []
+        var sharing:[FlagAnnotationView] = []
         
         let allPins = map.annotations
         for pin in allPins {
-            if (pin is MapPin) {
-                let mapPin = pin as! MapPin
-                if !mapPin.flag.isBlank() && shapeController.shapeContains(mapPin.flag.location()) {
-                    let pinView = map.viewForAnnotation(mapPin) as! MapPinView
+            if (pin is FlagAnnotation) {
+                let FlagAnnotation = pin as! FlagAnnotation
+                if !FlagAnnotation.flag.isBlank() && shapeController.shapeContains(FlagAnnotation.flag.location()) {
+                    let pinView = map.viewForAnnotation(FlagAnnotation) as! FlagAnnotationView
                     sharing.append(pinView)
                 }
             }
@@ -205,7 +205,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     // Callback for button on the callout
-    func rephotoMemory(pin: MapPinView) {
+    func rephotoMemory(pin: FlagAnnotationView) {
         if (self.navigationController?.topViewController != rephotoController) {
             zoomController.mapController = self
             zoomController.pinToRephoto = pin
@@ -217,7 +217,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     // Callback for button on the callout
-    func zoomPicture(pin: MapPinView) {
+    func zoomPicture(pin: FlagAnnotationView) {
         if (self.navigationController?.topViewController != zoomController) {
             self.navigationController?.navigationBarHidden = true
             zoomController.mapController = self
@@ -287,11 +287,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     // Callback for button on the callout
-    func deleteFlag(pin: MapPinView) {
+    func deleteFlag(pin: FlagAnnotationView) {
         flagRepository.remove(pin.flag!)
     }
     
-    func removePin(pin: MapPinView) {
+    func removePin(pin: FlagAnnotationView) {
         Utils.runOnUiThread {
             if pin.annotation != nil {
                 self.map.removeAnnotation(pin.annotation!)
@@ -320,71 +320,73 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         outBox.send()
     }
 
-    func shareFlag(pin: MapPinView) {
+    func shareFlag(pin: FlagAnnotationView) {
         shareController.shareFlag([pin])
     }
     
     // Callback for button on the callout
-    func rewordFlag(pin: MapPinView) {
+    func rewordFlag(pin: FlagAnnotationView) {
         deselect(pin)
         addFlag.reword(self, pin: pin)
     }
     
     // Callback for button on the callout
-    func rescheduleFlag(pin: MapPinView) {
+    func rescheduleFlag(pin: FlagAnnotationView) {
         deselect(pin)
         addFlag.reschedule(self, pin: pin)
     }
     
     // Callback for button on the callout
-    func unblankFlag(pin: MapPinView) {
+    func unblankFlag(pin: FlagAnnotationView) {
         deselect(pin)
         addFlag.unblank(self, pin: pin)
     }
     
-    private func deselect(pin: MapPinView) {
+    private func deselect(pin: FlagAnnotationView) {
         print("Deselect pin")
-        map.deselectAnnotation(pin.annotation, animated: false)
-        pin.refresh()
+//        map.deselectAnnotation(pin.annotation, animated: false)
+//        pin.refresh()
     }
     
     // Callback for display pins on map
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         return flagRenderer.render(mapView, viewForAnnotation: annotation)
     }
-    
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-        if newState == MKAnnotationViewDragState.Starting {
-            view.dragState = MKAnnotationViewDragState.Dragging
-        } else if newState == MKAnnotationViewDragState.Ending || newState == MKAnnotationViewDragState.Canceling {
-            view.dragState = MKAnnotationViewDragState.None;
-            if view.annotation is MapPin {
-                let pinData = view.annotation as! MapPin
-                pinData.setCoordinate2(pinData.coordinate)
-            } else if view.annotation is ShapeCorner {
-                let pinData = view.annotation as! ShapeCorner
-                shapeController.move(pinData)
-                showPinsInShape()
-            }
-        }
-    }
-    
-    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
-        for aView in views {
-            if aView is MapPinView {
-                if (aView as! MapPinView).flag!.isEvent() {
-                    aView.layer.zPosition = 1
-                }
-            } 
-        }
-    }
+//    
+//    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+//        if newState == MKAnnotationViewDragState.Starting {
+//            view.dragState = MKAnnotationViewDragState.Dragging
+//        } else if newState == MKAnnotationViewDragState.Ending || newState == MKAnnotationViewDragState.Canceling {
+//            view.dragState = MKAnnotationViewDragState.None;
+//            if view.annotation is FlagAnnotation {
+//                let pinData = view.annotation as! FlagAnnotation
+//                pinData.setCoordinate2(pinData.coordinate)
+//            } else if view.annotation is ShapeCorner {
+//                let pinData = view.annotation as! ShapeCorner
+//                shapeController.move(pinData)
+//                showPinsInShape()
+//            }
+//        }
+//    }
+//    
+//    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+//        for aView in views {
+//            if aView is FlagAnnotationView {
+//                if (aView as! FlagAnnotationView).flag!.isEvent() {
+//                    aView.layer.zPosition = 1
+//                }
+//            } 
+//        }
+//    }
+  
+
     
     func showPinsInShape() {
         let allPins = map.annotations
         for pin in allPins {
-            if pin is MapPin {
-                let mapPin = pin as! MapPin
-                let pinView = map.viewForAnnotation(mapPin) as? MapPinView
+            if pin is FlagAnnotation {
+                let FlagAnnotation = pin as! FlagAnnotation
+                let pinView = map.viewForAnnotation(FlagAnnotation) as? FlagAnnotationView
                 pinView?.refreshImage()
             }
         }

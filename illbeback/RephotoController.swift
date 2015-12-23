@@ -16,7 +16,7 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     var camera: Camera?
     var photoAlbum: PhotoAlbum?
     private var flagRepository: FlagRepository
-    var pinToRephoto: MapPinView?
+    var pinToRephoto: FlagAnnotationView?
     
     init(photoAlbum: PhotoAlbum, flagRepository: FlagRepository) {
         self.photoAlbum = photoAlbum

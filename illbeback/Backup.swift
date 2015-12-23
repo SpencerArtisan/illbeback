@@ -23,13 +23,15 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
     
     func create() {
         Utils.notifyObservers("BackupPreparing", properties: [:])
-        let mailComposeViewController = mailComposer()
-        if MFMailComposeViewController.canSendMail() {
-            mapController.presentViewController(mailComposeViewController, animated: true, completion: {})
-        } else {
-            print("MAIL SEND FAILED")
+        Utils.delay(0.3) {
+            let mailComposeViewController = self.mailComposer()
+            if MFMailComposeViewController.canSendMail() {
+                self.mapController.presentViewController(mailComposeViewController, animated: true, completion: {})
+            } else {
+                print("MAIL SEND FAILED")
+            }
+            Utils.notifyObservers("BackupPrepared", properties: [:])
         }
-        Utils.notifyObservers("BackupPrepared", properties: [:])
     }
     
     func mailComposer() -> MFMailComposeViewController {

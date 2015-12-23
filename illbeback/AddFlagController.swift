@@ -20,7 +20,7 @@ class AddFlagController: UIViewController, UITextViewDelegate {
     var mapController: MapController?
     var callingViewController: UIViewController?
     var photoAlbum: PhotoAlbum?
-    var rewordingPin: MapPinView?
+    var rewordingPin: FlagAnnotationView?
     var when: NSDate?
     var categoryShownAt: NSDate?
 
@@ -141,7 +141,7 @@ class AddFlagController: UIViewController, UITextViewDelegate {
         mapController!.addFlagHere("Blank", id: NSUUID().UUIDString, description: description, location: location, orientation: self.orientation, when: nil)
     }
     
-    func reword(controller: UIViewController, pin: MapPinView) {
+    func reword(controller: UIViewController, pin: FlagAnnotationView) {
         self.callingViewController = controller
         rewordingPin = pin
         flagImage = pin.flag!.type()
@@ -154,11 +154,11 @@ class AddFlagController: UIViewController, UITextViewDelegate {
         desciptionTextArea.text = flag.description()
     }
     
-    func reschedule(controller: UIViewController, pin: MapPinView) {
+    func reschedule(controller: UIViewController, pin: FlagAnnotationView) {
         reword(controller, pin: pin)
     }
     
-    func unblank(controller: UIViewController, pin: MapPinView) {
+    func unblank(controller: UIViewController, pin: FlagAnnotationView) {
         self.callingViewController = controller
         rewordingPin = pin
 
@@ -239,9 +239,9 @@ class AddFlagController: UIViewController, UITextViewDelegate {
                 mapController!.flagRepository.save()
                 let annotation = rewordingPin!.annotation!
                 print("add flag controller replacing pin")
-                rewordingPin?.mapController?.map?.deselectAnnotation(annotation, animated: false)
-                rewordingPin?.mapController?.map?.removeAnnotation(annotation)
-                rewordingPin?.mapController?.map?.addAnnotation(annotation)
+//                mapController?.map?.deselectAnnotation(annotation, animated: false)
+//                mapController?.map?.removeAnnotation(annotation)
+//                mapController?.map?.addAnnotation(annotation)
             } else {
                 mapController!.addFlagHere(flagImage!, id: flagId!, description: textView.text, location: self.flagLocation, orientation: self.orientation, when: when)
                 self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)

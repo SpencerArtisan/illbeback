@@ -10,7 +10,7 @@ import Foundation
 
 class ShareController : UIViewController {
     var shareModal: Modal?
-    var pinsToShare: [MapPinView] = []
+    var pinsToShare: [FlagAnnotationView] = []
     var mapController: MapController
     var outBox: OutBox
     
@@ -69,7 +69,7 @@ class ShareController : UIViewController {
     }
     
     // Callback for button on the callout
-    func shareFlag(pins: [MapPinView]) {
+    func shareFlag(pins: [FlagAnnotationView]) {
         pinsToShare = pins
 
         shareModal?.slideOutFromLeft(mapController.view)

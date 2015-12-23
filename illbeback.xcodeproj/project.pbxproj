@@ -10,6 +10,9 @@
 		351B950BBBC0C3C497174B4F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8214AFD7360B795E86E35A6 /* libPods.a */; };
 		97002F0E1BC91679002BF217 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97002F0D1BC91679002BF217 /* Photo.swift */; };
 		9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9717D3EE1B9254D3006455D8 /* ShareController.swift */; };
+		971DD8511C29AD3200CEFDDD /* FlagAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DD8501C29AD3200CEFDDD /* FlagAnnotationView.swift */; };
+		971DD8531C29ADA800CEFDDD /* FlagCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DD8521C29ADA800CEFDDD /* FlagCallout.swift */; };
+		971DD8551C2B20E700CEFDDD /* FlagAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DD8541C2B20E700CEFDDD /* FlagAnnotation.swift */; };
 		971DF36A1C26B5190051D47F /* Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3691C26B5190051D47F /* Backup.swift */; };
 		971DF36C1C26B6030051D47F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 971DF36B1C26B6030051D47F /* MessageUI.framework */; };
 		971DF3721C28AC4B0051D47F /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3711C28AC4B0051D47F /* Preferences.swift */; };
@@ -119,6 +122,9 @@
 		8D2932CC8DC9A55330BCF225 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		97002F0D1BC91679002BF217 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		9717D3EE1B9254D3006455D8 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
+		971DD8501C29AD3200CEFDDD /* FlagAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagAnnotationView.swift; sourceTree = "<group>"; };
+		971DD8521C29ADA800CEFDDD /* FlagCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagCallout.swift; sourceTree = "<group>"; };
+		971DD8541C2B20E700CEFDDD /* FlagAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagAnnotation.swift; sourceTree = "<group>"; };
 		971DF3691C26B5190051D47F /* Backup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backup.swift; sourceTree = "<group>"; };
 		971DF36B1C26B6030051D47F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		971DF3711C28AC4B0051D47F /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
@@ -268,6 +274,9 @@
 				97D1A7A41C2336E000518831 /* Hint.xib */,
 				97D1A7A61C23495900518831 /* HintController.swift */,
 				971DF3691C26B5190051D47F /* Backup.swift */,
+				971DD8501C29AD3200CEFDDD /* FlagAnnotationView.swift */,
+				971DD8521C29ADA800CEFDDD /* FlagCallout.swift */,
+				971DD8541C2B20E700CEFDDD /* FlagAnnotation.swift */,
 			);
 			name = CleanCode;
 			sourceTree = "<group>";
@@ -674,6 +683,7 @@
 				97FC866D1C00F45D00C30C56 /* FlagController.swift in Sources */,
 				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
 				97E3B9181A857A00007DB06E /* MapPin.swift in Sources */,
+				971DD8531C29ADA800CEFDDD /* FlagCallout.swift in Sources */,
 				979F850B1AA11B8600A11F7F /* Camera.swift in Sources */,
 				97D34ABB1C12F5BB00118819 /* OutBox.swift in Sources */,
 				97D34AAF1C12453100118819 /* Util.swift in Sources */,
@@ -681,6 +691,7 @@
 				97A3534D1A800B9500973CAC /* MapController.swift in Sources */,
 				973F25251C0B7C450034A235 /* FlagState.swift in Sources */,
 				97A353491A800B9500973CAC /* AppDelegate.swift in Sources */,
+				971DD8551C2B20E700CEFDDD /* FlagAnnotation.swift in Sources */,
 				97D1A7A71C23495900518831 /* HintController.swift in Sources */,
 				975CD7441AFFD6E800662BFC /* ZoomController.swift in Sources */,
 				97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */,
@@ -691,6 +702,7 @@
 				973F25281C0B7EC50034A235 /* FlagToken.swift in Sources */,
 				97FC866B1C00F44D00C30C56 /* FlagView.swift in Sources */,
 				972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */,
+				971DD8511C29AD3200CEFDDD /* FlagAnnotationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

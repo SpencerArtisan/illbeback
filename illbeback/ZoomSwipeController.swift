@@ -18,7 +18,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     var photoButton: UIButton?
     var deleteButton: UIButton?
     var created: Bool = false
-    var pinToRephoto: MapPinView?
+    var pinToRephoto: FlagAnnotationView?
     var mapController: MapController?
     var dots: [UIImageView] = []
 

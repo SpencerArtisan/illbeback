@@ -467,37 +467,37 @@ class MapPinView: MKAnnotationView {
         let system = NSProcessInfo.processInfo().systemUptime
         let elapsed = system - event!.timestamp
         let duplicate = lastHitTestPoint != nil && lastHitTestPoint! == point
-        if (!duplicate && elapsed < 0.1 && labelView != nil && hitView == nil && isCalloutVisible() && event!.type == UIEventType.Touches) {
-            lastHitTestPoint = point
-            hitView = calloutView!.hitTest(point, withEvent: event)
-            if acceptButton != nil && hitButton(point, button: acceptButton) {
-                if flag!.isBlank() {
-                    mapController?.unblankFlag(self)
-                } else if pendingAccept() {
-                    mapController?.acceptRecentShare(flag!)
-                }
-            } else if declineButton != nil && hitButton(point, button: declineButton) {
-                if flag!.isBlank() {
-                    mapController?.deleteFlag(self)
-                } else if pendingAccept() {
-                    mapController?.declineRecentShare(flag!)
-                }
-            } else if !pendingAccept() && hitButton(point, button: dateView) {
-                mapController?.rescheduleFlag(self)
-                lastSelectionChange = nil
-            } else if !pendingAccept() && hitButton(point, button: deleteButton) {
-                mapController?.deleteFlag(self)
-            } else if !pendingAccept() && hitButton(point, button: shareButton) {
-                mapController?.shareFlag(self)
-            } else if !pendingAccept() && hitButton(point, button: photoButton) {
-                mapController?.rephotoMemory(self)
-            } else if !pendingAccept() && hitButton(point, button: subtitleView) {
-                mapController?.rewordFlag(self)
-                lastSelectionChange = nil
-            } else if photoView != nil && hitPicture(point) {
-                mapController?.zoomPicture(self)
-            }
-        }
+//        if (!duplicate && elapsed < 0.1 && labelView != nil && hitView == nil && isCalloutVisible() && event!.type == UIEventType.Touches) {
+//            lastHitTestPoint = point
+//            hitView = calloutView!.hitTest(point, withEvent: event)
+//            if acceptButton != nil && hitButton(point, button: acceptButton) {
+//                if flag!.isBlank() {
+//                    mapController?.unblankFlag(self)
+//                } else if pendingAccept() {
+//                    mapController?.acceptRecentShare(flag!)
+//                }
+//            } else if declineButton != nil && hitButton(point, button: declineButton) {
+//                if flag!.isBlank() {
+//                    mapController?.deleteFlag(self)
+//                } else if pendingAccept() {
+//                    mapController?.declineRecentShare(flag!)
+//                }
+//            } else if !pendingAccept() && hitButton(point, button: dateView) {
+//                mapController?.rescheduleFlag(self)
+//                lastSelectionChange = nil
+//            } else if !pendingAccept() && hitButton(point, button: deleteButton) {
+//                mapController?.deleteFlag(self)
+//            } else if !pendingAccept() && hitButton(point, button: shareButton) {
+//                mapController?.shareFlag(self)
+//            } else if !pendingAccept() && hitButton(point, button: photoButton) {
+//                mapController?.rephotoMemory(self)
+//            } else if !pendingAccept() && hitButton(point, button: subtitleView) {
+//                mapController?.rewordFlag(self)
+//                lastSelectionChange = nil
+//            } else if photoView != nil && hitPicture(point) {
+//                mapController?.zoomPicture(self)
+//            }
+//        }
         
         hitOutside = hitView == nil
         return hitView

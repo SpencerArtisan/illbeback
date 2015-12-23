@@ -26,12 +26,12 @@ class FlagRenderer: NSObject {
     }
     
     func render(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MapPin {
-            let pinData = annotation as! MapPin
-            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as! MapPinView!
+        if annotation is FlagAnnotation {
+            let pinData = annotation as! FlagAnnotation
+            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as! FlagAnnotationView!
             
             if pinView == nil {
-                pinView = MapPinView(mapController: mapController, flag: pinData.flag)
+                pinView = FlagAnnotationView(mapController: mapController, flag: pinData.flag)
             }
             
             return pinView
@@ -86,7 +86,7 @@ class FlagRenderer: NSObject {
         }
     }
     
-    func remove(pin: MapPinView) {
+    func remove(pin: FlagAnnotationView) {
         map.removeAnnotation(pin.annotation!)
     }
     
@@ -98,13 +98,13 @@ class FlagRenderer: NSObject {
         }
     }
     
-    func update(pin: MapPinView) {
+    func update(pin: FlagAnnotationView) {
         print("Replace pin")
         map.removeAnnotation(pin.annotation!)
         map.addAnnotation(createPin(pin.flag!))
     }
     
-    func refresh(pin: MapPinView) {
+    func refresh(pin: FlagAnnotationView) {
         pin.refresh()
     }
 
@@ -120,35 +120,35 @@ class FlagRenderer: NSObject {
             if pin != nil {
                 if event.isPast() {
                     print("Removing old event \(event.id)")
-                    self.map.deselectAnnotation(pin, animated: false)
+//                    self.map.deselectAnnotation(pin, animated: false)
                     Utils.runOnUiThread2() {
-                        self.map.removeAnnotation(pin!)
+//                        self.map.removeAnnotation(pin!)
                     }
                 } else {
                     print("Update event pin")
-                    map.removeAnnotation(pin!)
-                    map.addAnnotation(pin!)
+//                    map.removeAnnotation(pin!)
+//                    map.addAnnotation(pin!)
                 }
             }
         }
     }
     
-    func getPin(flag: Flag) -> MapPin? {
+    func getPin(flag: Flag) -> FlagAnnotation? {
         for pin in self.map.annotations {
-            if pin is MapPin && (pin as! MapPin).flag.id() == flag.id() {
-                let mapPin = pin as? MapPin
-                return mapPin
+            if pin is FlagAnnotation && (pin as! FlagAnnotation).flag.id() == flag.id() {
+                let flagAnnotation = pin as? FlagAnnotation
+                return flagAnnotation
             }
         }
         return nil
     }
     
-    func getPinView(flag: Flag) -> MapPinView? {
+    func getPinView(flag: Flag) -> FlagAnnotationView? {
         let pin = getPin(flag)
-        return pin == nil ? nil : map.viewForAnnotation(pin!) as? MapPinView
+        return pin == nil ? nil : map.viewForAnnotation(pin!) as? FlagAnnotationView
     }
     
-    func createPin(flag: Flag) -> MapPin {
-        return MapPin(flag: flag)
+    func createPin(flag: Flag) -> FlagAnnotation {
+        return FlagAnnotation(flag: flag)
     }
 }
