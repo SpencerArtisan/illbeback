@@ -80,9 +80,9 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         let allPins = map.annotations
         for pin in allPins {
             if (pin is FlagAnnotation) {
-                let FlagAnnotation = pin as! FlagAnnotation
-                if !FlagAnnotation.flag.isBlank() && shapeController.shapeContains(FlagAnnotation.flag.location()) {
-                    let pinView = map.viewForAnnotation(FlagAnnotation) as! FlagAnnotationView
+                let flagAnnotation = pin as! FlagAnnotation
+                if !flagAnnotation.flag.isBlank() && shapeController.shapeContains(flagAnnotation.flag.location()) {
+                    let pinView = map.viewForAnnotation(flagAnnotation) as! FlagAnnotationView
                     sharing.append(pinView)
                 }
             }
@@ -385,8 +385,8 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         let allPins = map.annotations
         for pin in allPins {
             if pin is FlagAnnotation {
-                let FlagAnnotation = pin as! FlagAnnotation
-                let pinView = map.viewForAnnotation(FlagAnnotation) as? FlagAnnotationView
+                let flagAnnotation = pin as! FlagAnnotation
+                let pinView = map.viewForAnnotation(flagAnnotation) as? FlagAnnotationView
                 pinView?.refreshImage()
             }
         }

@@ -29,8 +29,7 @@ class FlagAnnotationView : MKAnnotationView {
     
     init(mapController: MapController, flag: Flag) {
         super.init(annotation: nil, reuseIdentifier: FlagAnnotationView.reuseIdentifier)
-        canShowCallout = true
-        self.detailCalloutAccessoryView = FlagCallout(flag: flag, mapController: mapController)
+        canShowCallout = false
         self.flag = flag
         self.mapController = mapController
         initImage()
@@ -52,42 +51,42 @@ class FlagAnnotationView : MKAnnotationView {
     
     }
   
-//    override func setSelected(selected: Bool, animated: Bool) {
-//        let calloutViewAdded = calloutView?.superview != nil
-//        
-//        if (selected || !selected && hitOutside) {
-//            super.setSelected(selected, animated: animated)
-//        }
-//        
-//        self.superview?.bringSubviewToFront(self)
-//        
-//        if (calloutView == nil) {
-//            calloutView = FlagCallout(flag: flag!, mapController: mapController!)
-//        }
-//        
-//        if (self.selected && !calloutViewAdded) {
-//            addSubview(calloutView!)
-//        }
-//        
-//        if (!self.selected) {
-//            calloutView?.removeFromSuperview()
-//        }
-//    }
+    override func setSelected(selected: Bool, animated: Bool) {
+        let calloutViewAdded = calloutView?.superview != nil
+        
+        if (selected || !selected && hitOutside) {
+            super.setSelected(selected, animated: animated)
+        }
+        
+        self.superview?.bringSubviewToFront(self)
+        
+        if (calloutView == nil) {
+            calloutView = FlagCallout(flag: flag!, mapController: mapController!)
+        }
+        
+        if (self.selected && !calloutViewAdded) {
+            addSubview(calloutView!)
+        }
+        
+        if (!self.selected) {
+            calloutView?.removeFromSuperview()
+        }
+    }
     
-//    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-//        var hitView = super.hitTest(point, withEvent: event)
-//        
-//        if let callout = calloutView {
-//            if (hitView == nil && self.selected) {
-//                hitView = callout.hitTest(point, withEvent: event)
-//            }
-//        }
-//        
-//        hitOutside = hitView == nil
-//        print("hit outside = \(hitOutside)")
-//        
-//        return hitView;
-//    }
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        var hitView = super.hitTest(point, withEvent: event)
+        
+        if let callout = calloutView {
+            if (hitView == nil && self.selected) {
+                hitView = callout.hitTest(point, withEvent: event)
+            }
+        }
+        
+        hitOutside = hitView == nil
+        print("hit outside = \(hitOutside)")
+        
+        return hitView;
+    }
     
     private func initImage() {
         let imageIcon = UIImage(named: flag!.type() + " Flag")!
@@ -121,6 +120,4 @@ class FlagAnnotationView : MKAnnotationView {
         UIGraphicsEndImageContext()
         centerOffset = CGPointMake(17, -20)
     }
-    
-
 }
