@@ -63,12 +63,24 @@ class FlagAnnotationView : MKAnnotationView {
         if self.selected && !calloutViewAdded {
             print("Adding callout for \(flag?.type())")
             addSubview(calloutView!)
+            centreFlag()
         }
         
         if !self.selected {
             print("Removing callout for \(flag?.type())")
             calloutView?.removeFromSuperview()
         }
+    }
+    
+    private func centreFlag() {
+        let map = self.mapController!.map
+        let pinCoord = flag!.location()
+        let mapTopCoord = map.convertPoint(CGPointMake(0, 0), toCoordinateFromView: map)
+        let mapBottomCoord = map.convertPoint(CGPointMake(0, map.frame.height), toCoordinateFromView: map)
+        let coordsTopToBottom = mapTopCoord.latitude - mapBottomCoord.latitude
+        let rescrollCoord = CLLocationCoordinate2D(latitude: (pinCoord.latitude + coordsTopToBottom/4), longitude: pinCoord.longitude)
+        
+        self.mapController?.map.setCenterCoordinate(rescrollCoord, animated: true)
     }
     
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
