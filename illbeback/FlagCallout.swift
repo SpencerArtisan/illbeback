@@ -81,33 +81,25 @@ class FlagCallout: UIView {
         createLabelView()
         createCalloutView()
         
-        frame = calloutFrame()
-    }
-    
-    internal override func intrinsicContentSize() -> CGSize {
-        return calloutSize!
-    }
-    
-    private func calloutFrame() -> CGRect {
-        return CGRect(
-                    x: -calloutSize!.width/2 + 15,
-                    y: -calloutSize!.height - 10,
-                    width: calloutSize!.width,
-                    height: calloutSize!.height)
+        frame = CGRect(
+            x: -calloutSize!.width/2 + 15,
+            y: -calloutSize!.height - 10,
+            width: calloutSize!.width,
+            height: calloutSize!.height)
     }
 
     func createLabelView() {
         labelView = UIView(frame: labelArea!)
         labelView!.backgroundColor = flag!.isPendingAccept() || flag!.isBlank() ? UIColor.lightGrayColor().colorWithAlphaComponent(0.3) : UIColor.whiteColor()
         labelView!.addSubview(titleView!)
-        if (Global.getUser().getName() != flag?.originator()) {
+        if Global.getUser().getName() != flag?.originator() {
             labelView!.addSubview(originatorView!)
         }
         for inviteeView in inviteeViews {
             labelView!.addSubview(inviteeView)
         }
         labelView!.addSubview(subtitleView!)
-        if (flag?.when() != nil) {
+        if flag?.when() != nil {
             labelView!.addSubview(dateView!)
         }
         
@@ -133,7 +125,7 @@ class FlagCallout: UIView {
         backgroundColor = UIColor.whiteColor()
         layer.cornerRadius = 10
         addSubview(labelView!)
-        if (photoView != nil) {
+        if photoView != nil {
             addSubview(photoView!)
             addDotsToPhoto()
         }
@@ -141,7 +133,6 @@ class FlagCallout: UIView {
         layer.borderWidth = 1.0
         layer.borderColor = UIColor.grayColor().CGColor
     }
-
     
     func createDeleteButton() {
         let x = photoView == nil ? labelArea!.width - 35 : labelArea!.width - 65
@@ -171,7 +162,7 @@ class FlagCallout: UIView {
     func addDotsToPhoto() {
         let count = mapController!.photoAlbum.photos(flag!).count
         
-        if (count > 1) {
+        if count > 1 {
             let left = photoView!.frame.width / 2 - (CGFloat(count-1)) * 6
             for i in 0...count-1 {
                 let image = UIImage(named: "dot")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
@@ -199,49 +190,36 @@ class FlagCallout: UIView {
     func createDateLabel() {
         if (flag?.when() != nil) {
             whenHeight = 23
-            dateView = UILabel(frame: CGRectMake(0, labelArea!.height-25, labelArea!.width, 25))
-            dateView!.layer.cornerRadius = 0
-            dateView!.numberOfLines = 0
-            dateView!.textAlignment = NSTextAlignment.Center
-            dateView!.font = UIFont.italicSystemFontOfSize(14)
-            dateView!.text = flag!.whenFormatted()
-            dateView!.backgroundColor = CategoryController.getColorForCategory(flag!.type()).colorWithAlphaComponent(0.5)
-            dateView!.layer.borderWidth = 0.5
-            dateView!.layer.borderColor = UIColor.lightGrayColor().CGColor
+            dateView = createLabel(
+                flag!.whenFormatted(),
+                position: CGRectMake(0, labelArea!.height-25, labelArea!.width, 25),
+                fontSize: 14,
+                italic: true,
+                color: CategoryController.getColorForCategory(flag!.type()).colorWithAlphaComponent(0.5))
         }
     }
     
     func createTitleLabel() {
-        titleView = UILabel(frame: CGRectMake(0, 0, labelArea!.width, 40))
-        titleView!.layer.cornerRadius = 0
-        titleView!.numberOfLines = 0
-        titleView!.textAlignment = NSTextAlignment.Center
-        titleView!.font = titleView!.font.fontWithSize(20)
-        titleView!.text = flag!.type()
-        titleView!.backgroundColor = CategoryController.getColorForCategory(flag!.type())
-        titleView!.layer.borderWidth = 0.5
-        titleView!.layer.borderColor = UIColor.lightGrayColor().CGColor
+        titleView = createLabel(
+            flag!.type(),
+            position: CGRectMake(0, 0, labelArea!.width, 40),
+            fontSize: 20,
+            italic: false,
+            color: CategoryController.getColorForCategory(flag!.type()))
     }
     
     func createOriginatorLabel() {
-        if (Global.getUser().getName() != flag?.originator()) {
-            fromHeight = 25
-        }
-        originatorView = UILabel(frame: CGRectMake(0, 40, labelArea!.width, 25))
-        originatorView!.layer.cornerRadius = 0
-        originatorView!.numberOfLines = 0
-        originatorView!.textAlignment = NSTextAlignment.Center
-        originatorView!.font = UIFont.italicSystemFontOfSize(14)
-        originatorView!.text = "from " + flag!.originator()
-        originatorView!.backgroundColor = CategoryController.getColorForCategory(flag!.type()).colorWithAlphaComponent(0.5)
-        originatorView!.layer.borderWidth = 0.5
-        originatorView!.layer.borderColor = UIColor.lightGrayColor().CGColor
+        if (Global.getUser().getName() != flag?.originator()) { fromHeight = 25 }
+        originatorView = createLabel(
+            "from " + flag!.originator(),
+            position: CGRectMake(0, 40, labelArea!.width, 25),
+            fontSize: 14,
+            italic: true,
+            color: CategoryController.getColorForCategory(flag!.type()).colorWithAlphaComponent(0.5))
     }
     
     func createInviteeLabel() {
-        if !flag!.isEvent() || flag?.originator() != Global.getUser().getName() {
-            return
-        }
+        if !flag!.isEvent() || flag?.originator() != Global.getUser().getName() { return }
         
         let barHeight = flag?.invitees().count > 2 ? CGFloat(18) : CGFloat(25)
         let fontSize = flag?.invitees().count > 2 ? CGFloat(12) : CGFloat(14)
@@ -250,67 +228,67 @@ class FlagCallout: UIView {
             var invitee = i
             if invitee.name() == Global.getUser().getName() { continue }
             count++
-            if count == 4 && flag?.invitees().count > 4 {
-                invitee = Invitee(name: "others")
-            }
+            if count == 4 && flag?.invitees().count > 4 { invitee = Invitee(name: "others") }
             
-            let inviteeView = UILabel(frame: CGRectMake(0, 40 + fromHeight, labelArea!.width, barHeight))
-            inviteeView.layer.cornerRadius = 0
-            inviteeView.numberOfLines = 0
-            inviteeView.textAlignment = NSTextAlignment.Center
-            inviteeView.font = UIFont.italicSystemFontOfSize(fontSize)
+            let color = invitee.state() == InviteeState.Accepted ? UIColor.greenColor().colorWithAlphaComponent(0.6) :
+                (invitee.state() == InviteeState.Declined ? UIColor.redColor().colorWithAlphaComponent(0.6) : UIColor.lightGrayColor().colorWithAlphaComponent(0.6))
             let state = invitee.state() == InviteeState.Accepted ? "accepted" : (invitee.state() == InviteeState.Declined ? "declined" : "invited")
-            inviteeView.text = "\(invitee.name()) \(state)"
-            inviteeView.backgroundColor = invitee.state() == InviteeState.Accepted ? UIColor.greenColor().colorWithAlphaComponent(0.6) : (invitee.state() == InviteeState.Declined ? UIColor.redColor().colorWithAlphaComponent(0.6) : UIColor.lightGrayColor().colorWithAlphaComponent(0.6))
-            inviteeView.textColor = invitee.state() == InviteeState.Accepted ? UIColor.blackColor() : (invitee.state() == InviteeState.Declined ? UIColor.whiteColor() : UIColor.darkGrayColor())
-            inviteeView.layer.borderWidth = 0.5
-            inviteeView.layer.borderColor = UIColor.lightGrayColor().CGColor
-            inviteeViews.append(inviteeView)
+            let InviteeLabel = createLabel(
+                "\(invitee.name()) \(state)",
+                position: CGRectMake(0, 40 + fromHeight, labelArea!.width, barHeight),
+                fontSize: fontSize,
+                italic: true,
+                color: color)
+            InviteeLabel.textColor = invitee.state() == InviteeState.Accepted ? UIColor.blackColor() : (invitee.state() == InviteeState.Declined ? UIColor.whiteColor() : UIColor.darkGrayColor())
+
+            inviteeViews.append(InviteeLabel)
             fromHeight += barHeight
             
-            if count == 4 {
-                break
-            }
+            if count == 4 { break }
         }
     }
-    
+
     func createSubtitleLabel() {
-        subtitleView = UILabel(frame: CGRectMake(6, 40 + fromHeight, labelArea!.width - 12, labelArea!.height - 74 - fromHeight - whenHeight))
-        subtitleView!.backgroundColor = UIColor.clearColor()
-        subtitleView!.layer.cornerRadius = 0
-        subtitleView!.numberOfLines = 0
-        subtitleView!.textAlignment = NSTextAlignment.Center
-        subtitleView!.text = flag!.description().isEmpty ? "No description provided" : flag!.description()
+        subtitleView = createLabel(
+            flag!.description().isEmpty ? "No description provided" : flag!.description(),
+            position: CGRectMake(6, 40 + fromHeight, labelArea!.width - 12, labelArea!.height - 74 - fromHeight - whenHeight),
+            fontSize: 16,
+            italic: false,
+            color: UIColor.clearColor())
+        subtitleView?.layer.borderWidth = 0
     }
     
     func createAcceptButton() {
-        if flag!.isPendingAccept()  || flag!.isBlank() {
-            acceptButton = UILabel(frame: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
-            acceptButton!.layer.cornerRadius = 0
-            acceptButton!.numberOfLines = 0
-            acceptButton!.textAlignment = NSTextAlignment.Center
-            acceptButton!.font = acceptButton!.font.fontWithSize(18)
-            acceptButton!.text = flag!.isBlank() ? "Use" : "Accept"
-            acceptButton!.backgroundColor = UIColor.greenColor()
-            acceptButton!.layer.borderWidth = 1
-            acceptButton!.layer.borderColor = UIColor.grayColor().CGColor
-        }
+        acceptButton = createLabel(
+            flag!.isBlank() ? "Use" : "Accept",
+            position: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35),
+            fontSize: 18,
+            italic: false,
+            color: UIColor.greenColor())
     }
     
     func createDeclineButton() {
-        if flag!.isPendingAccept()  || flag!.isBlank() {
-            declineButton = UILabel(frame: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35))
-            declineButton!.layer.cornerRadius = 0
-            declineButton!.numberOfLines = 0
-            declineButton!.textAlignment = NSTextAlignment.Center
-            declineButton!.font = declineButton!.font.fontWithSize(18)
-            declineButton!.text = flag!.isBlank() ? "Delete" : "Decline"
-            declineButton!.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
-            declineButton!.layer.borderWidth = 1
-            declineButton!.layer.borderColor = UIColor.grayColor().CGColor
-        }
+        declineButton = createLabel(
+            flag!.isBlank() ? "Delete" : "Decline",
+            position: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35),
+            fontSize: 18,
+            italic: false,
+            color:  UIColor.redColor().colorWithAlphaComponent(0.5))
     }
     
+    private func createLabel(text: String, position: CGRect, fontSize: CGFloat, italic: Bool, color: UIColor) -> UILabel {
+        let label = UILabel(frame: position)
+        label.layer.cornerRadius = 0
+        label.numberOfLines = 0
+        label.textAlignment = NSTextAlignment.Center
+        label.font = italic ? UIFont.italicSystemFontOfSize(fontSize) : UIFont.systemFontOfSize(fontSize)
+        label.text = text
+        label.backgroundColor = color
+        label.layer.borderWidth = 0.5
+        label.layer.borderColor = UIColor.lightGrayColor().CGColor
+        return label
+    }
+
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         let viewPoint = superview?.convertPoint(point, toView: self) ?? point
         
@@ -363,9 +341,5 @@ class FlagCallout: UIView {
     
     private func hitPicture(point: CGPoint) -> Bool {
         return photoView != nil && photoView!.bounds.contains(self.convertPoint(point, toView: photoView))
-    }
-
-    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
-        return CGRectContainsPoint(bounds, point)
     }
 }
