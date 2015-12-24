@@ -379,7 +379,31 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
 //        }
 //    }
   
-
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+//        if let flagView = view as? FlagAnnotationView {
+//            print("SELECT \(flagView.flag?.type())")
+//            
+//            for annotation in mapView.annotations {
+//                if let flag = annotation as? FlagAnnotation {
+//                    if flag.flag.id() != flagView.flag?.id() {
+//                        if let xxx = mapView.viewForAnnotation(flag) {
+//                        xxx.enabled = false
+//                        if xxx.selected {
+//                            print("Auto deselecting \(flag.flag.type())")
+//                            mapView.deselectAnnotation(annotation, animated: false)
+//                        }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+    }
+    
+    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
+//        if let flagView = view as? FlagAnnotationView {
+//            print("DESELECT \(flagView.flag?.type())")
+//        }
+    }
     
     func showPinsInShape() {
         let allPins = map.annotations
