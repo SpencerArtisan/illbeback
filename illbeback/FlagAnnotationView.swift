@@ -36,11 +36,15 @@ class FlagAnnotationView : MKAnnotationView {
     }
     
     func refreshImage() {
-        
+        initImage()
     }
     
     func refresh() {
-     
+        if selected {
+            // close and reopen
+        }
+        
+        
     }
     
     func refreshAndReopen() {
@@ -48,28 +52,30 @@ class FlagAnnotationView : MKAnnotationView {
     }
   
     override func setSelected(selected: Bool, animated: Bool) {
-        let calloutViewAdded = calloutView?.superview != nil
-        
         if selected || !selected && !clickedOnFlagOrCallout {
             super.setSelected(selected, animated: animated)
         } else {
             Utils.delay(0.1) { if self.annotation != nil { self.mapController?.map.selectAnnotation(self.annotation!, animated: false) } }
         }
         
-        self.superview?.bringSubviewToFront(self)
-        
-        calloutView = calloutView ?? FlagCallout(flag: flag!, mapController: mapController!, annotationView: self)
-        
-        if self.selected && !calloutViewAdded {
+        self.superview?.bringSubviewToFront(self)        
+        if self.selected { showCallout() }
+        if !self.selected { hideCallout() }
+    }
+    
+    private func showCallout() {
+        let calloutOpen = calloutView?.superview != nil
+        if !calloutOpen {
             print("Adding callout for \(flag?.type())")
+            calloutView = calloutView ?? FlagCallout(flag: flag!, mapController: mapController!, annotationView: self)
             addSubview(calloutView!)
             centreFlag()
         }
-        
-        if !self.selected {
-            print("Removing callout for \(flag?.type())")
-            calloutView?.removeFromSuperview()
-        }
+    }
+    
+    private func hideCallout() {
+        print("Removing callout for \(flag?.type())")
+        calloutView?.removeFromSuperview()
     }
     
     private func centreFlag() {
