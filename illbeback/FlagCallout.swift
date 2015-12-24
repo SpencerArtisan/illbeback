@@ -30,7 +30,8 @@ class FlagCallout: UIView {
     
     var mapController:MapController?
     var flag: Flag?
-    var hitOutside: Bool = true
+    var annotationView: FlagAnnotationView!
+
     var imageUrl: String?
     var labelArea: CGRect?
     var calloutSize: CGSize?
@@ -39,20 +40,16 @@ class FlagCallout: UIView {
     var whenHeight: CGFloat = 0.0
     var fromHeight: CGFloat = 0.0
     
-    var lastSelectionChange: NSDate?
-    static var lastCalloutAction: NSDate?
-    var lastHitTestPoint: CGPoint?
-
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(flag: Flag, mapController: MapController) {
+    init(flag: Flag, mapController: MapController, annotationView: FlagAnnotationView) {
         super.init(frame: CGRect(x:0, y:0, width: 0, height: 0))
         
         self.flag = flag
         self.mapController = mapController
+        self.annotationView = annotationView
         self.imageUrl = mapController.photoAlbum.getMainPhoto(flag)?.imagePath
             
         createPhotoView()
@@ -317,13 +314,57 @@ class FlagCallout: UIView {
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         let viewPoint = superview?.convertPoint(point, toView: self) ?? point
         
-//        let isInsideView = pointInside(viewPoint, withEvent: event)
+        if event!.type == UIEventType.Touches {
+            if hitButton(point, button: acceptButton) {
+                accept()
+            } else if hitButton(point, button: declineButton) {
+                decline()
+            } else if hitPicture(point) {
+                mapController?.zoomPicture(annotationView)
+            } else if !flag!.isPendingAccept() {
+                if hitButton(point, button: dateView) {
+                    mapController?.rescheduleFlag(annotationView)
+                } else if hitButton(point, button: deleteButton) {
+                    mapController?.deleteFlag(annotationView)
+                } else if hitButton(point, button: shareButton) {
+                    mapController?.shareFlag(annotationView)
+                } else if hitButton(point, button: photoButton) {
+                    mapController?.rephotoMemory(annotationView)
+                } else if hitButton(point, button: subtitleView) {
+                    mapController?.rewordFlag(annotationView)
+                }
+            }
+        }
         
         let view = super.hitTest(viewPoint, withEvent: event)
         
         return view
     }
     
+    private func accept() {
+        if flag!.isBlank() {
+            mapController?.unblankFlag(annotationView)
+        } else if flag!.isPendingAccept() {
+            mapController?.acceptRecentShare(flag!)
+        }
+    }
+    
+    private func decline() {
+        if flag!.isBlank() {
+            mapController?.deleteFlag(annotationView)
+        } else if flag!.isPendingAccept() {
+            mapController?.declineRecentShare(flag!)
+        }
+    }
+    
+    private func hitButton(point: CGPoint, button: UIView?) -> Bool {
+        return button != nil && button!.frame.contains(annotationView.convertPoint(point, toView: labelView))
+    }
+    
+    private func hitPicture(point: CGPoint) -> Bool {
+        return photoView != nil && photoView!.bounds.contains(self.convertPoint(point, toView: photoView))
+    }
+
     override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
         return CGRectContainsPoint(bounds, point)
     }

@@ -52,13 +52,13 @@ class FlagAnnotationView : MKAnnotationView {
         
         if selected || !selected && !clickedOnFlagOrCallout {
             super.setSelected(selected, animated: animated)
-        } else {
+        } else if self.annotation != nil {
             Utils.delay(0.1) { self.mapController?.map.selectAnnotation(self.annotation!, animated: false) }
         }
         
         self.superview?.bringSubviewToFront(self)
         
-        calloutView = calloutView ?? FlagCallout(flag: flag!, mapController: mapController!)
+        calloutView = calloutView ?? FlagCallout(flag: flag!, mapController: mapController!, annotationView: self)
         
         if self.selected && !calloutViewAdded {
             print("Adding callout for \(flag?.type())")
