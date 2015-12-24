@@ -259,21 +259,25 @@ class FlagCallout: UIView {
     }
     
     func createAcceptButton() {
-        acceptButton = createLabel(
-            flag!.isBlank() ? "Use" : "Accept",
-            position: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35),
-            fontSize: 18,
-            italic: false,
-            color: UIColor.greenColor())
+        if flag!.isPendingAccept()  || flag!.isBlank() {
+            acceptButton = createLabel(
+                flag!.isBlank() ? "Use" : "Accept",
+                position: CGRectMake(labelArea!.width / 2, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35),
+                fontSize: 18,
+                italic: false,
+                color: UIColor.greenColor())
+        }
     }
     
     func createDeclineButton() {
-        declineButton = createLabel(
-            flag!.isBlank() ? "Delete" : "Decline",
-            position: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35),
-            fontSize: 18,
-            italic: false,
-            color:  UIColor.redColor().colorWithAlphaComponent(0.5))
+        if flag!.isPendingAccept()  || flag!.isBlank() {
+            declineButton = createLabel(
+                flag!.isBlank() ? "Delete" : "Decline",
+                position: CGRectMake(0, labelArea!.height - 35 - whenHeight, labelArea!.width / 2, 35),
+                fontSize: 18,
+                italic: false,
+                color:  UIColor.redColor().colorWithAlphaComponent(0.5))
+        }
     }
     
     private func createLabel(text: String, position: CGRect, fontSize: CGFloat, italic: Bool, color: UIColor) -> UILabel {

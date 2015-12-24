@@ -52,8 +52,8 @@ class FlagAnnotationView : MKAnnotationView {
         
         if selected || !selected && !clickedOnFlagOrCallout {
             super.setSelected(selected, animated: animated)
-        } else if self.annotation != nil {
-            Utils.delay(0.1) { self.mapController?.map.selectAnnotation(self.annotation!, animated: false) }
+        } else {
+            Utils.delay(0.1) { if self.annotation != nil { self.mapController?.map.selectAnnotation(self.annotation!, animated: false) } }
         }
         
         self.superview?.bringSubviewToFront(self)
