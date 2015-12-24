@@ -314,12 +314,12 @@ class FlagCallout: UIView {
         }
     }
     
-    override func hitTest(var point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         let viewPoint = superview?.convertPoint(point, toView: self) ?? point
         
-        let isInsideView = pointInside(viewPoint, withEvent: event)
+//        let isInsideView = pointInside(viewPoint, withEvent: event)
         
-        var view = super.hitTest(viewPoint, withEvent: event)
+        let view = super.hitTest(viewPoint, withEvent: event)
         
         return view
     }

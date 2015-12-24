@@ -17,11 +17,7 @@ class FlagAnnotationView : MKAnnotationView {
     var flag: Flag?
     private var mapController: MapController?
     private var calloutView:FlagCallout?
-    private var hitOutside:Bool = true
-    
-    var preventDeselection:Bool {
-        return !hitOutside
-    }
+    private var clickedOnFlagOrCallout:Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,29 +50,22 @@ class FlagAnnotationView : MKAnnotationView {
     override func setSelected(selected: Bool, animated: Bool) {
         let calloutViewAdded = calloutView?.superview != nil
         
-        print("Set selected to \(selected) to \(flag?.type()) (was \(self.selected))")
-        
-        if (selected || !selected && hitOutside) {
-            print("Actioning...")
+        if selected || !selected && !clickedOnFlagOrCallout {
             super.setSelected(selected, animated: animated)
         } else {
-            Utils.delay(0.1) {
-                self.mapController?.map.selectAnnotation(self.annotation!, animated: false)
-            }
+            Utils.delay(0.1) { self.mapController?.map.selectAnnotation(self.annotation!, animated: false) }
         }
         
         self.superview?.bringSubviewToFront(self)
         
-        if (calloutView == nil) {
-            calloutView = FlagCallout(flag: flag!, mapController: mapController!)
-        }
+        calloutView = calloutView ?? FlagCallout(flag: flag!, mapController: mapController!)
         
-        if (self.selected && !calloutViewAdded) {
+        if self.selected && !calloutViewAdded {
             print("Adding callout for \(flag?.type())")
             addSubview(calloutView!)
         }
         
-        if (!self.selected) {
+        if !self.selected {
             print("Removing callout for \(flag?.type())")
             calloutView?.removeFromSuperview()
         }
@@ -85,58 +74,31 @@ class FlagAnnotationView : MKAnnotationView {
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         var hitView = super.hitTest(point, withEvent: event)
         
-        if let callout = calloutView {
-            if (hitView == nil && self.selected) {
-                hitView = callout.hitTest(point, withEvent: event)
-            }
+        if hitView == nil && self.selected {
+            hitView = calloutView?.hitTest(point, withEvent: event)
         }
         
-        hitOutside = hitView == nil
+        clickedOnFlagOrCallout = hitView != nil
 
-        if !hitOutside {
-            for annotation in (mapController?.map.annotations)! {
-                if let siblingFlag = annotation as? FlagAnnotation {
-                    if siblingFlag.flag.id() != flag?.id() {
-                        if let xxx = mapController?.map.viewForAnnotation(siblingFlag) {
-                            print("Disabling \(siblingFlag.flag.type())")
-                            xxx.enabled = false
-                            Utils.delay(0.8) {
-                                xxx.enabled = true
-                            }
-//                            if xxx.selected {
-//                                print("Auto deselecting \(flag.flag.type())")
-//                                mapView.deselectAnnotation(annotation, animated: false)
-//                            }
-                        }
+        if clickedOnFlagOrCallout {
+            disableSiblingSelectionTemporarily()
+        }
+        
+        return hitView
+    }
+    
+    private func disableSiblingSelectionTemporarily() {
+        for annotation in (mapController?.map.annotations)! {
+            if let siblingFlagAnnotation = annotation as? FlagAnnotation {
+                if siblingFlagAnnotation.flag.id() != flag?.id() {
+                    if let siblingFlagView = mapController?.map.viewForAnnotation(siblingFlagAnnotation) {
+                        print("Disabling \(siblingFlagAnnotation.flag.type())")
+                        siblingFlagView.enabled = false
+                        Utils.delay(0.8) { siblingFlagView.enabled = true }
                     }
                 }
             }
-            
         }
-        
-//        if let flagView = view as? FlagAnnotationView {
-//            print("SELECT \(flagView.flag?.type())")
-//            
-//        }
-
-        //     print("hit outside = \(hitOutside)")
-   
-//        UIView *hitView = [super hitTest:point withEvent:event];
-//        
-//        if (hitView == self.accessory) {
-//            [self preventParentSelectionChange];
-//            [self performSelector:@selector(allowParentSelectionChange) withObject:nil afterDelay:1.0];
-//            for (UIView *sibling in self.superview.subviews) {
-//                if ([sibling isKindOfClass:[MKAnnotationView class]] && sibling != self.parentAnnotationView) {
-//                    ((MKAnnotationView *)sibling).enabled = NO;
-//                    [self performSelector:@selector(enableSibling:) withObject:sibling afterDelay:1.0];
-//                }
-//            }
-//        }
-        
-
-        
-        return hitView;
     }
     
     private func initImage() {
