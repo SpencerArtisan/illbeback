@@ -326,85 +326,51 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     
     // Callback for button on the callout
     func rewordFlag(pin: FlagAnnotationView) {
-        deselect(pin)
         addFlag.reword(self, pin: pin)
     }
     
     // Callback for button on the callout
     func rescheduleFlag(pin: FlagAnnotationView) {
-        deselect(pin)
         addFlag.reschedule(self, pin: pin)
     }
     
     // Callback for button on the callout
     func unblankFlag(pin: FlagAnnotationView) {
-        deselect(pin)
         addFlag.unblank(self, pin: pin)
-    }
-    
-    private func deselect(pin: FlagAnnotationView) {
-        print("Deselect pin")
-//        map.deselectAnnotation(pin.annotation, animated: false)
-//        pin.refresh()
+        pin.refreshImage()
     }
     
     // Callback for display pins on map
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         return flagRenderer.render(mapView, viewForAnnotation: annotation)
     }
-//    
-//    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-//        if newState == MKAnnotationViewDragState.Starting {
-//            view.dragState = MKAnnotationViewDragState.Dragging
-//        } else if newState == MKAnnotationViewDragState.Ending || newState == MKAnnotationViewDragState.Canceling {
-//            view.dragState = MKAnnotationViewDragState.None;
-//            if view.annotation is FlagAnnotation {
-//                let pinData = view.annotation as! FlagAnnotation
-//                pinData.setCoordinate2(pinData.coordinate)
-//            } else if view.annotation is ShapeCorner {
-//                let pinData = view.annotation as! ShapeCorner
-//                shapeController.move(pinData)
-//                showPinsInShape()
-//            }
-//        }
-//    }
-//    
-//    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
-//        for aView in views {
-//            if aView is FlagAnnotationView {
-//                if (aView as! FlagAnnotationView).flag!.isEvent() {
-//                    aView.layer.zPosition = 1
-//                }
-//            } 
-//        }
-//    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+        if newState == MKAnnotationViewDragState.Starting {
+            view.dragState = MKAnnotationViewDragState.Dragging
+        } else if newState == MKAnnotationViewDragState.Ending || newState == MKAnnotationViewDragState.Canceling {
+            view.dragState = MKAnnotationViewDragState.None;
+            if view.annotation is FlagAnnotation {
+                let pinData = view.annotation as! FlagAnnotation
+                pinData.setCoordinate2(pinData.coordinate)
+            } else if view.annotation is ShapeCorner {
+                let pinData = view.annotation as! ShapeCorner
+                shapeController.move(pinData)
+                showPinsInShape()
+            }
+        }
+    }
+    
+    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+        for aView in views {
+            if aView is FlagAnnotationView {
+                if (aView as! FlagAnnotationView).flag!.isEvent() {
+                    aView.layer.zPosition = 1
+                }
+            } 
+        }
+    }
   
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-//        if let flagView = view as? FlagAnnotationView {
-//            print("SELECT \(flagView.flag?.type())")
-//            
-//            for annotation in mapView.annotations {
-//                if let flag = annotation as? FlagAnnotation {
-//                    if flag.flag.id() != flagView.flag?.id() {
-//                        if let xxx = mapView.viewForAnnotation(flag) {
-//                        xxx.enabled = false
-//                        if xxx.selected {
-//                            print("Auto deselecting \(flag.flag.type())")
-//                            mapView.deselectAnnotation(annotation, animated: false)
-//                        }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-    }
-    
-    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
-//        if let flagView = view as? FlagAnnotationView {
-//            print("DESELECT \(flagView.flag?.type())")
-//        }
-    }
-    
     func showPinsInShape() {
         let allPins = map.annotations
         for pin in allPins {

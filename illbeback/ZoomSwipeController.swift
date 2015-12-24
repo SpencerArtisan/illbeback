@@ -193,7 +193,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     }
     
     func goBack(sender : UIButton!) {
-        pinToRephoto!.refreshAndReopen()
+        pinToRephoto!.refresh()
         self.navigationController!.popViewControllerAnimated(false)
     }
     

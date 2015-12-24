@@ -48,6 +48,6 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
         flagRepository.save()
         photoAlbum!.addFlagImage(image, flag: pinToRephoto!.flag!)
         navigationController?.popViewControllerAnimated(false)
-        pinToRephoto!.refreshAndReopen()
+        pinToRephoto!.refresh()
     }
 }

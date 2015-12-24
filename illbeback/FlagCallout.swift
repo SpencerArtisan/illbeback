@@ -94,7 +94,7 @@ class FlagCallout: UIView {
         
         frame = CGRect(
             x: -calloutSize!.width/2 + 10,
-            y: -calloutSize!.height - 10,
+            y: -calloutSize!.height - 2,
             width: calloutSize!.width,
             height: calloutSize!.height)
     }

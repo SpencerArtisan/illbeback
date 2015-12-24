@@ -41,7 +41,7 @@ class HintController : NSObject {
     func backupHint() {
         image(4).hidden = true
         image(5).hidden = false
-        hint("Now you have a few flags, you might want to back them up from time to time", fromBottom: mapController.view.frame.height - 330)
+        hint("Now you have a few flags, you might want to back them up from time to time", fromBottom: mapController.view.frame.height - 300)
     }
     
     private func image(tag: Int) -> UIImageView {

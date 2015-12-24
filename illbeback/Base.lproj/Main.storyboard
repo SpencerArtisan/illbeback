@@ -174,7 +174,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="33T-Bv-nuw">
-                                <rect key="frame" x="287.5" y="12.5" width="25" height="25"/>
+                                <rect key="frame" x="287.5" y="2.5" width="25" height="25"/>
                                 <state key="normal" image="Backup"/>
                                 <connections>
                                     <action selector="backup:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="W54-jd-rFD"/>
@@ -189,7 +189,7 @@
                             <constraint firstItem="ZNr-gZ-dda" firstAttribute="leading" secondItem="HH0-zd-1ZB" secondAttribute="trailing" constant="8" symbolic="YES" id="9Vv-XO-hJS"/>
                             <constraint firstItem="33T-Bv-nuw" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="DQX-xG-4v5"/>
                             <constraint firstItem="DtY-Nv-kkq" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="Dlf-ik-2Fr"/>
-                            <constraint firstItem="KPX-1B-P6g" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="HmD-5v-KBY"/>
+                            <constraint firstItem="KPX-1B-P6g" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="-10" id="HmD-5v-KBY"/>
                             <constraint firstItem="ZNr-gZ-dda" firstAttribute="width" secondItem="HH0-zd-1ZB" secondAttribute="width" id="JEf-qf-8mo"/>
                             <constraint firstItem="SbP-CO-Ehi" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="JbX-y1-Zg8"/>
                             <constraint firstItem="DtY-Nv-kkq" firstAttribute="width" secondItem="HH0-zd-1ZB" secondAttribute="width" id="MvN-tI-H4Q"/>
@@ -208,11 +208,13 @@
                             <constraint firstItem="fbX-Mm-eun" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="foE-Fa-72T"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="height" secondItem="fbX-Mm-eun" secondAttribute="height" id="gOA-D7-t5i"/>
                             <constraint firstItem="33T-Bv-nuw" firstAttribute="centerY" secondItem="KPX-1B-P6g" secondAttribute="centerY" id="hvK-Jg-bpf"/>
+                            <constraint firstItem="fbX-Mm-eun" firstAttribute="centerY" secondItem="33T-Bv-nuw" secondAttribute="centerY" id="kzH-Bz-gbr"/>
                             <constraint firstItem="OyB-ot-KZY" firstAttribute="centerY" secondItem="HH0-zd-1ZB" secondAttribute="centerY" id="oSw-8q-NAR"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="ZNr-gZ-dda" secondAttribute="bottom" constant="30" id="pab-XA-2Zf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="foE-Fa-72T"/>
                                 <exclude reference="Uy4-sE-ClH"/>
                                 <exclude reference="gOA-D7-t5i"/>
                             </mask>

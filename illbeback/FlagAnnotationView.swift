@@ -40,16 +40,9 @@ class FlagAnnotationView : MKAnnotationView {
     }
     
     func refresh() {
-        if selected {
-            // close and reopen
-        }
         if calloutView != nil { calloutView!.refresh() }
     }
-    
-    func refreshAndReopen() {
-        refresh()
-    }
-  
+
     override func setSelected(selected: Bool, animated: Bool) {
         if selected || !selected && !clickedOnFlagOrCallout {
             super.setSelected(selected, animated: animated)
@@ -65,7 +58,6 @@ class FlagAnnotationView : MKAnnotationView {
     private func showCallout() {
         let calloutOpen = calloutView?.superview != nil
         if !calloutOpen {
-            print("Adding callout for \(flag?.type())")
             calloutView = calloutView ?? FlagCallout(flag: flag!, mapController: mapController!, annotationView: self)
             addSubview(calloutView!)
             centreFlag()
@@ -73,7 +65,6 @@ class FlagAnnotationView : MKAnnotationView {
     }
     
     private func hideCallout() {
-        print("Removing callout for \(flag?.type())")
         calloutView?.removeFromSuperview()
     }
     
@@ -109,7 +100,6 @@ class FlagAnnotationView : MKAnnotationView {
             if let siblingFlagAnnotation = annotation as? FlagAnnotation {
                 if siblingFlagAnnotation.flag.id() != flag?.id() {
                     if let siblingFlagView = mapController?.map.viewForAnnotation(siblingFlagAnnotation) {
-                        print("Disabling \(siblingFlagAnnotation.flag.type())")
                         siblingFlagView.enabled = false
                         Utils.delay(0.8) { siblingFlagView.enabled = true }
                     }

@@ -37,7 +37,6 @@ class ShapeController : UIViewController {
     
     func move(corner: ShapeCorner) {
         drawShape()
-        print(shapeContains(mapController.here.coordinate))
     }
     
     func beginShape() {
