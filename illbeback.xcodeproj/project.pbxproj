@@ -16,8 +16,6 @@
 		971DF36A1C26B5190051D47F /* Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3691C26B5190051D47F /* Backup.swift */; };
 		971DF36C1C26B6030051D47F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 971DF36B1C26B6030051D47F /* MessageUI.framework */; };
 		971DF3721C28AC4B0051D47F /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3711C28AC4B0051D47F /* Preferences.swift */; };
-		972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A01A90ECC100B5E74C /* MapPinView.swift */; };
-		972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A21A90ED2B00B5E74C /* MapPinCallout.swift */; };
 		972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A41A910E7500B5E74C /* PhotoAlbum.swift */; };
 		972006A71A9140FB00B5E74C /* DescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 972006A61A9140FB00B5E74C /* DescriptionView.xib */; };
 		9725CD381A98D22C0081C1B3 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD371A98D22C0081C1B3 /* Firebase.framework */; };
@@ -86,7 +84,6 @@
 		97D34AB91C127C1D00118819 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AB81C127C1D00118819 /* Extensions.swift */; };
 		97D34ABB1C12F5BB00118819 /* OutBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34ABA1C12F5BB00118819 /* OutBox.swift */; };
 		97D34ABC1C1316D900118819 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D34AB81C127C1D00118819 /* Extensions.swift */; };
-		97E3B9181A857A00007DB06E /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E3B9171A857A00007DB06E /* MapPin.swift */; };
 		97EA3FFD1AFE078D005507BF /* RephotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EA3FFC1AFE078D005507BF /* RephotoController.swift */; };
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
 		97EA40011AFEA36B005507BF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97EA40001AFEA36B005507BF /* AVFoundation.framework */; };
@@ -128,8 +125,6 @@
 		971DF3691C26B5190051D47F /* Backup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backup.swift; sourceTree = "<group>"; };
 		971DF36B1C26B6030051D47F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		971DF3711C28AC4B0051D47F /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		972006A01A90ECC100B5E74C /* MapPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
-		972006A21A90ED2B00B5E74C /* MapPinCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPinCallout.swift; sourceTree = "<group>"; };
 		972006A41A910E7500B5E74C /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
 		972006A61A9140FB00B5E74C /* DescriptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DescriptionView.xib; sourceTree = "<group>"; };
 		9725CD371A98D22C0081C1B3 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
@@ -191,7 +186,6 @@
 		97D34AB61C126C9100118819 /* FlagRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagRenderer.swift; sourceTree = "<group>"; };
 		97D34AB81C127C1D00118819 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		97D34ABA1C12F5BB00118819 /* OutBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutBox.swift; sourceTree = "<group>"; };
-		97E3B9171A857A00007DB06E /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		97EA3FFC1AFE078D005507BF /* RephotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RephotoController.swift; sourceTree = "<group>"; };
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
 		97EA40001AFEA36B005507BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -277,6 +271,7 @@
 				971DD8501C29AD3200CEFDDD /* FlagAnnotationView.swift */,
 				971DD8521C29ADA800CEFDDD /* FlagCallout.swift */,
 				971DD8541C2B20E700CEFDDD /* FlagAnnotation.swift */,
+				97A3534C1A800B9500973CAC /* MapController.swift */,
 			);
 			name = CleanCode;
 			sourceTree = "<group>";
@@ -298,11 +293,6 @@
 		97662C901BA2228800ACFF3A /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				97A3534C1A800B9500973CAC /* MapController.swift */,
-				97E3B9171A857A00007DB06E /* MapPin.swift */,
-				972006A01A90ECC100B5E74C /* MapPinView.swift */,
-				972006A21A90ED2B00B5E74C /* MapPinCallout.swift */,
-				97767D511B9088F300B6A827 /* SearchView.xib */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -357,6 +347,7 @@
 		97662C951BA2236100ACFF3A /* General */ = {
 			isa = PBXGroup;
 			children = (
+				97767D511B9088F300B6A827 /* SearchView.xib */,
 				97D34AB81C127C1D00118819 /* Extensions.swift */,
 				97D34AAE1C12453100118819 /* Util.swift */,
 				9749EE441BF749E300C1606B /* Global.swift */,
@@ -658,7 +649,6 @@
 				9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */,
 				971DF36A1C26B5190051D47F /* Backup.swift in Sources */,
 				97FA33451BF7E18800248F67 /* EventController.swift in Sources */,
-				972006A31A90ED2B00B5E74C /* MapPinCallout.swift in Sources */,
 				97D34AB71C126C9100118819 /* FlagRenderer.swift in Sources */,
 				97002F0E1BC91679002BF217 /* Photo.swift in Sources */,
 				973F252E1C0BA6F50034A235 /* Invitee2.swift in Sources */,
@@ -682,7 +672,6 @@
 				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,
 				97FC866D1C00F45D00C30C56 /* FlagController.swift in Sources */,
 				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
-				97E3B9181A857A00007DB06E /* MapPin.swift in Sources */,
 				971DD8531C29ADA800CEFDDD /* FlagCallout.swift in Sources */,
 				979F850B1AA11B8600A11F7F /* Camera.swift in Sources */,
 				97D34ABB1C12F5BB00118819 /* OutBox.swift in Sources */,
@@ -701,7 +690,6 @@
 				976696ED1A8A9EF4004CB60D /* CategoryController.swift in Sources */,
 				973F25281C0B7EC50034A235 /* FlagToken.swift in Sources */,
 				97FC866B1C00F44D00C30C56 /* FlagView.swift in Sources */,
-				972006A11A90ECC100B5E74C /* MapPinView.swift in Sources */,
 				971DD8511C29AD3200CEFDDD /* FlagAnnotationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

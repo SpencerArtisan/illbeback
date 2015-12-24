@@ -47,7 +47,7 @@ class FlagAnnotationView : MKAnnotationView {
     }
     
     func refreshAndReopen() {
-    
+        refresh()
     }
   
     override func setSelected(selected: Bool, animated: Bool) {

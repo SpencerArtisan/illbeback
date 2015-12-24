@@ -10,8 +10,8 @@ import Foundation
 
 class FlagCallout: UIView {
     let WITHOUT_PHOTO = CGSize(width: 220.0, height: 270.0)
-    let WITH_PORTRAIT_PHOTO = CGSize(width: 330.0, height: 280.0)
-    let WITH_LANDSCAPE_PHOTO = CGSize(width: 270.0, height: 350.0)
+    let WITH_PORTRAIT_PHOTO = CGSize(width: 300.0, height: 260.0)
+    let WITH_LANDSCAPE_PHOTO = CGSize(width: 260.0, height: 330.0)
     
     var photoView: UIImageView?
     var labelView: UIView?
@@ -92,7 +92,7 @@ class FlagCallout: UIView {
         createCalloutView()
         
         frame = CGRect(
-            x: -calloutSize!.width/2 + 15,
+            x: -calloutSize!.width/2 + 10,
             y: -calloutSize!.height - 10,
             width: calloutSize!.width,
             height: calloutSize!.height)
