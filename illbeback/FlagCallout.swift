@@ -50,8 +50,18 @@ class FlagCallout: UIView {
         self.flag = flag
         self.mapController = mapController
         self.annotationView = annotationView
-        self.imageUrl = mapController.photoAlbum.getMainPhoto(flag)?.imagePath
-            
+
+        reset()
+    }
+    
+    func refresh() {
+        reset()
+    }
+    
+    private func reset() {
+        whenHeight = 0
+        self.imageUrl = mapController!.photoAlbum.getMainPhoto(flag!)?.imagePath
+        
         createPhotoView()
         
         labelArea = CGRect(
@@ -87,7 +97,7 @@ class FlagCallout: UIView {
             width: calloutSize!.width,
             height: calloutSize!.height)
     }
-
+    
     func createLabelView() {
         labelView = UIView(frame: labelArea!)
         labelView!.backgroundColor = flag!.isPendingAccept() || flag!.isBlank() ? UIColor.lightGrayColor().colorWithAlphaComponent(0.3) : UIColor.whiteColor()
@@ -156,6 +166,8 @@ class FlagCallout: UIView {
             let image = UIImage(named: "camera")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             photoButton!.setImage(image, forState: UIControlState.Normal)
             photoButton?.tintColor = UIColor.blueColor()
+        } else {
+            photoButton = nil
         }
     }
     
@@ -175,16 +187,19 @@ class FlagCallout: UIView {
     }
     
     func createPhotoView() {
-        if (imageUrl == nil) { return }
-        photo = UIImage(contentsOfFile: imageUrl!)
-        photoView = UIImageView(frame: CGRectMake(
-            isLandscape() ? 1 : 0,
-            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 + 20: 0,
-            isLandscape() ? WITH_LANDSCAPE_PHOTO.width - 2 : WITH_PORTRAIT_PHOTO.width/2 + 1,
-            isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 20: WITH_PORTRAIT_PHOTO.height))
-        photoView!.image = photo
-        photoView!.layer.borderWidth = 1
-        photoView!.layer.borderColor = UIColor.grayColor().CGColor
+        if imageUrl != nil {
+            photo = UIImage(contentsOfFile: imageUrl!)
+            photoView = UIImageView(frame: CGRectMake(
+                isLandscape() ? 0 : 0,
+                isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 + 20: 0,
+                isLandscape() ? WITH_LANDSCAPE_PHOTO.width - 0 : WITH_PORTRAIT_PHOTO.width/2 + 1,
+                isLandscape() ? WITH_LANDSCAPE_PHOTO.height / 2 - 20: WITH_PORTRAIT_PHOTO.height))
+            photoView!.image = photo
+            photoView!.layer.borderWidth = 0.5
+            photoView!.layer.borderColor = UIColor.grayColor().CGColor
+        } else {
+            photoView = nil
+        }
     }
     
     func createDateLabel() {
@@ -196,6 +211,8 @@ class FlagCallout: UIView {
                 fontSize: 14,
                 italic: true,
                 color: CategoryController.getColorForCategory(flag!.type()).colorWithAlphaComponent(0.5))
+        } else {
+            dateView = nil
         }
     }
     
@@ -219,32 +236,34 @@ class FlagCallout: UIView {
     }
     
     func createInviteeLabel() {
-        if !flag!.isEvent() || flag?.originator() != Global.getUser().getName() { return }
-        
-        let barHeight = flag?.invitees().count > 2 ? CGFloat(18) : CGFloat(25)
-        let fontSize = flag?.invitees().count > 2 ? CGFloat(12) : CGFloat(14)
-        var count = 0
-        for i in (flag?.invitees())! {
-            var invitee = i
-            if invitee.name() == Global.getUser().getName() { continue }
-            count++
-            if count == 4 && flag?.invitees().count > 4 { invitee = Invitee(name: "others") }
-            
-            let color = invitee.state() == InviteeState.Accepted ? UIColor.greenColor().colorWithAlphaComponent(0.6) :
-                (invitee.state() == InviteeState.Declined ? UIColor.redColor().colorWithAlphaComponent(0.6) : UIColor.lightGrayColor().colorWithAlphaComponent(0.6))
-            let state = invitee.state() == InviteeState.Accepted ? "accepted" : (invitee.state() == InviteeState.Declined ? "declined" : "invited")
-            let InviteeLabel = createLabel(
-                "\(invitee.name()) \(state)",
-                position: CGRectMake(0, 40 + fromHeight, labelArea!.width, barHeight),
-                fontSize: fontSize,
-                italic: true,
-                color: color)
-            InviteeLabel.textColor = invitee.state() == InviteeState.Accepted ? UIColor.blackColor() : (invitee.state() == InviteeState.Declined ? UIColor.whiteColor() : UIColor.darkGrayColor())
-
-            inviteeViews.append(InviteeLabel)
-            fromHeight += barHeight
-            
-            if count == 4 { break }
+        if flag!.isEvent() && flag?.originator() == Global.getUser().getName() {
+            let barHeight = flag?.invitees().count > 2 ? CGFloat(18) : CGFloat(25)
+            let fontSize = flag?.invitees().count > 2 ? CGFloat(12) : CGFloat(14)
+            var count = 0
+            for i in (flag?.invitees())! {
+                var invitee = i
+                if invitee.name() == Global.getUser().getName() { continue }
+                count++
+                if count == 4 && flag?.invitees().count > 4 { invitee = Invitee(name: "others") }
+                
+                let color = invitee.state() == InviteeState.Accepted ? UIColor.greenColor().colorWithAlphaComponent(0.6) :
+                    (invitee.state() == InviteeState.Declined ? UIColor.redColor().colorWithAlphaComponent(0.6) : UIColor.lightGrayColor().colorWithAlphaComponent(0.6))
+                let state = invitee.state() == InviteeState.Accepted ? "accepted" : (invitee.state() == InviteeState.Declined ? "declined" : "invited")
+                let InviteeLabel = createLabel(
+                    "\(invitee.name()) \(state)",
+                    position: CGRectMake(0, 40 + fromHeight, labelArea!.width, barHeight),
+                    fontSize: fontSize,
+                    italic: true,
+                    color: color)
+                InviteeLabel.textColor = invitee.state() == InviteeState.Accepted ? UIColor.blackColor() : (invitee.state() == InviteeState.Declined ? UIColor.whiteColor() : UIColor.darkGrayColor())
+                
+                inviteeViews.append(InviteeLabel)
+                fromHeight += barHeight
+                
+                if count == 4 { break }
+            }
+        } else {
+            dateView = nil
         }
     }
 
@@ -266,6 +285,8 @@ class FlagCallout: UIView {
                 fontSize: 18,
                 italic: false,
                 color: UIColor.greenColor())
+        } else {
+            acceptButton = nil
         }
     }
     
@@ -277,8 +298,11 @@ class FlagCallout: UIView {
                 fontSize: 18,
                 italic: false,
                 color:  UIColor.redColor().colorWithAlphaComponent(0.5))
+        }  else {
+            declineButton = nil
         }
     }
+
     
     private func createLabel(text: String, position: CGRect, fontSize: CGFloat, italic: Bool, color: UIColor) -> UILabel {
         let label = UILabel(frame: position)
@@ -344,6 +368,6 @@ class FlagCallout: UIView {
     }
     
     private func hitPicture(point: CGPoint) -> Bool {
-        return photoView != nil && photoView!.bounds.contains(self.convertPoint(point, toView: photoView))
+        return photoView != nil && photoView!.bounds.contains(annotationView.convertPoint(point, toView: photoView))
     }
 }

@@ -43,8 +43,7 @@ class FlagAnnotationView : MKAnnotationView {
         if selected {
             // close and reopen
         }
-        
-        
+        if calloutView != nil { calloutView!.refresh() }
     }
     
     func refreshAndReopen() {
@@ -58,7 +57,7 @@ class FlagAnnotationView : MKAnnotationView {
             Utils.delay(0.1) { if self.annotation != nil { self.mapController?.map.selectAnnotation(self.annotation!, animated: false) } }
         }
         
-        self.superview?.bringSubviewToFront(self)        
+        self.superview?.bringSubviewToFront(self)
         if self.selected { showCallout() }
         if !self.selected { hideCallout() }
     }
