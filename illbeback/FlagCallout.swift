@@ -60,6 +60,7 @@ class FlagCallout: UIView {
     
     private func reset() {
         whenHeight = 0
+        fromHeight = 0
         self.imageUrl = mapController!.photoAlbum.getMainPhoto(flag!)?.imagePath
         
         createPhotoView()
@@ -236,6 +237,7 @@ class FlagCallout: UIView {
     }
     
     func createInviteeLabel() {
+        inviteeViews = []
         if flag!.isEvent() && flag?.originator() == Global.getUser().getName() {
             let barHeight = flag?.invitees().count > 2 ? CGFloat(18) : CGFloat(25)
             let fontSize = flag?.invitees().count > 2 ? CGFloat(12) : CGFloat(14)
@@ -244,7 +246,7 @@ class FlagCallout: UIView {
                 var invitee = i
                 if invitee.name() == Global.getUser().getName() { continue }
                 count++
-                if count == 4 && flag?.invitees().count > 4 { invitee = Invitee(name: "others") }
+                if count == 3 && flag?.invitees().count > 4 { invitee = Invitee(name: "others") }
                 
                 let color = invitee.state() == InviteeState.Accepted ? UIColor.greenColor().colorWithAlphaComponent(0.6) :
                     (invitee.state() == InviteeState.Declined ? UIColor.redColor().colorWithAlphaComponent(0.6) : UIColor.lightGrayColor().colorWithAlphaComponent(0.6))
@@ -260,7 +262,7 @@ class FlagCallout: UIView {
                 inviteeViews.append(InviteeLabel)
                 fromHeight += barHeight
                 
-                if count == 4 { break }
+                if count == 3 { break }
             }
         } else {
             dateView = nil
