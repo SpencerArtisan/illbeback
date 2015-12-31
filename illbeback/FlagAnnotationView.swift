@@ -118,10 +118,8 @@ class FlagAnnotationView : MKAnnotationView {
         let inShape: Bool = mapController!.shapeController.shapeContains(flag!.location())
         
         if flag!.when() != nil {
-            let nearness = CGFloat(1.0 / (1.0 + log2(1.0 + CGFloat(flag!.daysToGo())/(61.0))))
-            
             let daysToGo: NSString = " \(flag!.daysToGo()) "
-            let col = UIColor(red: nearness, green: 1 - nearness, blue: 0, alpha: 0.8)
+            let col = flag!.daysToGo() < 6 ? UIColor.redColor() : UIColor.grayColor()
             daysToGo.drawInRect(CGRectMake(0,finalSize.height-14,100,30), withAttributes: [
                 NSForegroundColorAttributeName: UIColor.whiteColor(),
                 NSBackgroundColorAttributeName: col,
