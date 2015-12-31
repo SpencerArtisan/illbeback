@@ -140,7 +140,15 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             checkForImminentEvents()
         }
         
-        if flagRepository.flags().count == 1 && !Preferences.hintedPressMap() && hintControlller != nil {
+        if flagRepository.flags().count == 1 && !Preferences.hintedFirstFlag() && hintControlller != nil {
+            hintControlller.dismissHint()
+            Utils.delay(3) {
+                self.hintControlller.firstFlagHint()
+            }
+            Preferences.hintedFirstFlag(true)
+        }
+        
+        if flagRepository.flags().count == 2 && !Preferences.hintedPressMap() && hintControlller != nil {
             hintControlller.dismissHint()
             Utils.delay(3) {
                 self.hintControlller.pressMapHint()

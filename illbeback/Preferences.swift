@@ -37,8 +37,17 @@ class Preferences {
         return (properties().valueForKey("hintedPressMap") as? Bool) ?? false
     }
     
+    static func hintedFirstFlag() -> Bool {
+        return (properties().valueForKey("hintedFirstFlag") as? Bool) ?? false
+    }
+    
     static func hintedPressMap(value: Bool) {
         properties().setValue(value, forKey: "hintedPressMap")
+        write()
+    }
+    
+    static func hintedFirstFlag(value: Bool) {
+        properties().setValue(value, forKey: "hintedFirstFlag")
         write()
     }
     
