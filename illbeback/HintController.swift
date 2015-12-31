@@ -20,12 +20,6 @@ class HintController : NSObject {
         cancelHint.addTarget(self, action: "onClickHint:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
-    func sharingNameHint() {
-        image(4).hidden = true
-        image(5).hidden = true
-        hint("Your friends will need this", fromBottom: mapController.view.frame.height - 180)
-    }
-    
     func photoHint() {
         image(4).hidden = false
         image(5).hidden = true

@@ -241,11 +241,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     
     func ensureUserKnown() {
         if (!Global.userDefined()) {
-            newUserLabel.text = "Your sharing name"
+            newUserLabel.text = "Your username"
             newUserText.becomeFirstResponder()
             newUserText.text = ""
             newUserModal?.slideOutFromRight(self.view)
-            hintControlller.sharingNameHint()
         }
     }
     
