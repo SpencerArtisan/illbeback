@@ -28,7 +28,7 @@
 		973F25251C0B7C450034A235 /* FlagState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25241C0B7C450034A235 /* FlagState.swift */; };
 		973F25281C0B7EC50034A235 /* FlagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25271C0B7EC50034A235 /* FlagToken.swift */; };
 		973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252A1C0B8F1E0034A235 /* StateMachineError.swift */; };
-		973F252E1C0BA6F50034A235 /* Invitee2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee2.swift */; };
+		973F252E1C0BA6F50034A235 /* Invitee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee.swift */; };
 		973F25311C0BA8D60034A235 /* InviteeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25301C0BA8D60034A235 /* InviteeState.swift */; };
 		97420BBE1A92A0320076E561 /* AddFlagController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97420BBD1A92A0320076E561 /* AddFlagController.swift */; };
 		9749EE451BF749E300C1606B /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9749EE441BF749E300C1606B /* Global.swift */; };
@@ -66,7 +66,7 @@
 		97C732651C0E5B73002B5214 /* FlagState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25241C0B7C450034A235 /* FlagState.swift */; };
 		97C732661C0E5B73002B5214 /* FlagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25271C0B7EC50034A235 /* FlagToken.swift */; };
 		97C732671C0E5B73002B5214 /* StateMachineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252A1C0B8F1E0034A235 /* StateMachineError.swift */; };
-		97C732681C0E5B73002B5214 /* Invitee2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee2.swift */; };
+		97C732681C0E5B73002B5214 /* Invitee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee.swift */; };
 		97C732691C0E5B73002B5214 /* InviteeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25301C0BA8D60034A235 /* InviteeState.swift */; };
 		97C7326A1C0E5BA0002B5214 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE667F1A9A19570007FC2C /* User.swift */; };
 		97C7326C1C0E608D002B5214 /* FlagStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C7326B1C0E608D002B5214 /* FlagStateTest.swift */; };
@@ -140,7 +140,7 @@
 		973F25241C0B7C450034A235 /* FlagState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagState.swift; sourceTree = "<group>"; };
 		973F25271C0B7EC50034A235 /* FlagToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagToken.swift; sourceTree = "<group>"; };
 		973F252A1C0B8F1E0034A235 /* StateMachineError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachineError.swift; sourceTree = "<group>"; };
-		973F252D1C0BA6F50034A235 /* Invitee2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invitee2.swift; sourceTree = "<group>"; };
+		973F252D1C0BA6F50034A235 /* Invitee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invitee.swift; sourceTree = "<group>"; };
 		973F25301C0BA8D60034A235 /* InviteeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeState.swift; sourceTree = "<group>"; };
 		973F25331C0BA9610034A235 /* InviteeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeTest.swift; sourceTree = "<group>"; };
 		97420BBD1A92A0320076E561 /* AddFlagController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFlagController.swift; sourceTree = "<group>"; };
@@ -258,7 +258,7 @@
 				973F25241C0B7C450034A235 /* FlagState.swift */,
 				973F25271C0B7EC50034A235 /* FlagToken.swift */,
 				973F252A1C0B8F1E0034A235 /* StateMachineError.swift */,
-				973F252D1C0BA6F50034A235 /* Invitee2.swift */,
+				973F252D1C0BA6F50034A235 /* Invitee.swift */,
 				973F25301C0BA8D60034A235 /* InviteeState.swift */,
 				97D34AB01C12472A00118819 /* FlagRepository.swift */,
 				97D34AB61C126C9100118819 /* FlagRenderer.swift */,
@@ -651,7 +651,7 @@
 				97FA33451BF7E18800248F67 /* EventController.swift in Sources */,
 				97D34AB71C126C9100118819 /* FlagRenderer.swift in Sources */,
 				97002F0E1BC91679002BF217 /* Photo.swift in Sources */,
-				973F252E1C0BA6F50034A235 /* Invitee2.swift in Sources */,
+				973F252E1C0BA6F50034A235 /* Invitee.swift in Sources */,
 				97420BBE1A92A0320076E561 /* AddFlagController.swift in Sources */,
 				972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */,
 				97767D581B91B2BD00B6A827 /* ShapeCorner.swift in Sources */,
@@ -712,7 +712,7 @@
 				97C7326A1C0E5BA0002B5214 /* User.swift in Sources */,
 				97D34AB31C124AFD00118819 /* FlagRepositoryTest.swift in Sources */,
 				97D34ABC1C1316D900118819 /* Extensions.swift in Sources */,
-				97C732681C0E5B73002B5214 /* Invitee2.swift in Sources */,
+				97C732681C0E5B73002B5214 /* Invitee.swift in Sources */,
 				97C7326C1C0E608D002B5214 /* FlagStateTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

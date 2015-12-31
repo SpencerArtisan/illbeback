@@ -329,7 +329,7 @@ class FlagCallout: UIView {
                 decline()
             } else if hitPicture(point) {
                 mapController?.zoomPicture(annotationView)
-            } else if !flag!.isPendingAccept() {
+            } else if !flag!.isPendingAccept() && !flag!.isBlank() {
                 if hitButton(point, button: dateView) {
                     mapController?.rescheduleFlag(annotationView)
                 } else if hitButton(point, button: deleteButton) {
