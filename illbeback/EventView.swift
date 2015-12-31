@@ -57,7 +57,7 @@ class EventView: UIView {
     }
     
     private func colorIfSoon() {
-        if event?.daysToGo() < 2 {
+        if event?.daysToGo() < 6 {
             normalColor = when.backgroundColor
             when.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.86)
         } else {
