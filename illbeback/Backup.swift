@@ -85,6 +85,8 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
                 }
             }
         }
+        
+        mapController.hintControlller.backupRestoredHint()
     }
 
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
