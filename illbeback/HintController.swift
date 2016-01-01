@@ -23,13 +23,13 @@ class HintController : NSObject {
     func backupRestoredHint() {
         image(4).hidden = true
         image(5).hidden = true
-        hint("Your backup has been restored!", fromBottom: mapController.view.frame.height - 260)
+        hint("Your backup has been restored!", fromBottom: mapController.view.frame.height - 330)
     }
     
     func firstFlagHint() {
         image(4).hidden = true
         image(5).hidden = true
-        hint("Click on the flag to share with friends or take more photos", fromBottom: mapController.view.frame.height - 260)
+        hint("Click on the flag to share with friends or take more photos", fromBottom: mapController.view.frame.height - 300)
     }
     
     func photoHint() {
@@ -47,7 +47,7 @@ class HintController : NSObject {
     func backupHint() {
         image(4).hidden = true
         image(5).hidden = false
-        hint("Now you have a few flags, you might want to back them up from time to time", fromBottom: mapController.view.frame.height - 290)
+        hint("Now you have a few flags, you might want to back them up from time to time", fromBottom: mapController.view.frame.height - 320)
     }
     
     private func image(tag: Int) -> UIImageView {

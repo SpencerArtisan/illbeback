@@ -38,7 +38,7 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         let mailComposer = MFMailComposeViewController()
         mailComposer.mailComposeDelegate = self
         mailComposer.setSubject("Backmap backup")
-        mailComposer.setMessageBody("This email is your backup.  Keep it somewhere safe!\r\nTo restore the backup, click on the attachment and choose 'Copy to Backmap'.", isHTML: false)
+        mailComposer.setMessageBody("This email is your backup.  Fill in the To field.  You probably want to send it to yourself.\r\n\r\nTo restore the backup, click on the attachment and choose 'Copy to Backmap'.", isHTML: false)
         let data = exportToData()
         mailComposer.addAttachmentData(data, mimeType: "application/backmap", fileName: "back.map")
         return mailComposer
