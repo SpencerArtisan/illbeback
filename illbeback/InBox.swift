@@ -111,11 +111,12 @@ class InBox {
             let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
             readRequest.bucket = BUCKET
             readRequest.key =  imageUrl.lastPathComponent!
-            readRequest.downloadingFileURL = NSURL(fileURLWithPath: "\(imageUrl.path!).recent")
+            let downloadingurl = NSURL(fileURLWithPath: "\(imageUrl.path!).recent")
+            readRequest.downloadingFileURL = downloadingurl
             
             let task = transferManager.download(readRequest)
             task.continueWithBlock { (task) -> AnyObject! in
-                self.postPhotoDownload(imageUrl, task: task)
+                self.postPhotoDownload(imageUrl.lastPathComponent!, imageUrl: downloadingurl, task: task)
                 leftToDownload--
                 if leftToDownload == 0 {
                     onComplete()
@@ -125,18 +126,18 @@ class InBox {
         }
     }
     
-    private func postPhotoDownload(imageUrl: NSURL, task: BFTask) {
+    private func postPhotoDownload(key: String, imageUrl: NSURL, task: BFTask) {
         if task.error != nil {
             // ensure no partial file left
-            do {
-                try photoAlbum.fileManager.removeItemAtPath(imageUrl.path!)
-            } catch {
-            }
+//            do {
+//                try photoAlbum.fileManager.removeItemAtPath(imageUrl.path!)
+//            } catch {
+//            }
         } else {
             print("    Image downloaded \(imageUrl.lastPathComponent!)")
             let deleteRequest = AWSS3DeleteObjectRequest()
             deleteRequest.bucket = BUCKET
-            deleteRequest.key =  imageUrl.lastPathComponent!
+            deleteRequest.key =  key
             AWSS3.defaultS3().deleteObject(deleteRequest).continueWithBlock{ _ in return nil }
         }
     }
