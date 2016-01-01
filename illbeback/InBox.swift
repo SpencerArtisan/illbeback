@@ -28,7 +28,7 @@ class InBox {
             return
         }
         
-        print("Resceive triggered")
+        print("Receive triggered")
         
         shareRoot(Global.getUser().getName()).observeSingleEventOfType(.Value, withBlock: { snapshot in
             self.receiveNextFlag(snapshot.children)
@@ -48,17 +48,23 @@ class InBox {
         let encoded = firebaseFlag.value["memory"] as! String
         let from = firebaseFlag.value["from"] as! String
         let flag = Flag.decode(encoded)
+        
+        print("Received flag \(flag.type())")
 
         flagRepository.receive(from, to: Global.getUser().getName(), flag: flag,
             onNew: { newFlag in
                 self.downloadImages(newFlag, onComplete: {
                     do {
                         try newFlag.receiveNewSuccess()
-                        print("All new flag photos downloaded.  Removing from firebase")
+                        print("All new flag photos downloaded. ")
                         self.flagRepository.add(newFlag)
+                        firebaseFlag.ref.removeValue()
+                        onComplete()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": newFlag, "from": from])
                     } catch {
                         flag.kill()
+                        firebaseFlag.ref.removeValue()
+                        onComplete()
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": newFlag, "from": from])
                     }
                 })
@@ -67,24 +73,34 @@ class InBox {
                 self.downloadImages(updatedFlag, onComplete: {
                     do {
                         try updatedFlag.receiveUpdateSuccess()
-                        print("All udated flag photos downloaded.  Removing from firebase")
+                        print("All udated flag photos downloaded. ")
+                        firebaseFlag.ref.removeValue()
+                        onComplete()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": updatedFlag, "from": from])
                     } catch {
                         updatedFlag.reset(FlagState.Neutral)
+                        firebaseFlag.ref.removeValue()
+                        onComplete()
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": updatedFlag, "from": from])
                     }
                 })
             },
             onAck: { ackedFlag in
-                print("Ack processed.  Removing from firebase")
-                Utils.notifyObservers("AckReceiveSuccess", properties: ["flag": ackedFlag, "from": from])
-            },
-            onComplete: {
+                print("Ack processed. ")
                 firebaseFlag.ref.removeValue()
                 onComplete()
-        })
+                if ackedFlag != nil {
+                    Utils.notifyObservers("AckReceiveSuccess", properties: ["flag": ackedFlag!, "from": from])
+                }
+            }
+        )
     }
-    
+
+    private func completeReceive(flag: Flag) {
+        print("Completed receiving flag \(flag.type())")
+
+    }
+
     private func downloadImages(flag: Flag, onComplete: () -> ()) {
         print("Downloading shared images for flag \(flag.id())")
         
@@ -102,9 +118,7 @@ class InBox {
                 self.postPhotoDownload(imageUrl, task: task)
                 leftToDownload--
                 if leftToDownload == 0 {
-                    Utils.runOnUiThread {
-                        onComplete()
-                    }
+                    onComplete()
                 }
                 return nil
             }
@@ -120,6 +134,10 @@ class InBox {
             }
         } else {
             print("    Image downloaded \(imageUrl.lastPathComponent!)")
+            let deleteRequest = AWSS3DeleteObjectRequest()
+            deleteRequest.bucket = BUCKET
+            deleteRequest.key =  imageUrl.lastPathComponent!
+            AWSS3.defaultS3().deleteObject(deleteRequest).continueWithBlock{ _ in return nil }
         }
     }
     

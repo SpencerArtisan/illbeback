@@ -26,7 +26,7 @@ class FlagRepository : NSObject {
         return _flags.filter {$0.state() != .Dead}
     }
     
-    func receive(from: String, to: String, flag: Flag, onNew: (newFlag: Flag) -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: (ackedFlag: Flag) -> (), onComplete: () -> ()) {
+    func receive(from: String, to: String, flag: Flag, onNew: (newFlag: Flag) -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: (ackedFlag: Flag?) -> ()) {
         do {
             var originalFlag = find(flag.id())
             
@@ -38,6 +38,8 @@ class FlagRepository : NSObject {
                     try flag.receivingNew(from)
                     onNew(newFlag: flag)
                     originalFlag = flag
+                } else {
+                    onAck(ackedFlag: nil)
                 }
             } else if !isAck(from, flag: flag) {
                 print("Receiving updated flag from \(from) to \(to)")
@@ -59,6 +61,8 @@ class FlagRepository : NSObject {
                             invitee!.declineSuccess()
                             onAck(ackedFlag: originalFlag!)
                         }
+                    } else {
+                        onAck(ackedFlag: nil)
                     }
                 } else {
                     let invitee = originalFlag!.findInvitee(to)
@@ -67,8 +71,6 @@ class FlagRepository : NSObject {
                     }
                 }
             }
-            
-            onComplete()
         } catch {
             print("** Failed to receive flag: \(flag)")
         }

@@ -193,6 +193,7 @@ public class Flag {
     func declining(friend: String) -> Invitee {
         var invitee = _token.findInvitee(friend)
         if !_token.hasPendingUpdate() || state() == .ReceivedNew {
+            print("No pending updates or received new, so putting flag on death row")
             dead = true
         }
         if _token.hasPendingUpdate() {

@@ -26,6 +26,7 @@ class FlagAnnotationView : MKAnnotationView {
     init(mapController: MapController, flag: Flag) {
         super.init(annotation: nil, reuseIdentifier: FlagAnnotationView.reuseIdentifier)
         canShowCallout = false
+        self.draggable = true
         self.flag = flag
         self.mapController = mapController
         initImage()
@@ -41,6 +42,7 @@ class FlagAnnotationView : MKAnnotationView {
     
     func refresh() {
         if calloutView != nil { calloutView!.refresh() }
+        initImage()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -61,11 +63,13 @@ class FlagAnnotationView : MKAnnotationView {
             calloutView = calloutView ?? FlagCallout(flag: flag!, mapController: mapController!, annotationView: self)
             addSubview(calloutView!)
             centreFlag()
+            self.layer.zPosition = 2
         }
     }
     
     private func hideCallout() {
         calloutView?.removeFromSuperview()
+        self.layer.zPosition = flag!.isEvent() ? 1 : 0
     }
     
     private func centreFlag() {

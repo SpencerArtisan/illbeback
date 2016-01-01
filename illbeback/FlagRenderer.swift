@@ -23,6 +23,8 @@ class FlagRenderer: NSObject {
         Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
         Utils.addObserver(self, selector: "onFlagChanged:", event: "FlagChanged")
         Utils.addObserver(self, selector: "onAckReceiveSuccess:", event: "AckReceiveSuccess")
+        Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
+        Utils.addObserver(self, selector: "onDeclineSuccess:", event: "DeclineSuccess")
     }
     
     func render(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -49,6 +51,16 @@ class FlagRenderer: NSObject {
         return nil
     }
 
+    func onAcceptSuccess(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        refreshImage(flag)
+    }
+    
+    func onDeclineSuccess(note: NSNotification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        refreshImage(flag)
+    }
+    
     func onFlagChanged(note: NSNotification) {
         let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
@@ -80,7 +92,7 @@ class FlagRenderer: NSObject {
     }
     
     func add(flag: Flag) {
-        Utils.runOnUiThread() {
+        Utils.runOnUiThread {
             let pin = self.createPin(flag)
             self.map.addAnnotation(pin)
         }
@@ -109,27 +121,23 @@ class FlagRenderer: NSObject {
     }
 
     func refresh(flag: Flag) {
+        Utils.runOnUiThread {
+            if let pin = self.getPinView(flag) {
+                self.refresh(pin)
+            }
+        }
+    }
+    
+    
+    func refreshImage(flag: Flag) {
         if let pin = getPinView(flag) {
-            refresh(pin)
+            pin.refreshImage()
         }
     }
     
     func updateEventPins(events: [Flag]) {
         for event in events {
-            let pin = getPin(event)
-            if pin != nil {
-                if event.isPast() {
-                    print("Removing old event \(event.id)")
-//                    self.map.deselectAnnotation(pin, animated: false)
-                    Utils.runOnUiThread2() {
-//                        self.map.removeAnnotation(pin!)
-                    }
-                } else {
-                    print("Update event pin")
-//                    map.removeAnnotation(pin!)
-//                    map.addAnnotation(pin!)
-                }
-            }
+            refreshImage(event)
         }
     }
     

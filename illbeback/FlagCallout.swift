@@ -40,6 +40,8 @@ class FlagCallout: UIView {
     var whenHeight: CGFloat = 0.0
     var fromHeight: CGFloat = 0.0
     
+    var lastHitTestPoint: CGPoint?
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -100,6 +102,8 @@ class FlagCallout: UIView {
     }
     
     func createLabelView() {
+        labelView?.removeFromSuperview()
+        
         labelView = UIView(frame: labelArea!)
         labelView!.backgroundColor = flag!.isPendingAccept() || flag!.isBlank() ? UIColor.lightGrayColor().colorWithAlphaComponent(0.3) : UIColor.whiteColor()
         labelView!.addSubview(titleView!)
@@ -188,6 +192,8 @@ class FlagCallout: UIView {
     }
     
     func createPhotoView() {
+        photoView?.removeFromSuperview()
+
         if imageUrl != nil {
             photo = UIImage(contentsOfFile: imageUrl!)
             photoView = UIImageView(frame: CGRectMake(
@@ -264,8 +270,6 @@ class FlagCallout: UIView {
                 
                 if count == 3 { break }
             }
-        } else {
-            dateView = nil
         }
     }
 
@@ -321,8 +325,10 @@ class FlagCallout: UIView {
 
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         let viewPoint = superview?.convertPoint(point, toView: self) ?? point
+        let duplicate = lastHitTestPoint != nil && lastHitTestPoint! == point
         
-        if event!.type == UIEventType.Touches {
+        if !duplicate && event!.type == UIEventType.Touches {
+            lastHitTestPoint = point
             if hitButton(point, button: acceptButton) {
                 accept()
             } else if hitButton(point, button: declineButton) {

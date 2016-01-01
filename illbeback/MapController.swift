@@ -127,6 +127,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         
         Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
         Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
+        Utils.addObserver(self, selector: "onDeclineSuccess:", event: "DeclineSuccess")
         Utils.addObserver(self, selector: "onDeclining:", event: "Declining")
     }
     
@@ -136,6 +137,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         ensureUserKnown()
         
         if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
+            flagRepository.purge()
             updatePins()
             checkForImminentEvents()
         }
@@ -172,6 +174,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     func onAcceptSuccess(note: NSNotification) {
+        updateButtonStates()
+        
+    }
+    
+    func onDeclineSuccess(note: NSNotification) {
         updateButtonStates()
     }
     
