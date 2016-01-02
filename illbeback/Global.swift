@@ -49,27 +49,30 @@ class Global {
           
             let tokenString = getDeviceTokenString()
             
-            let url = "https://illbeback.firebaseio.com/users/\(userName!)"
+            let url = "https://illbeback.firebaseio.com/users/\(userName!)/device"
             let node = Firebase(url: url)
             
             node.observeSingleEventOfType(.Value, withBlock: { snapshot in
-                if !snapshot.exists() || snapshot.value.objectForKey("iphone") == nil {
+                if !snapshot.exists() || snapshot.value == nil {
                     print("FIREBASE OP: Uploading new device token \(tokenString) to \(url)")
-                    node.setValue(["iphone": tokenString])
+                    node.setValue(tokenString)
                     onSuccess()
                 } else {
-                    let existingToken = snapshot.value.objectForKey("iphone")
+                    let existingToken = snapshot.value
                     print("FIREBASE OP: Existing device token \(existingToken!) at \(url)")
                     if existingToken! as! String != tokenString {
                         print("FIREBASE OP: Device token MISMATCH!")
                         if allowOverwrite {
                             print("FIREBASE OP: Overwriting old device token")
-                            node.setValue(["iphone": tokenString])
+                            node.setValue(tokenString)
                             onSuccess()
                         } else {
                             print("FIREBASE OP: Disallowing overwrite of old device token")
                             onFailure()
                         }
+                    } else {
+                        print("FIREBASE OP: Device token matches")                        
+                        onSuccess()
                     }
                 }                
             })

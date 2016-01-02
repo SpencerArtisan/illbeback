@@ -58,10 +58,12 @@ class InBox {
                         try newFlag.receiveNewSuccess()
                         print("All new flag photos downloaded. ")
                         self.flagRepository.add(newFlag)
+                        print("*******")
                         firebaseFlag.ref.removeValue()
                         onComplete()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": newFlag, "from": from])
                     } catch {
+                        print("*******")
                         flag.kill()
                         firebaseFlag.ref.removeValue()
                         onComplete()
@@ -74,11 +76,13 @@ class InBox {
                     do {
                         try updatedFlag.receiveUpdateSuccess()
                         print("All udated flag photos downloaded. ")
+                        print("*******")
                         firebaseFlag.ref.removeValue()
                         onComplete()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": updatedFlag, "from": from])
                     } catch {
                         updatedFlag.reset(FlagState.Neutral)
+                        print("*******")
                         firebaseFlag.ref.removeValue()
                         onComplete()
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": updatedFlag, "from": from])
@@ -87,6 +91,7 @@ class InBox {
             },
             onAck: { ackedFlag in
                 print("Ack processed. ")
+                print("*******")
                 firebaseFlag.ref.removeValue()
                 onComplete()
                 if ackedFlag != nil {
