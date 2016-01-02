@@ -15,12 +15,17 @@ class InBox {
     private let BUCKET = "illbebackappus"
     private var transferManager: AWSS3TransferManager
     private static var deviceToken: NSData?
+    private var receiving = false
     
     init(flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.flagRepository = flagRepository
         self.photoAlbum = photoAlbum
         root = Firebase(url:"https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.defaultS3TransferManager()
+    }
+    
+    func isReceiving() -> Bool {
+        return receiving
     }
     
     func receive() {
@@ -36,11 +41,14 @@ class InBox {
     }
     
     private func receiveNextFlag(firebaseFlags:NSEnumerator) {
+        receiving = true
         let firebaseFlag = firebaseFlags.nextObject() as? FDataSnapshot
         if firebaseFlag != nil {
             self.receive(firebaseFlag!, onComplete: {
                 self.receiveNextFlag(firebaseFlags)
             })
+        } else {
+            receiving = false
         }
     }
     
@@ -58,12 +66,10 @@ class InBox {
                         try newFlag.receiveNewSuccess()
                         print("All new flag photos downloaded. ")
                         self.flagRepository.add(newFlag)
-                        print("*******")
                         firebaseFlag.ref.removeValue()
                         onComplete()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": newFlag, "from": from])
                     } catch {
-                        print("*******")
                         flag.kill()
                         firebaseFlag.ref.removeValue()
                         onComplete()
@@ -76,13 +82,11 @@ class InBox {
                     do {
                         try updatedFlag.receiveUpdateSuccess()
                         print("All udated flag photos downloaded. ")
-                        print("*******")
                         firebaseFlag.ref.removeValue()
                         onComplete()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": updatedFlag, "from": from])
                     } catch {
                         updatedFlag.reset(FlagState.Neutral)
-                        print("*******")
                         firebaseFlag.ref.removeValue()
                         onComplete()
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": updatedFlag, "from": from])
@@ -91,7 +95,6 @@ class InBox {
             },
             onAck: { ackedFlag in
                 print("Ack processed. ")
-                print("*******")
                 firebaseFlag.ref.removeValue()
                 onComplete()
                 if ackedFlag != nil {

@@ -147,7 +147,7 @@ class AddFlagController: UIViewController, UITextViewDelegate {
         flagImage = pin.flag!.type()
         let flag = pin.flag!
         if flag.isEvent() {
-            self.showDescriptionEntryWithDate(flag.type(), date: flag.when()!)
+            self.showDescriptionEntryWithDate(flag.type(), date: flag.when() ?? Utils.today())
         } else {
             self.showDescriptionEntry(flag.type())
         }

@@ -143,19 +143,19 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         }
         
         if flagRepository.flags().count == 1 && !Preferences.hintedFirstFlag() && hintControlller != nil {
+            Preferences.hintedFirstFlag(true)
             hintControlller.dismissHint()
             Utils.delay(3) {
                 self.hintControlller.firstFlagHint()
             }
-            Preferences.hintedFirstFlag(true)
         }
         
         if flagRepository.flags().count == 2 && !Preferences.hintedPressMap() && hintControlller != nil {
+            Preferences.hintedPressMap(true)
             hintControlller.dismissHint()
             Utils.delay(3) {
                 self.hintControlller.pressMapHint()
             }
-            Preferences.hintedPressMap(true)
         }
         
         inBox.receive()
@@ -317,9 +317,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         alarmButton.hidden = flagRepository.events().count == 0
         newButton.hidden = flagRepository.new().count == 0
         backupButton.hidden = flagRepository.flags().count <= 4
-        if flagRepository.flags().count > 4 && !Preferences.hintedBackups() {
-            hintControlller.backupHint()
+        if flagRepository.flags().count > 4 && !Preferences.hintedBackups() && !inBox.isReceiving() {
             Preferences.hintedBackups(true)
+            Utils.delay(2) {
+                self.hintControlller.backupHint()
+            }
         }
     }
     

@@ -146,7 +146,7 @@ class MessageController : NSObject {
     func onNameAccepted(note: NSNotification) {
         Utils.runOnUiThread {
             let name = note.userInfo!["name"]
-            self.showMessage("Weclome to Backmap \(name!)", color: UIColor.greenColor(), fontColor: UIColor.blackColor(), time: 3.0)
+            self.showMessage("Welcome to Backmap \(name!)", color: UIColor.greenColor(), fontColor: UIColor.blackColor(), time: 3.0)
         }
         
         Utils.delay(4) {
