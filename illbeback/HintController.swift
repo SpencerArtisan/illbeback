@@ -20,6 +20,12 @@ class HintController : NSObject {
         cancelHint.addTarget(self, action: "onClickHint:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
+    func backupRestoringHint() {
+        image(4).hidden = true
+        image(5).hidden = true
+        hint("Please wait.\r\nYour backup is being restored.", fromBottom: mapController.view.frame.height - 330)
+    }
+    
     func backupRestoredHint() {
         image(4).hidden = true
         image(5).hidden = true

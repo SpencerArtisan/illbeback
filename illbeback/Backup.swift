@@ -63,6 +63,7 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     func importFromURL(url: NSURL) {
+
         let data = NSData(contentsOfURL: url)!
         let unarchiver = NSKeyedUnarchiver.init(forReadingWithData: data)
         let user = unarchiver.decodeObjectForKey("user") as! String
@@ -72,9 +73,12 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         flagData.writeToFile(flagRepository.filePath() , atomically: true)
         flagRepository.read()
         
-        flagRepository.flags().forEach { flag in
+        mapController.hintControlller.backupRestoringHint()
+
+        Utils.delay(0.5) {
+        self.flagRepository.flags().forEach { flag in
             print("Reading images for flag \(flag.id())")
-            let flagUrls = photoAlbum.getFlagImageUrls(flag.id())
+            let flagUrls = self.photoAlbum.getFlagImageUrls(flag.id())
             flagUrls.forEach { url in
                 let lastPathComp = url.lastPathComponent!
                 print("Looking for image \(lastPathComp)")
@@ -86,7 +90,8 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
             }
         }
         
-        mapController.hintControlller.backupRestoredHint()
+        self.mapController.hintControlller.backupRestoredHint()
+        }
     }
 
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
