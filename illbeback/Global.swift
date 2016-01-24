@@ -29,6 +29,7 @@ class Global {
     }
     
     static func setUserName(name: String, allowOverwrite: Bool) {
+        user.setName(name)
         storeDeviceToken(allowOverwrite, userName: name,
             onSuccess: {
                 user.setName(name)

@@ -149,7 +149,7 @@ class MessageController : NSObject {
             self.showMessage("Welcome to Backmap \(name!)", color: UIColor.greenColor(), fontColor: UIColor.blackColor(), time: 3.0)
         }
         
-        Utils.delay(4) {
+        Utils.delay(8) {
             self.mapController.hintControlller.photoHint()
         }
     }
