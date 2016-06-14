@@ -10,7 +10,7 @@ import Foundation
 
 class FlagRepository : NSObject {
     private var _flags = [Flag]()
-    private var _reading = false
+    private var _mutex = pthread_mutex_t()
     
     override init() {
         super.init()
@@ -137,9 +137,10 @@ class FlagRepository : NSObject {
     }
     
     func save() {
-        if _reading {
-            return
-        }
+        slowsync(saveImpl)
+    }
+    
+    func saveImpl() {
         purge()
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let path = paths.stringByAppendingPathComponent("memories.plist")
@@ -151,7 +152,10 @@ class FlagRepository : NSObject {
     }
     
     func read() {
-        _reading = true
+        slowsync(readImpl)
+    }
+    
+    func readImpl() {
         let path = filePath()
         let fileManager = NSFileManager.defaultManager()
         if (!(fileManager.fileExistsAtPath(path))) {
@@ -170,11 +174,18 @@ class FlagRepository : NSObject {
                     .forEach {flag in
                         if !self.isPurgable(flag) { self.add(flag) }
                     }
-        _reading = false
     }
     
     func filePath() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        return paths.stringByAppendingPathComponent("memories.plist")
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        return path.stringByAppendingPathComponent("memories.plist")
+    }
+    
+    internal func slowsync<R>(@noescape f: () -> R) -> R {
+        pthread_mutex_lock(&_mutex)
+        let r = f()
+        pthread_mutex_unlock(&_mutex)
+        return r
     }
 }
