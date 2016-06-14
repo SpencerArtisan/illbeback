@@ -15,16 +15,16 @@ class FlagRepositoryTest : XCTestCase {
     private let invitee2Repository = FlagRepository()
 
     func testEvents() {
-        originatorRepository.add(event("an event"))
-        originatorRepository.add(flag("not an event"))
+        originatorRepository.add(event("id1", description: "an event"))
+        originatorRepository.add(flag("id2", description: "not an event"))
         let events = originatorRepository.events()
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0].description(), "an event")
     }
     
     func testImminentEvents() {
-        originatorRepository.add(flag(NSDate(), description: "today event"))
-        originatorRepository.add(flag(NSDate.distantFuture(), description: "distant event"))
+        originatorRepository.add(flag("id1", when: NSDate(), description: "today event"))
+        originatorRepository.add(flag("id2", when: NSDate.distantFuture(), description: "distant event"))
         let events = originatorRepository.imminentEvents()
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0].description(), "today event")
@@ -44,8 +44,8 @@ class FlagRepositoryTest : XCTestCase {
 //    }
     
     func testFind() {
-        originatorRepository.add(flag("a flag"))
-        XCTAssertEqual(originatorRepository.find("id")?.description(), "a flag")
+        originatorRepository.add(flag("id1", description: "a flag"))
+        XCTAssertEqual(originatorRepository.find("id1")?.description(), "a flag")
     }
     
     func testFindFails() {
@@ -53,14 +53,22 @@ class FlagRepositoryTest : XCTestCase {
     }
     
     func testAdd() {
-        originatorRepository.add(flag("a flag"))
+        originatorRepository.add(flag("id1", description: "a flag"))
         let flags = originatorRepository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
     }
     
+    func testAddWithDuplicateId() {
+        originatorRepository.add(flag("id1", description: "a flag"))
+        originatorRepository.add(flag("id1", description: "a duplicate flag"))
+        let flags = originatorRepository.flags()
+        XCTAssertEqual(flags.count, 1)
+        XCTAssertEqual(flags[0].description(), "a duplicate flag")
+    }
+    
     func testRemove() {
-        let flag1 = flag("a flag")
+        let flag1 = flag("id1", description: "a flag")
         originatorRepository.add(flag1)
         originatorRepository.remove(flag1)
         let flags = originatorRepository.flags()
@@ -68,7 +76,7 @@ class FlagRepositoryTest : XCTestCase {
     }
     
     func testDeadFlagsIgnored() {
-        let flag1 = flag("a flag")
+        let flag1 = flag("id1", description: "a flag")
         originatorRepository.add(flag1)
         flag1.kill()
         let flags = originatorRepository.flags()
@@ -76,7 +84,7 @@ class FlagRepositoryTest : XCTestCase {
     }
     
     func testDeadEventsIgnored() {
-        let event1 = event("a flag")
+        let event1 = event("id1", description: "a flag")
         originatorRepository.add(event1)
         event1.kill()
         let events = originatorRepository.events()
@@ -322,7 +330,7 @@ class FlagRepositoryTest : XCTestCase {
     }
     
     private func offer(to: String) -> Flag {
-        let offeredFlag = flag("a flag")
+        let offeredFlag = flag("id1", description: "a flag")
         originatorRepository.add(offeredFlag)
         return offer(offeredFlag, to: to)
     }
@@ -421,15 +429,15 @@ class FlagRepositoryTest : XCTestCase {
         return Flag.decode(flag.encode())
     }
     
-    private func event(description: String) -> Flag {
-        return flag(NSDate(), description: description)
+    private func event(id: String, description: String) -> Flag {
+        return flag(id, when: NSDate(), description: description)
     }
     
-    private func flag(description: String) -> Flag {
-        return flag(nil, description: description)
+    private func flag(id: String, description: String) -> Flag {
+        return flag(id, when: nil, description: description)
     }
     
-    private func flag(when: NSDate?, description: String) -> Flag {
-        return Flag.create("id", type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: when)
+    private func flag(id: String, when: NSDate?, description: String) -> Flag {
+        return Flag.create(id, type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: when)
     }
 }

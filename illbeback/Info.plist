@@ -8,14 +8,14 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>Backmap Document</string>
+			<string>Breadcrumbs Document</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.artisan-software.backmap.map</string>
+				<string>com.artisan-software.breadcrumbs.crumb</string>
 			</array>
 		</dict>
 	</array>
@@ -26,11 +26,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Backmap</string>
+	<string>Breadcrumbs</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.2</string>
+	<string>2.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -96,15 +96,15 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Backmap Document</string>
+			<string>Breadcrumbs Document</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.artisan-software.backmap.map</string>
+			<string>com.artisan-software.breadcrumbs.crumb</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<string>map</string>
 				<key>public.mime-type</key>
-				<string>application/backmap</string>
+				<string>application/breadcrumbs</string>
 			</dict>
 		</dict>
 	</array>

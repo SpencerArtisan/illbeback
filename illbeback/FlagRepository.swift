@@ -14,8 +14,8 @@ class FlagRepository : NSObject {
     
     override init() {
         super.init()
-        Utils.addObserver(self, selector: "onFlagChanged:", event: "FlagChanged")
-        Utils.addObserver(self, selector: "onFlagChanged:", event: "InviteeChanged")
+        Utils.addObserver(self, selector: #selector(FlagRepository.onFlagChanged(_:)), event: "FlagChanged")
+        Utils.addObserver(self, selector: #selector(FlagRepository.onFlagChanged(_:)), event: "InviteeChanged")
     }
     
     func onFlagChanged(note: NSNotification) {
@@ -87,7 +87,13 @@ class FlagRepository : NSObject {
     }
     
     func add(flag: Flag) {
-        print("Adding flag to repo: \(flag.encode())")
+        if (find(flag.id()) != nil) {
+            print("Duplicate flag added to repo: \(flag.encode())")
+            _flags.removeObject(flag)
+        } else {
+            print("Adding flag to repo: \(flag.encode())")
+        }
+        
         _flags.append(flag)
         Utils.notifyObservers("FlagAdded", properties: ["flag": flag])
         save()
