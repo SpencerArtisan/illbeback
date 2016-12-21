@@ -67,34 +67,34 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
     
     func importFromURL(_ url: URL) {
 
-        let data = try! Data(contentsOf: url)
-        let unarchiver = NSKeyedUnarchiver.init(forReadingWith: data)
-        let user = unarchiver.decodeObject(forKey: "user") as! String
-        Global.setUserName(user, allowOverwrite: true)
-        let flagData = unarchiver.decodeObject(forKey: "flags") as! Data
-        flagRepository.removeAll()
-        try? flagData.write(to: URL(fileURLWithPath: flagRepository.filePath()) , options: [.atomic])
-        flagRepository.read()
-        
-        mapController.hintControlller.backupRestoringHint()
-
-        Utils.delay(0.5) {
-        self.flagRepository.flags().forEach { flag in
-            print("Reading images for flag \(flag.id())")
-            let flagUrls = self.photoAlbum.getFlagImageUrls(flag.id())
-            flagUrls.forEach { url in
-                let lastPathComp = url.lastPathComponent
-                print("Looking for image \(lastPathComp)")
-                let imageData = unarchiver.decodeObject(forKey: lastPathComp) as? Data
-                if imageData != nil {
-                    print("Image exists.  Saving to album at path \(url.path)")
-                    FileManager.default.createFile(atPath: url.path, contents: imageData!, attributes: nil)
-                }
-            }
-        }
-        
-        self.mapController.hintControlller.backupRestoredHint()
-        }
+//        let data = try! Data(contentsOf: url)
+//        let unarchiver = NSKeyedUnarchiver.init(forReadingWith: data)
+//        let user = unarchiver.decodeObject(forKey: "user") as! String
+//        Global.setUserName(user, allowOverwrite: true)
+//        let flagData = unarchiver.decodeObject(forKey: "flags") as! Data
+//        flagRepository.removeAll()
+//        try? flagData.write(to: URL(fileURLWithPath: flagRepository.filePath()) , options: [.atomic])
+//        flagRepository.read()
+//        
+//        mapController.hintControlller.backupRestoringHint()
+//
+//        Utils.delay(0.5) {
+//        self.flagRepository.flags().forEach { flag in
+//            print("Reading images for flag \(flag.id())")
+//            let flagUrls = self.photoAlbum.getFlagImageUrls(flag.id())
+//            flagUrls.forEach { url in
+//                let lastPathComp = url.lastPathComponent
+//                print("Looking for image \(lastPathComp)")
+//                let imageData = unarchiver.decodeObject(forKey: lastPathComp) as? Data
+//                if imageData != nil {
+//                    print("Image exists.  Saving to album at path \(url.path)")
+//                    FileManager.default.createFile(atPath: url.path, contents: imageData!, attributes: nil)
+//                }
+//            }
+//        }
+//        
+//        self.mapController.hintControlller.backupRestoredHint()
+//        }
     }
 
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {

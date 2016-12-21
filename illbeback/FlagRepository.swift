@@ -251,7 +251,7 @@ class FlagRepository : NSObject {
         return appDelegate.persistentContainer.viewContext
     }
     
-    func filePath() -> String {
+    fileprivate func filePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let path = paths[0] as NSString
         return path.appendingPathComponent("memories.plist")
