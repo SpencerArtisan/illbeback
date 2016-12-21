@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 class FlagRepository : NSObject {
     fileprivate var _flags = [Flag]()
@@ -19,7 +20,9 @@ class FlagRepository : NSObject {
     }
     
     func onFlagChanged(_ note: Notification) {
-        save()
+        print("Flag change")
+        let flag = note.userInfo!["flag"] as! Flag
+        save(flag)
     }
     
     func flags() -> [Flag] {
@@ -86,7 +89,12 @@ class FlagRepository : NSObject {
         return inviteeState != nil && inviteeState! == .Declining
     }
     
-    func add(_ flag: Flag) {
+    func create(_ flag: Flag) {
+        add(flag)
+        save(flag)
+    }
+    
+    fileprivate func add(_ flag: Flag) {
         if (find(flag.id()) != nil) {
             print("Duplicate flag added to repo: \(flag.encode())")
             _flags.removeObject(flag)
@@ -96,14 +104,13 @@ class FlagRepository : NSObject {
         
         _flags.append(flag)
         Utils.notifyObservers("FlagAdded", properties: ["flag": flag])
-        save()
     }
     
     func remove(_ flag: Flag) {
         print("Removing \(flag.type()) from repo")
         _flags.removeObject(flag)
         Utils.notifyObservers("FlagRemoved", properties: ["flag": flag])
-        save()
+        unsave(flag)
     }
     
     func removeAll() {
@@ -135,27 +142,16 @@ class FlagRepository : NSObject {
     fileprivate func isPurgable(_ flag: Flag) -> Bool {
         return flag.isPast() || flag.state() == .Dead
     }
-    
-    func save() {
-        slowsync(saveImpl)
-    }
-    
-    func saveImpl() {
-        purge()
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
-        let path = paths.appendingPathComponent("memories.plist")
-        let encodedFlags = flags().map {flag in flag.encode()}
-        let props: NSMutableDictionary = NSMutableDictionary()
-        props.setValue(encodedFlags, forKey: "Memories")
-        props.write(toFile: path, atomically: true)
-        _flags = flags()
-    }
-    
+
     func read() {
-        slowsync(readImpl)
+        readFromCoreData()
+        if _flags.count == 0 {
+            print("No flags found in core data. Reading from file instead")
+            readFromFile()
+        }
     }
     
-    func readImpl() {
+    func readFromFile() {
         let path = filePath()
         let fileManager = FileManager.default
         if (!(fileManager.fileExists(atPath: path))) {
@@ -172,20 +168,99 @@ class FlagRepository : NSObject {
         let encodedFlags = (props.value(forKey: "Memories") ?? []) as! [String]
         encodedFlags.map {encodedFlag in Flag.decode(encodedFlag)}
                     .forEach {flag in
-                        if !self.isPurgable(flag) { self.add(flag) }
+                        if !self.isPurgable(flag) { self.create(flag) }
                     }
+    }
+    
+    func readFromCoreData () {
+        //create a fetch request, telling it about the entity
+        let fetchRequest: NSFetchRequest<FlagEntity> = FlagEntity.fetchRequest()
+        
+        do {
+            //go get the results
+            let searchResults = try getContext().fetch(fetchRequest)
+            
+            //I like to check the size of the returned results!
+            print ("num of results = \(searchResults.count)")
+            
+            //You need to convert to NSManagedObject to use 'for' loops
+            for entity in searchResults as [NSManagedObject] {
+                //get the Key Value pairs (although there may be a better way to do that...
+                let encoded = entity.value(forKey: "encoded") as! String
+                print("Read: " + encoded)
+                let flag = Flag.decode(encoded)
+                if !isPurgable(flag) {
+                    self.add(flag)
+                }
+            }
+        } catch {
+            print("Error with request: \(error)")
+        }
+    }
+
+    func unsave(_ flag: Flag) {
+        let context = getContext()
+        do {
+            let searchResults = try read(id: flag.id(), context: context)
+            for entity in searchResults as [NSManagedObject] {
+                print("Delete \(flag.encode())")
+                context.delete(entity)
+            }
+        }
+        catch {
+                print("Error with request: \(error)")
+        }
+    }
+    
+    fileprivate func read(id: String, context: NSManagedObjectContext) throws -> [FlagEntity] {
+        let fetchRequest: NSFetchRequest<FlagEntity> = FlagEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        return try context.fetch(fetchRequest)
+    }
+    
+    func save(_ flag: Flag) {
+        print("Saving \(flag)")
+        let context = getContext()
+        
+        do {
+            var searchResults = try read(id: flag.id(), context: context)
+            if searchResults.count > 0 {
+                print ("Found \(searchResults.count) flags with duplicate ids")
+                let toAmend = searchResults.remove(at: 0)
+                for entity in searchResults as [NSManagedObject] {
+                    print("Deleting duplicate")
+                    context.delete(entity)
+                }
+                print("Amend existing flag")
+                toAmend.setValue(flag.encode(), forKey: "encoded")
+            } else {
+                print("Insert new flag")
+                let entity =  NSEntityDescription.entity(forEntityName: "FlagEntity", in: context)
+                let obj = NSManagedObject(entity: entity!, insertInto: context)
+                obj.setValue(flag.encode(), forKey: "encoded")
+                obj.setValue(flag.id(), forKey: "id")
+            }
+            try context.save()
+        } catch {
+            print("Error with request: \(error)")
+        }
+    }
+    
+    func getContext() -> NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer.viewContext
     }
     
     func filePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        let path = paths[0] as NSString
         return path.appendingPathComponent("memories.plist")
     }
     
-    internal func slowsync<R>(_ f: () -> R) -> R {
-        pthread_mutex_lock(&_mutex)
-        let r = f()
-        pthread_mutex_unlock(&_mutex)
-        return r
-    }
+//    internal func slowsync<R>(_ f: () -> R) -> R {
+//        pthread_mutex_lock(&_mutex)
+//        let r = f()
+//        pthread_mutex_unlock(&_mutex)
+//        return r
+//    }
 }

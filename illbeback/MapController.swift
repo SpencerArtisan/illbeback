@@ -296,7 +296,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     func addFlagHere(_ type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation?, when: Date?) {
         let actualLocation = location == nil ? (here == nil ? map.centerCoordinate : here.coordinate) : location!
         let flag = Flag.create(id, type: type, description: description, location: actualLocation, originator: Global.getUser().getName(), orientation: orientation, when: when)
-        flagRepository.add(flag)
+        flagRepository.create(flag)
         updateButtonStates()
     }
     

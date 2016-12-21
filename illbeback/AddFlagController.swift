@@ -233,10 +233,11 @@ class AddFlagController: UIViewController, UITextViewDelegate {
             
             let when = datePicker().isHidden ? nil as Date? : datePicker().date
             if (rewordingPin != nil) {
-                try! rewordingPin?.flag?.description(textView.text)
-                try! rewordingPin?.flag?.when(when)
-                rewordingPin?.flag?.type(self.flagImage!)
-                mapController!.flagRepository.save()
+                let flag = rewordingPin!.flag!
+                try! flag.description(textView.text)
+                try! flag.when(when)
+                flag.type(self.flagImage!)
+                mapController!.flagRepository.save(flag)
                 let annotation = rewordingPin!.annotation!
                 print("add flag controller replacing pin")
                 rewordingPin?.refreshImage()

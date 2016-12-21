@@ -88,6 +88,8 @@
 		97EA3FFF1AFE9A1C005507BF /* Black.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EA3FFE1AFE9A1C005507BF /* Black.xib */; };
 		97EA40011AFEA36B005507BF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97EA40001AFEA36B005507BF /* AVFoundation.framework */; };
 		97EA40031AFEB74C005507BF /* shutter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 97EA40021AFEB74C005507BF /* shutter.mp3 */; };
+		97F28F651E0AC16000EBE531 /* Breadcrumb.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97F28F631E0AC16000EBE531 /* Breadcrumb.xcdatamodeld */; };
+		97F28F671E0AC47800EBE531 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F28F661E0AC47800EBE531 /* CoreData.framework */; };
 		97FA33431BF7BEFE00248F67 /* Events.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33421BF7BEFE00248F67 /* Events.xib */; };
 		97FA33451BF7E18800248F67 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA33441BF7E18800248F67 /* EventController.swift */; };
 		97FA33471BF7E3A400248F67 /* Event.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97FA33461BF7E3A400248F67 /* Event.xib */; };
@@ -190,6 +192,8 @@
 		97EA3FFE1AFE9A1C005507BF /* Black.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Black.xib; sourceTree = "<group>"; };
 		97EA40001AFEA36B005507BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		97EA40021AFEB74C005507BF /* shutter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shutter.mp3; sourceTree = "<group>"; };
+		97F28F641E0AC16000EBE531 /* Breadcrumb.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Breadcrumb.xcdatamodel; sourceTree = "<group>"; };
+		97F28F661E0AC47800EBE531 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		97FA33421BF7BEFE00248F67 /* Events.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Events.xib; sourceTree = "<group>"; };
 		97FA33441BF7E18800248F67 /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		97FA33461BF7E3A400248F67 /* Event.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Event.xib; sourceTree = "<group>"; };
@@ -216,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97F28F671E0AC47800EBE531 /* CoreData.framework in Frameworks */,
 				971DF36C1C26B6030051D47F /* MessageUI.framework in Frameworks */,
 				97EA40011AFEA36B005507BF /* AVFoundation.framework in Frameworks */,
 				9725CD421A98D2C60081C1B3 /* SystemConfiguration.framework in Frameworks */,
@@ -429,6 +434,7 @@
 				97A353471A800B9500973CAC /* Info.plist */,
 				9772846B1A8A818B00CE628D /* user.plist */,
 				97FE66811A9A1A400007FC2C /* memories.plist */,
+				97F28F631E0AC16000EBE531 /* Breadcrumb.xcdatamodeld */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -478,6 +484,7 @@
 		EECFAABBC43934F677B29798 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				97F28F661E0AC47800EBE531 /* CoreData.framework */,
 				971DF36B1C26B6030051D47F /* MessageUI.framework */,
 				97EA40001AFEA36B005507BF /* AVFoundation.framework */,
 				973ABB2A1A99048300564820 /* libPods-AWSCognitoSync.a */,
@@ -694,6 +701,7 @@
 				973F25281C0B7EC50034A235 /* FlagToken.swift in Sources */,
 				97FC866B1C00F44D00C30C56 /* FlagView.swift in Sources */,
 				971DD8511C29AD3200CEFDDD /* FlagAnnotationView.swift in Sources */,
+				97F28F651E0AC16000EBE531 /* Breadcrumb.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -851,7 +859,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = illbeback/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -879,7 +887,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = illbeback/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -969,6 +977,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		97F28F631E0AC16000EBE531 /* Breadcrumb.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				97F28F641E0AC16000EBE531 /* Breadcrumb.xcdatamodel */,
+			);
+			currentVersion = 97F28F641E0AC16000EBE531 /* Breadcrumb.xcdatamodel */;
+			path = Breadcrumb.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 97A3533B1A800B9500973CAC /* Project object */;
 }

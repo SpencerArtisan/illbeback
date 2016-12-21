@@ -65,7 +65,7 @@ class InBox {
                     do {
                         try newFlag.receiveNewSuccess()
                         print("All new flag photos downloaded. ")
-                        self.flagRepository.add(newFlag)
+                        self.flagRepository.create(newFlag)
                         firebaseFlag.ref.removeValue()
                         onComplete()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": newFlag, "from": from])
