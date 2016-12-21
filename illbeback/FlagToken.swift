@@ -11,20 +11,20 @@ import CoreLocation
 import UIKit
 
 class FlagToken {
-    private var _type: String
-    private var _id: String
-    private var _description: String
-    private var _descriptionUpdate: String?
-    private var _location: CLLocationCoordinate2D
-    private var _locationUpdate: CLLocationCoordinate2D?
-    private var _originator: String
-    private var _sender: String?
-    private var _state: FlagState
-    private var _when: NSDate?
-    private var _whenUpdate: NSDate?
-    private var _invitees: [Invitee]
+    fileprivate var _type: String
+    fileprivate var _id: String
+    fileprivate var _description: String
+    fileprivate var _descriptionUpdate: String?
+    fileprivate var _location: CLLocationCoordinate2D
+    fileprivate var _locationUpdate: CLLocationCoordinate2D?
+    fileprivate var _originator: String
+    fileprivate var _sender: String?
+    fileprivate var _state: FlagState
+    fileprivate var _when: Date?
+    fileprivate var _whenUpdate: Date?
+    fileprivate var _invitees: [Invitee]
     
-    init(id: String, state: FlagState, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) {
+    init(id: String, state: FlagState, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: Date?) {
         self._id = id
         self._type = type
         self._description = description
@@ -36,24 +36,24 @@ class FlagToken {
     }
     
     init(token: String) {
-        var parts = token.componentsSeparatedByString(":")
+        var parts = token.components(separatedBy: ":")
         self._id = parts[4]
         
         self._type = parts[0]
-        let descriptionParts = parts[1].componentsSeparatedByString("|")
+        let descriptionParts = parts[1].components(separatedBy: "|")
         self._description = descriptionParts[0]
         if descriptionParts.count == 2 {
             self._descriptionUpdate = descriptionParts[1]
         }
         
-        let latParts = parts[2].componentsSeparatedByString(",")
-        let longParts = parts[3].componentsSeparatedByString(",")
+        let latParts = parts[2].components(separatedBy: ",")
+        let longParts = parts[3].components(separatedBy: ",")
         self._location = CLLocationCoordinate2D(latitude: (latParts[0] as NSString).doubleValue, longitude: (longParts[0] as NSString).doubleValue)
         if latParts.count == 2 && latParts[1] != "" && longParts.count == 2 && longParts[1] != "" {
             self._locationUpdate = CLLocationCoordinate2D(latitude: (latParts[1] as NSString).doubleValue, longitude: (longParts[1] as NSString).doubleValue)
         }
         
-        let originatorAndSender = parts[5].componentsSeparatedByString("|")
+        let originatorAndSender = parts[5].components(separatedBy: "|")
         self._originator = originatorAndSender[0]
         if originatorAndSender.count == 2 {
             self._sender = originatorAndSender[1]
@@ -62,13 +62,13 @@ class FlagToken {
         self._state = FlagState.fromCode(parts[6])
 
         if parts.count > 9 {
-            self._invitees = parts[9] != "" ? parts[9].componentsSeparatedByString(";").map{Invitee(code: $0)} : []
+            self._invitees = parts[9] != "" ? parts[9].components(separatedBy: ";").map{Invitee(code: $0)} : []
         } else {
             self._invitees = []
         }
         
         if parts.count > 8 {
-            let whenParts = parts[8].componentsSeparatedByString(",")
+            let whenParts = parts[8].components(separatedBy: ",")
             self._when = dateFromString(whenParts[0])
             if whenParts.count == 2 {
                 self._whenUpdate = dateFromString(whenParts[1])
@@ -77,7 +77,7 @@ class FlagToken {
     }
 
     
-    func pendingUpdate(token: FlagToken) {
+    func pendingUpdate(_ token: FlagToken) {
         _descriptionUpdate = token.description()
         _locationUpdate = token.location()
         _whenUpdate = token.when()
@@ -110,7 +110,7 @@ class FlagToken {
         return _type
     }
 
-    func type(type: String) {
+    func type(_ type: String) {
         _type = type
     }
     
@@ -118,7 +118,7 @@ class FlagToken {
         return _originator
     }
     
-    func originator(originator: String) {
+    func originator(_ originator: String) {
         _originator = originator
     }
     
@@ -126,7 +126,7 @@ class FlagToken {
         return _sender
     }
     
-    func sender(sender: String) {
+    func sender(_ sender: String) {
         _sender = sender
     }
     
@@ -134,7 +134,7 @@ class FlagToken {
         return _invitees
     }
     
-    func invitees(invitees: [Invitee]) {
+    func invitees(_ invitees: [Invitee]) {
         _invitees = invitees
     }
     
@@ -142,11 +142,11 @@ class FlagToken {
         _invitees = []
     }
     
-    func findInvitee(name: String) -> Invitee? {
+    func findInvitee(_ name: String) -> Invitee? {
         return invitees().filter({$0.name() == name}).first
     }
     
-    func addInvitee(invitee: Invitee) {
+    func addInvitee(_ invitee: Invitee) {
         let oldInvitee = findInvitee(invitee.name())
         if oldInvitee != nil {
             _invitees.removeObject(oldInvitee!)
@@ -159,7 +159,7 @@ class FlagToken {
         return _description
     }
     
-    func description(description: String) {
+    func description(_ description: String) {
         _description = description
     }
     
@@ -167,15 +167,15 @@ class FlagToken {
         return _location
     }
     
-    func location(location: CLLocationCoordinate2D) {
+    func location(_ location: CLLocationCoordinate2D) {
         _location = location
     }
     
-    func when() -> NSDate? {
+    func when() -> Date? {
         return _when
     }
     
-    func when(when: NSDate?) {
+    func when(_ when: Date?) {
         _when = when
     }
     
@@ -187,7 +187,7 @@ class FlagToken {
         return _locationUpdate
     }
 
-    func whenUpdate() -> NSDate? {
+    func whenUpdate() -> Date? {
         return _whenUpdate
     }
 
@@ -195,15 +195,15 @@ class FlagToken {
         return _state
     }
     
-    func state(state: FlagState) {
+    func state(_ state: FlagState) {
         print("< FLAG State transition \(self._type) from \(self._state) to \(state) >")
         self._state = state
     }
     
     func encode() -> String {
-        let whenString = _when != nil ? formatter().stringFromDate(_when!) : ""
-        let whenUpdateString = _whenUpdate != nil ? formatter().stringFromDate(_whenUpdate!) : ""
-        let inviteesString = _invitees.map{$0.encode()}.joinWithSeparator(";")
+        let whenString = _when != nil ? formatter().string(from: _when!) : ""
+        let whenUpdateString = _whenUpdate != nil ? formatter().string(from: _whenUpdate!) : ""
+        let inviteesString = _invitees.map{$0.encode()}.joined(separator: ";")
         let latitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.latitude)"
         let longitudeUpdateString = _locationUpdate == nil ? "" : "\(_locationUpdate!.longitude)"
         let descriptionUpdateString = _descriptionUpdate == nil ? "" : "|\(_descriptionUpdate!)"
@@ -212,25 +212,26 @@ class FlagToken {
     }
     
     func whenFormatted() -> String {
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        if formatter.stringFromDate(_when!) == "00:00" {
+        if formatter.string(from: _when!) == "00:00" {
             formatter.dateFormat = "EEE dd MMMM"
         } else {
             formatter.dateFormat = "EEE d MMM HH:mm"
         }
-        return formatter.stringFromDate(_when!)
+        return formatter.string(from: _when!)
     }
 
-    private func dateFromString(var value: String) -> NSDate? {
-        if value != "" && !value.containsString("-") {
+    private func dateFromString(_ value: String) -> Date? {
+        var value = value
+        if value != "" && !value.contains("-") {
             value += " 00-00-00-000"
         }
-        return value != "" ? formatter().dateFromString(value) : nil
+        return value != "" ? formatter().date(from: value) : nil
     }
     
-    private func formatter() -> NSDateFormatter {
-        let formatter = NSDateFormatter()
+    fileprivate func formatter() -> DateFormatter {
+        let formatter = DateFormatter()
         formatter.dateFormat = "dd MMMM yyyy HH-mm-ss-SSS"
         return formatter
     }

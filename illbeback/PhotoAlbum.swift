@@ -8,26 +8,26 @@
 
 import Foundation
 
-public class PhotoAlbum : NSObject {
+open class PhotoAlbum : NSObject {
 
     var folder: String
-    let fileManager = NSFileManager.defaultManager()
+    let fileManager = FileManager.default
     
     public override init() {
-        folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        folder = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         super.init()
-        Utils.addObserver(self, selector: "onFlagRemoved:", event: "FlagRemoved")
+        Utils.addObserver(self, selector: #selector(PhotoAlbum.onFlagRemoved), event: "FlagRemoved")
    }
     
-    func acceptRecentShare(flag: Flag) {
+    func acceptRecentShare(_ flag: Flag) {
         delete(flag)
         let paths = getImagePaths(flag.id())
         for path in paths {
             let recentPath = "\(path).recent"
-            if fileManager.fileExistsAtPath(recentPath) {
+            if fileManager.fileExists(atPath: recentPath) {
                 print("Promoting accepted share picture \(recentPath)")
                 do {
-                    try fileManager.moveItemAtPath(recentPath, toPath: path)
+                    try fileManager.moveItem(atPath: recentPath, toPath: path)
                 } catch {
                     print("Failed to promote picture \(recentPath)")
                 }
@@ -35,7 +35,7 @@ public class PhotoAlbum : NSObject {
         }
     }
 
-    func getMainPhoto(flag: Flag) -> Photo? {
+    func getMainPhoto(_ flag: Flag) -> Photo? {
         let allphotos = photos(flag)
         if (allphotos.count == 0) {
             return nil
@@ -44,54 +44,54 @@ public class PhotoAlbum : NSObject {
         }
     }
     
-    func getFlagImageUrls(memoryId: String) -> [NSURL] {
+    func getFlagImageUrls(_ memoryId: String) -> [URL] {
         let imagePaths = getImagePaths(memoryId)
-        return imagePaths.map {NSURL(fileURLWithPath: $0)}
+        return imagePaths.map {URL(fileURLWithPath: $0)}
     }
     
-    func saveFlagImage(image: UIImage?, flagId: String) {
+    func saveFlagImage(_ image: UIImage?, flagId: String) {
         let imagePath = getNewImagePath(flagId)
-        let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
-        fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
+        let imageData: Data = UIImageJPEGRepresentation(image!, 0.25)!
+        fileManager.createFile(atPath: imagePath, contents: imageData, attributes: nil)
     }
     
-    func photos(flag: Flag) -> [Photo] {
+    func photos(_ flag: Flag) -> [Photo] {
         let flagId = flag.id()
         var photos:[Photo] = []
         let marker = flag.state() == .ReceivedUpdate || flag.state() == .ReceivedNew ? ".recent" : ""
         var candidate = "\(folder)/Memory\(flagId).jpg\(marker)"
-        if fileManager.fileExistsAtPath(candidate) {
+        if fileManager.fileExists(atPath: candidate) {
             photos.append(Photo(imagePath: candidate))
         }
         
         for suffix in 2...10 {
             candidate = "\(folder)/Memory\(flagId)-\(suffix).jpg\(marker)"
-            if fileManager.fileExistsAtPath(candidate) {
+            if fileManager.fileExists(atPath: candidate) {
                 photos.append(Photo(imagePath: candidate))
             }
         }
         return photos
     }
     
-    func addFlagImage(image: UIImage?, flag: Flag) {
+    func addFlagImage(_ image: UIImage?, flag: Flag) {
         let imagePath = getNewImagePath(flag.id())
         print("Saving image \(imagePath)")
-        let imageData: NSData = UIImageJPEGRepresentation(image!, 0.25)!
-        fileManager.createFileAtPath(imagePath, contents: imageData, attributes: nil)
+        let imageData: Data = UIImageJPEGRepresentation(image!, 0.25)!
+        fileManager.createFile(atPath: imagePath, contents: imageData, attributes: nil)
         Utils.notifyObservers("FlagChanged", properties: ["flag": flag])
     }
     
-    private func getNewImagePath(flagId: String) -> String {
+    fileprivate func getNewImagePath(_ flagId: String) -> String {
         var candidate = "\(folder)/Memory\(flagId).jpg"
         var suffix = 2;
-        while (fileManager.fileExistsAtPath(candidate)) {
+        while (fileManager.fileExists(atPath: candidate)) {
             candidate = "\(folder)/Memory\(flagId)-\(suffix).jpg"
-            suffix++
+            suffix += 1
         }
         return candidate
     }
 
-    private func getImagePaths(flagId: String) -> [String] {
+    fileprivate func getImagePaths(_ flagId: String) -> [String] {
         var paths:[String] = []
         var candidate = "\(folder)/Memory\(flagId).jpg"
         paths.append(candidate)
@@ -102,7 +102,7 @@ public class PhotoAlbum : NSObject {
         return paths
     }
     
-    private func getImageFilenames(flagId: String) -> [String] {
+    fileprivate func getImageFilenames(_ flagId: String) -> [String] {
         var paths:[String] = []
         var candidate = "Memory\(flagId).jpg"
         paths.append(candidate)
@@ -114,24 +114,24 @@ public class PhotoAlbum : NSObject {
     }
     
     func allImageFiles() -> [String] {
-        let files = try! fileManager.contentsOfDirectoryAtPath(folder)
+        let files = try! fileManager.contentsOfDirectory(atPath: folder)
             .filter({$0.hasPrefix("Memory")})
             .map({"\(folder)/\($0)"})
-            .filter({fileManager.fileExistsAtPath($0)})
+            .filter({fileManager.fileExists(atPath: $0)})
         return files
     }
     
-    func onFlagRemoved(note: NSNotification) {
+    func onFlagRemoved(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         delete(flag)
     }
     
-    func delete(flag: Flag) {
+    func delete(_ flag: Flag) {
         let imagePaths = getImagePaths(flag.id())
         for path in imagePaths {
-            if fileManager.fileExistsAtPath(path) {
+            if fileManager.fileExists(atPath: path) {
                 do {
-                    try fileManager.removeItemAtPath(path)
+                    try fileManager.removeItem(atPath: path)
                     print("Deleted image \(path)")
                 } catch {
                     print("Failed to delete image \(path)")
@@ -140,18 +140,18 @@ public class PhotoAlbum : NSObject {
         }
     }
     
-    func purge(flagRepository: FlagRepository) {
+    func purge(_ flagRepository: FlagRepository) {
         let flagIds = flagRepository.flags().map { $0.id() }
         allImageFiles().forEach { imageFile in
             var purge = true
             flagIds.forEach { flagId in
-                if imageFile.containsString(flagId) {
+                if imageFile.contains(flagId) {
                     purge = false
                 }
             }
             if purge {
                 print("Purging old image \(imageFile)")
-                try! fileManager.removeItemAtPath(imageFile)
+                try! fileManager.removeItem(atPath: imageFile)
             }
         }
     }

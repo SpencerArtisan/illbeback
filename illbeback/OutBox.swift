@@ -9,18 +9,18 @@
 import Foundation
 
 class OutBox {
-    private let flagRepository: FlagRepository
-    private let photoAlbum: PhotoAlbum
-    private var root: Firebase
-    private let BUCKET = "illbebackappus"
-    private var transferManager: AWSS3TransferManager
-    private static var deviceToken: NSData?
+    fileprivate let flagRepository: FlagRepository
+    fileprivate let photoAlbum: PhotoAlbum
+    fileprivate var root: Firebase
+    fileprivate let BUCKET = "illbebackappus"
+    fileprivate var transferManager: AWSS3TransferManager
+    fileprivate static var deviceToken: Data?
   
     init(flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.flagRepository = flagRepository
         self.photoAlbum = photoAlbum
         root = Firebase(url:"https://illbeback.firebaseio.com/")
-        transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        transferManager = AWSS3TransferManager.default()
     }
     
     func send() {
@@ -30,7 +30,7 @@ class OutBox {
         sendDeclines()
     }
     
-    private func sendAccepts() {
+    fileprivate func sendAccepts() {
         for flag in flagRepository.flags() {
             let accepting = flag.invitees().filter {$0.state() == InviteeState.Accepting && $0.name() == Global.getUser().getName()}
             for invitee in accepting {
@@ -50,7 +50,7 @@ class OutBox {
         }
     }
     
-    private func sendDeclines() {
+    fileprivate func sendDeclines() {
         for flag in flagRepository.flags() {
             let declining = flag.invitees().filter {$0.state() == InviteeState.Declining && $0.name() == Global.getUser().getName()}
             for invitee in declining {
@@ -70,7 +70,7 @@ class OutBox {
         }
     }
     
-    private func sendInvites() {
+    fileprivate func sendInvites() {
         for flag in flagRepository.flags() {
             let inviting = flag.invitees().filter {$0.state() == InviteeState.Inviting}
             for invitee in inviting {
@@ -81,7 +81,7 @@ class OutBox {
         }
     }
     
-    func invite(invitee: Invitee, flag: Flag) {
+    func invite(_ invitee: Invitee, flag: Flag) {
         Utils.notifyObservers("Inviting", properties: ["name": invitee.name(), "flag": flag])
         uploadPhotos(invitee, flag: flag,
             onComplete: {
@@ -102,7 +102,7 @@ class OutBox {
             })
     }
     
-    private func uploadPhotos(invitee: Invitee, flag: Flag, onComplete: () -> Void, onError: () -> Void) {
+    fileprivate func uploadPhotos(_ invitee: Invitee, flag: Flag, onComplete: @escaping () -> Void, onError: @escaping () -> Void) {
         let photos = photoAlbum.photos(flag)
         print("Uploading \(photos.count) photos")
         var leftToUpload = photos.count
@@ -113,13 +113,13 @@ class OutBox {
                 print("    Uploading photo \(key)")
                 uploadImage(photo.imagePath, key: key,
                     onComplete: {
-                        leftToUpload--
+                        leftToUpload = leftToUpload - 1
                         print("    Uploaded photo '\(photo.imagePath)'.  \(leftToUpload) left")
                         self.postPhotoUpload(leftToUpload, failedToUpload: failedToUpload, onComplete: onComplete, onError: onError)
                     },
                     onError: {
-                        leftToUpload--
-                        failedToUpload++
+                        leftToUpload = leftToUpload - 1
+                        failedToUpload = failedToUpload + 1
                         print("    Failed uploading photo '\(photo.imagePath)'.  \(leftToUpload) left")
                         self.postPhotoUpload(leftToUpload, failedToUpload: failedToUpload, onComplete: onComplete, onError: onError)
                     })
@@ -129,7 +129,7 @@ class OutBox {
         }
     }
     
-    private func postPhotoUpload(leftToUpload: Int, failedToUpload: Int, onComplete: () -> Void, onError: () -> Void) {
+    fileprivate func postPhotoUpload(_ leftToUpload: Int, failedToUpload: Int, onComplete: () -> Void, onError: () -> Void) {
         if leftToUpload == 0 {
             if failedToUpload == 0 {
                 onComplete()
@@ -139,17 +139,17 @@ class OutBox {
         }
     }
     
-    private func uploadImage(imagePath: String?, key: String, onComplete: () -> (), onError: () -> ()) {
+    fileprivate func uploadImage(_ imagePath: String?, key: String, onComplete: @escaping () -> (), onError: @escaping () -> ()) {
         let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.bucket = BUCKET
         uploadRequest.key = key
-        uploadRequest.body = NSURL(fileURLWithPath: imagePath!)
-        uploadRequest.ACL = AWSS3ObjectCannedACL.AuthenticatedRead
+        uploadRequest.body = URL(fileURLWithPath: imagePath!)
+        uploadRequest.acl = AWSS3ObjectCannedACL.authenticatedRead
         
         let task = transferManager.upload(uploadRequest)
-        task.continueWithBlock { (task) -> AnyObject! in
+        task!.continue({ (task) -> AnyObject? in
             Utils.runOnUiThread {
-                if task.error != nil {
+                if task!.error != nil {
                     print("    Image upload FAILED! \(key)")
                     onError()
                 } else {
@@ -159,14 +159,14 @@ class OutBox {
             }
             
             return nil
-        }
+        })
     }
     
-    private func uploadFlagDetails(to: String, flag: Flag, onComplete: () -> (), onError: () -> ()) {
+    fileprivate func uploadFlagDetails(_ to: String, flag: Flag, onComplete: @escaping () -> (), onError: @escaping () -> ()) {
         print("FIREBASE OP: Uploading flag " + flag.encode())
         let newNode = shareRoot(to).childByAutoId()
-        newNode.setValue(["from": Global.getUser().getName(), "memory": flag.encode()], withCompletionBlock: {
-            (error:NSError?, ref:Firebase!) in
+        newNode!.setValue(["from": Global.getUser().getName(), "memory": flag.encode()], withCompletionBlock: {
+            (error:Error?, ref:Firebase?) in
             Utils.runOnUiThread {
                 if (error != nil) {
                     print("     Flag upload FAILED! \(flag.type())")
@@ -179,7 +179,7 @@ class OutBox {
         })
     }
     
-    private func shareRoot(to: String) -> Firebase {
-        return root.childByAppendingPath("users/" + to + "/given")
+    fileprivate func shareRoot(_ to: String) -> Firebase {
+        return root.child(byAppendingPath: "users/" + to + "/given")
     }
 }

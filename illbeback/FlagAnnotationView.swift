@@ -15,18 +15,14 @@ class FlagAnnotationView : MKAnnotationView {
     }
     
     var flag: Flag?
-    private var mapController: MapController?
-    private var calloutView:FlagCallout?
-    private var clickedOnFlagOrCallout:Bool = false
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
+    fileprivate var mapController: MapController?
+    fileprivate var calloutView:FlagCallout?
+    fileprivate var clickedOnFlagOrCallout:Bool = false
     
     init(mapController: MapController, flag: Flag) {
         super.init(annotation: nil, reuseIdentifier: FlagAnnotationView.reuseIdentifier)
         canShowCallout = false
-        self.draggable = true
+        self.isDraggable = true
         self.flag = flag
         self.mapController = mapController
         initImage()
@@ -45,19 +41,19 @@ class FlagAnnotationView : MKAnnotationView {
         initImage()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         if selected || !selected && !clickedOnFlagOrCallout {
             super.setSelected(selected, animated: animated)
         } else {
             Utils.delay(0.1) { if self.annotation != nil { self.mapController?.map.selectAnnotation(self.annotation!, animated: false) } }
         }
         
-        self.superview?.bringSubviewToFront(self)
-        if self.selected { showCallout() }
-        if !self.selected { hideCallout() }
+        self.superview?.bringSubview(toFront: self)
+        if self.isSelected { showCallout() }
+        if !self.isSelected { hideCallout() }
     }
     
-    private func showCallout() {
+    fileprivate func showCallout() {
         let calloutOpen = calloutView?.superview != nil
         if !calloutOpen {
             calloutView = calloutView ?? FlagCallout(flag: flag!, mapController: mapController!, annotationView: self)
@@ -67,27 +63,27 @@ class FlagAnnotationView : MKAnnotationView {
         }
     }
     
-    private func hideCallout() {
+    fileprivate func hideCallout() {
         calloutView?.removeFromSuperview()
         self.layer.zPosition = flag!.isEvent() ? 1 : 0
     }
     
-    private func centreFlag() {
+    fileprivate func centreFlag() {
         let map = self.mapController!.map
         let pinCoord = flag!.location()
-        let mapTopCoord = map.convertPoint(CGPointMake(0, 0), toCoordinateFromView: map)
-        let mapBottomCoord = map.convertPoint(CGPointMake(0, map.frame.height), toCoordinateFromView: map)
-        let coordsTopToBottom = mapTopCoord.latitude - mapBottomCoord.latitude
+        let mapTopCoord = map?.convert(CGPoint(x: 0, y: 0), toCoordinateFrom: map)
+        let mapBottomCoord = map?.convert(CGPoint(x: 0, y: (map?.frame.height)!), toCoordinateFrom: map)
+        let coordsTopToBottom = (mapTopCoord?.latitude)! - (mapBottomCoord?.latitude)!
         let rescrollCoord = CLLocationCoordinate2D(latitude: (pinCoord.latitude + coordsTopToBottom/4), longitude: pinCoord.longitude)
         
-        self.mapController?.map.setCenterCoordinate(rescrollCoord, animated: true)
+        self.mapController?.map.setCenter(rescrollCoord, animated: true)
     }
     
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        var hitView = super.hitTest(point, withEvent: event)
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        var hitView = super.hitTest(point, with: event)
         
-        if hitView == nil && self.selected {
-            hitView = calloutView?.hitTest(point, withEvent: event)
+        if hitView == nil && self.isSelected {
+            hitView = calloutView?.hitTest(point, with: event)
         }
         
         clickedOnFlagOrCallout = hitView != nil
@@ -99,33 +95,33 @@ class FlagAnnotationView : MKAnnotationView {
         return hitView
     }
     
-    private func disableSiblingSelectionTemporarily() {
+    fileprivate func disableSiblingSelectionTemporarily() {
         for annotation in (mapController?.map.annotations)! {
             if let siblingFlagAnnotation = annotation as? FlagAnnotation {
                 if siblingFlagAnnotation.flag.id() != flag?.id() {
-                    if let siblingFlagView = mapController?.map.viewForAnnotation(siblingFlagAnnotation) {
-                        siblingFlagView.enabled = false
-                        Utils.delay(0.8) { siblingFlagView.enabled = true }
+                    if let siblingFlagView = mapController?.map.view(for: siblingFlagAnnotation) {
+                        siblingFlagView.isEnabled = false
+                        Utils.delay(0.8) { siblingFlagView.isEnabled = true }
                     }
                 }
             }
         }
     }
     
-    private func initImage() {
+    fileprivate func initImage() {
         let imageIcon = UIImage(named: flag!.type() + " Flag")!
         
-        let finalSize = CGSizeMake(imageIcon.size.width + 10, imageIcon.size.height + 10)
+        let finalSize = CGSize(width: imageIcon.size.width + 10, height: imageIcon.size.height + 10)
         UIGraphicsBeginImageContext(finalSize)
-        imageIcon.drawInRect(CGRectMake(0, 10, imageIcon.size.width, imageIcon.size.height))
+        imageIcon.draw(in: CGRect(x: 0, y: 10, width: imageIcon.size.width, height: imageIcon.size.height))
         
         let inShape: Bool = mapController!.shapeController.shapeContains(flag!.location())
         
         if flag!.when() != nil {
-            let daysToGo: NSString = " \(flag!.daysToGo()) "
-            let col = flag!.daysToGo() < 6 ? UIColor.redColor() : UIColor.grayColor()
-            daysToGo.drawInRect(CGRectMake(0,finalSize.height-14,100,30), withAttributes: [
-                NSForegroundColorAttributeName: UIColor.whiteColor(),
+            let daysToGo: NSString = " \(flag!.daysToGo()) " as NSString
+            let col = flag!.daysToGo() < 6 ? UIColor.red : UIColor.gray
+            daysToGo.draw(in: CGRect(x: 0,y: finalSize.height-14,width: 100,height: 30), withAttributes: [
+                NSForegroundColorAttributeName: UIColor.white,
                 NSBackgroundColorAttributeName: col,
                 NSFontAttributeName: UIFont(name: "Arial-BoldMT", size: 12)!
                 ])
@@ -133,13 +129,13 @@ class FlagAnnotationView : MKAnnotationView {
         
         if (inShape) {
             let imageHighlight = UIImage(named: "share flag")!
-            imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
+            imageHighlight.draw(in: CGRect(x: 0, y: 0, width: imageHighlight.size.width, height: imageHighlight.size.height))
         } else if flag!.isPendingAccept() {
             let imageHighlight = UIImage(named: "recent")!
-            imageHighlight.drawInRect(CGRectMake(0, 0, imageHighlight.size.width, imageHighlight.size.height))
+            imageHighlight.draw(in: CGRect(x: 0, y: 0, width: imageHighlight.size.width, height: imageHighlight.size.height))
         }
         image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        centerOffset = CGPointMake(17, -20)
+        centerOffset = CGPoint(x: 17, y: -20)
     }
 }

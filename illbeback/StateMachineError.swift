@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum StateMachineError : ErrorType {
-    case InvalidTransition
+enum StateMachineError : Error {
+    case invalidTransition
 }

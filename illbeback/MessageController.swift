@@ -9,74 +9,74 @@
 import Foundation
 
 class MessageController : NSObject {
-    private var mapController: MapController!
-    private var activeModals = [String: Modal] ()
-    private var messageModals: [Modal] = []
+    fileprivate var mapController: MapController!
+    fileprivate var activeModals = [String: Modal] ()
+    fileprivate var messageModals: [Modal] = []
     
     init(mapController: MapController) {
         super.init()
         self.mapController = mapController
-        Utils.addObserver(self, selector: "onNameTaken:", event: "NameTaken")
-        Utils.addObserver(self, selector: "onNameAccepted:", event: "NameAccepted")
-        Utils.addObserver(self, selector: "onEventListChange:", event: "EventListChange")
-        Utils.addObserver(self, selector: "onFlagSending:", event: "FlagSending")
-        Utils.addObserver(self, selector: "onFlagSendSuccess:", event: "FlagSendSuccess")
-        Utils.addObserver(self, selector: "onFlagSendFailed:", event: "FlagSendFailed")
-        Utils.addObserver(self, selector: "onFlagReceiving:", event: "FlagReceiving")
-        Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
-        Utils.addObserver(self, selector: "onFlagReceiveFailed:", event: "FlagReceiveFailed")
-        Utils.addObserver(self, selector: "onAckReceiveSuccess:", event: "AckReceiveSuccess")
-        Utils.addObserver(self, selector: "onDeclining:", event: "Declining")
-        Utils.addObserver(self, selector: "onDeclineSuccess:", event: "DeclineSuccess")
-        Utils.addObserver(self, selector: "onDeclineFailed:", event: "DeclineFailed")
-        Utils.addObserver(self, selector: "onAccepting:", event: "Accepting")
-        Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
-        Utils.addObserver(self, selector: "onAcceptFailed:", event: "AcceptFailed")
-        Utils.addObserver(self, selector: "onBackupPreparing:", event: "BackupPreparing")
-        Utils.addObserver(self, selector: "onBackupPrepared:", event: "BackupPrepared")
+        Utils.addObserver(self, selector: #selector(MessageController.onNameTaken), event: "NameTaken")
+        Utils.addObserver(self, selector: #selector(MessageController.onNameAccepted), event: "NameAccepted")
+        Utils.addObserver(self, selector: #selector(MessageController.onEventListChange), event: "EventListChange")
+        Utils.addObserver(self, selector: #selector(MessageController.onFlagSending), event: "FlagSending")
+        Utils.addObserver(self, selector: #selector(MessageController.onFlagSendSuccess), event: "FlagSendSuccess")
+        Utils.addObserver(self, selector: #selector(MessageController.onFlagSendFailed), event: "FlagSendFailed")
+        Utils.addObserver(self, selector: #selector(MessageController.onFlagReceiving), event: "FlagReceiving")
+        Utils.addObserver(self, selector: #selector(MessageController.onFlagReceiveSuccess), event: "FlagReceiveSuccess")
+        Utils.addObserver(self, selector: #selector(MessageController.onFlagReceiveFailed), event: "FlagReceiveFailed")
+        Utils.addObserver(self, selector: #selector(MessageController.onAckReceiveSuccess), event: "AckReceiveSuccess")
+        Utils.addObserver(self, selector: #selector(MessageController.onDeclining), event: "Declining")
+        Utils.addObserver(self, selector: #selector(MessageController.onDeclineSuccess), event: "DeclineSuccess")
+        Utils.addObserver(self, selector: #selector(MessageController.onDeclineFailed), event: "DeclineFailed")
+        Utils.addObserver(self, selector: #selector(MessageController.onAccepting), event: "Accepting")
+        Utils.addObserver(self, selector: #selector(MessageController.onAcceptSuccess), event: "AcceptSuccess")
+        Utils.addObserver(self, selector: #selector(MessageController.onAcceptFailed), event: "AcceptFailed")
+        Utils.addObserver(self, selector: #selector(MessageController.onBackupPreparing), event: "BackupPreparing")
+        Utils.addObserver(self, selector: #selector(MessageController.onBackupPrepared), event: "BackupPrepared")
     }
     
-    func onFlagSending(note: NSNotification) {
+    func onFlagSending(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let to = note.userInfo!["to"] as! String
         let message = "Sending \(flag.type()) to \(to)"
         preMessage(message, key: flag.id()+to, flag: flag)
     }
     
-    func onFlagSendSuccess(note: NSNotification) {
+    func onFlagSendSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let to = note.userInfo!["to"] as! String
         let message = "Sent \(flag.type()) to \(to)"
         postMessage(message, key:  flag.id()+to, flag: flag, success: true)
     }
     
-    func onFlagSendFailed(note: NSNotification) {
+    func onFlagSendFailed(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let to = note.userInfo!["to"] as! String
         let message = "Failed sending \(flag.type()) to \(to)"
         postMessage(message, key:  flag.id()+to, flag: flag, success: false)
     }
     
-    func onFlagReceiving(note: NSNotification) {
+    func onFlagReceiving(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let message = "Downloading \(flag.type())"
         preMessage(message, key: flag.id(), flag: flag)
     }
     
-    func onFlagReceiveSuccess(note: NSNotification) {
+    func onFlagReceiveSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let from = note.userInfo!["from"] as! String
         let message = "Downloaded \(flag.type()) from \(from)"
         postMessage(message, key:  flag.id(), flag: flag, success: true)
     }
     
-    func onFlagReceiveFailed(note: NSNotification) {
+    func onFlagReceiveFailed(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let message = "Failed downloading \(flag.type())"
         postMessage(message, key:  flag.id(), flag: flag, success: false)
     }
     
-    func onAccepting(note: NSNotification) {
+    func onAccepting(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Sending accept for \(flag.type())"
@@ -84,7 +84,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onAcceptSuccess(note: NSNotification) {
+    func onAcceptSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Sent accept"
@@ -92,7 +92,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onAcceptFailed(note: NSNotification) {
+    func onAcceptFailed(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Failed sending accept"
@@ -100,7 +100,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onDeclining(note: NSNotification) {
+    func onDeclining(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Sending decline for \(flag.type())"
@@ -108,7 +108,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onDeclineSuccess(note: NSNotification) {
+    func onDeclineSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Sent decline"
@@ -116,7 +116,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onDeclineFailed(note: NSNotification) {
+    func onDeclineFailed(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Failed sending decline"
@@ -124,7 +124,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onAckReceiveSuccess(note: NSNotification) {
+    func onAckReceiveSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let from = note.userInfo!["from"] as! String
@@ -135,18 +135,18 @@ class MessageController : NSObject {
         }
     }
 
-    func onNameTaken(note: NSNotification) {
+    func onNameTaken(_ note: Notification) {
         Utils.runOnUiThread {
             let takenName = note.userInfo!["name"]
-            self.showMessage("Sharing name \(takenName!) taken!", color: UIColor.redColor(), fontColor: UIColor.whiteColor(), time: 3.0)
+            self.showMessage("Sharing name \(takenName!) taken!", color: UIColor.red, fontColor: UIColor.white, time: 3.0)
             self.mapController.ensureUserKnown()
         }
     }
     
-    func onNameAccepted(note: NSNotification) {
+    func onNameAccepted(_ note: Notification) {
         Utils.runOnUiThread {
             let name = note.userInfo!["name"]
-            self.showMessage("Welcome to Backmap \(name!)", color: UIColor.greenColor(), fontColor: UIColor.blackColor(), time: 3.0)
+            self.showMessage("Welcome to Backmap \(name!)", color: UIColor.green, fontColor: UIColor.black, time: 3.0)
         }
         
         Utils.delay(8) {
@@ -154,30 +154,30 @@ class MessageController : NSObject {
         }
     }
     
-    func onEventListChange(note: NSNotification) {
+    func onEventListChange(_ note: Notification) {
         Utils.runOnUiThread {
             let enable = note.userInfo!["enable"] as! Bool
-            self.mapController.alarmButton.hidden = !enable
+            self.mapController.alarmButton.isHidden = !enable
         }
     }
     
-    func onBackupPreparing(note: NSNotification) {
+    func onBackupPreparing(_ note: Notification) {
         let message = "Preparing backup"
         preMessage(message, key: "backup", color: UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.8))
     }
     
-    func onBackupPrepared(note: NSNotification) {
+    func onBackupPrepared(_ note: Notification) {
         Utils.runOnUiThread {
             self.dismissMessage("backup")
         }
     }
     
-    private func preMessage(message: String, key: String, flag: Flag) {
+    fileprivate func preMessage(_ message: String, key: String, flag: Flag) {
         let color = CategoryController.getColorForCategory(flag.type())
         preMessage(message, key: key, color: color)
     }
     
-    private func preMessage(message: String, key: String, color: UIColor) {
+    fileprivate func preMessage(_ message: String, key: String, color: UIColor) {
         Utils.runOnUiThread {
             self.dismissMessage(key)
             let modal = self.showMessage(message, color: color, time: nil)
@@ -185,7 +185,7 @@ class MessageController : NSObject {
         }
     }
     
-    private func postMessage(message: String, key: String, flag: Flag, success: Bool) {
+    fileprivate func postMessage(_ message: String, key: String, flag: Flag, success: Bool) {
         Utils.delay(0.5) {
             let color = success ? UIColor(red: 0.4, green: 1.0, blue: 0.4, alpha: 1.0) : UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0)
             self.dismissMessage(key)
@@ -193,23 +193,23 @@ class MessageController : NSObject {
         }
     }
     
-    private func dismissMessage(key: String) {
+    fileprivate func dismissMessage(_ key: String) {
         if let existingModal = self.activeModals[key] {
-            self.activeModals.removeValueForKey(key)
+            self.activeModals.removeValue(forKey: key)
             self.dismissMessage(existingModal)
         }
     }
     
-    private func showMessage(text: String, color: UIColor, time: Double?) -> Modal {
-        return self.showMessage(text, color: color, fontColor: UIColor.blackColor(), time: time)
+    fileprivate func showMessage(_ text: String, color: UIColor, time: Double?) -> Modal {
+        return self.showMessage(text, color: color, fontColor: UIColor.black, time: time)
     }
     
-    private func showMessage(text: String, color: UIColor, fontColor: UIColor, time: Double?) -> Modal {
+    fileprivate func showMessage(_ text: String, color: UIColor, fontColor: UIColor, time: Double?) -> Modal {
         let messageModal = Modal(viewName: "MessageView", owner: mapController)
         let message = messageModal.findElementByTag(1) as! UIButton
-        message.backgroundColor = color.colorWithAlphaComponent(1)
-        message.setTitleColor(fontColor, forState: UIControlState.Normal)
-        message.setTitle(text, forState: UIControlState.Normal)
+        message.backgroundColor = color.withAlphaComponent(1)
+        message.setTitleColor(fontColor, for: UIControlState())
+        message.setTitle(text, for: UIControlState())
         messageModal.slideDownFromTop(self.mapController.view)
         
         if time != nil {
@@ -220,11 +220,11 @@ class MessageController : NSObject {
         return messageModal
     }
     
-    private func dismissMessage(messageModal: Modal) {
+    fileprivate func dismissMessage(_ messageModal: Modal) {
         messageModal.slideUpFromTop(self.mapController.view)
     }
     
-    private func dismissMessage(sender: AnyObject?) {
+    fileprivate func dismissMessage(_ sender: AnyObject?) {
         let messageModal = self.messageModals.removeLast()
         messageModal.slideUpFromTop(self.mapController.view)
     }

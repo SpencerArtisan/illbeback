@@ -42,10 +42,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     var searchModal: Modal?
     var shapeModal: Modal?
 
-    let queue = dispatch_queue_create("com.artisan.cachequeue", DISPATCH_QUEUE_CONCURRENT);
+    let queue = DispatchQueue(label: "com.artisan.cachequeue", attributes: DispatchQueue.Attributes.concurrent);
     var newUserLabel: UILabel!
     var newUserText: UITextView!
-    var lastTimeAppUsed: NSDate?
+    var lastTimeAppUsed: Date?
     
     var flagRenderer: FlagRenderer!
     var flagRepository: FlagRepository!
@@ -56,25 +56,25 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         return self.view
     }
     
-    @IBAction func showNewStuff(sender: AnyObject) {
+    @IBAction func showNewStuff(_ sender: AnyObject) {
         flagListController.showFlags()
     }
     
-    @IBAction func showEvents(sender: AnyObject) {
+    @IBAction func showEvents(_ sender: AnyObject) {
         eventListController.showEvents()
     }
     
-    @IBAction func backup(sender: AnyObject) {
+    @IBAction func backup(_ sender: AnyObject) {
         backup!.create()
     }
     
-    @IBAction func cancel(sender: AnyObject) {
+    @IBAction func cancel(_ sender: AnyObject) {
         shapeController.clear()
         showPinsInShape()
         shapeModal?.slideUpFromTop(view)
     }
     
-    @IBAction func share(sender: AnyObject) {
+    @IBAction func share(_ sender: AnyObject) {
         var sharing:[FlagAnnotationView] = []
         
         let allPins = map.annotations
@@ -82,7 +82,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             if (pin is FlagAnnotation) {
                 let flagAnnotation = pin as! FlagAnnotation
                 if !flagAnnotation.flag.isBlank() && shapeController.shapeContains(flagAnnotation.flag.location()) {
-                    let pinView = map.viewForAnnotation(flagAnnotation) as! FlagAnnotationView
+                    let pinView = map.view(for: flagAnnotation) as! FlagAnnotationView
                     sharing.append(pinView)
                 }
             }
@@ -125,18 +125,18 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         flagRepository.read()
         photoAlbum.purge(flagRepository)
         
-        Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
-        Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
-        Utils.addObserver(self, selector: "onDeclineSuccess:", event: "DeclineSuccess")
-        Utils.addObserver(self, selector: "onDeclining:", event: "Declining")
+        Utils.addObserver(self, selector: #selector(MapController.onFlagReceiveSuccess), event: "FlagReceiveSuccess")
+        Utils.addObserver(self, selector: #selector(MapController.onAcceptSuccess), event: "AcceptSuccess")
+        Utils.addObserver(self, selector: #selector(MapController.onDeclineSuccess), event: "DeclineSuccess")
+        Utils.addObserver(self, selector: #selector(MapController.onDeclining), event: "Declining")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
         
         ensureUserKnown()
         
-        if lastTimeAppUsed == nil || NSDate().timeIntervalSinceDate(lastTimeAppUsed!) > HOUR * 5 {
+        if lastTimeAppUsed == nil || Date().timeIntervalSince(lastTimeAppUsed!) > HOUR * 5 {
             flagRepository.purge()
             updatePins()
             checkForImminentEvents()
@@ -162,79 +162,79 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         outBox.send()
         updateButtonStates()
         
-        self.lastTimeAppUsed = NSDate()
+        self.lastTimeAppUsed = Date()
     }
 
-    func handleOpenURL(url: NSURL) {
+    func handleOpenURL(_ url: URL) {
         backup!.importFromURL(url)
     }
     
-    func onFlagReceiveSuccess(note: NSNotification) {
+    func onFlagReceiveSuccess(_ note: Notification) {
         updateButtonStates()
     }
     
-    func onAcceptSuccess(note: NSNotification) {
+    func onAcceptSuccess(_ note: Notification) {
         updateButtonStates()
         
     }
     
-    func onDeclineSuccess(note: NSNotification) {
+    func onDeclineSuccess(_ note: Notification) {
         updateButtonStates()
     }
     
-    func onDeclining(note: NSNotification) {
+    func onDeclining(_ note: Notification) {
         updateButtonStates()
     }
     
-    @IBAction func takePhoto(sender: AnyObject) {
-        self.navigationController?.navigationBarHidden = true
+    @IBAction func takePhoto(_ sender: AnyObject) {
+        self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.pushViewController(rememberController, animated: false)
     }
     
-    @IBAction func currentLocation(sender: AnyObject) {
+    @IBAction func currentLocation(_ sender: AnyObject) {
         if here != nil {
             centerMap(here!.coordinate)
         }
     }
     
-    @IBAction func search(sender: AnyObject) {
+    @IBAction func search(_ sender: AnyObject) {
         searchText.becomeFirstResponder()
         searchText.text = ""
         searchModal?.slideOutFromLeft(self.view)
     }
     
-    @IBAction func cancelSearch(sender: AnyObject) {
+    @IBAction func cancelSearch(_ sender: AnyObject) {
         searchModal?.slideInFromLeft(self.view)
         searchText.resignFirstResponder()
     }
     
-    @IBAction func shape(sender: AnyObject) {
+    @IBAction func shape(_ sender: AnyObject) {
         shapeController.beginShape()
         showPinsInShape()
         shapeModal?.blurBackground()
         shapeModal?.slideDownFromTop(self.view)
     }
     
-    @IBAction func friends(sender: AnyObject) {
+    @IBAction func friends(_ sender: AnyObject) {
         shareController.editFriends()
     }
     
     // Callback for button on the callout
-    func rephotoMemory(pin: FlagAnnotationView) {
+    func rephotoMemory(_ pin: FlagAnnotationView) {
         if (self.navigationController?.topViewController != rephotoController) {
             zoomController.mapController = self
             zoomController.pinToRephoto = pin
             rephotoController.pinToRephoto = pin
-            self.navigationController?.navigationBarHidden = true
+            self.navigationController?.isNavigationBarHidden = true
             self.navigationController?.pushViewController(zoomController, animated: false)
             self.navigationController?.pushViewController(rephotoController!, animated: false)
         }
     }
     
     // Callback for button on the callout
-    func zoomPicture(pin: FlagAnnotationView) {
+    func zoomPicture(_ pin: FlagAnnotationView) {
         if (self.navigationController?.topViewController != zoomController) {
-            self.navigationController?.navigationBarHidden = true
+            self.navigationController?.isNavigationBarHidden = true
             zoomController.mapController = self
             zoomController.pinToRephoto = pin
             self.navigationController?.pushViewController(zoomController, animated: true)
@@ -242,14 +242,14 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
 
     
-    private func checkForImminentEvents() {
+    fileprivate func checkForImminentEvents() {
         let imminentEvents = flagRepository.imminentEvents()
         if imminentEvents.count > 0 && imminentEvents[0].daysToGo() < 2 {
             eventListController.showEvents()
         }
     }
     
-    private func updatePins() {
+    fileprivate func updatePins() {
         flagRepository.purge()
         flagRenderer.updateEventPins(flagRepository.events())
     }
@@ -272,28 +272,28 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
 
     func initMap() {
         map.delegate = self
-        let tapRecognizer = UILongPressGestureRecognizer(target: self, action: "foundTap:")
+        let tapRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MapController.foundTap(_:)))
         map.addGestureRecognizer(tapRecognizer)
         map.showsPointsOfInterest = false
-        map.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
+        map.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
     }
     
     // User clicked on map - Add a flag there
-    func foundTap(recognizer: UITapGestureRecognizer) {
-        if recognizer.state == UIGestureRecognizerState.Began {
-            let point = recognizer.locationInView(self.map)
-            let tapPoint = self.map.convertPoint(point, toCoordinateFromView: self.view)
+    func foundTap(_ recognizer: UITapGestureRecognizer) {
+        if recognizer.state == UIGestureRecognizerState.began {
+            let point = recognizer.location(in: self.map)
+            let tapPoint = self.map.convert(point, toCoordinateFrom: self.view)
             self.addFlag.add(self, location: tapPoint)
         }
     }
 
     // Callback for location updates
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         here = locations[0]
     }
 
     // Callback for button on the UI
-    func addFlagHere(type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation?, when: NSDate?) {
+    func addFlagHere(_ type: String, id: String, description: String, location: CLLocationCoordinate2D?, orientation: UIDeviceOrientation?, when: Date?) {
         let actualLocation = location == nil ? (here == nil ? map.centerCoordinate : here.coordinate) : location!
         let flag = Flag.create(id, type: type, description: description, location: actualLocation, originator: Global.getUser().getName(), orientation: orientation, when: when)
         flagRepository.add(flag)
@@ -301,11 +301,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     // Callback for button on the callout
-    func deleteFlag(pin: FlagAnnotationView) {
+    func deleteFlag(_ pin: FlagAnnotationView) {
         flagRepository.remove(pin.flag!)
     }
     
-    func removePin(pin: FlagAnnotationView) {
+    func removePin(_ pin: FlagAnnotationView) {
         Utils.runOnUiThread {
             if pin.annotation != nil {
                 self.map.removeAnnotation(pin.annotation!)
@@ -313,10 +313,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         }
     }
     
-    private func updateButtonStates() {
-        alarmButton.hidden = flagRepository.events().count == 0
-        newButton.hidden = flagRepository.new().count == 0
-        backupButton.hidden = flagRepository.flags().count <= 4
+    fileprivate func updateButtonStates() {
+        alarmButton.isHidden = flagRepository.events().count == 0
+        newButton.isHidden = flagRepository.new().count == 0
+        backupButton.isHidden = flagRepository.flags().count <= 4
         if flagRepository.flags().count > 4 && !Preferences.hintedBackups() && !inBox.isReceiving() {
             Preferences.hintedBackups(true)
             Utils.delay(2) {
@@ -325,47 +325,47 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         }
     }
     
-    func acceptRecentShare(flag: Flag) {
+    func acceptRecentShare(_ flag: Flag) {
         photoAlbum.acceptRecentShare(flag)
         flag.accepting(Global.getUser().getName())
         outBox.send()
     }
 
-    func declineRecentShare(flag: Flag) {
+    func declineRecentShare(_ flag: Flag) {
         flag.declining(Global.getUser().getName())
         outBox.send()
     }
 
-    func shareFlag(pin: FlagAnnotationView) {
+    func shareFlag(_ pin: FlagAnnotationView) {
         shareController.shareFlag([pin])
     }
     
     // Callback for button on the callout
-    func rewordFlag(pin: FlagAnnotationView) {
+    func rewordFlag(_ pin: FlagAnnotationView) {
         addFlag.reword(self, pin: pin)
     }
     
     // Callback for button on the callout
-    func rescheduleFlag(pin: FlagAnnotationView) {
+    func rescheduleFlag(_ pin: FlagAnnotationView) {
         addFlag.reschedule(self, pin: pin)
     }
     
     // Callback for button on the callout
-    func unblankFlag(pin: FlagAnnotationView) {
+    func unblankFlag(_ pin: FlagAnnotationView) {
         addFlag.unblank(self, pin: pin)
         pin.refreshImage()
     }
     
     // Callback for display pins on map
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         return flagRenderer.render(mapView, viewForAnnotation: annotation)
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-        if newState == MKAnnotationViewDragState.Starting {
-            view.dragState = MKAnnotationViewDragState.Dragging
-        } else if newState == MKAnnotationViewDragState.Ending || newState == MKAnnotationViewDragState.Canceling {
-            view.dragState = MKAnnotationViewDragState.None;
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+        if newState == MKAnnotationViewDragState.starting {
+            view.dragState = MKAnnotationViewDragState.dragging
+        } else if newState == MKAnnotationViewDragState.ending || newState == MKAnnotationViewDragState.canceling {
+            view.dragState = MKAnnotationViewDragState.none;
             if view.annotation is FlagAnnotation {
                 let pinData = view.annotation as! FlagAnnotation
                 pinData.setCoordinate2(pinData.coordinate)
@@ -377,7 +377,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         }
     }
     
-    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
         for aView in views {
             if aView is FlagAnnotationView {
                 if (aView as! FlagAnnotationView).flag!.isEvent() {
@@ -392,25 +392,25 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         for pin in allPins {
             if pin is FlagAnnotation {
                 let flagAnnotation = pin as! FlagAnnotation
-                let pinView = map.viewForAnnotation(flagAnnotation) as? FlagAnnotationView
+                let pinView = map.view(for: flagAnnotation) as? FlagAnnotationView
                 pinView?.refreshImage()
             }
         }
     }
     
-    func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolyline {
             let polylineRenderer = MKPolylineRenderer(overlay: overlay)
             polylineRenderer.strokeColor = UIColor(red: 0, green: 0, blue: 1, alpha: 0.2)
             polylineRenderer.lineWidth = 4
             return polylineRenderer
         }
-        return nil
+        return MKOverlayRenderer(overlay: overlay)
     }
 
     // Callback for new friend dialogs
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        textView.text = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        textView.text = textView.text.trimmingCharacters(in: CharacterSet.newlines)
         
         if textView == self.newUserText && text != "\n" {
             if textView.text.characters.count + text.characters.count > 14 { return false }
@@ -428,7 +428,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                         self.centerMap(placemark.location!.coordinate)
                         self.addFlag.addBlank(self, location: placemark.location!.coordinate, description: textView.text)
                     }
-                })
+                } as! CLGeocodeCompletionHandler)
             } else {
                 print("NEW USER TEXT \(textView.text)")
                 
@@ -449,7 +449,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         return true
     }
     
-    func centerMap(at: CLLocationCoordinate2D) {
+    func centerMap(_ at: CLLocationCoordinate2D) {
         let span = MKCoordinateSpan(latitudeDelta: 0.016, longitudeDelta: 0.016)
         let region = MKCoordinateRegion(center: at, span: span)
         map.setRegion(region, animated: true)

@@ -10,9 +10,9 @@ import XCTest
 import CoreLocation
 
 class FlagRepositoryTest : XCTestCase {
-    private let originatorRepository = FlagRepository()
-    private let inviteeRepository = FlagRepository()
-    private let invitee2Repository = FlagRepository()
+    fileprivate let originatorRepository = FlagRepository()
+    fileprivate let inviteeRepository = FlagRepository()
+    fileprivate let invitee2Repository = FlagRepository()
 
     func testEvents() {
         originatorRepository.add(event("id1", description: "an event"))
@@ -23,8 +23,8 @@ class FlagRepositoryTest : XCTestCase {
     }
     
     func testImminentEvents() {
-        originatorRepository.add(flag("id1", when: NSDate(), description: "today event"))
-        originatorRepository.add(flag("id2", when: NSDate.distantFuture(), description: "distant event"))
+        originatorRepository.add(flag("id1", when: Date(), description: "today event"))
+        originatorRepository.add(flag("id2", when: Date.distantFuture, description: "distant event"))
         let events = originatorRepository.imminentEvents()
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0].description(), "today event")
@@ -321,78 +321,78 @@ class FlagRepositoryTest : XCTestCase {
         XCTAssertEqual(inviteeFlag().invitees()[1].state(), InviteeState.Declined)
     }
     
-    private func offer() -> Flag {
+    fileprivate func offer() -> Flag {
         return offer("invitee")
     }
     
-    private func offerToInvitee(offeredFlag: Flag) -> Flag {
+    fileprivate func offerToInvitee(_ offeredFlag: Flag) -> Flag {
         return offer(offeredFlag, to: "invitee2")
     }
     
-    private func offer(to: String) -> Flag {
+    fileprivate func offer(_ to: String) -> Flag {
         let offeredFlag = flag("id1", description: "a flag")
         originatorRepository.add(offeredFlag)
         return offer(offeredFlag, to: to)
     }
 
-    private func offer(offeredFlag: Flag) -> Flag {
+    fileprivate func offer(_ offeredFlag: Flag) -> Flag {
         return offer(offeredFlag, to: "invitee")
     }
     
-    private func offer(offeredFlag: Flag, to: String) -> Flag {
+    fileprivate func offer(_ offeredFlag: Flag, to: String) -> Flag {
         offeredFlag.invite(to).inviteSuccess()
         return originatorFlag()
     }
     
-    private func offerFromInvitee(offeredFlag: Flag) -> Flag {
+    fileprivate func offerFromInvitee(_ offeredFlag: Flag) -> Flag {
         offeredFlag.invite("originator").inviteSuccess()
         return inviteeFlag()
     }
     
-    private func receive(offeredFlag: Flag) -> Flag {
+    fileprivate func receive(_ offeredFlag: Flag) -> Flag {
         return receive(offeredFlag, from: "originator", to: "invitee", toRepository: inviteeRepository)
     }
     
-    private func receiveByInvitee(offeredFlag: Flag) -> Flag {
+    fileprivate func receiveByInvitee(_ offeredFlag: Flag) -> Flag {
         return receive(offeredFlag, from: "originator", to: "invitee2", toRepository: invitee2Repository)
     }
     
-    private func receiveByOriginator(offeredFlag: Flag) -> Flag {
+    fileprivate func receiveByOriginator(_ offeredFlag: Flag) -> Flag {
         return receive(offeredFlag, from: "invitee", to: "originator", toRepository: originatorRepository)
     }
     
-    private func receive(offeredFlag: Flag, from: String, to: String, toRepository: FlagRepository) -> Flag {
+    fileprivate func receive(_ offeredFlag: Flag, from: String, to: String, toRepository: FlagRepository) -> Flag {
         let receivedFlag = transfer(offeredFlag)
         toRepository.receive(from, to: to, flag: receivedFlag, onNew: { flag in try! flag.receiveNewSuccess(); toRepository.add(flag) }, onUpdate: {flag in try! flag.receiveUpdateSuccess() }, onAck: { _ in XCTFail() })
         return toRepository.flags()[0]
     }
     
-    private func accept(receivedFlag: Flag) -> Flag {
+    fileprivate func accept(_ receivedFlag: Flag) -> Flag {
         accept(receivedFlag, from: "invitee", to: "originator", toRepository: originatorRepository)
         return originatorFlag()
     }
     
-    private func acceptByInvitee(receivedFlag: Flag) -> Flag {
+    fileprivate func acceptByInvitee(_ receivedFlag: Flag) -> Flag {
         accept(receivedFlag, from: "invitee2", to: "originator", toRepository: originatorRepository)
         return originatorFlag()
     }
     
-    private func acceptByOriginator(receivedFlag: Flag) -> Flag {
+    fileprivate func acceptByOriginator(_ receivedFlag: Flag) -> Flag {
         accept(receivedFlag, from: "originator", to: "invitee", toRepository: inviteeRepository)
         return inviteeFlag()
     }
     
-    private func decline(receivedFlag: Flag) -> Flag {
+    fileprivate func decline(_ receivedFlag: Flag) -> Flag {
         decline(receivedFlag, from: "invitee", to: "originator", toRepository: originatorRepository)
         return originatorFlag()
     }
     
-    private func declineByOriginator(receivedFlag: Flag) -> Flag {
+    fileprivate func declineByOriginator(_ receivedFlag: Flag) -> Flag {
         decline(receivedFlag, from: "originator", to: "invitee", toRepository: inviteeRepository)
         return inviteeFlag()
     }
     
-    private func decline(receivedFlag: Flag, from: String, to: String, toRepository: FlagRepository)  {
+    fileprivate func decline(_ receivedFlag: Flag, from: String, to: String, toRepository: FlagRepository)  {
         let invitee = receivedFlag.declining(from)
         let returnedFlag = transfer(receivedFlag)
         var calledBack = false
@@ -401,7 +401,7 @@ class FlagRepositoryTest : XCTestCase {
         receivedFlag.declineSuccess(invitee)
     }
     
-    private func accept(receivedFlag: Flag, from: String, to: String, toRepository: FlagRepository) {
+    fileprivate func accept(_ receivedFlag: Flag, from: String, to: String, toRepository: FlagRepository) {
         let invitee = receivedFlag.accepting(from)
         let returnedFlag = transfer(receivedFlag)
         var calledBack = false
@@ -410,34 +410,34 @@ class FlagRepositoryTest : XCTestCase {
         receivedFlag.acceptSuccess(invitee)
     }
 
-    private func originatorFlag() -> Flag {
+    fileprivate func originatorFlag() -> Flag {
         XCTAssertTrue(originatorRepository.flags().count == 1)
         return originatorRepository.flags()[0]
     }
     
-    private func inviteeFlag() -> Flag {
+    fileprivate func inviteeFlag() -> Flag {
         XCTAssertTrue(inviteeRepository.flags().count == 1)
         return inviteeRepository.flags()[0]
     }
     
-    private func invitee2Flag() -> Flag {
+    fileprivate func invitee2Flag() -> Flag {
         XCTAssertTrue(invitee2Repository.flags().count == 1)
         return invitee2Repository.flags()[0]
     }
     
-    private  func transfer(flag: Flag) -> Flag {
+    fileprivate  func transfer(_ flag: Flag) -> Flag {
         return Flag.decode(flag.encode())
     }
     
-    private func event(id: String, description: String) -> Flag {
-        return flag(id, when: NSDate(), description: description)
+    fileprivate func event(_ id: String, description: String) -> Flag {
+        return flag(id, when: Date(), description: description)
     }
     
-    private func flag(id: String, description: String) -> Flag {
+    fileprivate func flag(_ id: String, description: String) -> Flag {
         return flag(id, when: nil, description: description)
     }
     
-    private func flag(id: String, when: NSDate?, description: String) -> Flag {
-        return Flag.create(id, type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: when)
+    fileprivate func flag(_ id: String, when: Date?, description: String) -> Flag {
+        return Flag.create(id, type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.faceUp, when: when)
     }
 }

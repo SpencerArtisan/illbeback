@@ -10,20 +10,20 @@ import Foundation
 import CoreLocation
 import UIKit
 
-public class Flag {
-    private var _token: FlagToken
-    private var dead = false
+open class Flag {
+    fileprivate var _token: FlagToken
+    fileprivate var dead = false
     
-    static func create(id: String, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: NSDate?) -> Flag {
+    static func create(_ id: String, type: String, description: String, location: CLLocationCoordinate2D, originator: String, orientation: UIDeviceOrientation?, when: Date?) -> Flag {
         let token = FlagToken(id: id, state: .Neutral, type: type, description: description, location: location, originator: originator, orientation: orientation, when: when)
         return Flag(token: token)
     }
     
-    static func decode(encoded: String) -> Flag {
+    static func decode(_ encoded: String) -> Flag {
         return Flag(token: FlagToken(token: encoded))
     }
     
-    private init(token: FlagToken) {
+    fileprivate init(token: FlagToken) {
         _token = token
     }
     
@@ -56,7 +56,7 @@ public class Flag {
         fireChangeEvent()
     }
     
-    func findInvitee(name: String) -> Invitee? {
+    func findInvitee(_ name: String) -> Invitee? {
         return _token.findInvitee(name)
     }
     
@@ -68,51 +68,51 @@ public class Flag {
         return _token.descriptionUpdate() ?? _token.description()
     }
     
-    func description(description: String) throws {
+    func description(_ description: String) throws {
         guard canUpdate() else {
-            throw StateMachineError.InvalidTransition
+            throw StateMachineError.invalidTransition
         }
         _token.description(description)
         fireChangeEvent()
     }
     
-    func when() -> NSDate? {
-        return _token.whenUpdate() ?? _token.when()
+    func when() -> Date? {
+        return _token.whenUpdate() as Date?? ?? _token.when() as Date?
     }
     
-    func when(when: NSDate?) throws{
+    func when(_ when: Date?) throws{
         guard canUpdate() else {
-            throw StateMachineError.InvalidTransition
+            throw StateMachineError.invalidTransition
         }
         _token.when(when)
         fireChangeEvent()
     }
     
     func daysToGo() -> Int {
-        let fromNow = when()!.timeIntervalSinceDate(Utils.today())
+        let fromNow = when()!.timeIntervalSince(Utils.today() as Date)
         return Int(Int64(fromNow) / Int64(60*60*24))
     }
     
     func isPast() -> Bool {
-        return when() != nil && when()!.timeIntervalSinceDate(Utils.today()) < 0
+        return when() != nil && when()!.timeIntervalSince(Utils.today() as Date) < 0
     }
     
     func whenFormatted() -> String {
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        if formatter.stringFromDate(when()!) == "00:00" {
+        if formatter.string(from: when()!) == "00:00" {
             formatter.dateFormat = "EEE dd MMMM"
         } else {
             formatter.dateFormat = "EEE d MMM HH:mm"
         }
-        return formatter.stringFromDate(when()!)
+        return formatter.string(from: when()!)
     }
     
     func location() -> CLLocationCoordinate2D {
         return _token.locationUpdate() ?? _token.location()
     }
     
-    func location(location: CLLocationCoordinate2D) {
+    func location(_ location: CLLocationCoordinate2D) {
         _token.location(location)
         fireChangeEvent()
     }
@@ -121,7 +121,7 @@ public class Flag {
         return _token.type()
     }
     
-    func type(type: String) {
+    func type(_ type: String) {
         _token.type(type)
         fireChangeEvent()
     }
@@ -138,12 +138,12 @@ public class Flag {
         if description() == "" {
             return type()
         } else {
-            let withoutReturns = description().stringByReplacingOccurrencesOfString("\r\n", withString: " ")
-            return (withoutReturns as NSString).substringToIndex(min(withoutReturns.characters.count, 30))
+            let withoutReturns = description().replacingOccurrences(of: "\r\n", with: " ")
+            return (withoutReturns as NSString).substring(to: min(withoutReturns.characters.count, 30))
         }
     }
     
-    func invite(friend: String) -> Invitee {
+    func invite(_ friend: String) -> Invitee {
         let invitee = Invitee(name: friend)
         _token.addInvitee(invitee)
         print("Added invitee.  Invitees now \(_token.invitees())")
@@ -151,7 +151,7 @@ public class Flag {
         return invitee
     }
     
-    func accepting(friend: String) -> Invitee {
+    func accepting(_ friend: String) -> Invitee {
         var invitee = _token.findInvitee(friend)
         if _token.hasPendingUpdate() {
             _token.acceptUpdate()
@@ -166,17 +166,17 @@ public class Flag {
         return invitee!
     }
     
-    func acceptSuccess(invitee: Invitee) {
+    func acceptSuccess(_ invitee: Invitee) {
         invitee.acceptSuccess()
         _token.state(.Neutral)
         fireChangeEvent()
     }
     
-    func acceptFailure(invitee: Invitee) {
+    func acceptFailure(_ invitee: Invitee) {
         invitee.acceptFailure()
     }
     
-    func declineSuccess(invitee: Invitee) {
+    func declineSuccess(_ invitee: Invitee) {
         invitee.declineSuccess()
         if dead {
             kill()
@@ -186,11 +186,11 @@ public class Flag {
         }
     }
     
-    func declineFailure(invitee: Invitee) {
+    func declineFailure(_ invitee: Invitee) {
         invitee.declineFailure()
     }
     
-    func declining(friend: String) -> Invitee {
+    func declining(_ friend: String) -> Invitee {
         var invitee = _token.findInvitee(friend)
         if !_token.hasPendingUpdate() || state() == .ReceivedNew {
             print("No pending updates or received new, so putting flag on death row")
@@ -213,13 +213,13 @@ public class Flag {
         return state() == .Neutral && !dead
     }
     
-    func receivingNew(from: String) throws {
+    func receivingNew(_ from: String) throws {
         _token.state(.ReceivingNew)
         _token.sender(from)
         fireChangeEvent()
     }
     
-    func receivingUpdate(from: String, flag: Flag) {
+    func receivingUpdate(_ from: String, flag: Flag) {
         _token.pendingUpdate(flag._token)
         _token.sender(from)
         if state() == .ReceivedNew {
@@ -263,14 +263,14 @@ public class Flag {
         fireChangeEvent()
     }
     
-    func reset(state: FlagState) {
+    func reset(_ state: FlagState) {
         print("< ** RESET PROBLEM FLAG TO \(state): \(self) ** >")
         _token.declineUpdate()
         _token.state(.Neutral)
         fireChangeEvent()
     }
 
-    private func state(acceptableStartStates: [FlagState], targetState: FlagState) throws {
+    fileprivate func state(_ acceptableStartStates: [FlagState], targetState: FlagState) throws {
         if !acceptableStartStates.contains(state()) {
             print("< ** INVALID FLAG State transition \(type()) from \(state()) to \(targetState) ** >")            
         }
@@ -282,7 +282,7 @@ public class Flag {
             self.fireChangeEvent()
     }
     
-    private func fireChangeEvent() {
+    fileprivate func fireChangeEvent() {
         Utils.notifyObservers("FlagChanged", properties: ["flag": self])
     }
 }

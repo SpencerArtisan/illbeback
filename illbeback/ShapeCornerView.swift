@@ -18,19 +18,15 @@ class ShapeCornerView : MKAnnotationView {
         self.mapController = mapController
         
         canShowCallout = false
-        enabled = true
-        draggable = true
+        isEnabled = true
+        isDraggable = true
         initImage()
     }
     
-    private func initImage() {
+    fileprivate func initImage() {
         image = UIImage(named: "Shape Corner")!
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

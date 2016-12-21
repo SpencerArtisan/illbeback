@@ -11,9 +11,9 @@ import UIKit
 import MessageUI
 
 class Backup: NSObject, MFMailComposeViewControllerDelegate {
-    private var mapController: MapController
-    private var flagRepository: FlagRepository
-    private var photoAlbum: PhotoAlbum
+    fileprivate var mapController: MapController
+    fileprivate var flagRepository: FlagRepository
+    fileprivate var photoAlbum: PhotoAlbum
     
     init(mapController: MapController, flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.mapController = mapController
@@ -26,7 +26,7 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         Utils.delay(0.3) {
             let mailComposeViewController = self.mailComposer()
             if MFMailComposeViewController.canSendMail() {
-                self.mapController.presentViewController(mailComposeViewController, animated: true, completion: {})
+                self.mapController.present(mailComposeViewController, animated: true, completion: {})
             } else {
                 print("MAIL SEND FAILED")
             }
@@ -37,43 +37,43 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
     func mailComposer() -> MFMailComposeViewController {
         let mailComposer = MFMailComposeViewController()
         mailComposer.mailComposeDelegate = self
-        mailComposer.setSubject("Backmap backup")
-        mailComposer.setMessageBody("This email is your backup.  Fill in the To field.  You probably want to send it to yourself.\r\n\r\nTo restore the backup, click on the attachment and choose 'Copy to Backmap'.", isHTML: false)
-        let data = exportToData()
-        mailComposer.addAttachmentData(data, mimeType: "application/breadcrumbs", fileName: "bread.crumb")
+        mailComposer.setSubject("Breadcrumb backup")
+        mailComposer.setMessageBody("This email is your backup.  Fill in the To field.  You probably want to send it to yourself.\r\n\r\nTo restore the backup, click on the attachment and choose 'Copy to Breadcrumb'.", isHTML: false)
+//        let data = exportToData()
+//        mailComposer.addAttachmentData(data, mimeType: "application/breadcrumbs", fileName: "bread.crumb")
         return mailComposer
     }
     
-    func exportToData() -> NSData {
-        let flagData = NSData.dataWithContentsOfMappedFile(flagRepository.filePath()) as! NSData
-        
-        let data = NSMutableData()
-        let archiver = NSKeyedArchiver.init(forWritingWithMutableData: data)
-        archiver.encodeObject(Global.getUser().getName(), forKey: "user")
-        archiver.encodeObject(flagData, forKey: "flags")
-        let imageFiles = photoAlbum.allImageFiles()
-        imageFiles.forEach {imageFile in
-            let image = UIImage(contentsOfFile: imageFile)
-            if image != nil {
-                let imageData = UIImageJPEGRepresentation(image!, 0.25)!
-                let key = NSURL(fileURLWithPath: imageFile).lastPathComponent!
-                print("Encoding image with key \(key)")
-                archiver.encodeObject(imageData, forKey: key)
-            }
-        }
-        archiver.finishEncoding()
-        return data
-    }
+//    func exportToData() -> Data {
+//        let flagData = Data.with(contentsOfFile: flagRepository.filePath()) as! Data
+//        
+//        let data = NSMutableData()
+//        let archiver = NSKeyedArchiver.init(forWritingWith: data)
+//        archiver.encode(Global.getUser().getName(), forKey: "user")
+//        archiver.encode(flagData, forKey: "flags")
+//        let imageFiles = photoAlbum.allImageFiles()
+//        imageFiles.forEach {imageFile in
+//            let image = UIImage(contentsOfFile: imageFile)
+//            if image != nil {
+//                let imageData = UIImageJPEGRepresentation(image!, 0.25)!
+//                let key = URL(fileURLWithPath: imageFile).lastPathComponent
+//                print("Encoding image with key \(key)")
+//                archiver.encode(imageData, forKey: key)
+//            }
+//        }
+//        archiver.finishEncoding()
+//        return data as Data
+//    }
     
-    func importFromURL(url: NSURL) {
+    func importFromURL(_ url: URL) {
 
-        let data = NSData(contentsOfURL: url)!
-        let unarchiver = NSKeyedUnarchiver.init(forReadingWithData: data)
-        let user = unarchiver.decodeObjectForKey("user") as! String
+        let data = try! Data(contentsOf: url)
+        let unarchiver = NSKeyedUnarchiver.init(forReadingWith: data)
+        let user = unarchiver.decodeObject(forKey: "user") as! String
         Global.setUserName(user, allowOverwrite: true)
-        let flagData = unarchiver.decodeObjectForKey("flags") as! NSData
+        let flagData = unarchiver.decodeObject(forKey: "flags") as! Data
         flagRepository.removeAll()
-        flagData.writeToFile(flagRepository.filePath() , atomically: true)
+        try? flagData.write(to: URL(fileURLWithPath: flagRepository.filePath()) , options: [.atomic])
         flagRepository.read()
         
         mapController.hintControlller.backupRestoringHint()
@@ -83,12 +83,12 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
             print("Reading images for flag \(flag.id())")
             let flagUrls = self.photoAlbum.getFlagImageUrls(flag.id())
             flagUrls.forEach { url in
-                let lastPathComp = url.lastPathComponent!
+                let lastPathComp = url.lastPathComponent
                 print("Looking for image \(lastPathComp)")
-                let imageData = unarchiver.decodeObjectForKey(lastPathComp) as? NSData
+                let imageData = unarchiver.decodeObject(forKey: lastPathComp) as? Data
                 if imageData != nil {
-                    print("Image exists.  Saving to album at path \(url.path!)")
-                    NSFileManager.defaultManager().createFileAtPath(url.path!, contents: imageData!, attributes: nil)
+                    print("Image exists.  Saving to album at path \(url.path)")
+                    FileManager.default.createFile(atPath: url.path, contents: imageData!, attributes: nil)
                 }
             }
         }
@@ -97,7 +97,7 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         }
     }
 
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

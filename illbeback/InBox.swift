@@ -9,19 +9,19 @@
 import Foundation
 
 class InBox {
-    private let flagRepository: FlagRepository
-    private let photoAlbum: PhotoAlbum
-    private var root: Firebase
-    private let BUCKET = "illbebackappus"
-    private var transferManager: AWSS3TransferManager
-    private static var deviceToken: NSData?
-    private var receiving = false
+    fileprivate let flagRepository: FlagRepository
+    fileprivate let photoAlbum: PhotoAlbum
+    fileprivate var root: Firebase
+    fileprivate let BUCKET = "illbebackappus"
+    fileprivate var transferManager: AWSS3TransferManager
+    fileprivate static var deviceToken: Data?
+    fileprivate var receiving = false
     
     init(flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.flagRepository = flagRepository
         self.photoAlbum = photoAlbum
         root = Firebase(url:"https://illbeback.firebaseio.com/")
-        transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        transferManager = AWSS3TransferManager.default()
     }
     
     func isReceiving() -> Bool {
@@ -35,12 +35,12 @@ class InBox {
         
         print("Receive triggered")
         
-        shareRoot(Global.getUser().getName()).observeSingleEventOfType(.Value, withBlock: { snapshot in
-            self.receiveNextFlag(snapshot.children)
+        shareRoot(Global.getUser().getName()).observeSingleEvent(of: .value, with: { snapshot in
+            self.receiveNextFlag((snapshot?.children)!)
         })
     }
     
-    private func receiveNextFlag(firebaseFlags:NSEnumerator) {
+    fileprivate func receiveNextFlag(_ firebaseFlags:NSEnumerator) {
         receiving = true
         let firebaseFlag = firebaseFlags.nextObject() as? FDataSnapshot
         if firebaseFlag != nil {
@@ -52,9 +52,9 @@ class InBox {
         }
     }
     
-    func receive(firebaseFlag: FDataSnapshot, onComplete: () -> ()) {
-        let encoded = firebaseFlag.value["memory"] as! String
-        let from = firebaseFlag.value["from"] as! String
+    func receive(_ firebaseFlag: FDataSnapshot, onComplete: @escaping () -> ()) {
+        let encoded = (firebaseFlag.value as! NSDictionary)["memory"] as! String
+        let from = (firebaseFlag.value as! NSDictionary)["from"] as! String
         let flag = Flag.decode(encoded)
         
         print("Received flag \(flag.type())")
@@ -104,12 +104,12 @@ class InBox {
         )
     }
 
-    private func completeReceive(flag: Flag) {
+    fileprivate func completeReceive(_ flag: Flag) {
         print("Completed receiving flag \(flag.type())")
 
     }
 
-    private func downloadImages(flag: Flag, onComplete: () -> ()) {
+    fileprivate func downloadImages(_ flag: Flag, onComplete: @escaping () -> ()) {
         print("Downloading shared images for flag \(flag.id())")
         
         let imageUrls = photoAlbum.getFlagImageUrls(flag.id())
@@ -118,23 +118,23 @@ class InBox {
         for imageUrl in imageUrls {
             let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
             readRequest.bucket = BUCKET
-            readRequest.key =  imageUrl.lastPathComponent!
-            let downloadingurl = NSURL(fileURLWithPath: "\(imageUrl.path!).recent")
+            readRequest.key =  imageUrl.lastPathComponent
+            let downloadingurl = URL(fileURLWithPath: "\(imageUrl.path).recent")
             readRequest.downloadingFileURL = downloadingurl
             
             let task = transferManager.download(readRequest)
-            task.continueWithBlock { (task) -> AnyObject! in
-                self.postPhotoDownload(imageUrl.lastPathComponent!, imageUrl: downloadingurl, task: task)
-                leftToDownload--
+            task!.continue( { (task) -> AnyObject! in
+                self.postPhotoDownload(imageUrl.lastPathComponent, imageUrl: downloadingurl, task: task!)
+                leftToDownload = leftToDownload - 1
                 if leftToDownload == 0 {
                     onComplete()
                 }
                 return nil
-            }
+            })
         }
     }
     
-    private func postPhotoDownload(key: String, imageUrl: NSURL, task: BFTask) {
+    fileprivate func postPhotoDownload(_ key: String, imageUrl: URL, task: BFTask) {
         if task.error != nil {
             // ensure no partial file left
 //            do {
@@ -142,15 +142,15 @@ class InBox {
 //            } catch {
 //            }
         } else {
-            print("    Image downloaded \(imageUrl.lastPathComponent!)")
+            print("    Image downloaded \(imageUrl.lastPathComponent)")
             let deleteRequest = AWSS3DeleteObjectRequest()
-            deleteRequest.bucket = BUCKET
-            deleteRequest.key =  key
-            AWSS3.defaultS3().deleteObject(deleteRequest).continueWithBlock{ _ in return nil }
+            deleteRequest?.bucket = BUCKET
+            deleteRequest?.key =  key
+            AWSS3.default().deleteObject(deleteRequest).continue({ _ in return nil })
         }
     }
     
-    private func shareRoot(to: String) -> Firebase {
-        return root.childByAppendingPath("users/" + to + "/given")
+    fileprivate func shareRoot(_ to: String) -> Firebase {
+        return root.child(byAppendingPath: "users/" + to + "/given")
     }
 }

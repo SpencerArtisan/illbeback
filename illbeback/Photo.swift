@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-public class Photo {
+open class Photo {
     let image: UIImage
     let imagePath: String
-    let fileManager = NSFileManager.defaultManager()
+    let fileManager = FileManager.default
     
     init(imagePath: String) {
         self.image = UIImage(contentsOfFile: imagePath)!
@@ -22,7 +22,7 @@ public class Photo {
     func deletePhoto() {
         do {
             print("Delete photo \(imagePath)")
-            try self.fileManager.removeItemAtPath(imagePath)
+            try self.fileManager.removeItem(atPath: imagePath)
         } catch {
         }
     }

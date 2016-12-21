@@ -31,13 +31,13 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         if (!created) {
             created = true
         
-            pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+            pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
             pageViewController!.dataSource = self
         
             let startingViewController = zoomController(0)
             let viewControllers: NSArray = [startingViewController]
-            pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: false, completion: nil)
-            pageViewController!.view.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height + 37);
+            pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .forward, animated: false, completion: nil)
+            pageViewController!.view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height + 37);
         
             addChildViewController(pageViewController!)
             view.addSubview(pageViewController!.view)
@@ -49,12 +49,12 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
             view.addSubview(self.deleteButton!)
             view.addSubview(self.photoButton!)
         
-            pageViewController!.didMoveToParentViewController(self)
+            pageViewController!.didMove(toParentViewController: self)
         }
         drawDots(0)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         let previousPhotoPaths = self.photos.map { $0.imagePath }
         
         self.photos = mapController!.photoAlbum.photos(pinToRephoto!.flag!)
@@ -67,14 +67,14 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
             if !previousPhotoPaths.contains(photo.imagePath) {
                 break
             }
-            i++
+            i += 1
         }
         if i == self.photos.count { i = 0 }
         showScreen(i)
         drawDots(i)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let currentIndex = (viewController as! ZoomController).index
         if (currentIndex == 0) {
             return nil
@@ -82,7 +82,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         return zoomController(currentIndex-1)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let currentIndex = (viewController as! ZoomController).index
         if (currentIndex == photos.count - 1) {
             return nil
@@ -90,8 +90,8 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         return zoomController(currentIndex+1)
     }
     
-    private func zoomController(newIndex: Int) -> ZoomController {
-        let newView = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
+    fileprivate func zoomController(_ newIndex: Int) -> ZoomController {
+        let newView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ZoomController") as! ZoomController
         let imageView = newView.view.subviews[0] as! UIImageView
         if newIndex >= photos.count {
             print("Trying to show non existent image in zoom controller")
@@ -102,15 +102,15 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         newView.owner = self
         return newView    }
     
-    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return photos.count
     }
     
-    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return index
     }
     
-    func drawDots(colourIndex: Int) {
+    func drawDots(_ colourIndex: Int) {
         for dot in dots {
             dot.removeFromSuperview()
         }
@@ -119,64 +119,64 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         if (photos.count > 1) {
             let left = view.frame.width / 2 - (CGFloat(photos.count-1)) * 8
             for i in 0...photos.count-1 {
-                let image = UIImage(named: "dot")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                let image = UIImage(named: "dot")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
                 let dot = UIImageView(image: image)
-                dot.frame = CGRectMake(left + 16 * CGFloat(i), 45, 10, 10)
+                dot.frame = CGRect(x: left + 16 * CGFloat(i), y: 45, width: 10, height: 10)
                 dots.append(dot)
                 view.addSubview(dot)
                 if (i == colourIndex) {
-                    dot.tintColor = UIColor.orangeColor()
+                    dot.tintColor = UIColor.orange
                 } else {
-                    dot.tintColor = UIColor.lightGrayColor()
+                    dot.tintColor = UIColor.lightGray
                 }
             }
         }
     }
     
     func createBackButton() {
-        self.backButton = UIButton(frame: CGRectMake(0, 0, 60, 60))
-        let image = UIImage(named: "back")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        self.backButton!.setImage(image, forState: UIControlState.Normal)
-        self.backButton!.tintColor = UIColor.blueColor()
+        self.backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        let image = UIImage(named: "back")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        self.backButton!.setImage(image, for: UIControlState())
+        self.backButton!.tintColor = UIColor.blue
         self.backButton!.clipsToBounds = true
         self.backButton!.layer.cornerRadius = 30.0
-        self.backButton!.layer.borderColor = UIColor.blackColor().CGColor
+        self.backButton!.layer.borderColor = UIColor.black.cgColor
         self.backButton!.layer.borderWidth = 1.0
-        self.backButton!.backgroundColor = UIColor.whiteColor()
+        self.backButton!.backgroundColor = UIColor.white
         self.backButton!.center = CGPoint(x: 65, y: view.bounds.height - 60)
-        self.backButton!.addTarget(self, action: "goBack:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.backButton!.addTarget(self, action: #selector(ZoomSwipeController.goBack(_:)), for: UIControlEvents.touchUpInside)
     }
     
     func createPhotoButton() {
-        self.photoButton = UIButton(frame: CGRectMake(0, 0, 90, 90))
-        let image = UIImage(named: "camerablue")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        self.photoButton!.setImage(image, forState: UIControlState.Normal)
-        self.photoButton!.tintColor = UIColor.blueColor()
+        self.photoButton = UIButton(frame: CGRect(x: 0, y: 0, width: 90, height: 90))
+        let image = UIImage(named: "camerablue")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        self.photoButton!.setImage(image, for: UIControlState())
+        self.photoButton!.tintColor = UIColor.blue
         self.photoButton!.clipsToBounds = true
         self.photoButton!.layer.cornerRadius = 45.0
-        self.photoButton!.layer.borderColor = UIColor.blackColor().CGColor
+        self.photoButton!.layer.borderColor = UIColor.black.cgColor
         self.photoButton!.layer.borderWidth = 1.0
-        self.photoButton!.backgroundColor = UIColor.whiteColor()
+        self.photoButton!.backgroundColor = UIColor.white
         self.photoButton!.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height - 60)
-        self.photoButton!.addTarget(self, action: "photo:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.photoButton!.addTarget(self, action: #selector(ZoomSwipeController.photo(_:)), for: UIControlEvents.touchUpInside)
     }
     
     func createDeleteButton() {
-        self.deleteButton = UIButton(frame: CGRectMake(0, 0, 60, 60))
+        self.deleteButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         let image = UIImage(named: "trash")
-        self.deleteButton!.setImage(image, forState: UIControlState.Normal)
+        self.deleteButton!.setImage(image, for: UIControlState())
         self.deleteButton!.clipsToBounds = true
         self.deleteButton!.layer.cornerRadius = 30.0
-        self.deleteButton!.layer.borderColor = UIColor.blackColor().CGColor
+        self.deleteButton!.layer.borderColor = UIColor.black.cgColor
         self.deleteButton!.layer.borderWidth = 1.0
-        self.deleteButton!.backgroundColor = UIColor.whiteColor()
+        self.deleteButton!.backgroundColor = UIColor.white
         self.deleteButton!.center = CGPoint(x: view.bounds.width - 65, y: view.bounds.height - 60)
-        self.deleteButton!.addTarget(self, action: "deletePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.deleteButton!.addTarget(self, action: #selector(ZoomSwipeController.deletePhoto(_:)), for: UIControlEvents.touchUpInside)
     }
 
-    func deletePhoto(sender : UIButton!) {
+    func deletePhoto(_ sender : UIButton!) {
         photos[index].deletePhoto()
-        photos.removeAtIndex(index)
+        photos.remove(at: index)
         if photos.count > 0 {
             showScreen(0)
         } else {
@@ -184,23 +184,23 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         }
     }
 
-    func photo(sender : UIButton!) {
+    func photo(_ sender : UIButton!) {
         if (self.navigationController?.topViewController != self.mapController!.rephotoController) {
             self.mapController!.rephotoController.pinToRephoto = pinToRephoto
-            self.navigationController?.navigationBarHidden = true
+            self.navigationController?.isNavigationBarHidden = true
             self.navigationController?.pushViewController(self.mapController!.rephotoController!, animated: false)
         }
     }
     
-    func goBack(sender : UIButton!) {
+    func goBack(_ sender : UIButton!) {
         pinToRephoto!.refresh()
-        self.navigationController!.popViewControllerAnimated(false)
+        self.navigationController!.popViewController(animated: false)
     }
     
-    func showScreen(i: Int) {
+    func showScreen(_ i: Int) {
         let startingViewController = zoomController(i)
         let viewControllers: NSArray = [startingViewController]
-        pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: false, completion: nil)
+        pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .forward, animated: false, completion: nil)
      
     }
 }

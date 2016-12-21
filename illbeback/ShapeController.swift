@@ -27,15 +27,15 @@ class ShapeController : UIViewController {
     
     func clear() {
         if polyline != nil {
-            self.map.removeOverlay(polyline!)
+            self.map.remove(polyline!)
         }
         for corner in corners {
             map!.removeAnnotation(corner)
         }
-        corners.removeAll(keepCapacity: true)
+        corners.removeAll(keepingCapacity: true)
     }
     
-    func move(corner: ShapeCorner) {
+    func move(_ corner: ShapeCorner) {
         drawShape()
     }
     
@@ -79,24 +79,24 @@ class ShapeController : UIViewController {
     func drawShape() {
         var points = shape()
         if (polyline != nil) {
-            self.map.removeOverlay(polyline!)
+            self.map.remove(polyline!)
         }
         polyline = MKPolyline(coordinates: &points, count: points.count)
-        self.map.addOverlay(polyline!)
+        self.map.add(polyline!)
     }
     
-    func pointAt(x: Double, y: Double) -> CLLocationCoordinate2D {
+    func pointAt(_ x: Double, y: Double) -> CLLocationCoordinate2D {
         return MKCoordinateForMapPoint(MKMapPointMake(x, y))
     }
     
     func shape() -> [CLLocationCoordinate2D] {
-        var points = corners.map({(let corner) -> CLLocationCoordinate2D in corner.coordinate})
+        var points = corners.map({(corner) -> CLLocationCoordinate2D in corner.coordinate})
         points.append(points[0])
         return points
     }
     
     
-    func shapeContains(test: CLLocationCoordinate2D) -> Bool {
+    func shapeContains(_ test: CLLocationCoordinate2D) -> Bool {
         if corners.count <= 1 {
             return false //or if first point = test -> return true
         }
@@ -106,18 +106,18 @@ class ShapeController : UIViewController {
         let p = UIBezierPath()
         let firstPoint = toPoint(polygon[0]) as CGPoint
         
-        p.moveToPoint(firstPoint)
+        p.move(to: firstPoint)
         
         for index in 1...polygon.count-1 {
-            p.addLineToPoint(toPoint(polygon[index]))
+            p.addLine(to: toPoint(polygon[index]))
         }
         
-        p.closePath()
+        p.close()
         
-        return p.containsPoint(toPoint(test))
+        return p.contains(toPoint(test))
     }
     
-    func toPoint(coordinate: CLLocationCoordinate2D) -> CGPoint {
-        return CGPointMake(CGFloat(coordinate.longitude), CGFloat(coordinate.latitude))
+    func toPoint(_ coordinate: CLLocationCoordinate2D) -> CGPoint {
+        return CGPoint(x: CGFloat(coordinate.longitude), y: CGFloat(coordinate.latitude))
     }
 }

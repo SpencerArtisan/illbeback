@@ -8,9 +8,9 @@
 
 import Foundation
 
-public class Invitee {
-    private var _name: String
-    private var _state: InviteeState
+open class Invitee {
+    fileprivate var _name: String
+    fileprivate var _state: InviteeState
     
     init(name: String) {
         _name = name
@@ -18,7 +18,7 @@ public class Invitee {
     }
     
     init(code: String) {
-        let parts = code.componentsSeparatedByString(",")
+        let parts = code.components(separatedBy: ",")
         _name = parts[0]
         _state = InviteeState.fromCode(parts[1])
     }
@@ -64,7 +64,7 @@ public class Invitee {
         return "\(_name),\(_state.rawValue)"
     }
     
-    private func state(state: InviteeState) {
+    fileprivate func state(_ state: InviteeState) {
         print("< INVITEE State transition \(_name) from \(_state) to \(state) >")
         _state = state
         Utils.notifyObservers("InviteeChanged", properties: [:])

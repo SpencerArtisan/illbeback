@@ -10,27 +10,27 @@ import Foundation
 import MapKit
 
 class FlagRenderer: NSObject {
-    private let map: MKMapView
-    private let mapController: MapController
+    fileprivate let map: MKMapView
+    fileprivate let mapController: MapController
     
     init(map: MKMapView, mapController: MapController) {
         self.map = map
         self.mapController = mapController
         super.init()
-        Utils.addObserver(self, selector: "onFlagAdded:", event: "FlagAdded")
-        Utils.addObserver(self, selector: "onFlagRemoved:", event: "FlagRemoved")
-        Utils.addObserver(self, selector: "onFlagSent:", event: "FlagSent")
-        Utils.addObserver(self, selector: "onFlagReceiveSuccess:", event: "FlagReceiveSuccess")
-        Utils.addObserver(self, selector: "onFlagChanged:", event: "FlagChanged")
-        Utils.addObserver(self, selector: "onAckReceiveSuccess:", event: "AckReceiveSuccess")
-        Utils.addObserver(self, selector: "onAcceptSuccess:", event: "AcceptSuccess")
-        Utils.addObserver(self, selector: "onDeclineSuccess:", event: "DeclineSuccess")
+        Utils.addObserver(self, selector: #selector(FlagRenderer.onFlagAdded), event: "FlagAdded")
+        Utils.addObserver(self, selector: #selector(FlagRenderer.onFlagRemoved), event: "FlagRemoved")
+        Utils.addObserver(self, selector: #selector(FlagRenderer.onFlagSent), event: "FlagSent")
+        Utils.addObserver(self, selector: #selector(FlagRenderer.onFlagReceiveSuccess), event: "FlagReceiveSuccess")
+        Utils.addObserver(self, selector: #selector(FlagRenderer.onFlagChanged), event: "FlagChanged")
+        Utils.addObserver(self, selector: #selector(FlagRenderer.onAckReceiveSuccess), event: "AckReceiveSuccess")
+        Utils.addObserver(self, selector: #selector(FlagRenderer.onAcceptSuccess), event: "AcceptSuccess")
+        Utils.addObserver(self, selector: #selector(FlagRenderer.onDeclineSuccess), event: "DeclineSuccess")
     }
     
-    func render(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func render(_ mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is FlagAnnotation {
             let pinData = annotation as! FlagAnnotation
-            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as! FlagAnnotationView!
+            var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: "pin") as! FlagAnnotationView!
             
             if pinView == nil {
                 pinView = FlagAnnotationView(mapController: mapController, flag: pinData.flag)
@@ -38,71 +38,71 @@ class FlagRenderer: NSObject {
             
             return pinView
         } else if annotation is ShapeCorner {
-            var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("corner") as! ShapeCornerView!
+            var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: "corner") as! ShapeCornerView!
             
             if pinView == nil {
                 pinView = ShapeCornerView(mapController: mapController)
             }
             
-            pinView.selected = true
+            pinView?.isSelected = true
 
             return pinView
         }
         return nil
     }
 
-    func onAcceptSuccess(note: NSNotification) {
+    func onAcceptSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refreshImage(flag)
     }
     
-    func onDeclineSuccess(note: NSNotification) {
+    func onDeclineSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refreshImage(flag)
     }
     
-    func onFlagChanged(note: NSNotification) {
+    func onFlagChanged(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
     }
     
-    func onFlagAdded(note: NSNotification) {
+    func onFlagAdded(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         add(flag)
     }
 
-    func onFlagRemoved(note: NSNotification) {
+    func onFlagRemoved(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         remove(flag)
     }
     
-    func onFlagSent(note: NSNotification) {
+    func onFlagSent(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
     }
     
-    func onFlagReceiveSuccess(note: NSNotification) {
+    func onFlagReceiveSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
     }
     
-    func onAckReceiveSuccess(note: NSNotification) {
+    func onAckReceiveSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
     }
     
-    func add(flag: Flag) {
+    func add(_ flag: Flag) {
         Utils.runOnUiThread {
             let pin = self.createPin(flag)
             self.map.addAnnotation(pin)
         }
     }
     
-    func remove(pin: FlagAnnotationView) {
+    func remove(_ pin: FlagAnnotationView) {
         map.removeAnnotation(pin.annotation!)
     }
     
-    func remove(flag: Flag) {
+    func remove(_ flag: Flag) {
         let pin = getPin(flag)
         if pin != nil {
             print("Removed pin for \(flag.type())")
@@ -110,17 +110,17 @@ class FlagRenderer: NSObject {
         }
     }
     
-    func update(pin: FlagAnnotationView) {
+    func update(_ pin: FlagAnnotationView) {
         print("Replace pin")
         map.removeAnnotation(pin.annotation!)
         map.addAnnotation(createPin(pin.flag!))
     }
     
-    func refresh(pin: FlagAnnotationView) {
+    func refresh(_ pin: FlagAnnotationView) {
         pin.refresh()
     }
 
-    func refresh(flag: Flag) {
+    func refresh(_ flag: Flag) {
         Utils.runOnUiThread {
             if let pin = self.getPinView(flag) {
                 self.refresh(pin)
@@ -129,19 +129,19 @@ class FlagRenderer: NSObject {
     }
     
     
-    func refreshImage(flag: Flag) {
+    func refreshImage(_ flag: Flag) {
         if let pin = getPinView(flag) {
             pin.refreshImage()
         }
     }
     
-    func updateEventPins(events: [Flag]) {
+    func updateEventPins(_ events: [Flag]) {
         for event in events {
             refreshImage(event)
         }
     }
     
-    func getPin(flag: Flag) -> FlagAnnotation? {
+    func getPin(_ flag: Flag) -> FlagAnnotation? {
         for pin in self.map.annotations {
             if pin is FlagAnnotation && (pin as! FlagAnnotation).flag.id() == flag.id() {
                 let flagAnnotation = pin as? FlagAnnotation
@@ -151,12 +151,12 @@ class FlagRenderer: NSObject {
         return nil
     }
     
-    func getPinView(flag: Flag) -> FlagAnnotationView? {
+    func getPinView(_ flag: Flag) -> FlagAnnotationView? {
         let pin = getPin(flag)
-        return pin == nil ? nil : map.viewForAnnotation(pin!) as? FlagAnnotationView
+        return pin == nil ? nil : map.view(for: pin!) as? FlagAnnotationView
     }
     
-    func createPin(flag: Flag) -> FlagAnnotation {
+    func createPin(_ flag: Flag) -> FlagAnnotation {
         return FlagAnnotation(flag: flag)
     }
 }

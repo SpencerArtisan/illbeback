@@ -22,7 +22,7 @@ class FlagsController: UIViewController, UITextViewDelegate {
         self.mapController = mapController
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -30,14 +30,14 @@ class FlagsController: UIViewController, UITextViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @IBAction func cancel(sender: AnyObject) {
-        cancelButton.enabled = false
+    @IBAction func cancel(_ sender: AnyObject) {
+        cancelButton.isEnabled = false
         hideFlags()
     }
     
     func showFlags() {
         Utils.delay(1) {
-            self.cancelButton.enabled = true
+            self.cancelButton.isEnabled = true
         }
         let flags = mapController.flagRepository.new()
         var tag = 1
@@ -48,16 +48,16 @@ class FlagsController: UIViewController, UITextViewDelegate {
             }
             flagView!.setFlag(flag)
             flagView!.mapController = mapController
-            flagView!.hidden = false
-            tag++
+            flagView!.isHidden = false
+            tag += 1
         }
         while (true) {
             let flagView = flagsModal.findElementByTag(tag) as? FlagView
             if flagView == nil {
                 break;
             }
-            flagView!.hidden = true
-            tag++
+            flagView!.isHidden = true
+            tag += 1
         }
         
         flagsModal.slideOutFromLeft(self.mapController.view)

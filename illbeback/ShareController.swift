@@ -36,40 +36,42 @@ class ShareController : UIViewController {
         var tag = 3
         let friends: [String] = Global.getUser().getFriends()
         for friend in friends {
-            let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
-            shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
-            shareButton.hidden = false
-            shareButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
-            shareButton.addTarget(self, action: "deleteFriendConfirmed:", forControlEvents: .TouchUpInside)
-            shareButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-            shareButton.enabled = true
-            shareButton.setImage(deleteImage, forState: UIControlState.Normal)
+            let shareButton = shareModal?.findElementByTag(tag) as! UIButton
+            tag = tag + 1
+            shareButton.setTitle(" " + friend, for: UIControlState())
+            shareButton.isHidden = false
+            shareButton.removeTarget(self, action: nil, for: .touchUpInside)
+            shareButton.addTarget(self, action: #selector(ShareController.deleteFriendConfirmed(_:)), for: .touchUpInside)
+            shareButton.setTitleColor(UIColor.black, for: UIControlState())
+            shareButton.isEnabled = true
+            shareButton.setImage(deleteImage, for: UIControlState())
         }
         while (tag <= 15) {
-            let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
-            shareButton.hidden = true
+            let shareButton = shareModal?.findElementByTag(tag) as! UIButton
+            tag = tag + 1
+            shareButton.isHidden = true
         }
         
         let newFriendButton = shareModal?.findElementByTag(2) as! UIButton
         if (friends.count > 12) {
-            newFriendButton.hidden = true
+            newFriendButton.isHidden = true
         } else {
-            newFriendButton.hidden = false
-            newFriendButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
-            newFriendButton.addTarget(self, action: "createNewFriend:", forControlEvents: .TouchUpInside)
-            newFriendButton.enabled = true
-            newFriendButton.setImage(nil, forState: UIControlState.Normal)
+            newFriendButton.isHidden = false
+            newFriendButton.removeTarget(self, action: nil, for: .touchUpInside)
+            newFriendButton.addTarget(self, action: #selector(ShareController.createNewFriend(_:)), for: .touchUpInside)
+            newFriendButton.isEnabled = true
+            newFriendButton.setImage(nil, for: UIControlState())
         }
         
         let cancelButton = shareModal?.findElementByTag(99) as! UIButton
-        cancelButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
-        cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
-        cancelButton.enabled = false
-        delay(0.5) { cancelButton.enabled = true }
+        cancelButton.removeTarget(self, action: nil, for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(ShareController.shareMemoryCancelled(_:)), for: .touchUpInside)
+        cancelButton.isEnabled = false
+        delay(0.5) { cancelButton.isEnabled = true }
     }
     
     // Callback for button on the callout
-    func shareFlag(pins: [FlagAnnotationView]) {
+    func shareFlag(_ pins: [FlagAnnotationView]) {
         pinsToShare = pins
 
         shareModal?.slideOutFromLeft(mapController.view)
@@ -78,41 +80,43 @@ class ShareController : UIViewController {
         var tag = 3
         let friends: [String] = Global.getUser().getFriends()
         for friend in friends {
-            let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
-            shareButton.setTitle(" " + friend, forState: UIControlState.Normal)
-            shareButton.hidden = false
-            shareButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
-            shareButton.addTarget(self, action: "shareMemoryConfirmed:", forControlEvents: .TouchUpInside)
-            shareButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-            shareButton.enabled = false
-            shareButton.setImage(shareImage, forState: UIControlState.Normal)
-            delay(0.5) { shareButton.enabled = true }
+            let shareButton = shareModal?.findElementByTag(tag) as! UIButton
+            tag = tag + 1
+            shareButton.setTitle(" " + friend, for: UIControlState())
+            shareButton.isHidden = false
+            shareButton.removeTarget(self, action: nil, for: .touchUpInside)
+            shareButton.addTarget(self, action: #selector(ShareController.shareMemoryConfirmed(_:)), for: .touchUpInside)
+            shareButton.setTitleColor(UIColor.black, for: UIControlState())
+            shareButton.isEnabled = false
+            shareButton.setImage(shareImage, for: UIControlState())
+            delay(0.5) { shareButton.isEnabled = true }
         }
         while (tag <= 15) {
-            let shareButton = shareModal?.findElementByTag(tag++) as! UIButton
-            shareButton.hidden = true
+            let shareButton = shareModal?.findElementByTag(tag) as! UIButton
+            tag = tag + 1
+            shareButton.isHidden = true
         }
         
         let newFriendButton = shareModal?.findElementByTag(2) as! UIButton
         if (friends.count > 12) {
-            newFriendButton.hidden = true
+            newFriendButton.isHidden = true
         } else {
-            newFriendButton.hidden = false
-            newFriendButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
-            newFriendButton.addTarget(self, action: "shareWithNewFriend:", forControlEvents: .TouchUpInside)
-            newFriendButton.enabled = false
-            newFriendButton.setImage(shareImage, forState: UIControlState.Normal)
-            delay(0.5) { newFriendButton.enabled = true }
+            newFriendButton.isHidden = false
+            newFriendButton.removeTarget(self, action: nil, for: .touchUpInside)
+            newFriendButton.addTarget(self, action: #selector(ShareController.shareWithNewFriend(_:)), for: .touchUpInside)
+            newFriendButton.isEnabled = false
+            newFriendButton.setImage(shareImage, for: UIControlState())
+            delay(0.5) { newFriendButton.isEnabled = true }
         }
         
         let cancelButton = shareModal?.findElementByTag(99) as! UIButton
-        cancelButton.removeTarget(self, action: nil, forControlEvents: .TouchUpInside)
-        cancelButton.addTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
-        cancelButton.enabled = false
-        delay(0.5) { cancelButton.enabled = true }
+        cancelButton.removeTarget(self, action: nil, for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(ShareController.shareMemoryCancelled(_:)), for: .touchUpInside)
+        cancelButton.isEnabled = false
+        delay(0.5) { cancelButton.isEnabled = true }
     }
     
-    func shareWith(friend: String) {
+    func shareWith(_ friend: String) {
         if pinsToShare.count == 0 {
             editFriends()
             return
@@ -126,66 +130,62 @@ class ShareController : UIViewController {
         outBox.send()
     }
     
-    func hideShareModal(sender: AnyObject?) {
+    func hideShareModal(_ sender: AnyObject?) {
         shareModal?.slideInFromLeft(mapController.view)
     }
     
-    func shareWithNewFriend(sender: AnyObject?) {
-        newFriend(sender, cancelAction: "shareNewFriendCancelled:")
+    func shareWithNewFriend(_ sender: AnyObject?) {
+        newFriend(sender, cancelAction: #selector(ShareController.shareNewFriendCancelled(_:)))
     }
     
-    func createNewFriend(sender: AnyObject?) {
-        newFriend(sender, cancelAction: "createNewFriendCancelled:")
+    func createNewFriend(_ sender: AnyObject?) {
+        newFriend(sender, cancelAction: #selector(ShareController.createNewFriendCancelled(_:)))
     }
     
-    func newFriend(sender: AnyObject?, cancelAction: Selector) {
+    func newFriend(_ sender: AnyObject?, cancelAction: Selector) {
         hideShareModal(sender)
         mapController.newUserLabel.text = "Friend's sharing name"
         mapController.newUserText.becomeFirstResponder()
         mapController.newUserText.text = ""
         mapController.newUserModal?.slideOutFromRight(mapController.view)
         let cancelButton = mapController.newUserModal?.findElementByTag(4) as! UIButton
-        cancelButton.addTarget(self, action: cancelAction, forControlEvents: .TouchUpInside)
-        cancelButton.enabled = false
-        delay(0.5) { cancelButton.enabled = true }
+        cancelButton.addTarget(self, action: cancelAction, for: .touchUpInside)
+        cancelButton.isEnabled = false
+        delay(0.5) { cancelButton.isEnabled = true }
     }
     
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
     }
     
-    func shareMemoryConfirmed(sender: AnyObject?) {
-        let friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    func shareMemoryConfirmed(_ sender: AnyObject?) {
+        let friend = (sender as! UIButton).titleLabel?.text!.trimmingCharacters(in: CharacterSet.whitespaces)
         shareWith(friend!)
         hideShareModal(sender)
     }
     
-    func shareMemoryCancelled(sender: AnyObject?) {
+    func shareMemoryCancelled(_ sender: AnyObject?) {
         pinsToShare = []
         shareModal?.slideInFromLeft(mapController.view)
-        ((sender) as! UIButton).removeTarget(self, action: "shareMemoryCancelled:", forControlEvents: .TouchUpInside)
+        ((sender) as! UIButton).removeTarget(self, action: #selector(ShareController.shareMemoryCancelled(_:)), for: .touchUpInside)
     }
     
-    func shareNewFriendCancelled(sender: AnyObject?) {
+    func shareNewFriendCancelled(_ sender: AnyObject?) {
         mapController.newUserText.resignFirstResponder()
         pinsToShare = []
         mapController.newUserModal?.slideInFromRight(mapController.view)
-        ((sender) as! UIButton).removeTarget(self, action: "shareNewFriendCancelled:", forControlEvents: .TouchUpInside)
+        ((sender) as! UIButton).removeTarget(self, action: #selector(ShareController.shareNewFriendCancelled(_:)), for: .touchUpInside)
     }
     
-    func deleteFriendConfirmed(sender: AnyObject?) {
-        let friend = (sender as! UIButton).titleLabel?.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    func deleteFriendConfirmed(_ sender: AnyObject?) {
+        let friend = (sender as! UIButton).titleLabel?.text!.trimmingCharacters(in: CharacterSet.whitespaces)
         Global.getUser().removeFriend(friend!)
         Preferences.user(Global.getUser())
         showEditFriends()
     }
     
-    func createNewFriendCancelled(sender: AnyObject?) {
+    func createNewFriendCancelled(_ sender: AnyObject?) {
         mapController.newUserText.resignFirstResponder()
         pinsToShare = []
         mapController.newUserModal?.slideInFromRight(mapController.view)

@@ -9,15 +9,15 @@
 import Foundation
 
 class Global {
-    private static var user = Preferences.user()
-    private static var deviceToken: NSData?
-    private static var tokenStored = false
+    fileprivate static var user = Preferences.user()
+    fileprivate static var deviceToken: Data?
+    fileprivate static var tokenStored = false
     
     static func getUser() -> User {
         return user
     }
     
-    static func setDevice(deviceToken: NSData) {
+    static func setDevice(_ deviceToken: Data) {
         self.deviceToken = deviceToken
         if userDefined() {
             storeDeviceToken(true, userName: user.getName(), onSuccess: {}, onFailure: {})
@@ -28,7 +28,7 @@ class Global {
         return user.hasName()
     }
     
-    static func setUserName(name: String, allowOverwrite: Bool) {
+    static func setUserName(_ name: String, allowOverwrite: Bool) {
         user.setName(name)
         storeDeviceToken(allowOverwrite, userName: name,
             onSuccess: {
@@ -44,7 +44,7 @@ class Global {
         })
     }
     
-    static func storeDeviceToken(allowOverwrite: Bool, userName: String?, onSuccess: () -> (), onFailure: () -> ()) {
+    static func storeDeviceToken(_ allowOverwrite: Bool, userName: String?, onSuccess: @escaping () -> (), onFailure: @escaping () -> ()) {
         if !tokenStored && deviceToken != nil && userName != nil && userName != "" {
             tokenStored = true
           
@@ -53,19 +53,19 @@ class Global {
             let url = "https://illbeback.firebaseio.com/users/\(userName!)/device"
             let node = Firebase(url: url)
             
-            node.observeSingleEventOfType(.Value, withBlock: { snapshot in
-                if !snapshot.exists() || snapshot.value == nil {
+            node?.observeSingleEvent(of: .value, with: { snapshot in
+                if !(snapshot?.exists())! || snapshot?.value == nil {
                     print("FIREBASE OP: Uploading new device token \(tokenString) to \(url)")
-                    node.setValue(tokenString)
+                    node?.setValue(tokenString)
                     onSuccess()
                 } else {
-                    let existingToken = snapshot.value
+                    let existingToken = snapshot?.value
                     print("FIREBASE OP: Existing device token \(existingToken!) at \(url)")
                     if existingToken! as! String != tokenString {
                         print("FIREBASE OP: Device token MISMATCH!")
                         if allowOverwrite {
                             print("FIREBASE OP: Overwriting old device token")
-                            node.setValue(tokenString)
+                            node?.setValue(tokenString)
                             onSuccess()
                         } else {
                             print("FIREBASE OP: Disallowing overwrite of old device token")
@@ -80,18 +80,18 @@ class Global {
         }
     }
     
-    private static func getDeviceTokenString() -> String {
-        let count = deviceToken!.length / sizeof(UInt8)
+    fileprivate static func getDeviceTokenString() -> String {
+        let count = deviceToken!.count / MemoryLayout<UInt8>.size
         
         // create an array of Uint8
-        var array = [UInt8](count: count, repeatedValue: 0)
+        var array = [UInt8](repeating: 0, count: count)
         
         // copy bytes into array
-        deviceToken!.getBytes(&array, length:count * sizeof(UInt8))
+        (deviceToken! as NSData).getBytes(&array, length:count * MemoryLayout<UInt8>.size)
         
         var tokenString = ""
         
-        for var i = 0; i < count; i++ {
+        for i in 0 ..< count {
             tokenString += String(format: "%02.2hhx", arguments: [array[i]])
         }
         

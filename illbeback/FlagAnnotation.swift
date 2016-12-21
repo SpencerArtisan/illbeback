@@ -20,7 +20,7 @@ class FlagAnnotation : NSObject, MKAnnotation {
         self.flag = flag
     }
     
-    func setCoordinate2(newCoordinate: CLLocationCoordinate2D) {
+    func setCoordinate2(_ newCoordinate: CLLocationCoordinate2D) {
         coordinate = newCoordinate
         flag.location(newCoordinate)
     }

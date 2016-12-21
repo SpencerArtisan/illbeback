@@ -9,8 +9,8 @@
 import Foundation
 
 class User {
-    private var name: String?
-    private var friends: [String]
+    fileprivate var name: String?
+    fileprivate var friends: [String]
     
     init(name: String?, friends: [String]) {
         self.name = name
@@ -18,11 +18,11 @@ class User {
     }
     
     func getName() -> String {
-        return name!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        return name!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
     
-    func setName(name: String) {
-        self.name = name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    func setName(_ name: String) {
+        self.name = name.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         print("Setting user name to \(self.name)")
     }
     
@@ -34,12 +34,12 @@ class User {
         return friends
     }
     
-    func addFriend(friend: String) {
+    func addFriend(_ friend: String) {
         friends.append(friend)
     }
     
-    func removeFriend(friend: String) {
-        let index = friends.indexOf(friend)
-        friends.removeAtIndex(index!)
+    func removeFriend(_ friend: String) {
+        let index = friends.index(of: friend)
+        friends.remove(at: index!)
     }
 }

@@ -20,12 +20,12 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let dev = UIDevice.currentDevice()
+        let dev = UIDevice.current
         dev.beginGeneratingDeviceOrientationNotifications()
-        let nc = NSNotificationCenter.defaultCenter()
+        let nc = NotificationCenter.default
 
         //using an inline closure
-        nc.addObserverForName(UIDeviceOrientationDidChangeNotification, object: dev, queue: NSOperationQueue.mainQueue(), usingBlock: {
+        nc.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: dev, queue: OperationQueue.main, using: {
             note in if let object: UIDevice = note.object as? UIDevice {
                 let orient = object.orientation
                 self.rotate(orient)
@@ -33,26 +33,26 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
            }})
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         owner?.index = index
         owner?.drawDots(index)
-        let orientation = UIDevice.currentDevice().orientation
+        let orientation = UIDevice.current.orientation
         rotate(orientation)
     }
     
-    func rotate(orient: UIDeviceOrientation) {
+    func rotate(_ orient: UIDeviceOrientation) {
         let width = self.photo!.image!.size.width
         let height = self.photo!.image!.size.height
         
-        var transform = CGAffineTransformIdentity
-        if orient == UIDeviceOrientation.LandscapeLeft {
-            transform = CGAffineTransformMakeScale(width/height, width/height)
-            transform = CGAffineTransformRotate(transform, 3.14159/2);
-        } else if orient == UIDeviceOrientation.LandscapeRight {
-            transform = CGAffineTransformMakeScale(width/height, width/height)
-            transform = CGAffineTransformRotate(transform, -3.14159/2);
-        } else if orient == UIDeviceOrientation.PortraitUpsideDown {
-            transform = CGAffineTransformRotate(transform, 3.14159);
+        var transform = CGAffineTransform.identity
+        if orient == UIDeviceOrientation.landscapeLeft {
+            transform = CGAffineTransform(scaleX: width/height, y: width/height)
+            transform = transform.rotated(by: 3.14159/2);
+        } else if orient == UIDeviceOrientation.landscapeRight {
+            transform = CGAffineTransform(scaleX: width/height, y: width/height)
+            transform = transform.rotated(by: -3.14159/2);
+        } else if orient == UIDeviceOrientation.portraitUpsideDown {
+            transform = transform.rotated(by: 3.14159);
         }
         
         self.photo?.transform = transform

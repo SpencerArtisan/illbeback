@@ -128,28 +128,28 @@ class FlagTokenTest: XCTestCase {
         XCTAssertEqual(token!.invitees().count, 1)
     }
     
-    private func setUpWithUpdate() {
+    fileprivate func setUpWithUpdate() {
         token = createTokenWithUpdates()
         let encoded = token!.encode()
         decoded = FlagToken(token: encoded)
     }
     
-    private func setUpWithoutUpdate() {
+    fileprivate func setUpWithoutUpdate() {
         token = createTokenWithoutUpdates()
         let encoded = token!.encode()
         decoded = FlagToken(token: encoded)
     }
 
-    private func createTokenWithUpdates() -> FlagToken {
+    fileprivate func createTokenWithUpdates() -> FlagToken {
         let token = createTokenWithoutUpdates()
-        let updateToken = FlagToken(id: "id", state: FlagState.Neutral, type: "type", description: "updated description", location: CLLocationCoordinate2D(latitude: 3.0, longitude: 4.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate.distantFuture())
+        let updateToken = FlagToken(id: "id", state: FlagState.Neutral, type: "type", description: "updated description", location: CLLocationCoordinate2D(latitude: 3.0, longitude: 4.0), originator: "originator", orientation: UIDeviceOrientation.faceUp, when: Date.distantFuture)
         updateToken.addInvitee(Invitee(name: "Spencer"))
         token.pendingUpdate(updateToken)
         return token
     }
 
-    private func createTokenWithoutUpdates() -> FlagToken {
-        let token = FlagToken(id: "id", state: FlagState.Neutral, type: "type", description: "description", location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate())
+    fileprivate func createTokenWithoutUpdates() -> FlagToken {
+        let token = FlagToken(id: "id", state: FlagState.Neutral, type: "type", description: "description", location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.faceUp, when: Date())
         token.addInvitee(Invitee(name: "Madeleine"))
         return token
     }

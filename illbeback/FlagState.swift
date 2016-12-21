@@ -20,7 +20,7 @@ enum FlagState : String {
         return rawValue
     }
     
-    static func fromCode(code: String) -> FlagState {
+    static func fromCode(_ code: String) -> FlagState {
         switch code {
         case "F":
             return .Neutral

@@ -20,7 +20,7 @@ enum InviteeState: String {
         return rawValue
     }
     
-    static func fromCode(code: String) -> InviteeState {
+    static func fromCode(_ code: String) -> InviteeState {
         switch code {
         case "W":
             return InviteeState.Invited

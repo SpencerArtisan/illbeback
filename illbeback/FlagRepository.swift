@@ -9,16 +9,16 @@
 import Foundation
 
 class FlagRepository : NSObject {
-    private var _flags = [Flag]()
-    private var _mutex = pthread_mutex_t()
+    fileprivate var _flags = [Flag]()
+    fileprivate var _mutex = pthread_mutex_t()
     
     override init() {
         super.init()
-        Utils.addObserver(self, selector: #selector(FlagRepository.onFlagChanged(_:)), event: "FlagChanged")
-        Utils.addObserver(self, selector: #selector(FlagRepository.onFlagChanged(_:)), event: "InviteeChanged")
+        Utils.addObserver(self, selector: #selector(FlagRepository.onFlagChanged), event: "FlagChanged")
+        Utils.addObserver(self, selector: #selector(FlagRepository.onFlagChanged), event: "InviteeChanged")
     }
     
-    func onFlagChanged(note: NSNotification) {
+    func onFlagChanged(_ note: Notification) {
         save()
     }
     
@@ -26,7 +26,7 @@ class FlagRepository : NSObject {
         return _flags.filter {$0.state() != .Dead}
     }
     
-    func receive(from: String, to: String, flag: Flag, onNew: (newFlag: Flag) -> (), onUpdate: (updatedFlag: Flag) -> (), onAck: (ackedFlag: Flag?) -> ()) {
+    func receive(_ from: String, to: String, flag: Flag, onNew: (_ newFlag: Flag) -> (), onUpdate: (_ updatedFlag: Flag) -> (), onAck: (_ ackedFlag: Flag?) -> ()) {
         do {
             var originalFlag = find(flag.id())
             
@@ -36,16 +36,16 @@ class FlagRepository : NSObject {
                     print("Receiving new flag from \(from) to \(to)")
                     Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
                     try flag.receivingNew(from)
-                    onNew(newFlag: flag)
+                    onNew(flag)
                     originalFlag = flag
                 } else {
-                    onAck(ackedFlag: nil)
+                    onAck(nil)
                 }
             } else if !isAck(from, flag: flag) {
                 print("Receiving updated flag from \(from) to \(to)")
                 originalFlag!.receivingUpdate(from, flag: flag)
                 Utils.notifyObservers("FlagReceiving", properties: ["flag": flag, "from": from])
-                onUpdate(updatedFlag: originalFlag!)
+                onUpdate(originalFlag!)
             }
             
             if originalFlag != nil {
@@ -56,13 +56,13 @@ class FlagRepository : NSObject {
                         
                         if inviteeState == .Accepting {
                             invitee!.acceptSuccess()
-                            onAck(ackedFlag: originalFlag!)
+                            onAck(originalFlag!)
                         } else if inviteeState == .Declining {
                             invitee!.declineSuccess()
-                            onAck(ackedFlag: originalFlag!)
+                            onAck(originalFlag!)
                         }
                     } else {
-                        onAck(ackedFlag: nil)
+                        onAck(nil)
                     }
                 } else {
                     let invitee = originalFlag!.findInvitee(to)
@@ -76,17 +76,17 @@ class FlagRepository : NSObject {
         }
     }
     
-    private func isAck(from: String, flag: Flag) -> Bool {
+    fileprivate func isAck(_ from: String, flag: Flag) -> Bool {
         let inviteeState = flag.findInvitee(from)?.state()
         return inviteeState != nil && (inviteeState! == .Accepting || inviteeState! == .Declining)
     }
     
-    private func isDecline(from: String, flag: Flag) -> Bool {
+    fileprivate func isDecline(_ from: String, flag: Flag) -> Bool {
         let inviteeState = flag.findInvitee(from)?.state()
         return inviteeState != nil && inviteeState! == .Declining
     }
     
-    func add(flag: Flag) {
+    func add(_ flag: Flag) {
         if (find(flag.id()) != nil) {
             print("Duplicate flag added to repo: \(flag.encode())")
             _flags.removeObject(flag)
@@ -99,7 +99,7 @@ class FlagRepository : NSObject {
         save()
     }
     
-    func remove(flag: Flag) {
+    func remove(_ flag: Flag) {
         print("Removing \(flag.type()) from repo")
         _flags.removeObject(flag)
         Utils.notifyObservers("FlagRemoved", properties: ["flag": flag])
@@ -110,13 +110,13 @@ class FlagRepository : NSObject {
         flags().forEach { remove($0) }
     }
     
-    func find(id: String) -> Flag? {
+    func find(_ id: String) -> Flag? {
         return flags().filter {$0.id() == id}.first
     }
     
     func events() -> [Flag] {
         let all = flags().filter {$0.when() != nil }
-        return all.sort {$0.daysToGo() < $1.daysToGo()}
+        return all.sorted {$0.daysToGo() < $1.daysToGo()}
     }
     
     func new() -> [Flag] {
@@ -125,14 +125,14 @@ class FlagRepository : NSObject {
     
     func imminentEvents() -> [Flag] {
         let imminent = flags().filter {$0.when() != nil && $0.daysToGo() < 6 && $0.daysToGo() >= 0}
-        return imminent.sort {$0.daysToGo() < $1.daysToGo()}
+        return imminent.sorted {$0.daysToGo() < $1.daysToGo()}
     }
     
     func purge() {
         _flags.filter({self.isPurgable($0)}).forEach {self.remove($0)}
     }
     
-    private func isPurgable(flag: Flag) -> Bool {
+    fileprivate func isPurgable(_ flag: Flag) -> Bool {
         return flag.isPast() || flag.state() == .Dead
     }
     
@@ -142,12 +142,12 @@ class FlagRepository : NSObject {
     
     func saveImpl() {
         purge()
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let path = paths.stringByAppendingPathComponent("memories.plist")
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        let path = paths.appendingPathComponent("memories.plist")
         let encodedFlags = flags().map {flag in flag.encode()}
         let props: NSMutableDictionary = NSMutableDictionary()
         props.setValue(encodedFlags, forKey: "Memories")
-        props.writeToFile(path, atomically: true)
+        props.write(toFile: path, atomically: true)
         _flags = flags()
     }
     
@@ -157,11 +157,11 @@ class FlagRepository : NSObject {
     
     func readImpl() {
         let path = filePath()
-        let fileManager = NSFileManager.defaultManager()
-        if (!(fileManager.fileExistsAtPath(path))) {
-            let bundle : NSString = NSBundle.mainBundle().pathForResource("memories", ofType: "plist")!
+        let fileManager = FileManager.default
+        if (!(fileManager.fileExists(atPath: path))) {
+            let bundle : NSString = Bundle.main.path(forResource: "memories", ofType: "plist")! as NSString
             do {
-                try fileManager.copyItemAtPath(bundle as String, toPath: path)
+                try fileManager.copyItem(atPath: bundle as String, toPath: path)
             } catch {
                 print("Failed to read local flag store")
             }
@@ -169,7 +169,7 @@ class FlagRepository : NSObject {
         
         let props = NSDictionary(contentsOfFile: path)?.mutableCopy() as! NSDictionary
         
-        let encodedFlags = (props.valueForKey("Memories") ?? []) as! [String]
+        let encodedFlags = (props.value(forKey: "Memories") ?? []) as! [String]
         encodedFlags.map {encodedFlag in Flag.decode(encodedFlag)}
                     .forEach {flag in
                         if !self.isPurgable(flag) { self.add(flag) }
@@ -177,12 +177,12 @@ class FlagRepository : NSObject {
     }
     
     func filePath() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        return path.stringByAppendingPathComponent("memories.plist")
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        return path.appendingPathComponent("memories.plist")
     }
     
-    internal func slowsync<R>(@noescape f: () -> R) -> R {
+    internal func slowsync<R>(_ f: () -> R) -> R {
         pthread_mutex_lock(&_mutex)
         let r = f()
         pthread_mutex_unlock(&_mutex)

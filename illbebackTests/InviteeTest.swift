@@ -9,7 +9,7 @@
 import XCTest
 
 class InviteeTest: XCTestCase {
-    private var invitee: Invitee?
+    fileprivate var invitee: Invitee?
     
     override func setUp() {
         invitee = Invitee(name: "Madeleine")

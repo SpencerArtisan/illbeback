@@ -15,7 +15,7 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     let addFlag = AddFlagController()
     var camera: Camera?
     var photoAlbum: PhotoAlbum?
-    private var flagRepository: FlagRepository
+    fileprivate var flagRepository: FlagRepository
     var pinToRephoto: FlagAnnotationView?
     
     init(photoAlbum: PhotoAlbum, flagRepository: FlagRepository) {
@@ -36,18 +36,18 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
         )
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         camera!.start()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         camera!.stop()
     }
     
-    func addPhoto(image: UIImage, orientation: UIDeviceOrientation) {
+    func addPhoto(_ image: UIImage, orientation: UIDeviceOrientation) {
         flagRepository.save()
         photoAlbum!.addFlagImage(image, flag: pinToRephoto!.flag!)
-        navigationController?.popViewControllerAnimated(false)
+        navigationController?.popViewController(animated: false)
         pinToRephoto!.refresh()
     }
 }

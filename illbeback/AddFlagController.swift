@@ -21,8 +21,8 @@ class AddFlagController: UIViewController, UITextViewDelegate {
     var callingViewController: UIViewController?
     var photoAlbum: PhotoAlbum?
     var rewordingPin: FlagAnnotationView?
-    var when: NSDate?
-    var categoryShownAt: NSDate?
+    var when: Date?
+    var categoryShownAt: Date?
 
     init(album: PhotoAlbum, mapController: MapController) {
         super.init(nibName: nil, bundle: nil)
@@ -33,13 +33,13 @@ class AddFlagController: UIViewController, UITextViewDelegate {
         self.mapController = mapController
     }
     
-    @IBAction func cancelDescription(sender: AnyObject) {
+    @IBAction func cancelDescription(_ sender: AnyObject) {
         descriptionModal.hide()
         self.desciptionTextArea.text = ""
-        self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
+        self.callingViewController!.navigationController!.popToRootViewController(animated: true)
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -47,118 +47,118 @@ class AddFlagController: UIViewController, UITextViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.desciptionTextArea.resignFirstResponder()
     }
 
-    @IBAction func addCafe(sender: AnyObject) {
+    @IBAction func addCafe(_ sender: AnyObject) {
         addMemory("Cafe")
     }
     
-    @IBAction func addRestaurant(sender: AnyObject) {
+    @IBAction func addRestaurant(_ sender: AnyObject) {
         addMemory("Restaurant")
     }
     
-    @IBAction func addPub(sender: AnyObject) {
+    @IBAction func addPub(_ sender: AnyObject) {
         addMemory("Bar")
     }
     
-    @IBAction func addShop(sender: AnyObject) {
+    @IBAction func addShop(_ sender: AnyObject) {
         addMemory("Shop")
     }
     
-    @IBAction func addMuseum(sender: AnyObject) {
+    @IBAction func addMuseum(_ sender: AnyObject) {
         addMemory("Museum")
     }
 
-    @IBAction func addMusicVenue(sender: AnyObject) {
+    @IBAction func addMusicVenue(_ sender: AnyObject) {
         addMemory("Music Venue")
     }
     
-    @IBAction func addArtsVenue(sender: AnyObject) {
+    @IBAction func addArtsVenue(_ sender: AnyObject) {
         addMemory("Arts Venue")
     }
     
-    @IBAction func addLavatory(sender: AnyObject) {
+    @IBAction func addLavatory(_ sender: AnyObject) {
         addMemory("Lavatory")
     }
     
-    @IBAction func addBuilding(sender: AnyObject) {
+    @IBAction func addBuilding(_ sender: AnyObject) {
         addMemory("Building")
     }
     
-    @IBAction func addSpecial(sender: AnyObject) {
+    @IBAction func addSpecial(_ sender: AnyObject) {
         addMemory("Special")
     }
     
-    @IBAction func addGreenSpace(sender: AnyObject) {
+    @IBAction func addGreenSpace(_ sender: AnyObject) {
         addMemory("Green Space")
     }
     
-    @IBAction func addPlaceToStay(sender: AnyObject) {
+    @IBAction func addPlaceToStay(_ sender: AnyObject) {
         addMemory("Place to Stay")
     }
     
-    @IBAction func addRemembrance(sender: AnyObject) {
+    @IBAction func addRemembrance(_ sender: AnyObject) {
         addMemory("Memory")
     }
     
-    @IBAction func addGallery(sender: AnyObject) {
+    @IBAction func addGallery(_ sender: AnyObject) {
         addMemory("Gallery")
     }
     
-    @IBAction func addEvent(sender: AnyObject) {
+    @IBAction func addEvent(_ sender: AnyObject) {
         addMemoryWithDate("Event")
     }
     
-    @IBAction func cancel(sender: AnyObject) {
-        if self.categoryShownAt == nil || NSDate().timeIntervalSinceDate(categoryShownAt!) > 0.7 {
+    @IBAction func cancel(_ sender: AnyObject) {
+        if self.categoryShownAt == nil || Date().timeIntervalSince(categoryShownAt!) > 0.7 {
             categoryModal.hide()
-            self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
+            self.callingViewController!.navigationController!.popToRootViewController(animated: true)
         }
     }
     
-    func add(controller: UIViewController, image: UIImage, orientation: UIDeviceOrientation) {
+    func add(_ controller: UIViewController, image: UIImage, orientation: UIDeviceOrientation) {
         print("Adding image at device orientation \(orientation.rawValue), size \(image.size)")
         rewordingPin = nil
         self.flagLocation = nil
         self.callingViewController = controller
-        self.flagId = NSUUID().UUIDString
+        self.flagId = UUID().uuidString
         self.orientation = orientation
         self.photoAlbum!.saveFlagImage(image, flagId: self.flagId!)
         self.showCategorySelector()
     }
     
-    func add(controller: UIViewController, location: CLLocationCoordinate2D) {
+    func add(_ controller: UIViewController, location: CLLocationCoordinate2D) {
         rewordingPin = nil
         self.flagLocation = location
         self.callingViewController = controller
-        self.flagId = NSUUID().UUIDString
+        self.flagId = UUID().uuidString
         self.showCategorySelector()
     }
 
-    func addBlank(controller: UIViewController, location: CLLocationCoordinate2D, description: String) {
-        mapController!.addFlagHere("Blank", id: NSUUID().UUIDString, description: description, location: location, orientation: self.orientation, when: nil)
+    func addBlank(_ controller: UIViewController, location: CLLocationCoordinate2D, description: String) {
+        mapController!.addFlagHere("Blank", id: UUID().uuidString, description: description, location: location, orientation: self.orientation, when: nil)
     }
     
-    func reword(controller: UIViewController, pin: FlagAnnotationView) {
+    func reword(_ controller: UIViewController, pin: FlagAnnotationView) {
         self.callingViewController = controller
         rewordingPin = pin
         flagImage = pin.flag!.type()
         let flag = pin.flag!
         if flag.isEvent() {
-            self.showDescriptionEntryWithDate(flag.type(), date: flag.when() ?? Utils.today())
+            self.showDescriptionEntryWithDate(flag.type(), date: (flag.when() ?? Utils.today()) as Date)
         } else {
             self.showDescriptionEntry(flag.type())
         }
         desciptionTextArea.text = flag.description()
     }
     
-    func reschedule(controller: UIViewController, pin: FlagAnnotationView) {
+    func reschedule(_ controller: UIViewController, pin: FlagAnnotationView) {
         reword(controller, pin: pin)
     }
     
-    func unblank(controller: UIViewController, pin: FlagAnnotationView) {
+    func unblank(_ controller: UIViewController, pin: FlagAnnotationView) {
         self.callingViewController = controller
         rewordingPin = pin
 
@@ -166,7 +166,7 @@ class AddFlagController: UIViewController, UITextViewDelegate {
     }
     
     func showCategorySelector() {
-        self.categoryShownAt = NSDate()
+        self.categoryShownAt = Date()
         categoryModal.slideOutFromLeft(self.callingViewController!.view)
     }
     
@@ -174,49 +174,49 @@ class AddFlagController: UIViewController, UITextViewDelegate {
         categoryModal.slideInFromLeft(self.callingViewController!.view)
     }
     
-    func showDescriptionEntry(type: String) {
+    func showDescriptionEntry(_ type: String) {
         let message = descriptionLabel()
         message.backgroundColor = CategoryController.getColorForCategory(type)
         message.text = type
-        datePicker().hidden = true
+        datePicker().isHidden = true
     
         descriptionModal.slideOutFromRight(self.callingViewController!.view)
         self.desciptionTextArea.becomeFirstResponder()
     }
 
-    func showDescriptionEntryWithDate(type: String, date: NSDate) {
+    func showDescriptionEntryWithDate(_ type: String, date: Date) {
         let message = descriptionLabel()
         message.backgroundColor = CategoryController.getColorForCategory(type)
         message.text = type
         let when = datePicker()
         when.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.75)
         when.minimumDate = today()
-        when.maximumDate = NSDate().dateByAddingTimeInterval(NSTimeInterval(31536000))
+        when.maximumDate = Date().addingTimeInterval(TimeInterval(31536000))
         when.setDate(date, animated: false)
-        when.hidden = false
+        when.isHidden = false
         
         descriptionModal.slideOutFromRight(self.callingViewController!.view)
         self.desciptionTextArea.becomeFirstResponder()
     }
     
-    func showDateEntry(type: String) {
+    func showDateEntry(_ type: String) {
         let message = descriptionLabel()
         message.backgroundColor = CategoryController.getColorForCategory(type)
         message.text = type
         let when = datePicker()
         when.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.75)
         when.minimumDate = today()
-        when.maximumDate = NSDate().dateByAddingTimeInterval(NSTimeInterval(31536000))
+        when.maximumDate = Date().addingTimeInterval(TimeInterval(31536000))
         when.setDate(today(),animated: false)
-        when.hidden = false
+        when.isHidden = false
         
         descriptionModal.slideOutFromRight(self.callingViewController!.view)
         self.desciptionTextArea.becomeFirstResponder()
     }
     
-    func today() -> NSDate {
-        let cal = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        return cal.startOfDayForDate(NSDate())
+    func today() -> Date {
+        let cal = Calendar(identifier: Calendar.Identifier.gregorian)
+        return cal.startOfDay(for: Date())
     }
     
     func datePicker() -> UIDatePicker {
@@ -227,11 +227,11 @@ class AddFlagController: UIViewController, UITextViewDelegate {
         return descriptionModal.findElementByTag(1) as! UILabel
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
             
-            let when = datePicker().hidden ? nil as NSDate? : datePicker().date
+            let when = datePicker().isHidden ? nil as Date? : datePicker().date
             if (rewordingPin != nil) {
                 try! rewordingPin?.flag?.description(textView.text)
                 try! rewordingPin?.flag?.when(when)
@@ -242,7 +242,7 @@ class AddFlagController: UIViewController, UITextViewDelegate {
                 rewordingPin?.refreshImage()
             } else {
                 mapController!.addFlagHere(flagImage!, id: flagId!, description: textView.text, location: self.flagLocation, orientation: self.orientation, when: when)
-                self.callingViewController!.navigationController!.popToRootViewControllerAnimated(true)
+                self.callingViewController!.navigationController!.popToRootViewController(animated: true)
             }
             descriptionModal.hide()
             self.desciptionTextArea.text = ""
@@ -251,16 +251,16 @@ class AddFlagController: UIViewController, UITextViewDelegate {
         return true
     }
     
-    func addMemory(type: String) {
-        if self.categoryShownAt == nil || NSDate().timeIntervalSinceDate(categoryShownAt!) > 0.7 {
+    func addMemory(_ type: String) {
+        if self.categoryShownAt == nil || Date().timeIntervalSince(categoryShownAt!) > 0.7 {
             flagImage = type
             showDescriptionEntry(type)
             hideCategorySelector()
         }
     }
 
-    func addMemoryWithDate(type: String) {
-        if self.categoryShownAt == nil || NSDate().timeIntervalSinceDate(categoryShownAt!) > 0.7 {
+    func addMemoryWithDate(_ type: String) {
+        if self.categoryShownAt == nil || Date().timeIntervalSince(categoryShownAt!) > 0.7 {
             flagImage = type
             showDescriptionEntryWithDate(type, date: today())
             hideCategorySelector()

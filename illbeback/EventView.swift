@@ -7,6 +7,19 @@
 //
 
 import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class EventView: UIView {
     @IBOutlet var containerView: UIView!
@@ -14,8 +27,8 @@ class EventView: UIView {
     @IBOutlet weak var when: UILabel!
     
     var mapController: MapController!
-    private var event: Flag?
-    private var normalColor: UIColor?
+    fileprivate var event: Flag?
+    fileprivate var normalColor: UIColor?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,20 +40,20 @@ class EventView: UIView {
         loadXib()
     }
     
-    @IBAction func goto(sender: AnyObject) {
+    @IBAction func goto(_ sender: AnyObject) {
         print("go to \(event!.summary())")
         mapController.centerMap(event!.location())
     }
     
-    func setEvent(event: Flag) {
+    func setEvent(_ event: Flag) {
         self.event = event
         title.text = " \(event.summary())"
         when.text = formatWhen(event)
         colorIfSoon()
     }
     
-    private func formatWhen(event: Flag) -> String {
-        let formatter = NSDateFormatter()
+    fileprivate func formatWhen(_ event: Flag) -> String {
+        let formatter = DateFormatter()
         formatter.dateFormat = "EEE"
         
         if event.daysToGo() == 0 {
@@ -48,18 +61,18 @@ class EventView: UIView {
         } else if event.daysToGo() == 1 {
             return "tomorrow"
         } else if event.daysToGo() < 7 {
-            return formatter.stringFromDate(event.when()!)
+            return formatter.string(from: event.when()! as Date)
         } else {
-            let formatter2 = NSDateFormatter()
+            let formatter2 = DateFormatter()
             formatter2.dateFormat = "d MMM"
-            return "\(formatter.stringFromDate(event.when()!))\r\n\(formatter2.stringFromDate(event.when()!))"
+            return "\(formatter.string(from: event.when()! as Date))\r\n\(formatter2.string(from: event.when()! as Date))"
         }
     }
     
-    private func colorIfSoon() {
+    fileprivate func colorIfSoon() {
         if event?.daysToGo() < 6 {
             normalColor = when.backgroundColor
-            when.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.86)
+            when.backgroundColor = UIColor.red.withAlphaComponent(0.86)
         } else {
             if normalColor != nil {
                 when.backgroundColor = normalColor
@@ -67,13 +80,13 @@ class EventView: UIView {
         }
     }
     
-    private func loadXib() {
-        containerView = NSBundle.mainBundle().loadNibNamed("Event", owner: self, options: nil)[0] as! UIView
+    fileprivate func loadXib() {
+        containerView = Bundle.main.loadNibNamed("Event", owner: self, options: nil)?[0] as! UIView
         
         self.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         let views = ["containerView": containerView]
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[containerView]|", options: [], metrics: nil, views: views))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[containerView]|", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[containerView]|", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[containerView]|", options: [], metrics: nil, views: views))
     }
 }

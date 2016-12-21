@@ -20,7 +20,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     var snapPlayer: AVAudioPlayer?
     let imagePicker = UIImagePickerController()
  
-    init(navigationController: UINavigationController, callback: ((UINavigationController, UIImage, UIDeviceOrientation) -> Void)) {
+    init(navigationController: UINavigationController, callback: @escaping ((UINavigationController, UIImage, UIDeviceOrientation) -> Void)) {
         self.navigationController = navigationController
         self.parentController = navigationController.topViewController
         self.callback = callback
@@ -33,8 +33,8 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     }
     
     func createSound() {
-        let snapPath = NSBundle.mainBundle().pathForResource("shutter", ofType: "mp3")
-        let snapURL = NSURL(fileURLWithPath: snapPath!)
+        let snapPath = Bundle.main.path(forResource: "shutter", ofType: "mp3")
+        let snapURL = URL(fileURLWithPath: snapPath!)
         #if (arch(i386) || arch(x86_64)) && os(iOS)
             print("SIMULATOR")
         #else
@@ -48,8 +48,8 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     
     func start() {
         blackout()
-        let screenRect = UIScreen.mainScreen().bounds
-        self.camera.attachToViewController(parentController, withFrame: CGRectMake(0, 0, screenRect.size.width, screenRect.size.height))
+        let screenRect = UIScreen.main.bounds
+        self.camera.attach(to: parentController, withFrame: CGRect(x: 0, y: 0, width: screenRect.size.width, height: screenRect.size.height))
         parentController.view.addSubview(self.snapButton)
         parentController.view.addSubview(self.libraryButton)
         parentController.view.addSubview(self.backButton)
@@ -68,102 +68,103 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     }
     
     func createSnapButton() {
-        self.snapButton = UIButton(type: UIButtonType.System)
-        self.snapButton.frame = CGRectMake(0, 0, 90.0, 90.0)
+        self.snapButton = UIButton(type: UIButtonType.system)
+        self.snapButton.frame = CGRect(x: 0, y: 0, width: 90.0, height: 90.0)
         self.snapButton.clipsToBounds = true
         self.snapButton.layer.cornerRadius = 45.0
-        self.snapButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.snapButton.layer.borderColor = UIColor.white.cgColor
         self.snapButton.layer.borderWidth = 2.0
-        self.snapButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
-        self.snapButton.layer.rasterizationScale = UIScreen.mainScreen().scale
+        self.snapButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        self.snapButton.layer.rasterizationScale = UIScreen.main.scale
         self.snapButton.layer.shouldRasterize = true
-        self.snapButton.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.snapButton.addTarget(self, action: #selector(Camera.takePhoto(_:)), for: UIControlEvents.touchUpInside)
         self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 60)
     }
 
     func createLibraryButton() {
-        self.libraryButton = UIButton(frame: CGRectMake(0, 0, 60, 60))
-        let image = UIImage(named: "Library")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        self.libraryButton!.setImage(image, forState: UIControlState.Normal)
-        self.libraryButton?.tintColor = UIColor.blueColor()
+        self.libraryButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        let image = UIImage(named: "Library")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        self.libraryButton!.setImage(image, for: UIControlState())
+        self.libraryButton?.tintColor = UIColor.blue
         self.libraryButton.clipsToBounds = true
         self.libraryButton.layer.cornerRadius = 30.0
-        self.libraryButton.layer.borderColor = UIColor.blackColor().CGColor
+        self.libraryButton.layer.borderColor = UIColor.black.cgColor
         self.libraryButton.layer.borderWidth = 1.0
-        self.libraryButton.backgroundColor = UIColor.whiteColor()
+        self.libraryButton.backgroundColor = UIColor.white
         self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 65, y: parentController.view.bounds.height - 60)
-        self.libraryButton.addTarget(self, action: "library:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.libraryButton.addTarget(self, action: #selector(Camera.library(_:)), for: UIControlEvents.touchUpInside)
     }
     
     func createBackButton() {
-        self.backButton = UIButton(frame: CGRectMake(0, 0, 60, 60))
-        let image = UIImage(named: "back")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        self.backButton!.setImage(image, forState: UIControlState.Normal)
-        self.backButton!.tintColor = UIColor.blueColor()
+        self.backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        let image = UIImage(named: "back")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        self.backButton!.setImage(image, for: UIControlState())
+        self.backButton!.tintColor = UIColor.blue
         self.backButton!.clipsToBounds = true
         self.backButton!.layer.cornerRadius = 30.0
-        self.backButton!.layer.borderColor = UIColor.blackColor().CGColor
+        self.backButton!.layer.borderColor = UIColor.black.cgColor
         self.backButton!.layer.borderWidth = 1.0
-        self.backButton!.backgroundColor = UIColor.whiteColor()
+        self.backButton!.backgroundColor = UIColor.white
         self.backButton.center = CGPoint(x: 65, y: parentController.view.bounds.height - 60)
-        self.backButton!.addTarget(self, action: "goBack:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.backButton!.addTarget(self, action: #selector(Camera.goBack(_:)), for: UIControlEvents.touchUpInside)
     }
     
-    func takePhoto(sender : UIButton!) {
+    func takePhoto(_ sender : UIButton!) {
         snapPlayer?.play()
         let blackView = blackout()
         
-        UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: 0.15, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             blackView.layer.opacity = 1
             }, completion: {_ in
-                UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                UIView.animate(withDuration: 0.15, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                     blackView.layer.opacity = 0
                     }, completion: {_ in
                         blackView.removeFromSuperview()
                 })
         })
 
-        self.camera.capture({ (camera: LLSimpleCamera?, var image: UIImage?, dict: [NSObject : AnyObject]?, err: NSError?, orientation: UIDeviceOrientation) -> Void in
+        self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [AnyHashable: Any]?, err: Error?, orientation: UIDeviceOrientation) -> Void in
             self.snapButton.removeFromSuperview()
-            if (orientation == UIDeviceOrientation.LandscapeRight) {
-                image = image?.rotateImage(image, onDegrees: 90)
-            } else if (orientation == UIDeviceOrientation.LandscapeLeft) {
-                image = image?.rotateImage(image, onDegrees: -90)
+            var modifiedImage = image
+            if (orientation == UIDeviceOrientation.landscapeRight) {
+                modifiedImage = image?.rotateImage(image, onDegrees: 90)
+            } else if (orientation == UIDeviceOrientation.landscapeLeft) {
+                modifiedImage = image?.rotateImage(image, onDegrees: -90)
             }
             
-            self.callback(self.navigationController, image!, orientation)
+            self.callback(self.navigationController, modifiedImage!, orientation)
             }, exactSeenImage: true)
     }
     
     func blackout() -> UIView {
-        let blackView = NSBundle.mainBundle().loadNibNamed("Black", owner: self, options: nil)[0] as? UIView
-        let screenRect = UIScreen.mainScreen().bounds
-        blackView!.frame = CGRectMake(0, 0, screenRect.size.width, screenRect.size.height)
+        let blackView = Bundle.main.loadNibNamed("Black", owner: self, options: nil)?[0] as? UIView
+        let screenRect = UIScreen.main.bounds
+        blackView!.frame = CGRect(x: 0, y: 0, width: screenRect.size.width, height: screenRect.size.height)
         self.parentController.view.addSubview(blackView!)
         blackView!.layer.opacity = 0
         return blackView!
     }
 
-    func library(sender : UIButton!) {
+    func library(_ sender : UIButton!) {
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.sourceType = .photoLibrary
         
-        parentController.presentViewController(imagePicker, animated: false, completion: nil)
+        parentController.present(imagePicker, animated: false, completion: nil)
     }
     
-    func goBack(sender : UIButton!) {
-        self.navigationController.popViewControllerAnimated(false)
+    func goBack(_ sender : UIButton!) {
+        self.navigationController.popViewController(animated: false)
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.snapButton.removeFromSuperview()
-            parentController.dismissViewControllerAnimated(false, completion: nil)
+            parentController.dismiss(animated: false, completion: nil)
 
             print(navigationController.viewControllers.count)
             if navigationController.viewControllers.count == 2 {
-                let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ZoomController") as! ZoomController
+                let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ZoomController") as! ZoomController
                 let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
                 photoView.image = pickedImage
                 navigationController.pushViewController(zoomController, animated: false)
@@ -171,26 +172,26 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
             
             let devOrient = imageToDeviceOrientation(pickedImage)
             let correctedImage = pickedImage.fixOrientation()
-            self.callback(navigationController, correctedImage, devOrient)
+            self.callback(navigationController, correctedImage!, devOrient)
         }
     }
     
-    func toDeviceOrientation(image: UIImage) -> UIDeviceOrientation {
-        if (image.size.width > image.size.height) { return UIDeviceOrientation.LandscapeRight }
-        return UIDeviceOrientation.FaceUp
+    func toDeviceOrientation(_ image: UIImage) -> UIDeviceOrientation {
+        if (image.size.width > image.size.height) { return UIDeviceOrientation.landscapeRight }
+        return UIDeviceOrientation.faceUp
     }
     
-    func toImageOrientation(image: UIImage) -> UIImageOrientation {
-        if (image.size.width > image.size.height) { return UIImageOrientation.Left }
-        return UIImageOrientation.Up
+    func toImageOrientation(_ image: UIImage) -> UIImageOrientation {
+        if (image.size.width > image.size.height) { return UIImageOrientation.left }
+        return UIImageOrientation.up
     }
     
-    func imageToDeviceOrientation(image: UIImage) -> UIDeviceOrientation {
-        if (image.imageOrientation == UIImageOrientation.Up) { return UIDeviceOrientation.LandscapeLeft }
-        if (image.imageOrientation == UIImageOrientation.Right) { return UIDeviceOrientation.Portrait }
-        if (image.imageOrientation == UIImageOrientation.Down) { return UIDeviceOrientation.LandscapeRight }
+    func imageToDeviceOrientation(_ image: UIImage) -> UIDeviceOrientation {
+        if (image.imageOrientation == UIImageOrientation.up) { return UIDeviceOrientation.landscapeLeft }
+        if (image.imageOrientation == UIImageOrientation.right) { return UIDeviceOrientation.portrait }
+        if (image.imageOrientation == UIImageOrientation.down) { return UIDeviceOrientation.landscapeRight }
         
-        return UIDeviceOrientation.FaceUp
+        return UIDeviceOrientation.faceUp
     }
 
 }

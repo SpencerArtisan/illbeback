@@ -9,56 +9,56 @@
 import Foundation
 
 class Preferences {
-    private static var props: NSDictionary?
+    fileprivate static var props: NSDictionary?
     
-    static func user(user: User) {
+    static func user(_ user: User) {
         properties().setValue(user.getFriends(), forKey: "Friends")
         properties().setValue(user.getName(), forKey: "Name")
         write()
     }
     
     static func user() -> User {
-        let friends = properties().valueForKey("Friends") as? [String]
-        let name = properties().valueForKey("Name") as? String
+        let friends = properties().value(forKey: "Friends") as? [String]
+        let name = properties().value(forKey: "Name") as? String
         let user = User(name: name, friends: friends ?? [])
         return user
     }
     
     static func hintedBackups() -> Bool {
-        return (properties().valueForKey("hintedBackups") as? Bool) ?? false
+        return (properties().value(forKey: "hintedBackups") as? Bool) ?? false
     }
     
-    static func hintedBackups(value: Bool) {
+    static func hintedBackups(_ value: Bool) {
         properties().setValue(value, forKey: "hintedBackups")
         write()
     }
     
     static func hintedPressMap() -> Bool {
-        return (properties().valueForKey("hintedPressMap") as? Bool) ?? false
+        return (properties().value(forKey: "hintedPressMap") as? Bool) ?? false
     }
     
     static func hintedFirstFlag() -> Bool {
-        return (properties().valueForKey("hintedFirstFlag") as? Bool) ?? false
+        return (properties().value(forKey: "hintedFirstFlag") as? Bool) ?? false
     }
     
-    static func hintedPressMap(value: Bool) {
+    static func hintedPressMap(_ value: Bool) {
         properties().setValue(value, forKey: "hintedPressMap")
         write()
     }
     
-    static func hintedFirstFlag(value: Bool) {
+    static func hintedFirstFlag(_ value: Bool) {
         properties().setValue(value, forKey: "hintedFirstFlag")
         write()
     }
     
-    private static func properties() -> NSDictionary {
+    fileprivate static func properties() -> NSDictionary {
         if props == nil {
             let propsPath = path()
-            let fileManager = NSFileManager.defaultManager()
-            if (!(fileManager.fileExistsAtPath(propsPath))) {
-                let bundle : NSString = NSBundle.mainBundle().pathForResource("user", ofType: "plist")!
+            let fileManager = FileManager.default
+            if (!(fileManager.fileExists(atPath: propsPath))) {
+                let bundle : NSString = Bundle.main.path(forResource: "user", ofType: "plist")! as NSString
                 do {
-                    try fileManager.copyItemAtPath(bundle as String, toPath: propsPath)
+                    try fileManager.copyItem(atPath: bundle as String, toPath: propsPath)
                 } catch {
                 }
             }
@@ -68,12 +68,12 @@ class Preferences {
         return props!
     }
     
-    private static func path() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        return paths.stringByAppendingPathComponent("user.plist")
+    fileprivate static func path() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        return paths.appendingPathComponent("user.plist")
     }
     
-    private static func write() {
-        properties().writeToFile(path(), atomically: true)
+    fileprivate static func write() {
+        properties().write(toFile: path(), atomically: true)
     }
 }

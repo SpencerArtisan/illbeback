@@ -22,7 +22,7 @@ class EventsController: UIViewController, UITextViewDelegate {
         self.mapController = mapController
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -32,7 +32,7 @@ class EventsController: UIViewController, UITextViewDelegate {
     
     func showEvents() {
         delay(1) {
-            self.cancelButton.enabled = true
+            self.cancelButton.isEnabled = true
         }
         let events = mapController.flagRepository.events()
         var tag = 1
@@ -43,16 +43,16 @@ class EventsController: UIViewController, UITextViewDelegate {
             }
             eventView!.setEvent(event)
             eventView!.mapController = mapController
-            eventView!.hidden = false
-            tag++
+            eventView!.isHidden = false
+            tag += 1
         }
         while (true) {
             let eventView = eventsModal.findElementByTag(tag) as? EventView
             if eventView == nil {
                 break;
             }
-            eventView!.hidden = true
-            tag++
+            eventView!.isHidden = true
+            tag += 1
         }
         
         eventsModal.slideOutFromRight(self.mapController.view)
@@ -62,18 +62,14 @@ class EventsController: UIViewController, UITextViewDelegate {
         eventsModal.slideInFromRight(self.mapController.view)
     }
     
-    @IBAction func cancel(sender: AnyObject) {
-        cancelButton.enabled = false
+    @IBAction func cancel(_ sender: AnyObject) {
+        cancelButton.isEnabled = false
         hideEvents()
     }
     
     
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
     }
 }

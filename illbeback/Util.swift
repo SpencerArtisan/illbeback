@@ -9,37 +9,33 @@
 import Foundation
 
 class Utils {
-    static func today() -> NSDate {
-        let cal = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        return cal.startOfDayForDate(NSDate())
+    static func today() -> Date {
+        let cal = Calendar(identifier: Calendar.Identifier.gregorian)
+        return cal.startOfDay(for: Date())
     }
     
-    static func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    static func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
     }
     
-    static func runOnUiThread(closure:()->()) {
+    static func runOnUiThread(_ closure:@escaping ()->()) {
 //        delay(0.5, closure: closure)
 //        runOnUiThread2(closure)
-        dispatch_async(dispatch_get_main_queue(), closure)
+        DispatchQueue.main.async(execute: closure)
     }
     
-    static func runOnUiThread2(closure:()->()) {
+    static func runOnUiThread2(_ closure:@escaping ()->()) {
 //        runOnUiThread(closure)
-        NSOperationQueue.mainQueue().addOperationWithBlock(closure)
+        OperationQueue.main.addOperation(closure)
 //        delay(0.5, closure: closure)
     }
     
-    static func addObserver(observer: NSObject, selector: Selector, event: String) {
-        NSNotificationCenter.defaultCenter().addObserver(observer, selector: selector, name: event, object: nil)
+    static func addObserver(_ observer: NSObject, selector: Selector, event: String) {
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name(rawValue: event), object: nil)
     }
     
-    static func notifyObservers(event: String, properties: [NSObject: AnyObject]) {
-        NSNotificationCenter.defaultCenter().postNotificationName(event, object: nil, userInfo: properties)
+    static func notifyObservers(_ event: String, properties: [AnyHashable: Any]) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: event), object: nil, userInfo: properties)
     }
 }

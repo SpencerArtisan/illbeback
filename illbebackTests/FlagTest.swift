@@ -118,7 +118,7 @@ class FlagTest: XCTestCase {
         XCTAssertEqual(flag.invitees()[0].state(), InviteeState.Inviting)
     }
     
-    private func assertError(code: () throws -> Void) {
+    fileprivate func assertError(_ code: () throws -> Void) {
         do {
             try code()
             XCTFail("Exception expected")
@@ -127,11 +127,11 @@ class FlagTest: XCTestCase {
         }
     }
     
-    private func createFlag(description: String) -> Flag {
-        return Flag.create("id", type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.FaceUp, when: NSDate())
+    fileprivate func createFlag(_ description: String) -> Flag {
+        return Flag.create("id", type: "type", description: description, location: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0), originator: "originator", orientation: UIDeviceOrientation.faceUp, when: Date())
     }
     
-    private func createFlag() -> Flag {
+    fileprivate func createFlag() -> Flag {
         return createFlag("description")
     }
 }
