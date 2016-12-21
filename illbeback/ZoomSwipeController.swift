@@ -92,7 +92,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     
     fileprivate func zoomController(_ newIndex: Int) -> ZoomController {
         let newView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ZoomController") as! ZoomController
-        let imageView = newView.view.subviews[0] as! UIImageView
+        let imageView = (newView.view.subviews[0] as! UIScrollView).subviews[0] as! UIImageView
         if newIndex >= photos.count {
             print("Trying to show non existent image in zoom controller")
         } else {

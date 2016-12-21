@@ -11,8 +11,9 @@ import Foundation
 import Foundation
 import MapKit
 
-class ZoomController: UIViewController, UINavigationControllerDelegate {
+class ZoomController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate {
     @IBOutlet weak var photo: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var index: Int = 0
     var owner : ZoomSwipeController?
@@ -23,7 +24,10 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
         let dev = UIDevice.current
         dev.beginGeneratingDeviceOrientationNotifications()
         let nc = NotificationCenter.default
-
+        
+        self.scrollView.minimumZoomScale = 1.0
+        self.scrollView.maximumZoomScale = 6.0
+        
         //using an inline closure
         nc.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: dev, queue: OperationQueue.main, using: {
             note in if let object: UIDevice = note.object as? UIDevice {
@@ -56,5 +60,9 @@ class ZoomController: UIViewController, UINavigationControllerDelegate {
         }
         
         self.photo?.transform = transform
+    }
+    
+    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return photo
     }
 }
