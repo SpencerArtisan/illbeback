@@ -67,7 +67,6 @@ open class Invitee {
     fileprivate func state(_ state: InviteeState) {
         print("< INVITEE State transition \(_name) from \(_state) to \(state) >")
         _state = state
-        Utils.notifyObservers("InviteeChanged", properties: [:])
     }
 }
 

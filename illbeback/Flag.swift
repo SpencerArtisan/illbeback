@@ -23,7 +23,7 @@ open class Flag {
         return Flag(token: FlagToken(token: encoded))
     }
     
-    fileprivate init(token: FlagToken) {
+    init(token: FlagToken) {
         _token = token
     }
     
@@ -163,6 +163,7 @@ open class Flag {
             invitee = invite(friend)
             invitee!.accepting()
         }
+        fireChangeEvent()
         return invitee!
     }
     
@@ -206,6 +207,7 @@ open class Flag {
             invitee = invite(friend)
             invitee!.declining()
         }
+        fireChangeEvent()
         return invitee!
     }
     

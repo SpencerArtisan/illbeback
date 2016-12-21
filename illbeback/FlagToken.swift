@@ -62,7 +62,7 @@ class FlagToken {
         self._state = FlagState.fromCode(parts[6])
 
         if parts.count > 9 {
-            self._invitees = parts[9] != "" ? parts[9].components(separatedBy: ";").map{Invitee(code: $0)} : []
+            self._invitees = parts[9] != "" ? parts[9].components(separatedBy: ";").map { Invitee(code: $0) } : []
         } else {
             self._invitees = []
         }

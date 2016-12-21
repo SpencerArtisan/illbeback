@@ -89,6 +89,7 @@ class OutBox {
                     onComplete: {
                         invitee.inviteSuccess()
                         Utils.notifyObservers("FlagSendSuccess", properties: ["flag": flag, "to": invitee.name()])
+                        Utils.notifyObservers("FlagChanged", properties: ["flag": flag])
                    },
                     onError: {
                         invitee.inviteFailure()

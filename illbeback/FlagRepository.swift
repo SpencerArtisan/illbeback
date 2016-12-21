@@ -73,6 +73,7 @@ class FlagRepository : NSObject {
                         invitee!.inviteSuccess()
                     }
                 }
+                Utils.notifyObservers("InviteeChanged", properties: ["flag": originalFlag!])
             }
         } catch {
             print("** Failed to receive flag: \(flag)")
