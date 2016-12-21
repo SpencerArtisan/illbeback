@@ -207,6 +207,7 @@ class FlagRepository : NSObject {
                 print("Delete \(flag.encode())")
                 context.delete(entity)
             }
+            try context.save()
         }
         catch {
                 print("Error with request: \(error)")
