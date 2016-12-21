@@ -77,7 +77,7 @@ open class Flag {
     }
     
     func when() -> Date? {
-        return _token.whenUpdate() as Date?? ?? _token.when() as Date?
+        return _token.whenUpdate() as Date? ?? _token.when() as Date?
     }
     
     func when(_ when: Date?) throws{

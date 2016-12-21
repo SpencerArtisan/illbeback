@@ -3,6 +3,23 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "Flag.when() -&gt; Date?:Flag.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "_token.when()">
+            </PersistentString>
+            <PersistentString
+               value = "_token.whenUpdate() as Date? ?? _token.when() as Date?">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FlagToken.init(token : String) -&gt; FlagToken:FlagToken.swift">
+      </ContextState>
+      <ContextState
+         contextName = "FlagRepository.onFlagChanged(Notification) -&gt; ():FlagRepository.swift">
+      </ContextState>
+      <ContextState
          contextName = "static I_ll_Be_Back.CategoryController.getColorForCategory (I_ll_Be_Back.CategoryController.Type)(Swift.String) -&gt; ObjectiveC.UIColor:CategoryController.swift">
          <PersistentStrings>
             <PersistentString
@@ -14,10 +31,10 @@
          contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
       </ContextState>
       <ContextState
-         contextName = "static Global.storeDeviceToken() -&gt; ():Global.swift">
+         contextName = "I_ll_Be_Back.MemoriesController.zoomPicture (I_ll_Be_Back.MemoriesController)(I_ll_Be_Back.MapPinView) -&gt; ():MemoriesController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "Global.deviceToken">
+               value = "zoomController">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -28,18 +45,18 @@
                value = "elapsed">
             </PersistentString>
             <PersistentString
-               value = "self.selected">
+               value = "event!.type">
             </PersistentString>
             <PersistentString
-               value = "event!.type">
+               value = "self.selected">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "I_ll_Be_Back.MemoriesController.zoomPicture (I_ll_Be_Back.MemoriesController)(I_ll_Be_Back.MapPinView) -&gt; ():MemoriesController.swift">
+         contextName = "static Global.storeDeviceToken() -&gt; ():Global.swift">
          <PersistentStrings>
             <PersistentString
-               value = "zoomController">
+               value = "Global.deviceToken">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -48,6 +65,14 @@
          <PersistentStrings>
             <PersistentString
                value = "(UIImage?)image">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FlagCallout.createLabelView() -&gt; ():FlagCallout.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "flag?.when() ">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
