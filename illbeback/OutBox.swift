@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AWSS3
 
 class OutBox {
     fileprivate let flagRepository: FlagRepository
@@ -150,8 +151,8 @@ class OutBox {
         let task = transferManager.upload(uploadRequest)
         task!.continue({ (task) -> AnyObject? in
             Utils.runOnUiThread {
-                if task!.error != nil {
-                    print("    Image upload FAILED! \(key): \(task!.error)")
+                if task.error != nil {
+                    print("    Image upload FAILED! \(key): \(task.error)")
                     onError()
                 } else {
                     print("    Image uploaded \(key)")

@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "I_ll_Be_Back.MapPinView.(hitButton in _120B66E1E93D0B724A79960A6F797684) (I_ll_Be_Back.MapPinView)(C.CGPoint, button : Swift.Optional&lt;ObjectiveC.UIView&gt;) -&gt; Swift.Bool:MapPinView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "button!.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Flag.when() -&gt; Date?:Flag.swift">
          <PersistentStrings>
             <PersistentString
@@ -17,7 +25,31 @@
          contextName = "FlagToken.init(token : String) -&gt; FlagToken:FlagToken.swift">
       </ContextState>
       <ContextState
+         contextName = "OutBox.(uploadImage(String?, key : String, onComplete : () -&gt; (), onError : () -&gt; ()) -&gt; ()).(closure #1).(closure #1):OutBox.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "task!.error">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "FlagRepository.onFlagChanged(Notification) -&gt; ():FlagRepository.swift">
+      </ContextState>
+      <ContextState
+         contextName = "static Global.storeDeviceToken() -&gt; ():Global.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Global.deviceToken">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FlagCallout.createLabelView() -&gt; ():FlagCallout.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "flag?.when() ">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "static I_ll_Be_Back.CategoryController.getColorForCategory (I_ll_Be_Back.CategoryController.Type)(Swift.String) -&gt; ObjectiveC.UIColor:CategoryController.swift">
@@ -28,13 +60,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
-      </ContextState>
-      <ContextState
-         contextName = "I_ll_Be_Back.MemoriesController.zoomPicture (I_ll_Be_Back.MemoriesController)(I_ll_Be_Back.MapPinView) -&gt; ():MemoriesController.swift">
+         contextName = "I_ll_Be_Back.Camera.(takePhoto (I_ll_Be_Back.Camera) -&gt; (Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UIButton&gt;) -&gt; ()).(closure #3):Camera.swift">
          <PersistentStrings>
             <PersistentString
-               value = "zoomController">
+               value = "(UIImage?)image">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -53,36 +82,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "static Global.storeDeviceToken() -&gt; ():Global.swift">
+         contextName = "I_ll_Be_Back.MemoriesController.zoomPicture (I_ll_Be_Back.MemoriesController)(I_ll_Be_Back.MapPinView) -&gt; ():MemoriesController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "Global.deviceToken">
+               value = "zoomController">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "I_ll_Be_Back.Camera.(takePhoto (I_ll_Be_Back.Camera) -&gt; (Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UIButton&gt;) -&gt; ()).(closure #3):Camera.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "(UIImage?)image">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "FlagCallout.createLabelView() -&gt; ():FlagCallout.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "flag?.when() ">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "I_ll_Be_Back.MapPinView.(hitButton in _120B66E1E93D0B724A79960A6F797684) (I_ll_Be_Back.MapPinView)(C.CGPoint, button : Swift.Optional&lt;ObjectiveC.UIView&gt;) -&gt; Swift.Bool:MapPinView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "button!.frame">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

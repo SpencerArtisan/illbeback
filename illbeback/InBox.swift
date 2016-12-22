@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AWSS3
 
 class InBox {
     fileprivate let flagRepository: FlagRepository
@@ -124,7 +125,7 @@ class InBox {
             
             let task = transferManager.download(readRequest)
             task!.continue( { (task) -> AnyObject! in
-                self.postPhotoDownload(imageUrl.lastPathComponent, imageUrl: downloadingurl, task: task!)
+                self.postPhotoDownload(imageUrl.lastPathComponent, imageUrl: downloadingurl, task: task)
                 leftToDownload = leftToDownload - 1
                 if leftToDownload == 0 {
                     onComplete()
@@ -134,7 +135,7 @@ class InBox {
         }
     }
     
-    fileprivate func postPhotoDownload(_ key: String, imageUrl: URL, task: BFTask) {
+    fileprivate func postPhotoDownload(_ key: String, imageUrl: URL, task: AWSTask<AnyObject>) {
         if task.error != nil {
             // ensure no partial file left
 //            do {
@@ -146,7 +147,7 @@ class InBox {
             let deleteRequest = AWSS3DeleteObjectRequest()
             deleteRequest?.bucket = BUCKET
             deleteRequest?.key =  key
-            AWSS3.default().deleteObject(deleteRequest).continue({ _ in return nil })
+            AWSS3.default().deleteObject(deleteRequest!).continue({ _ in return nil })
         }
     }
     

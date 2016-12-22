@@ -1,4 +1,9 @@
 source 'https://github.com/CocoaPods/Specs.git'
-pod 'AWSiOSSDKv2'
-pod 'AWSCognitoSync'
+
+platform :ios, '8.0'
+use_frameworks!
+
+target :'illbeback' do
+    pod 'AWSS3'
+end
 

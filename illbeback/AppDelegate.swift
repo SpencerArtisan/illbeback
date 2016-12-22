@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import AWSS3
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,15 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        let credentialsProvider = AWSCognitoCredentialsProvider.credentials(
-            with: AWSRegionType.usEast1,
+        let credentialsProvider = AWSCognitoCredentialsProvider(
+            regionType: AWSRegionType.usEast1,
             identityPoolId: "us-east-1:16f753ac-4d74-42c0-a10b-1fbd18692eb1")
 
         let configuration = AWSServiceConfiguration(region: AWSRegionType.usWest1,
             credentialsProvider:credentialsProvider)
         
-        AWSServiceManager.default().setDefaultServiceConfiguration(configuration)
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
 
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)

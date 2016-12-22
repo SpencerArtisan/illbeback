@@ -4,57 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-AWSCognitoSync.xcscheme</key>
+		<key>AWSCore.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-AWSiOSSDKv2.xcscheme</key>
+		<key>AWSS3.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-Bolts.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-FMDB.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-GZIP.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-Mantle.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-Reachability.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-TMCache.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-UICKeyChainStore.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-XMLDictionary.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods.xcscheme</key>
+		<key>Pods-illbeback.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -62,57 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>37A131B850DBD51567616185</key>
+		<key>5ACFCBB5C36270A9DF9A2D2D11708867</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>38845EF6B9250212B6690384</key>
+		<key>9F7098779713B711F6C591B62A41F242</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>414B0CD3EB62BE2586510F35</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4E6103A69187D5CB32C6626F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5F6434EB6AFE233C7E2C25FA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>72A2ACB09780637421FA0FB8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B93708ED446088332F48C7CF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D3561452CFD8B11AA783736D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DB470E9210502B2E9BA0F126</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E6A6FF7F3F4185BAE4A9295D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F8765EAA35E472BEAE849B8D</key>
+		<key>D6755BACD09B609510D76DDAFA5B4D8F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
