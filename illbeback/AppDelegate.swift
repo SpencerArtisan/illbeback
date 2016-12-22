@@ -45,9 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("SIMULATOR")
             Global.setDevice(Data(bytes: UnsafePointer<UInt8>([0xff] as [UInt8]), count: 1))
         #else
-            let settings = UIUserNotificationSettings(forTypes: [.Badge, .Alert], categories: nil)
-            UIApplication.sharedApplication().registerForRemoteNotifications()
-            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            let settings = UIUserNotificationSettings(types: [.badge, .alert], categories: nil)
+            UIApplication.shared.registerForRemoteNotifications()
+            UIApplication.shared.registerUserNotificationSettings(settings)
         #endif
         
 //        if launchOptions != nil {

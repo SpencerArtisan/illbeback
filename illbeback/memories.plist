@@ -3,6 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Memories</key>
-	<array/>
+	<array>
+		<string>bbb</string>
+		<string>aaa</string>
+	</array>
 </dict>
 </plist>

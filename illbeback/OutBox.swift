@@ -151,7 +151,7 @@ class OutBox {
         task!.continue({ (task) -> AnyObject? in
             Utils.runOnUiThread {
                 if task!.error != nil {
-                    print("    Image upload FAILED! \(key)")
+                    print("    Image upload FAILED! \(key): \(task!.error)")
                     onError()
                 } else {
                     print("    Image uploaded \(key)")

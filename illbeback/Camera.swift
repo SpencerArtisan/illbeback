@@ -39,7 +39,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
             print("SIMULATOR")
         #else
             do {
-                try snapPlayer = AVAudioPlayer(contentsOfURL: snapURL)
+                try snapPlayer = AVAudioPlayer(contentsOf: snapURL)
                 snapPlayer!.prepareToPlay()
             } catch {
             }
