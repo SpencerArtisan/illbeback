@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseDatabase
 
 class Global {
     fileprivate static var user = Preferences.user()
@@ -51,21 +52,22 @@ class Global {
             let tokenString = getDeviceTokenString()
             
             let url = "https://illbeback.firebaseio.com/users/\(userName!)/device"
-            let node = Firebase(url: url)
             
-            node?.observeSingleEvent(of: .value, with: { snapshot in
-                if !(snapshot?.exists())! || snapshot?.value == nil {
+            let deviceRef = FIRDatabase.database().reference(fromURL: url)
+            
+            deviceRef.observeSingleEvent(of: .value, with: { snapshot in
+                if !snapshot.exists() || snapshot.value == nil {
                     print("FIREBASE OP: Uploading new device token \(tokenString) to \(url)")
-                    node?.setValue(tokenString)
+                    deviceRef.setValue(tokenString)
                     onSuccess()
                 } else {
-                    let existingToken = snapshot?.value
+                    let existingToken = snapshot.value
                     print("FIREBASE OP: Existing device token \(existingToken!) at \(url)")
                     if existingToken! as! String != tokenString {
                         print("FIREBASE OP: Device token MISMATCH!")
                         if allowOverwrite {
                             print("FIREBASE OP: Overwriting old device token")
-                            node?.setValue(tokenString)
+                            deviceRef.setValue(tokenString)
                             onSuccess()
                         } else {
                             print("FIREBASE OP: Disallowing overwrite of old device token")

@@ -17,7 +17,6 @@
 		971DF3721C28AC4B0051D47F /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DF3711C28AC4B0051D47F /* Preferences.swift */; };
 		972006A51A910E7500B5E74C /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972006A41A910E7500B5E74C /* PhotoAlbum.swift */; };
 		972006A71A9140FB00B5E74C /* DescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 972006A61A9140FB00B5E74C /* DescriptionView.xib */; };
-		9725CD381A98D22C0081C1B3 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD371A98D22C0081C1B3 /* Firebase.framework */; };
 		9725CD3A1A98D26E0081C1B3 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD391A98D26E0081C1B3 /* libicucore.dylib */; };
 		9725CD3C1A98D2950081C1B3 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD3B1A98D2950081C1B3 /* libc++.dylib */; };
 		9725CD3E1A98D2AA0081C1B3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9725CD3D1A98D2AA0081C1B3 /* CFNetwork.framework */; };
@@ -44,6 +43,7 @@
 		97767D581B91B2BD00B6A827 /* ShapeCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97767D571B91B2BD00B6A827 /* ShapeCorner.swift */; };
 		97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97767D591B91B3D800B6A827 /* ShapeCornerView.swift */; };
 		97767D5C1B91DE2200B6A827 /* ShapeOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */; };
+		978E8AC91E0C1109007810F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 978E8AC81E0C1109007810F5 /* GoogleService-Info.plist */; };
 		9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */; };
 		9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */; };
 		9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */; };
@@ -127,7 +127,6 @@
 		971DF3711C28AC4B0051D47F /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		972006A41A910E7500B5E74C /* PhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
 		972006A61A9140FB00B5E74C /* DescriptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DescriptionView.xib; sourceTree = "<group>"; };
-		9725CD371A98D22C0081C1B3 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
 		9725CD391A98D26E0081C1B3 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		9725CD3B1A98D2950081C1B3 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		9725CD3D1A98D2AA0081C1B3 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -156,6 +155,8 @@
 		97767D571B91B2BD00B6A827 /* ShapeCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeCorner.swift; sourceTree = "<group>"; };
 		97767D591B91B3D800B6A827 /* ShapeCornerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeCornerView.swift; sourceTree = "<group>"; };
 		97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShapeOptions.xib; sourceTree = "<group>"; };
+		978E8AC81E0C1109007810F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		978E8ACA1E0C1324007810F5 /* I'll Be Back.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "I'll Be Back.entitlements"; sourceTree = "<group>"; };
 		9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "illbeback-Bridging-Header.h"; sourceTree = "<group>"; };
 		979F850A1AA11B8600A11F7F /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		97A353431A800B9500973CAC /* I'll Be Back.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I'll Be Back.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,7 +227,6 @@
 				9725CD3E1A98D2AA0081C1B3 /* CFNetwork.framework in Frameworks */,
 				9725CD3C1A98D2950081C1B3 /* libc++.dylib in Frameworks */,
 				9725CD3A1A98D26E0081C1B3 /* libicucore.dylib in Frameworks */,
-				9725CD381A98D22C0081C1B3 /* Firebase.framework in Frameworks */,
 				976696EB1A8A992D004CB60D /* QuartzCore.framework in Frameworks */,
 				9759BF701A80318300B945CB /* ImageIO.framework in Frameworks */,
 				9759BF6E1A802C4100B945CB /* CoreLocation.framework in Frameworks */,
@@ -373,7 +373,6 @@
 				9725CD3D1A98D2AA0081C1B3 /* CFNetwork.framework */,
 				9725CD3B1A98D2950081C1B3 /* libc++.dylib */,
 				9725CD391A98D26E0081C1B3 /* libicucore.dylib */,
-				9725CD371A98D22C0081C1B3 /* Firebase.framework */,
 				976696EA1A8A992D004CB60D /* QuartzCore.framework */,
 				97FC73291A840B8D00676F16 /* LLSimpleCamera */,
 				9759BF6F1A80318300B945CB /* ImageIO.framework */,
@@ -407,6 +406,8 @@
 		97A353451A800B9500973CAC /* illbeback */ = {
 			isa = PBXGroup;
 			children = (
+				978E8ACA1E0C1324007810F5 /* I'll Be Back.entitlements */,
+				978E8AC81E0C1109007810F5 /* GoogleService-Info.plist */,
 				97A353461A800B9500973CAC /* Supporting Files */,
 				97A3536A1A800EF500973CAC /* Media.xcassets */,
 				97662C951BA2236100ACFF3A /* General */,
@@ -601,6 +602,7 @@
 				97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */,
 				976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */,
 				97A353551A800B9500973CAC /* LaunchScreen.xib in Resources */,
+				978E8AC91E0C1109007810F5 /* GoogleService-Info.plist in Resources */,
 				97FA33431BF7BEFE00248F67 /* Events.xib in Resources */,
 				97FC86691C00EED400C30C56 /* FlagsView.xib in Resources */,
 			);
@@ -863,6 +865,7 @@
 			baseConfigurationReference = B25A04F75CABD4EE0D09E626 /* Pods-illbeback.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "illbeback/I'll Be Back.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -891,6 +894,7 @@
 			baseConfigurationReference = E3C9DD9CC1D9C89ED7011DA4 /* Pods-illbeback.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "illbeback/I'll Be Back.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;

@@ -8,9 +8,10 @@
 
 import UIKit
 import AWSS3
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -26,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        FIRApp.configure()
+        
         let credentialsProvider = AWSCognitoCredentialsProvider(
             regionType: AWSRegionType.usEast1,
             identityPoolId: "us-east-1:16f753ac-4d74-42c0-a10b-1fbd18692eb1")
@@ -44,9 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("SIMULATOR")
             Global.setDevice(Data(bytes: UnsafePointer<UInt8>([0xff] as [UInt8]), count: 1))
         #else
-            let settings = UIUserNotificationSettings(types: [.badge, .alert], categories: nil)
-            UIApplication.shared.registerForRemoteNotifications()
-            UIApplication.shared.registerUserNotificationSettings(settings)
+            
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options:[.badge, .alert]) { (granted, error) in
+                // Enable or disable features based on authorization.
+            }
+            application.registerForRemoteNotifications()
         #endif
         
 //        if launchOptions != nil {
@@ -61,14 +67,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    // implemented in your application delegate
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("Got token data! \(deviceToken)")
+        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        print(deviceTokenString)
         Global.setDevice(deviceToken)
     }
-    
+
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Couldn't register: \(error)")
+        print("Error getting token \(error)")
     }
     
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {

@@ -3,12 +3,7 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "I_ll_Be_Back.MapPinView.(hitButton in _120B66E1E93D0B724A79960A6F797684) (I_ll_Be_Back.MapPinView)(C.CGPoint, button : Swift.Optional&lt;ObjectiveC.UIView&gt;) -&gt; Swift.Bool:MapPinView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "button!.frame">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
       </ContextState>
       <ContextState
          contextName = "Flag.when() -&gt; Date?:Flag.swift">
@@ -34,6 +29,14 @@
       </ContextState>
       <ContextState
          contextName = "FlagRepository.onFlagChanged(Notification) -&gt; ():FlagRepository.swift">
+      </ContextState>
+      <ContextState
+         contextName = "static Global.(storeDeviceToken(Bool, userName : String?, onSuccess : () -&gt; (), onFailure : () -&gt; ()) -&gt; ()).(closure #1):Global.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "existingToken! as! String">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "static Global.storeDeviceToken() -&gt; ():Global.swift">
@@ -68,16 +71,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "I_ll_Be_Back.MapPinView.hitTest (I_ll_Be_Back.MapPinView)(C.CGPoint, withEvent : Swift.Optional&lt;ObjectiveC.UIEvent&gt;) -&gt; Swift.Optional&lt;ObjectiveC.UIView&gt;:MapPinView.swift">
+         contextName = "I_ll_Be_Back.MapPinView.(hitButton in _120B66E1E93D0B724A79960A6F797684) (I_ll_Be_Back.MapPinView)(C.CGPoint, button : Swift.Optional&lt;ObjectiveC.UIView&gt;) -&gt; Swift.Bool:MapPinView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "elapsed">
-            </PersistentString>
-            <PersistentString
-               value = "event!.type">
-            </PersistentString>
-            <PersistentString
-               value = "self.selected">
+               value = "button!.frame">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -90,7 +87,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
+         contextName = "I_ll_Be_Back.MapPinView.hitTest (I_ll_Be_Back.MapPinView)(C.CGPoint, withEvent : Swift.Optional&lt;ObjectiveC.UIEvent&gt;) -&gt; Swift.Optional&lt;ObjectiveC.UIView&gt;:MapPinView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "elapsed">
+            </PersistentString>
+            <PersistentString
+               value = "self.selected">
+            </PersistentString>
+            <PersistentString
+               value = "event!.type">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

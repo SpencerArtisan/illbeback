@@ -8,11 +8,12 @@
 
 import Foundation
 import AWSS3
+import FirebaseDatabase
 
 class OutBox {
     fileprivate let flagRepository: FlagRepository
     fileprivate let photoAlbum: PhotoAlbum
-    fileprivate var root: Firebase
+    fileprivate var root: FIRDatabaseReference
     fileprivate let BUCKET = "illbebackappus"
     fileprivate var transferManager: AWSS3TransferManager
     fileprivate static var deviceToken: Data?
@@ -20,7 +21,7 @@ class OutBox {
     init(flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.flagRepository = flagRepository
         self.photoAlbum = photoAlbum
-        root = Firebase(url:"https://illbeback.firebaseio.com/")
+        root = FIRDatabase.database().reference(fromURL: "https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.default()
     }
     
@@ -167,8 +168,9 @@ class OutBox {
     fileprivate func uploadFlagDetails(_ to: String, flag: Flag, onComplete: @escaping () -> (), onError: @escaping () -> ()) {
         print("FIREBASE OP: Uploading flag " + flag.encode())
         let newNode = shareRoot(to).childByAutoId()
-        newNode!.setValue(["from": Global.getUser().getName(), "memory": flag.encode()], withCompletionBlock: {
-            (error:Error?, ref:Firebase?) in
+
+        newNode.setValue(["from": Global.getUser().getName(), "memory": flag.encode()], withCompletionBlock: {
+            (error:Error?, ref:FIRDatabaseReference) in
             Utils.runOnUiThread {
                 if (error != nil) {
                     print("     Flag upload FAILED! \(flag.type())")
@@ -181,7 +183,7 @@ class OutBox {
         })
     }
     
-    fileprivate func shareRoot(_ to: String) -> Firebase {
-        return root.child(byAppendingPath: "users/" + to + "/given")
+    fileprivate func shareRoot(_ to: String) -> FIRDatabaseReference {
+        return root.child("users/" + to + "/given")
     }
 }

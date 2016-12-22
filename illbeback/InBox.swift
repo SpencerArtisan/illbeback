@@ -8,11 +8,12 @@
 
 import Foundation
 import AWSS3
+import FirebaseDatabase
 
 class InBox {
     fileprivate let flagRepository: FlagRepository
     fileprivate let photoAlbum: PhotoAlbum
-    fileprivate var root: Firebase
+    fileprivate var root: FIRDatabaseReference
     fileprivate let BUCKET = "illbebackappus"
     fileprivate var transferManager: AWSS3TransferManager
     fileprivate static var deviceToken: Data?
@@ -21,7 +22,7 @@ class InBox {
     init(flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.flagRepository = flagRepository
         self.photoAlbum = photoAlbum
-        root = Firebase(url:"https://illbeback.firebaseio.com/")
+        root = FIRDatabase.database().reference(fromURL: "https://illbeback.firebaseio.com/")
         transferManager = AWSS3TransferManager.default()
     }
     
@@ -37,13 +38,13 @@ class InBox {
         print("Receive triggered")
         
         shareRoot(Global.getUser().getName()).observeSingleEvent(of: .value, with: { snapshot in
-            self.receiveNextFlag((snapshot?.children)!)
+            self.receiveNextFlag(snapshot.children)
         })
     }
     
     fileprivate func receiveNextFlag(_ firebaseFlags:NSEnumerator) {
         receiving = true
-        let firebaseFlag = firebaseFlags.nextObject() as? FDataSnapshot
+        let firebaseFlag = firebaseFlags.nextObject() as? FIRDataSnapshot
         if firebaseFlag != nil {
             self.receive(firebaseFlag!, onComplete: {
                 self.receiveNextFlag(firebaseFlags)
@@ -53,7 +54,7 @@ class InBox {
         }
     }
     
-    func receive(_ firebaseFlag: FDataSnapshot, onComplete: @escaping () -> ()) {
+    func receive(_ firebaseFlag: FIRDataSnapshot, onComplete: @escaping () -> ()) {
         let encoded = (firebaseFlag.value as! NSDictionary)["memory"] as! String
         let from = (firebaseFlag.value as! NSDictionary)["from"] as! String
         let flag = Flag.decode(encoded)
@@ -151,7 +152,7 @@ class InBox {
         }
     }
     
-    fileprivate func shareRoot(_ to: String) -> Firebase {
-        return root.child(byAppendingPath: "users/" + to + "/given")
+    fileprivate func shareRoot(_ to: String) -> FIRDatabaseReference {
+        return root.child("users/" + to + "/given")
     }
 }
