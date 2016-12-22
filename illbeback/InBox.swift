@@ -88,7 +88,7 @@ class InBox {
                         onComplete()
                         Utils.notifyObservers("FlagReceiveSuccess", properties: ["flag": updatedFlag, "from": from])
                     } catch {
-                        updatedFlag.reset(FlagState.Neutral)
+                        updatedFlag.reset()
                         firebaseFlag.ref.removeValue()
                         onComplete()
                         Utils.notifyObservers("FlagReceiveFailed", properties: ["flag": updatedFlag, "from": from])

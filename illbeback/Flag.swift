@@ -265,8 +265,8 @@ open class Flag {
         fireChangeEvent()
     }
     
-    func reset(_ state: FlagState) {
-        print("< ** RESET PROBLEM FLAG TO \(state): \(self) ** >")
+    func reset() {
+        print("< ** RESET PROBLEM FLAG TO Neutral: \(self) ** >")
         _token.declineUpdate()
         _token.state(.Neutral)
         fireChangeEvent()

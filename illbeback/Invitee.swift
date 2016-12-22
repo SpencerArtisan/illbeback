@@ -8,9 +8,11 @@
 
 import Foundation
 
-open class Invitee {
+open class Invitee : CustomStringConvertible {
     fileprivate var _name: String
     fileprivate var _state: InviteeState
+    
+    public var description: String { return encode() }
     
     init(name: String) {
         _name = name

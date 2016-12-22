@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FIRApp.configure()
         
+        AWSLogger.default().logLevel = .info
+        
         let credentialsProvider = AWSCognitoCredentialsProvider(
             regionType: AWSRegionType.usEast1,
             identityPoolId: "us-east-1:16f753ac-4d74-42c0-a10b-1fbd18692eb1")

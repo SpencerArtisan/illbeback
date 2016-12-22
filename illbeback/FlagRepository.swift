@@ -227,7 +227,7 @@ class FlagRepository : NSObject {
         do {
             var searchResults = try read(id: flag.id(), context: context)
             if searchResults.count > 0 {
-                print ("Found \(searchResults.count) flags with duplicate ids")
+                print("Found \(searchResults.count) flags with duplicate ids")
                 let toAmend = searchResults.remove(at: 0)
                 for entity in searchResults as [NSManagedObject] {
                     print("Deleting duplicate")
