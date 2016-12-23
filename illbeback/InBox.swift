@@ -14,8 +14,8 @@ class InBox {
     fileprivate let flagRepository: FlagRepository
     fileprivate let photoAlbum: PhotoAlbum
     fileprivate var root: FIRDatabaseReference
-    fileprivate let BUCKET = "illbebackappus"
-    fileprivate var transferManager: AWSS3TransferManager
+    fileprivate let BUCKET = "ireland-breadcrumbs"
+    fileprivate var transferManager: AWSS3TransferUtility
     fileprivate static var deviceToken: Data?
     fileprivate var receiving = false
     
@@ -23,7 +23,7 @@ class InBox {
         self.flagRepository = flagRepository
         self.photoAlbum = photoAlbum
         root = FIRDatabase.database().reference(fromURL: "https://illbeback.firebaseio.com/")
-        transferManager = AWSS3TransferManager.default()
+        transferManager = AWSS3TransferUtility.s3TransferUtility(forKey: "x")
     }
     
     func isReceiving() -> Bool {
@@ -124,8 +124,8 @@ class InBox {
             let downloadingurl = URL(fileURLWithPath: "\(imageUrl.path).recent")
             readRequest.downloadingFileURL = downloadingurl
             
-            let task = transferManager.download(readRequest)
-            task!.continue( { (task) -> AnyObject! in
+            let task = transferManager.download(to: URL(fileURLWithPath: "\(imageUrl.path).recent"), bucket: BUCKET, key: imageUrl.lastPathComponent, expression: nil, completionHander: nil)
+            task.continue( { (task) -> AnyObject! in
                 self.postPhotoDownload(imageUrl.lastPathComponent, imageUrl: downloadingurl, task: task)
                 leftToDownload = leftToDownload - 1
                 if leftToDownload == 0 {
@@ -136,7 +136,7 @@ class InBox {
         }
     }
     
-    fileprivate func postPhotoDownload(_ key: String, imageUrl: URL, task: AWSTask<AnyObject>) {
+    fileprivate func postPhotoDownload(_ key: String, imageUrl: URL, task: AWSTask<AWSS3TransferUtilityDownloadTask>) {
         if task.error != nil {
             // ensure no partial file left
 //            do {

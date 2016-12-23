@@ -14,7 +14,7 @@ open class Photo {
     let imagePath: String
     let fileManager = FileManager.default
     
-    init(imagePath: String) {
+    init(imagePath: String) throws {
         self.image = UIImage(contentsOfFile: imagePath)!
         self.imagePath = imagePath
     }

@@ -14,20 +14,20 @@ class OutBox {
     fileprivate let flagRepository: FlagRepository
     fileprivate let photoAlbum: PhotoAlbum
     fileprivate var root: FIRDatabaseReference
-    fileprivate let BUCKET = "illbebackappus"
-    fileprivate var transferManager: AWSS3TransferManager
+    fileprivate let BUCKET = "ireland-breadcrumbs"
+    fileprivate var transferManager: AWSS3TransferUtility
     fileprivate static var deviceToken: Data?
   
     init(flagRepository: FlagRepository, photoAlbum: PhotoAlbum) {
         self.flagRepository = flagRepository
         self.photoAlbum = photoAlbum
         root = FIRDatabase.database().reference(fromURL: "https://illbeback.firebaseio.com/")
-        transferManager = AWSS3TransferManager.default()
+        transferManager = AWSS3TransferUtility.s3TransferUtility(forKey: "x")
     }
     
     func send() {
         print("Send triggered")
-        sendInvites()
+        sendNextInvite()
         sendAccepts()
         sendDeclines()
     }
@@ -72,13 +72,15 @@ class OutBox {
         }
     }
     
-    fileprivate func sendInvites() {
+    fileprivate func sendNextInvite() {
+        print("Attempting to send next invite...")
         for flag in flagRepository.flags() {
-            let inviting = flag.invitees().filter {$0.state() == InviteeState.Inviting}
-            for invitee in inviting {
-                print("SENDING INVITE for \(flag.type()) to \(invitee.name())...")
-                Utils.notifyObservers("FlagSending", properties: ["flag": flag, "to": invitee.name()])
-                invite(invitee, flag: flag)
+            let invitee = flag.invitees().first {$0.state() == InviteeState.Inviting}
+            if invitee != nil {
+                print("SENDING INVITE for \(flag.type()) to \(invitee!.name())...")
+                Utils.notifyObservers("FlagSending", properties: ["flag": flag, "to": invitee!.name()])
+                invite(invitee!, flag: flag)
+                return
             }
         }
     }
@@ -92,16 +94,19 @@ class OutBox {
                         invitee.inviteSuccess()
                         Utils.notifyObservers("FlagSendSuccess", properties: ["flag": flag, "to": invitee.name()])
                         Utils.notifyObservers("FlagChanged", properties: ["flag": flag])
+                        self.sendNextInvite()
                    },
                     onError: {
                         invitee.inviteFailure()
                         Utils.notifyObservers("FlagSendFailed", properties: ["flag": flag, "to": invitee.name()])
+                        self.sendNextInvite()
                     }
                 )
             },
             onError: {
                 invitee.inviteFailure()
                 Utils.notifyObservers("FlagSendFailed", properties: ["flag": flag, "to": invitee.name()])
+                self.sendNextInvite()
             })
     }
     
@@ -147,10 +152,12 @@ class OutBox {
         uploadRequest.bucket = BUCKET
         uploadRequest.key = key
         uploadRequest.body = URL(fileURLWithPath: imagePath!)
-        uploadRequest.acl = AWSS3ObjectCannedACL.authenticatedRead
         
-        let task = transferManager.upload(uploadRequest)
-        task!.continue({ (task) -> AnyObject? in
+        //uploadRequest.acl = AWSS3ObjectCannedACL.authenticatedRead
+        
+        let task = transferManager.uploadFile( URL(fileURLWithPath: imagePath!), bucket: BUCKET, key: key, contentType: "image/jpeg", expression: nil, completionHander: nil)
+            
+        task.continue({ (task) -> AnyObject? in
             Utils.runOnUiThread {
                 if task.error != nil {
                     print("    Image upload FAILED! \(key): \(task.error)")

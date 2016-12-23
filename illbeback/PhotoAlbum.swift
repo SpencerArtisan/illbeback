@@ -60,19 +60,25 @@ open class PhotoAlbum : NSObject {
         var photos:[Photo] = []
         let marker = flag.state() == .ReceivedUpdate || flag.state() == .ReceivedNew ? ".recent" : ""
         var candidate = "\(folder)/Memory\(flagId).jpg\(marker)"
-        if fileManager.fileExists(atPath: candidate) {
-            photos.append(Photo(imagePath: candidate))
-        }
+        addPhoto(photos: &photos, path: candidate)
         
         for suffix in 2...10 {
             candidate = "\(folder)/Memory\(flagId)-\(suffix).jpg\(marker)"
-            if fileManager.fileExists(atPath: candidate) {
-                photos.append(Photo(imagePath: candidate))
-            }
+            addPhoto(photos: &photos, path: candidate)
         }
         return photos
     }
     
+    fileprivate func addPhoto(photos: inout [Photo], path: String) {
+        do {
+            if fileManager.fileExists(atPath: path) {
+                try photos.append(Photo(imagePath: path))
+            }
+        } catch {
+            print("Failed to add photo \(path)")
+        }
+    }
+
     func addFlagImage(_ image: UIImage?, flag: Flag) {
         let imagePath = getNewImagePath(flag.id())
         print("Saving image \(imagePath)")

@@ -31,15 +31,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         AWSLogger.default().logLevel = .info
         
-        let credentialsProvider = AWSCognitoCredentialsProvider(
-            regionType: AWSRegionType.usEast1,
-            identityPoolId: "us-east-1:16f753ac-4d74-42c0-a10b-1fbd18692eb1")
-
-        let configuration = AWSServiceConfiguration(region: AWSRegionType.usWest1,
-            credentialsProvider:credentialsProvider)
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.euWest1,
+                                                                identityPoolId:"eu-west-1:d5862648-a41c-4e0f-978c-2526953cc384")
         
+        let configuration = AWSServiceConfiguration(region:.euWest1, credentialsProvider:credentialsProvider)
         AWSServiceManager.default().defaultServiceConfiguration = configuration
 
+        let utilityConfiguration = AWSS3TransferUtilityConfiguration()
+        utilityConfiguration.isAccelerateModeEnabled = true
+        AWSS3TransferUtility.register(with: configuration!, transferUtilityConfiguration: utilityConfiguration, forKey: "x")
+        
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         } catch {
