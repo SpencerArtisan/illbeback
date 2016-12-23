@@ -28,6 +28,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "InBox.(downloadImages(Flag, onComplete : () -&gt; ()) -&gt; ()).(closure #1):InBox.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "error!">
+            </PersistentString>
+            <PersistentString
+               value = "downloadingurl.path">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "static Global.(storeDeviceToken(Bool, userName : String?, onSuccess : () -&gt; (), onFailure : () -&gt; ()) -&gt; ()).(closure #1):Global.swift">
          <PersistentStrings>
             <PersistentString
@@ -83,6 +94,9 @@
                value = "task.exception">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Photo.init(imagePath : String) throws -&gt; Photo:Photo.swift">
       </ContextState>
       <ContextState
          contextName = "I_ll_Be_Back.Camera.(takePhoto (I_ll_Be_Back.Camera) -&gt; (Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UIButton&gt;) -&gt; ()).(closure #3):Camera.swift">

@@ -113,22 +113,26 @@ class InBox {
 
     fileprivate func downloadImages(_ flag: Flag, onComplete: @escaping () -> ()) {
         print("Downloading shared images for flag \(flag.id())")
-        
+
         let imageUrls = photoAlbum.getFlagImageUrls(flag.id())
         var leftToDownload = imageUrls.count
         
         for imageUrl in imageUrls {
             let downloadingurl = URL(fileURLWithPath: "\(imageUrl.path).recent")
             
-            let task = transferManager.download(to: downloadingurl, bucket: BUCKET, key: imageUrl.lastPathComponent, expression: nil, completionHander: nil)
-            task.continue( { (task) -> AnyObject! in
-                self.postPhotoDownload(imageUrl.lastPathComponent, imageUrl: downloadingurl, task: task)
+            let url = URL(string: "https://s3-eu-west-1.amazonaws.com/ireland-breadcrumbs/\(imageUrl.lastPathComponent)")
+            
+            let task = URLSession.shared.dataTask(with: url!) { data, response, error in
+                if error == nil && data != nil {
+                        FileManager.default.createFile(atPath: downloadingurl.path, contents: data!, attributes: nil)
+                }
                 leftToDownload = leftToDownload - 1
                 if leftToDownload == 0 {
                     onComplete()
                 }
-                return nil
-            })
+            }
+            
+            task.resume()
         }
     }
     

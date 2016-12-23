@@ -148,7 +148,11 @@ class OutBox {
     }
     
     fileprivate func uploadImage(_ imagePath: String?, key: String, onComplete: @escaping () -> (), onError: @escaping () -> ()) {
-        let task = transferManager.uploadFile( URL(fileURLWithPath: imagePath!), bucket: BUCKET, key: key, contentType: "image/jpeg", expression: nil, completionHander: nil)
+        
+        let expression = AWSS3TransferUtilityUploadExpression()
+        expression.setValue("authenticated-read", forRequestHeader: "x-amz-acl")
+        
+        let task = transferManager.uploadFile( URL(fileURLWithPath: imagePath!), bucket: BUCKET, key: key, contentType: "image/jpeg", expression: expression, completionHander: nil)
             
         task.continue({ (task) -> AnyObject? in
             Utils.runOnUiThread {
