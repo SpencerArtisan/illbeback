@@ -118,14 +118,12 @@ class InBox {
         var leftToDownload = imageUrls.count
         
         for imageUrl in imageUrls {
-            let downloadingurl = URL(fileURLWithPath: "\(imageUrl.path).recent")
-            
+
+            let urlFixed = imageUrl
             let url = URL(string: "https://s3-eu-west-1.amazonaws.com/ireland-breadcrumbs/\(imageUrl.lastPathComponent)")
-            
+            print("Trying to download image \(url!)")
             let task = URLSession.shared.dataTask(with: url!) { data, response, error in
-                if error == nil && data != nil {
-                        FileManager.default.createFile(atPath: downloadingurl.path, contents: data!, attributes: nil)
-                }
+                self.onPhotoDownload(data: data, response: response, error: error, imageUrl: urlFixed)
                 leftToDownload = leftToDownload - 1
                 if leftToDownload == 0 {
                     onComplete()
@@ -136,18 +134,15 @@ class InBox {
         }
     }
     
-    fileprivate func postPhotoDownload(_ key: String, imageUrl: URL, task: AWSTask<AWSS3TransferUtilityDownloadTask>) {
-        if task.error != nil  {
-            // ensure no partial file left
-//            do {
-//                try photoAlbum.fileManager.removeItemAtPath(imageUrl.path!)
-//            } catch {
-//            }
-        } else {
-            print("    Image downloaded \(imageUrl.lastPathComponent)")
+    fileprivate func onPhotoDownload(data: Data?, response: URLResponse?, error: Error?, imageUrl: URL) {
+        if error == nil && data != nil && data!.count > 1000 {
+            let downloadingurl = URL(fileURLWithPath: "\(imageUrl.path).recent")
+            print("Image download complete. Saving to file \(downloadingurl.path)")
+            FileManager.default.createFile(atPath: downloadingurl.path, contents: data!, attributes: nil)
             let deleteRequest = AWSS3DeleteObjectRequest()
-            deleteRequest?.bucket = BUCKET
-            deleteRequest?.key =  key
+            deleteRequest?.bucket = self.BUCKET
+            deleteRequest?.key =  imageUrl.lastPathComponent
+            print("Deleting \(imageUrl.lastPathComponent)")
             AWSS3.default().deleteObject(deleteRequest!).continue({ _ in return nil })
         }
     }
