@@ -15,8 +15,13 @@ open class Photo {
     let fileManager = FileManager.default
     
     init(imagePath: String) throws {
-        self.image = UIImage(contentsOfFile: imagePath)!
-        self.imagePath = imagePath
+        let img = UIImage(contentsOfFile: imagePath)
+        if (img != nil) {
+            self.image = img!
+            self.imagePath = imagePath
+        } else {
+            throw AwfulError.Bad
+        }
     }
     
     func deletePhoto() {
@@ -25,5 +30,11 @@ open class Photo {
             try self.fileManager.removeItem(atPath: imagePath)
         } catch {
         }
+    }
+    
+    enum AwfulError: Error {
+        case Bad
+        case Worse
+        case Terrible
     }
 }

@@ -144,7 +144,7 @@ class ShareController : UIViewController {
     
     func newFriend(_ sender: AnyObject?, cancelAction: Selector) {
         hideShareModal(sender)
-        mapController.newUserLabel.text = "Friend's sharing name"
+        mapController.newUserLabel.text = "Friend's username"
         mapController.newUserText.becomeFirstResponder()
         mapController.newUserText.text = ""
         mapController.newUserModal?.slideOutFromRight(mapController.view)

@@ -3,7 +3,18 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
+         contextName = "I_ll_Be_Back.MapPinView.hitTest (I_ll_Be_Back.MapPinView)(C.CGPoint, withEvent : Swift.Optional&lt;ObjectiveC.UIEvent&gt;) -&gt; Swift.Optional&lt;ObjectiveC.UIView&gt;:MapPinView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "elapsed">
+            </PersistentString>
+            <PersistentString
+               value = "event!.type">
+            </PersistentString>
+            <PersistentString
+               value = "self.selected">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "Flag.when() -&gt; Date?:Flag.swift">
@@ -17,24 +28,24 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "static Global.(storeDeviceToken(Bool, userName : String?, onSuccess : () -&gt; (), onFailure : () -&gt; ()) -&gt; ()).(closure #1):Global.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "existingToken! as! String">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "FlagToken.init(token : String) -&gt; FlagToken:FlagToken.swift">
+      </ContextState>
+      <ContextState
+         contextName = "FlagRepository.onFlagChanged(Notification) -&gt; ():FlagRepository.swift">
       </ContextState>
       <ContextState
          contextName = "OutBox.(uploadImage(String?, key : String, onComplete : () -&gt; (), onError : () -&gt; ()) -&gt; ()).(closure #1).(closure #1):OutBox.swift">
          <PersistentStrings>
             <PersistentString
                value = "task!.error">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "FlagRepository.onFlagChanged(Notification) -&gt; ():FlagRepository.swift">
-      </ContextState>
-      <ContextState
-         contextName = "static Global.(storeDeviceToken(Bool, userName : String?, onSuccess : () -&gt; (), onFailure : () -&gt; ()) -&gt; ()).(closure #1):Global.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "existingToken! as! String">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -63,6 +74,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "InBox.postPhotoDownload(String, imageUrl : URL, task : AWSTask&lt;AWSS3TransferUtilityDownloadTask&gt;) -&gt; ():InBox.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "task.error">
+            </PersistentString>
+            <PersistentString
+               value = "task.exception">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "I_ll_Be_Back.Camera.(takePhoto (I_ll_Be_Back.Camera) -&gt; (Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UIButton&gt;) -&gt; ()).(closure #3):Camera.swift">
          <PersistentStrings>
             <PersistentString
@@ -87,18 +109,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "I_ll_Be_Back.MapPinView.hitTest (I_ll_Be_Back.MapPinView)(C.CGPoint, withEvent : Swift.Optional&lt;ObjectiveC.UIEvent&gt;) -&gt; Swift.Optional&lt;ObjectiveC.UIView&gt;:MapPinView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "elapsed">
-            </PersistentString>
-            <PersistentString
-               value = "self.selected">
-            </PersistentString>
-            <PersistentString
-               value = "event!.type">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

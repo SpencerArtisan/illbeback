@@ -118,13 +118,9 @@ class InBox {
         var leftToDownload = imageUrls.count
         
         for imageUrl in imageUrls {
-            let readRequest : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
-            readRequest.bucket = BUCKET
-            readRequest.key =  imageUrl.lastPathComponent
             let downloadingurl = URL(fileURLWithPath: "\(imageUrl.path).recent")
-            readRequest.downloadingFileURL = downloadingurl
             
-            let task = transferManager.download(to: URL(fileURLWithPath: "\(imageUrl.path).recent"), bucket: BUCKET, key: imageUrl.lastPathComponent, expression: nil, completionHander: nil)
+            let task = transferManager.download(to: downloadingurl, bucket: BUCKET, key: imageUrl.lastPathComponent, expression: nil, completionHander: nil)
             task.continue( { (task) -> AnyObject! in
                 self.postPhotoDownload(imageUrl.lastPathComponent, imageUrl: downloadingurl, task: task)
                 leftToDownload = leftToDownload - 1
@@ -137,7 +133,7 @@ class InBox {
     }
     
     fileprivate func postPhotoDownload(_ key: String, imageUrl: URL, task: AWSTask<AWSS3TransferUtilityDownloadTask>) {
-        if task.error != nil {
+        if task.error != nil  {
             // ensure no partial file left
 //            do {
 //                try photoAlbum.fileManager.removeItemAtPath(imageUrl.path!)

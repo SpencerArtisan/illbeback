@@ -146,7 +146,7 @@ class MessageController : NSObject {
     func onNameAccepted(_ note: Notification) {
         Utils.runOnUiThread {
             let name = note.userInfo!["name"]
-            self.showMessage("Welcome to Breadsrumbs \(name!)", color: UIColor.green, fontColor: UIColor.black, time: 3.0)
+            self.showMessage("Welcome to Breadcrumbs \(name!)", color: UIColor.green, fontColor: UIColor.black, time: 3.0)
         }
         
         Utils.delay(8) {

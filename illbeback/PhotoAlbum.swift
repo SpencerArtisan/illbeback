@@ -76,6 +76,10 @@ open class PhotoAlbum : NSObject {
             }
         } catch {
             print("Failed to add photo \(path)")
+            do {
+                try fileManager.removeItem(atPath: path)
+            } catch {
+            }
         }
     }
 

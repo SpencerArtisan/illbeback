@@ -76,7 +76,7 @@ class OutBox {
         print("Attempting to send next invite...")
         for flag in flagRepository.flags() {
             let invitee = flag.invitees().first {$0.state() == InviteeState.Inviting}
-            if invitee != nil {
+            if !flag.isPendingAccept() && invitee != nil {
                 print("SENDING INVITE for \(flag.type()) to \(invitee!.name())...")
                 Utils.notifyObservers("FlagSending", properties: ["flag": flag, "to": invitee!.name()])
                 invite(invitee!, flag: flag)
@@ -148,13 +148,6 @@ class OutBox {
     }
     
     fileprivate func uploadImage(_ imagePath: String?, key: String, onComplete: @escaping () -> (), onError: @escaping () -> ()) {
-        let uploadRequest : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest.bucket = BUCKET
-        uploadRequest.key = key
-        uploadRequest.body = URL(fileURLWithPath: imagePath!)
-        
-        //uploadRequest.acl = AWSS3ObjectCannedACL.authenticatedRead
-        
         let task = transferManager.uploadFile( URL(fileURLWithPath: imagePath!), bucket: BUCKET, key: key, contentType: "image/jpeg", expression: nil, completionHander: nil)
             
         task.continue({ (task) -> AnyObject? in

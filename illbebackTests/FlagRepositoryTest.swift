@@ -15,16 +15,16 @@ class FlagRepositoryTest : XCTestCase {
     fileprivate let invitee2Repository = FlagRepository()
 
     func testEvents() {
-        originatorRepository.add(event("id1", description: "an event"))
-        originatorRepository.add(flag("id2", description: "not an event"))
+        originatorRepository.create(event("id1", description: "an event"))
+        originatorRepository.create(flag("id2", description: "not an event"))
         let events = originatorRepository.events()
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0].description(), "an event")
     }
     
     func testImminentEvents() {
-        originatorRepository.add(flag("id1", when: Date(), description: "today event"))
-        originatorRepository.add(flag("id2", when: Date.distantFuture, description: "distant event"))
+        originatorRepository.create(flag("id1", when: Date(), description: "today event"))
+        originatorRepository.create(flag("id2", when: Date.distantFuture, description: "distant event"))
         let events = originatorRepository.imminentEvents()
         XCTAssertEqual(events.count, 1)
         XCTAssertEqual(events[0].description(), "today event")
@@ -44,7 +44,7 @@ class FlagRepositoryTest : XCTestCase {
 //    }
     
     func testFind() {
-        originatorRepository.add(flag("id1", description: "a flag"))
+        originatorRepository.create(flag("id1", description: "a flag"))
         XCTAssertEqual(originatorRepository.find("id1")?.description(), "a flag")
     }
     
@@ -53,15 +53,15 @@ class FlagRepositoryTest : XCTestCase {
     }
     
     func testAdd() {
-        originatorRepository.add(flag("id1", description: "a flag"))
+        originatorRepository.create(flag("id1", description: "a flag"))
         let flags = originatorRepository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a flag")
     }
     
     func testAddWithDuplicateId() {
-        originatorRepository.add(flag("id1", description: "a flag"))
-        originatorRepository.add(flag("id1", description: "a duplicate flag"))
+        originatorRepository.create(flag("id1", description: "a flag"))
+        originatorRepository.create(flag("id1", description: "a duplicate flag"))
         let flags = originatorRepository.flags()
         XCTAssertEqual(flags.count, 1)
         XCTAssertEqual(flags[0].description(), "a duplicate flag")
@@ -69,7 +69,7 @@ class FlagRepositoryTest : XCTestCase {
     
     func testRemove() {
         let flag1 = flag("id1", description: "a flag")
-        originatorRepository.add(flag1)
+        originatorRepository.create(flag1)
         originatorRepository.remove(flag1)
         let flags = originatorRepository.flags()
         XCTAssertEqual(flags.count, 0)
@@ -77,7 +77,7 @@ class FlagRepositoryTest : XCTestCase {
     
     func testDeadFlagsIgnored() {
         let flag1 = flag("id1", description: "a flag")
-        originatorRepository.add(flag1)
+        originatorRepository.create(flag1)
         flag1.kill()
         let flags = originatorRepository.flags()
         XCTAssertEqual(flags.count, 0)
@@ -85,7 +85,7 @@ class FlagRepositoryTest : XCTestCase {
     
     func testDeadEventsIgnored() {
         let event1 = event("id1", description: "a flag")
-        originatorRepository.add(event1)
+        originatorRepository.create(event1)
         event1.kill()
         let events = originatorRepository.events()
         XCTAssertEqual(events.count, 0)
@@ -331,7 +331,7 @@ class FlagRepositoryTest : XCTestCase {
     
     fileprivate func offer(_ to: String) -> Flag {
         let offeredFlag = flag("id1", description: "a flag")
-        originatorRepository.add(offeredFlag)
+        originatorRepository.create(offeredFlag)
         return offer(offeredFlag, to: to)
     }
 
@@ -363,7 +363,7 @@ class FlagRepositoryTest : XCTestCase {
     
     fileprivate func receive(_ offeredFlag: Flag, from: String, to: String, toRepository: FlagRepository) -> Flag {
         let receivedFlag = transfer(offeredFlag)
-        toRepository.receive(from, to: to, flag: receivedFlag, onNew: { flag in try! flag.receiveNewSuccess(); toRepository.add(flag) }, onUpdate: {flag in try! flag.receiveUpdateSuccess() }, onAck: { _ in XCTFail() })
+        toRepository.receive(from, to: to, flag: receivedFlag, onNew: { flag in try! flag.receiveNewSuccess(); toRepository.create(flag) }, onUpdate: {flag in try! flag.receiveUpdateSuccess() }, onAck: { _ in XCTFail() })
         return toRepository.flags()[0]
     }
     
