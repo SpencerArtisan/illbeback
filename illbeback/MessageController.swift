@@ -34,6 +34,7 @@ class MessageController : NSObject {
         Utils.addObserver(self, selector: #selector(MessageController.onAcceptFailed), event: "AcceptFailed")
         Utils.addObserver(self, selector: #selector(MessageController.onBackupPreparing), event: "BackupPreparing")
         Utils.addObserver(self, selector: #selector(MessageController.onBackupPrepared), event: "BackupPrepared")
+        Utils.addObserver(self, selector: #selector(MessageController.onBackupFailed), event: "BackupFailed")
     }
     
     func onFlagSending(_ note: Notification) {
@@ -167,6 +168,12 @@ class MessageController : NSObject {
     }
     
     func onBackupPrepared(_ note: Notification) {
+        Utils.runOnUiThread {
+            self.dismissMessage("backup")
+        }
+    }
+    
+    func onBackupFailed(_ note: Notification) {
         Utils.runOnUiThread {
             self.dismissMessage("backup")
         }

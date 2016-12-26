@@ -24,29 +24,35 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
     func create() {
         Utils.notifyObservers("BackupPreparing", properties: [:])
         Utils.delay(0.3) {
-            let mailComposeViewController = self.mailComposer()
-            if MFMailComposeViewController.canSendMail() {
-                self.mapController.present(mailComposeViewController, animated: true, completion: {})
-            } else {
-                print("MAIL SEND FAILED")
+            do {
+                let mailComposeViewController = try self.mailComposer()
+                if MFMailComposeViewController.canSendMail() {
+                    self.mapController.present(mailComposeViewController, animated: true, completion: {})
+                } else {
+                    print("MAIL SEND FAILED")
+                }
+                Utils.notifyObservers("BackupPrepared", properties: [:])
+            } catch {
+                print("Failed to export")
+                Utils.notifyObservers("BackupFailed", properties: [:])
             }
-            Utils.notifyObservers("BackupPrepared", properties: [:])
         }
     }
     
-    func mailComposer() -> MFMailComposeViewController {
-        let mailComposer = MFMailComposeViewController()
-        mailComposer.mailComposeDelegate = self
-        mailComposer.setSubject("Breadcrumb backup")
-        mailComposer.setMessageBody("This email is your backup.  Fill in the To field.  You probably want to send it to yourself.\r\n\r\nTo restore the backup, click on the attachment and choose 'Copy to Breadcrumb'.", isHTML: false)
-//        let data = exportToData()
-//        mailComposer.addAttachmentData(data, mimeType: "application/breadcrumbs", fileName: "bread.crumb")
-        return mailComposer
+    func mailComposer() throws -> MFMailComposeViewController {
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.mailComposeDelegate = self
+            mailComposer.setSubject("Breadcrumb backup")
+            mailComposer.setMessageBody("This email is your backup.  Fill in the To field.  You probably want to send it to yourself.\r\n\r\nTo restore the backup, click on the attachment and choose 'Copy to Breadcrumb'.", isHTML: false)
+            let data = try exportToData()
+            mailComposer.addAttachmentData(data, mimeType: "application/breadcrumbs", fileName: "bread.crumb")
+            return mailComposer
     }
     
-    func exportToData() -> Data {
-        let flagData = Data(contentsOf: URL(fileURLWithPath: flagRepository.filePath())) 
-        
+    func exportToData() throws -> Data {
+        flagRepository.writeToFile()
+
+        let flagData = try Data(contentsOf: URL(fileURLWithPath: flagRepository.filePath()))
         let data = NSMutableData()
         let archiver = NSKeyedArchiver.init(forWritingWith: data)
         archiver.encode(Global.getUser().getName(), forKey: "user")

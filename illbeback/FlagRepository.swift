@@ -173,7 +173,15 @@ class FlagRepository : NSObject {
                     }
     }
     
-    
+    func writeToFile() {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        let path = paths.appendingPathComponent("memories.plist")
+        let encodedFlags = flags().map {flag in flag.encode()}
+        let props: NSMutableDictionary = NSMutableDictionary()
+        props.setValue(encodedFlags, forKey: "Memories")
+        props.write(toFile: path, atomically: true)
+        _flags = flags()
+    }
     
     func readFromCoreData () {
         //create a fetch request, telling it about the entity
