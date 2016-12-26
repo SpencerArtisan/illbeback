@@ -173,6 +173,8 @@ class FlagRepository : NSObject {
                     }
     }
     
+    
+    
     func readFromCoreData () {
         //create a fetch request, telling it about the entity
         let fetchRequest: NSFetchRequest<FlagEntity> = FlagEntity.fetchRequest()
@@ -253,7 +255,7 @@ class FlagRepository : NSObject {
         return appDelegate.persistentContainer.viewContext
     }
     
-    fileprivate func filePath() -> String {
+    func filePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let path = paths[0] as NSString
         return path.appendingPathComponent("memories.plist")
