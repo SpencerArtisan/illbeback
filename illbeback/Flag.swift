@@ -31,6 +31,10 @@ open class Flag {
         return state() == .ReceivedUpdate || state() == .ReceivedNew ||  state() == .ReceivingUpdate || state() == .ReceivingNew
     }
     
+    func isDead() -> Bool {
+        return state() == .Dead
+    }
+    
     func encode() -> String {
         return _token.encode()
     }

@@ -58,7 +58,11 @@ class FlagRenderer: NSObject {
     
     func onDeclineSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
-        refreshImage(flag)
+        if flag.isDead() {
+            remove(flag)
+        } else {
+            refreshImage(flag)
+        }
     }
     
     func onFlagChanged(_ note: Notification) {
@@ -127,7 +131,6 @@ class FlagRenderer: NSObject {
             }
         }
     }
-    
     
     func refreshImage(_ flag: Flag) {
         if let pin = getPinView(flag) {

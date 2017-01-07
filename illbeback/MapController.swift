@@ -421,12 +421,13 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                 searchText.resignFirstResponder()
                 
                 let geocoder = CLGeocoder()
-                geocoder.geocodeAddressString(textView.text, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+                
+                geocoder.geocodeAddressString(textView.text) { placemarks, error in
                     if let placemark = placemarks?[0] {
                         self.centerMap(placemark.location!.coordinate)
                         self.addFlag.addBlank(self, location: placemark.location!.coordinate, description: textView.text)
                     }
-                } as! CLGeocodeCompletionHandler)
+                }
             } else {
                 print("NEW USER TEXT \(textView.text)")
                 

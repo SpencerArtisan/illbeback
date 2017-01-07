@@ -17,10 +17,25 @@ open class PhotoAlbum : NSObject {
         folder = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         super.init()
         Utils.addObserver(self, selector: #selector(PhotoAlbum.onFlagRemoved), event: "FlagRemoved")
-   }
+        Utils.addObserver(self, selector: #selector(PhotoAlbum.onAccepted), event: "AcceptSuccess")
+        Utils.addObserver(self, selector: #selector(PhotoAlbum.onDeclined), event: "DeclineSuccess")
+    }
     
-    func acceptRecentShare(_ flag: Flag) {
-        delete(flag)
+    func onFlagRemoved(_ note: Notification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        delete(getRecentImagePaths(flag.id()))
+        delete(getImagePaths(flag.id()))
+    }
+    
+    func onDeclined(_ note: Notification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        delete(getRecentImagePaths(flag.id()))
+    }
+    
+    func onAccepted(_ note: Notification) {
+        let flag = note.userInfo!["flag"] as! Flag
+        delete(getImagePaths(flag.id()))
+        
         let paths = getImagePaths(flag.id())
         for path in paths {
             let recentPath = "\(path).recent"
@@ -101,6 +116,10 @@ open class PhotoAlbum : NSObject {
         return candidate
     }
 
+    fileprivate func getRecentImagePaths(_ flagId: String) -> [String] {
+        return getImagePaths(flagId).map {"\($0).recent"}
+    }
+    
     fileprivate func getImagePaths(_ flagId: String) -> [String] {
         var paths:[String] = []
         var candidate = "\(folder)/Memory\(flagId).jpg"
@@ -130,14 +149,9 @@ open class PhotoAlbum : NSObject {
             .filter({fileManager.fileExists(atPath: $0)})
         return files
     }
-    
-    func onFlagRemoved(_ note: Notification) {
-        let flag = note.userInfo!["flag"] as! Flag
-        delete(flag)
-    }
-    
-    func delete(_ flag: Flag) {
-        let imagePaths = getImagePaths(flag.id())
+
+ 
+    func delete(_ imagePaths: [String]) {
         for path in imagePaths {
             if fileManager.fileExists(atPath: path) {
                 do {

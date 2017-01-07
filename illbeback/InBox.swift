@@ -142,7 +142,13 @@ class InBox {
             deleteRequest?.bucket = self.BUCKET
             deleteRequest?.key =  imageUrl.lastPathComponent
             print("Deleting \(imageUrl.lastPathComponent)")
-            AWSS3.default().deleteObject(deleteRequest!).continue({ _ in return nil })
+            AWSS3.default().deleteObject(deleteRequest!)  { (output, error) in
+                if  error != nil {
+                    print("    Delete s3 photo FAILED! \(imageUrl.lastPathComponent): \(error)")
+                } else {
+                    print("    Delete s3 photo Success. \(imageUrl.lastPathComponent)")
+                }
+            }
         } else if error != nil {
             print("Error to downloading image \(response?.url)")
         } else {
