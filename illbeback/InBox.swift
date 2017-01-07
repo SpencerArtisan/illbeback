@@ -118,7 +118,6 @@ class InBox {
         var leftToDownload = imageUrls.count
         
         for imageUrl in imageUrls {
-
             let urlFixed = imageUrl
             let url = URL(string: "https://s3-eu-west-1.amazonaws.com/ireland-breadcrumbs/\(imageUrl.lastPathComponent)")
             print("Trying to download image \(url!)")
@@ -144,6 +143,10 @@ class InBox {
             deleteRequest?.key =  imageUrl.lastPathComponent
             print("Deleting \(imageUrl.lastPathComponent)")
             AWSS3.default().deleteObject(deleteRequest!).continue({ _ in return nil })
+        } else if error != nil {
+            print("Error to downloading image \(response?.url)")
+        } else {
+            print("Unknown problem downing image \(response?.url)")
         }
     }
     

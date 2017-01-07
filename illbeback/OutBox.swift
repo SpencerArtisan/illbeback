@@ -149,20 +149,26 @@ class OutBox {
     }
     
     fileprivate func uploadImage(_ imagePath: String?, key: String, onComplete: @escaping () -> (), onError: @escaping () -> ()) {
-        
         let expression = AWSS3TransferUtilityUploadExpression()
         expression.setValue("authenticated-read", forRequestHeader: "x-amz-acl")
         
-        let task = transferManager.uploadFile( URL(fileURLWithPath: imagePath!), bucket: BUCKET, key: key, contentType: "image/jpeg", expression: expression, completionHander: nil)
-            
+        let task = transferManager.uploadFile( URL(fileURLWithPath: imagePath!), bucket: BUCKET, key: key, contentType: "image/jpeg", expression: expression, completionHander:  { (task, error) in
+                if  error != nil {
+                    print("    Upload image FAILED! \(key): \(error)")
+                    onError()
+                } else {
+                    print("    Upload image Success. \(key)")
+                    onComplete()
+                }
+        })
+        
         task.continue({ (task) -> AnyObject? in
             Utils.runOnUiThread {
                 if task.error != nil {
-                    print("    Image upload FAILED! \(key): \(task.error)")
+                    print("    Upload task FAILED! \(key): \(task.error)")
                     onError()
                 } else {
-                    print("    Image uploaded \(key)")
-                    onComplete()
+                    print("    Upoad task started \(key)")
                 }
             }
             

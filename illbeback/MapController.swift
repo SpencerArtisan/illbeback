@@ -14,7 +14,6 @@ import MapKit
 class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextViewDelegate {
     let HOUR: Double = 60 * 60
     
-
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var alarmButton: UIButton!
