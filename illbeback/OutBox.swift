@@ -73,7 +73,6 @@ class OutBox {
     }
     
     fileprivate func sendNextInvite() {
-        print("Attempting to send next invite...")
         for flag in flagRepository.flags() {
             let invitee = flag.invitees().first {$0.state() == InviteeState.Inviting}
             if !flag.isPendingAccept() && invitee != nil {
@@ -99,14 +98,12 @@ class OutBox {
                     onError: {
                         invitee.inviteFailure()
                         Utils.notifyObservers("FlagSendFailed", properties: ["flag": flag, "to": invitee.name()])
-                        self.sendNextInvite()
                     }
                 )
             },
             onError: {
                 invitee.inviteFailure()
                 Utils.notifyObservers("FlagSendFailed", properties: ["flag": flag, "to": invitee.name()])
-                self.sendNextInvite()
             })
     }
     
