@@ -43,7 +43,7 @@
 		97767D581B91B2BD00B6A827 /* ShapeCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97767D571B91B2BD00B6A827 /* ShapeCorner.swift */; };
 		97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97767D591B91B3D800B6A827 /* ShapeCornerView.swift */; };
 		97767D5C1B91DE2200B6A827 /* ShapeOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */; };
-		978E8AC91E0C1109007810F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 978E8AC81E0C1109007810F5 /* GoogleService-Info.plist */; };
+		9779D93C1E2131D6002A30B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9779D93B1E2131D6002A30B0 /* GoogleService-Info.plist */; };
 		9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */; };
 		9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */; };
 		9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */; };
@@ -155,7 +155,7 @@
 		97767D571B91B2BD00B6A827 /* ShapeCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeCorner.swift; sourceTree = "<group>"; };
 		97767D591B91B3D800B6A827 /* ShapeCornerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeCornerView.swift; sourceTree = "<group>"; };
 		97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShapeOptions.xib; sourceTree = "<group>"; };
-		978E8AC81E0C1109007810F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9779D93B1E2131D6002A30B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		978E8ACA1E0C1324007810F5 /* I'll Be Back.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "I'll Be Back.entitlements"; sourceTree = "<group>"; };
 		9793DB5B1A840DEB007324F2 /* illbeback-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "illbeback-Bridging-Header.h"; sourceTree = "<group>"; };
 		979F850A1AA11B8600A11F7F /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
@@ -293,13 +293,6 @@
 			path = ../illbebackTests;
 			sourceTree = "<group>";
 		};
-		97662C901BA2228800ACFF3A /* Map */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Map;
-			sourceTree = "<group>";
-		};
 		97662C911BA222B100ACFF3A /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,15 +399,14 @@
 		97A353451A800B9500973CAC /* illbeback */ = {
 			isa = PBXGroup;
 			children = (
+				9779D93B1E2131D6002A30B0 /* GoogleService-Info.plist */,
 				978E8ACA1E0C1324007810F5 /* I'll Be Back.entitlements */,
-				978E8AC81E0C1109007810F5 /* GoogleService-Info.plist */,
 				97A353461A800B9500973CAC /* Supporting Files */,
 				97A3536A1A800EF500973CAC /* Media.xcassets */,
 				97662C951BA2236100ACFF3A /* General */,
 				973F251D1C0B77E20034A235 /* CleanCode */,
 				97FC86651C00EE6300C30C56 /* NewFlagList */,
 				97FA33411BF7BEE500248F67 /* EventList */,
-				97662C901BA2228800ACFF3A /* Map */,
 				97662C931BA2230100ACFF3A /* Photo */,
 				97662C941BA2231A00ACFF3A /* Share */,
 				97662C911BA222B100ACFF3A /* Shapes */,
@@ -602,7 +594,7 @@
 				97FE667C1A99EB1E0007FC2C /* ShareView.xib in Resources */,
 				976696EF1A8AA317004CB60D /* CategoryView.xib in Resources */,
 				97A353551A800B9500973CAC /* LaunchScreen.xib in Resources */,
-				978E8AC91E0C1109007810F5 /* GoogleService-Info.plist in Resources */,
+				9779D93C1E2131D6002A30B0 /* GoogleService-Info.plist in Resources */,
 				97FA33431BF7BEFE00248F67 /* Events.xib in Resources */,
 				97FC86691C00EED400C30C56 /* FlagsView.xib in Resources */,
 			);

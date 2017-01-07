@@ -72,7 +72,6 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     func importFromURL(_ url: URL) {
-
         let data = try! Data(contentsOf: url)
         let unarchiver = NSKeyedUnarchiver.init(forReadingWith: data)
         let user = unarchiver.decodeObject(forKey: "user") as! String

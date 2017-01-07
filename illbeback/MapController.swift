@@ -326,7 +326,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     func acceptRecentShare(_ flag: Flag) {
-        photoAlbum.acceptRecentShare(flag)
         flag.accepting(Global.getUser().getName())
         outBox.send()
     }

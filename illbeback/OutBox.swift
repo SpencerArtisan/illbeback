@@ -40,6 +40,7 @@ class OutBox {
                 Utils.notifyObservers("Accepting", properties: ["flag": flag])
                 self.uploadFlagDetails(flag.sender()!, flag: flag,
                     onComplete: {
+                        self.photoAlbum.acceptRecentShare(flag)
                         flag.acceptSuccess(invitee)
                         Utils.notifyObservers("AcceptSuccess", properties: ["flag": flag])
                     },

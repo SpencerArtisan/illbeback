@@ -1,7 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MemoriesController" customModule="I_ll_Be_Back" customModuleProvider="target">
@@ -16,7 +21,7 @@
             <subviews>
                 <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.85000002384185791" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="F7u-nF-eJV">
                     <rect key="frame" x="0.0" y="57" width="260" height="48"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="8E4-6q-ajX"/>
                         <constraint firstAttribute="width" constant="300" id="T5E-kF-1AI"/>
@@ -26,26 +31,26 @@
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kW-pT-0VD">
                     <rect key="frame" x="0.0" y="17" width="260" height="40"/>
-                    <color key="backgroundColor" red="0.387117722" green="0.41761363639999999" blue="0.11454920220000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.387117722" green="0.41761363639999999" blue="0.11454920220000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="REc-yv-gfg"/>
                         <constraint firstAttribute="height" constant="40" id="iN0-Lf-0oJ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2in-bI-i8l" userLabel="cancel">
                     <rect key="frame" x="8" y="107" width="367" height="560"/>
                     <state key="normal">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="cancelSearch:" destination="-1" eventType="touchUpInside" id="hbg-ZN-wMa"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="2in-bI-i8l" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="DGr-2m-hJb"/>
                 <constraint firstItem="F7u-nF-eJV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="QVN-Qe-Hzl"/>
@@ -56,7 +61,6 @@
                 <constraint firstItem="9kW-pT-0VD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="60" id="jBk-O7-Psn"/>
                 <constraint firstAttribute="trailing" secondItem="2in-bI-i8l" secondAttribute="trailing" id="vvA-6Q-V6W"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>
 </document>
