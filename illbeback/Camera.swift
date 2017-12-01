@@ -78,7 +78,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         self.snapButton.layer.rasterizationScale = UIScreen.main.scale
         self.snapButton.layer.shouldRasterize = true
         self.snapButton.addTarget(self, action: #selector(Camera.takePhoto(_:)), for: UIControlEvents.touchUpInside)
-        self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 60)
+        self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 66)
     }
 
     func createLibraryButton() {
@@ -91,7 +91,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         self.libraryButton.layer.borderColor = UIColor.black.cgColor
         self.libraryButton.layer.borderWidth = 1.0
         self.libraryButton.backgroundColor = UIColor.white
-        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 65, y: parentController.view.bounds.height - 60)
+        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 65, y: parentController.view.bounds.height - 66)
         self.libraryButton.addTarget(self, action: #selector(Camera.library(_:)), for: UIControlEvents.touchUpInside)
     }
     
@@ -105,7 +105,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         self.backButton!.layer.borderColor = UIColor.black.cgColor
         self.backButton!.layer.borderWidth = 1.0
         self.backButton!.backgroundColor = UIColor.white
-        self.backButton.center = CGPoint(x: 65, y: parentController.view.bounds.height - 60)
+        self.backButton.center = CGPoint(x: 65, y: parentController.view.bounds.height - 66)
         self.backButton!.addTarget(self, action: #selector(Camera.goBack(_:)), for: UIControlEvents.touchUpInside)
     }
     
@@ -165,8 +165,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
             print(navigationController.viewControllers.count)
             if navigationController.viewControllers.count == 2 {
                 let zoomController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ZoomController") as! ZoomController
-                let photoView: UIImageView = zoomController.view.subviews[0] as! UIImageView
-                photoView.image = pickedImage
+                zoomController.image = pickedImage
                 navigationController.pushViewController(zoomController, animated: false)
             }
             

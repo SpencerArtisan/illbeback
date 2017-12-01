@@ -99,13 +99,13 @@ class Modal {
     fileprivate func slideVertically(_ parentView: UIView, start: CGFloat, end: CGFloat, hide: Bool) {
         if self.view.superview == nil {
             parentView.addSubview(self.view)
-            self.view.frame = CGRect(x: 0, y: 0, width: parentView.frame.width, height: self.view.frame.height)
+            self.view.frame = CGRect(x: 0, y: parentView.layoutMargins.top - 40, width: parentView.frame.width, height: self.view.frame.height)
         }
         self.view.frame.origin.y = start
         
         UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             var sliderFrame = self.view.frame
-            sliderFrame.origin.y = end
+            sliderFrame.origin.y = end + parentView.layoutMargins.top - 40
             self.view.frame = sliderFrame
             }, completion: {_ in if hide { self.hide() } })
     }

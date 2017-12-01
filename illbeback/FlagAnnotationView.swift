@@ -109,11 +109,15 @@ class FlagAnnotationView : MKAnnotationView {
     }
     
     fileprivate func initImage() {
-        let imageIcon = UIImage(named: flag!.type() + " Flag")!
         
-        let finalSize = CGSize(width: imageIcon.size.width + 10, height: imageIcon.size.height + 10)
+        var imageIcon = UIImage(named: flag!.type() + " Flag")
+        if imageIcon == nil {
+            imageIcon = UIImage(named: "Blank Flag")
+        }
+        
+        let finalSize = CGSize(width: imageIcon!.size.width + 10, height: imageIcon!.size.height + 10)
         UIGraphicsBeginImageContext(finalSize)
-        imageIcon.draw(in: CGRect(x: 0, y: 10, width: imageIcon.size.width, height: imageIcon.size.height))
+        imageIcon!.draw(in: CGRect(x: 0, y: 10, width: imageIcon!.size.width, height: imageIcon!.size.height))
         
         let inShape: Bool = mapController!.shapeController.shapeContains(flag!.location())
         

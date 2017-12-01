@@ -1,37 +1,47 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="MalayalamSangamMN.ttc">
+            <string>MalayalamSangamMN</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="92"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MmJ-qs-SJe">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
-                    <color key="backgroundColor" red="0.91568359649999997" green="0.92156862750000001" blue="0.6611108255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MmJ-qs-SJe">
+                    <rect key="frame" x="0.0" y="-30" width="375" height="110"/>
+                    <color key="backgroundColor" red="0.89564049243927002" green="0.91121578216552734" blue="0.59770107269287109" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="59" id="UHO-WG-Kog"/>
+                        <constraint firstAttribute="height" constant="110" id="UHO-WG-Kog"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="MalayalamSangamMN" family="Malayalam Sangam MN" pointSize="18"/>
-                    <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="16"/>
                     <size key="titleShadowOffset" width="2.2250738585072014e-308" height="2.2250738585072014e-308"/>
                     <state key="normal" title=" 2 Message Test">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="MmJ-qs-SJe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MKe-er-Z72"/>
                 <constraint firstAttribute="trailing" secondItem="MmJ-qs-SJe" secondAttribute="trailing" id="P5O-iZ-ssT"/>
-                <constraint firstItem="MmJ-qs-SJe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="XmP-ge-sMJ"/>
+                <constraint firstItem="MmJ-qs-SJe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-30" id="XmP-ge-sMJ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="419.5" y="411.5"/>
+            <point key="canvasLocation" x="419.5" y="428"/>
         </view>
     </objects>
 </document>

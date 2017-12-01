@@ -3,16 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "I_ll_Be_Back.MapPinView.hitTest (I_ll_Be_Back.MapPinView)(C.CGPoint, withEvent : Swift.Optional&lt;ObjectiveC.UIEvent&gt;) -&gt; Swift.Optional&lt;ObjectiveC.UIView&gt;:MapPinView.swift">
+         contextName = "I_ll_Be_Back.MemoriesController.zoomPicture (I_ll_Be_Back.MemoriesController)(I_ll_Be_Back.MapPinView) -&gt; ():MemoriesController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "elapsed">
-            </PersistentString>
-            <PersistentString
-               value = "event!.type">
-            </PersistentString>
-            <PersistentString
-               value = "self.selected">
+               value = "zoomController">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -28,16 +22,25 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "InBox.(downloadImages(Flag, onComplete : () -&gt; ()) -&gt; ()).(closure #1):InBox.swift">
+         contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
+      </ContextState>
+      <ContextState
+         contextName = "Camera.imagePickerController(_:didFinishPickingMediaWithInfo:):Camera.swift">
          <PersistentStrings>
             <PersistentString
-               value = "error!">
+               value = "zoomController.view.subviews[0]">
             </PersistentString>
             <PersistentString
-               value = "imageUrl.lastPathComponent">
+               value = "zoomController.view">
             </PersistentString>
             <PersistentString
-               value = "downloadingurl.path">
+               value = "zoomController.photo.image">
+            </PersistentString>
+            <PersistentString
+               value = "zoomController.photo!">
+            </PersistentString>
+            <PersistentString
+               value = "zoomController.photo">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -60,6 +63,14 @@
          <PersistentStrings>
             <PersistentString
                value = "task!.error">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Modal.slideVertically(_:start:end:hide:):Modal.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "parentView.layoutMargins.top">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -102,6 +113,34 @@
          contextName = "Photo.init(imagePath : String) throws -&gt; Photo:Photo.swift">
       </ContextState>
       <ContextState
+         contextName = "InBox.(downloadImages(Flag, onComplete : () -&gt; ()) -&gt; ()).(closure #1):InBox.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "imageUrl.lastPathComponent">
+            </PersistentString>
+            <PersistentString
+               value = "downloadingurl.path">
+            </PersistentString>
+            <PersistentString
+               value = "error!">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "I_ll_Be_Back.MapPinView.hitTest (I_ll_Be_Back.MapPinView)(C.CGPoint, withEvent : Swift.Optional&lt;ObjectiveC.UIEvent&gt;) -&gt; Swift.Optional&lt;ObjectiveC.UIView&gt;:MapPinView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "elapsed">
+            </PersistentString>
+            <PersistentString
+               value = "self.selected">
+            </PersistentString>
+            <PersistentString
+               value = "event!.type">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "I_ll_Be_Back.Camera.(takePhoto (I_ll_Be_Back.Camera) -&gt; (Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UIButton&gt;) -&gt; ()).(closure #3):Camera.swift">
          <PersistentStrings>
             <PersistentString
@@ -116,17 +155,6 @@
                value = "button!.frame">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "I_ll_Be_Back.MemoriesController.zoomPicture (I_ll_Be_Back.MemoriesController)(I_ll_Be_Back.MapPinView) -&gt; ():MemoriesController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "zoomController">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[UIImage(fixOrientation) fixOrientation]:UIImage+FixOrientation.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

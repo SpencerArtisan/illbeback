@@ -15,6 +15,7 @@ class ZoomController: UIViewController, UINavigationControllerDelegate, UIScroll
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    var image: UIImage?
     var index: Int = 0
     var owner : ZoomSwipeController?
     
@@ -38,6 +39,7 @@ class ZoomController: UIViewController, UINavigationControllerDelegate, UIScroll
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        photo.image = image
         owner?.index = index
         owner?.drawDots(index)
         let orientation = UIDevice.current.orientation
