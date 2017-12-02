@@ -34,7 +34,6 @@ class ZoomController: UIViewController, UINavigationControllerDelegate, UIScroll
             note in if let object: UIDevice = note.object as? UIDevice {
                 let orient = object.orientation
                 self.rotate(orient)
-                
            }})
     }
     
@@ -42,8 +41,10 @@ class ZoomController: UIViewController, UINavigationControllerDelegate, UIScroll
         photo.image = image
         owner?.index = index
         owner?.drawDots(index)
-        let orientation = UIDevice.current.orientation
-        rotate(orientation)
+        Utils.runOnUiThread {
+            let orientation = UIDevice.current.orientation
+            self.rotate(orientation)
+        }
     }
     
     func rotate(_ orient: UIDeviceOrientation) {
