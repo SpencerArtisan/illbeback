@@ -30,6 +30,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="734"/>
                                     </imageView>
                                 </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="egM-WL-ln4" secondAttribute="trailing" id="BPw-vb-1Xp"/>
                                     <constraint firstItem="egM-WL-ln4" firstAttribute="centerY" secondItem="fqQ-IS-FI5" secondAttribute="centerY" id="Xtb-CE-BqX"/>

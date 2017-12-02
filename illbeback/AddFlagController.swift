@@ -126,7 +126,9 @@ class AddFlagController: UIViewController, UITextViewDelegate {
         self.flagId = UUID().uuidString
         self.orientation = orientation
         self.photoAlbum!.saveFlagImage(image, flagId: self.flagId!)
-        self.showCategorySelector()
+        Utils.delay(0.2, closure: {
+            self.showCategorySelector()
+        })
     }
     
     func add(_ controller: UIViewController, location: CLLocationCoordinate2D) {
