@@ -125,6 +125,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
 
         self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [AnyHashable: Any]?, err: Error?, orientation: UIDeviceOrientation) -> Void in
             self.snapButton.removeFromSuperview()
+            self.libraryButton.removeFromSuperview()
             var modifiedImage = image
             if (orientation == UIDeviceOrientation.landscapeRight) {
                 modifiedImage = image?.rotateImage(image, onDegrees: 90)
