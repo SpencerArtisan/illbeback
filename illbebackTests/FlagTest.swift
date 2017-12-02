@@ -8,6 +8,8 @@
 
 import XCTest
 import CoreLocation
+import CoreData
+@testable import Pods_illbeback
 
 class FlagTest: XCTestCase {
 

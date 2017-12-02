@@ -97,10 +97,12 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
             print("Trying to show non existent image in zoom controller")
         } else {
             imageView.image = photos[newIndex].image
+            newView.image = photos[newIndex].image
         }
         newView.index = newIndex
         newView.owner = self
-        return newView    }
+        return newView
+    }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return photos.count
