@@ -9,132 +9,183 @@
 import Foundation
 import AVFoundation
 
-class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    var camera: LLSimpleCamera!
+class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AVCapturePhotoCaptureDelegate {
+
+    static var captureSession: AVCaptureSession?
+    static var photoOutput: AVCapturePhotoOutput?
+    static var rearCamera: AVCaptureDevice?
+    static var rearCameraInput: AVCaptureDeviceInput?
+    
+    var previewLayer: AVCaptureVideoPreviewLayer?
+    var photoCaptureCompletionBlock: ((UIImage?, Error?) -> Void)?
+    
     var backButton: UIButton!
     var snapButton: UIButton!
     var libraryButton: UIButton!
     var navigationController: UINavigationController!
     var parentController: UIViewController!
     var callback: ((UINavigationController, UIImage, UIDeviceOrientation) -> Void)
-    var snapPlayer: AVAudioPlayer?
     let imagePicker = UIImagePickerController()
- 
+    
+    enum CameraControllerError: Swift.Error {
+        case captureSessionAlreadyRunning
+        case captureSessionIsMissing
+        case inputsAreInvalid
+        case invalidOperation
+        case noCamerasAvailable
+        case unknown
+    }
+    
     init(navigationController: UINavigationController, callback: @escaping ((UINavigationController, UIImage, UIDeviceOrientation) -> Void)) {
         self.navigationController = navigationController
         self.parentController = navigationController.topViewController
         self.callback = callback
         super.init()
-        createCamera()
         createSnapButton()
         createLibraryButton()
         createBackButton()
-        createSound()
-    }
+        try? self.displayPreview(on: self.parentController.view)
+   }
     
-    func createSound() {
-        let snapPath = Bundle.main.path(forResource: "shutter", ofType: "mp3")
-        let snapURL = URL(fileURLWithPath: snapPath!)
-        #if (arch(i386) || arch(x86_64)) && os(iOS)
-            print("SIMULATOR")
-        #else
-            do {
-                try snapPlayer = AVAudioPlayer(contentsOf: snapURL)
-                snapPlayer!.prepareToPlay()
-            } catch {
+    static func prepare(completionHandler: @escaping (Error?) -> Void) {
+        func createCaptureSession() {
+            self.captureSession = AVCaptureSession()
+        }
+        func configureCaptureDevices() throws {
+            //1
+            let session = AVCaptureDeviceDiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaTypeVideo, position: .unspecified)
+            guard let cameras = (session?.devices.flatMap { $0 }), !cameras.isEmpty else { throw CameraControllerError.noCamerasAvailable }
+            
+            //2
+            for camera in cameras {
+                if camera.position == .back {
+                    self.rearCamera = camera
+                    
+                    try camera.lockForConfiguration()
+                    camera.focusMode = .continuousAutoFocus
+                    camera.unlockForConfiguration()
+                }
             }
-        #endif
+        }
+        func configureDeviceInputs() throws {
+            //4
+            if let rearCamera = self.rearCamera {
+                self.rearCameraInput = try AVCaptureDeviceInput(device: rearCamera)
+                if self.captureSession!.canAddInput(self.rearCameraInput!) {
+                    self.captureSession!.addInput(self.rearCameraInput!)
+                    
+                }
+            }
+                
+            else { throw CameraControllerError.noCamerasAvailable }
+        }
+        func configurePhotoOutput() throws {
+            self.photoOutput = AVCapturePhotoOutput()
+            self.photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecJPEG])], completionHandler: nil)
+            
+            if self.captureSession!.canAddOutput(self.photoOutput) {
+                self.captureSession!.addOutput(self.photoOutput)
+            }
+        }
+        
+        DispatchQueue(label: "prepare").async {
+            do {
+                createCaptureSession()
+                try configureCaptureDevices()
+                try configureDeviceInputs()
+                try configurePhotoOutput()
+            }
+                
+            catch {
+                DispatchQueue.main.async {
+                    completionHandler(error)
+                }
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                completionHandler(nil)
+            }
+        }
     }
     
+    func displayPreview(on view: UIView) throws {
+        self.previewLayer = AVCaptureVideoPreviewLayer(session: Camera.captureSession)
+        self.previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        self.previewLayer?.connection?.videoOrientation = .portrait
+        
+        view.layer.insertSublayer(self.previewLayer!, at: 0)
+        self.previewLayer?.frame = view.frame
+    }
+
     func start() {
-        blackout()
-        let screenRect = UIScreen.main.bounds
-        self.camera.attach(to: parentController, withFrame: CGRect(x: 0, y: 0, width: screenRect.size.width, height: screenRect.size.height))
-        parentController.view.addSubview(self.snapButton)
-        parentController.view.addSubview(self.libraryButton)
-        parentController.view.addSubview(self.backButton)
-        camera.start()
+        Utils.runOnUiThread {
+            Camera.captureSession!.startRunning()
+        }
+            
+        self.parentController.view.addSubview(self.snapButton)
+        self.parentController.view.addSubview(self.libraryButton)
+        self.parentController.view.addSubview(self.backButton)
     }
     
     func stop() {
-        camera.removeFromParentViewController()
-        camera.view.removeFromSuperview()
-        camera.stop()
-    }
-    
-    func createCamera() {
-        self.camera = LLSimpleCamera(quality: CameraQualityPhoto, andPosition: CameraPositionBack)
-        self.camera.fixOrientationAfterCapture = true
-    }
-    
-    func createSnapButton() {
-        self.snapButton = UIButton(type: UIButtonType.system)
-        self.snapButton.frame = CGRect(x: 0, y: 0, width: 90.0, height: 90.0)
-        self.snapButton.clipsToBounds = true
-        self.snapButton.layer.cornerRadius = 45.0
-        self.snapButton.layer.borderColor = UIColor.white.cgColor
-        self.snapButton.layer.borderWidth = 2.0
-        self.snapButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        self.snapButton.layer.rasterizationScale = UIScreen.main.scale
-        self.snapButton.layer.shouldRasterize = true
-        self.snapButton.addTarget(self, action: #selector(Camera.takePhoto(_:)), for: UIControlEvents.touchUpInside)
-        self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 66)
-    }
-
-    func createLibraryButton() {
-        self.libraryButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        let image = UIImage(named: "Library")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        self.libraryButton!.setImage(image, for: UIControlState())
-        self.libraryButton?.tintColor = UIColor.blue
-        self.libraryButton.clipsToBounds = true
-        self.libraryButton.layer.cornerRadius = 30.0
-        self.libraryButton.layer.borderColor = UIColor.black.cgColor
-        self.libraryButton.layer.borderWidth = 1.0
-        self.libraryButton.backgroundColor = UIColor.white
-        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 65, y: parentController.view.bounds.height - 66)
-        self.libraryButton.addTarget(self, action: #selector(Camera.library(_:)), for: UIControlEvents.touchUpInside)
-    }
-    
-    func createBackButton() {
-        self.backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        let image = UIImage(named: "back")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        self.backButton!.setImage(image, for: UIControlState())
-        self.backButton!.tintColor = UIColor.blue
-        self.backButton!.clipsToBounds = true
-        self.backButton!.layer.cornerRadius = 30.0
-        self.backButton!.layer.borderColor = UIColor.black.cgColor
-        self.backButton!.layer.borderWidth = 1.0
-        self.backButton!.backgroundColor = UIColor.white
-        self.backButton.center = CGPoint(x: 65, y: parentController.view.bounds.height - 66)
-        self.backButton!.addTarget(self, action: #selector(Camera.goBack(_:)), for: UIControlEvents.touchUpInside)
     }
     
     func takePhoto(_ sender : UIButton!) {
-        snapPlayer?.play()
+        self.captureImage {(image, error) in
+//            self.takePhotoEffects()
+            let orientation = UIDeviceOrientation.faceUp
+            self.snapButton.removeFromSuperview()
+            self.libraryButton.removeFromSuperview()
+            self.callback(self.navigationController, image!, orientation)
+            Camera.captureSession!.stopRunning()
+        }
+//            var modifiedImage = image
+//            if (orientation == UIDeviceOrientation.landscapeRight) {
+//                modifiedImage = image?.rotateImage(image, onDegrees: 90)
+//            } else if (orientation == UIDeviceOrientation.landscapeLeft) {
+//                modifiedImage = image?.rotateImage(image, onDegrees: -90)
+//            }
+    }
+    
+    func captureImage( completion: @escaping (UIImage?, Error?) -> Void) {
+        self.photoCaptureCompletionBlock = completion
+        let videoPreviewLayerOrientation = previewLayer!.connection.videoOrientation
+        
+        // Update the photo output's connection to match the video orientation of the video preview layer.
+        if let photoOutputConnection = Camera.photoOutput!.connection(withMediaType: AVMediaTypeVideo) {
+            photoOutputConnection.videoOrientation = videoPreviewLayerOrientation
+        }
+        
+        Camera.photoOutput?.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
+    }
+    
+    public func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?,
+                        resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Swift.Error?) {
+        if let error = error {
+            self.photoCaptureCompletionBlock?(nil, error)
+        } else if let buffer = photoSampleBuffer,
+                    let data = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: buffer, previewPhotoSampleBuffer: nil),
+                    let image = UIImage(data: data) {
+            self.photoCaptureCompletionBlock?(image, nil)
+        } else {
+            self.photoCaptureCompletionBlock?(nil, CameraControllerError.unknown)
+        }
+    }
+    
+    func takePhotoEffects() {
         let blackView = blackout()
         
         UIView.animate(withDuration: 0.15, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             blackView.layer.opacity = 1
+        }, completion: {_ in
+            UIView.animate(withDuration: 0.15, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                blackView.layer.opacity = 0
             }, completion: {_ in
-                UIView.animate(withDuration: 0.15, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-                    blackView.layer.opacity = 0
-                    }, completion: {_ in
-                        blackView.removeFromSuperview()
-                })
+                blackView.removeFromSuperview()
+            })
         })
-
-        self.camera.capture({ (camera: LLSimpleCamera?, image: UIImage?, dict: [AnyHashable: Any]?, err: Error?, orientation: UIDeviceOrientation) -> Void in
-            self.snapButton.removeFromSuperview()
-            self.libraryButton.removeFromSuperview()
-            var modifiedImage = image
-            if (orientation == UIDeviceOrientation.landscapeRight) {
-                modifiedImage = image?.rotateImage(image, onDegrees: 90)
-            } else if (orientation == UIDeviceOrientation.landscapeLeft) {
-                modifiedImage = image?.rotateImage(image, onDegrees: -90)
-            }
-            
-            self.callback(self.navigationController, modifiedImage!, orientation)
-            }, exactSeenImage: true)
     }
     
     func blackout() -> UIView {
@@ -194,4 +245,45 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         return UIDeviceOrientation.faceUp
     }
 
+    func createSnapButton() {
+        self.snapButton = UIButton(type: UIButtonType.system)
+        self.snapButton.frame = CGRect(x: 0, y: 0, width: 90.0, height: 90.0)
+        self.snapButton.clipsToBounds = true
+        self.snapButton.layer.cornerRadius = 45.0
+        self.snapButton.layer.borderColor = UIColor.white.cgColor
+        self.snapButton.layer.borderWidth = 2.0
+        self.snapButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        self.snapButton.layer.rasterizationScale = UIScreen.main.scale
+        self.snapButton.layer.shouldRasterize = true
+        self.snapButton.addTarget(self, action: #selector(Camera.takePhoto(_:)), for: UIControlEvents.touchUpInside)
+        self.snapButton.center = CGPoint(x: parentController.view.center.x, y: parentController.view.bounds.height - 66)
+    }
+    
+    func createLibraryButton() {
+        self.libraryButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        let image = UIImage(named: "Library")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        self.libraryButton!.setImage(image, for: UIControlState())
+        self.libraryButton?.tintColor = UIColor.blue
+        self.libraryButton.clipsToBounds = true
+        self.libraryButton.layer.cornerRadius = 30.0
+        self.libraryButton.layer.borderColor = UIColor.black.cgColor
+        self.libraryButton.layer.borderWidth = 1.0
+        self.libraryButton.backgroundColor = UIColor.white
+        self.libraryButton.center = CGPoint(x: parentController.view.bounds.width - 65, y: parentController.view.bounds.height - 66)
+        self.libraryButton.addTarget(self, action: #selector(Camera.library(_:)), for: UIControlEvents.touchUpInside)
+    }
+    
+    func createBackButton() {
+        self.backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        let image = UIImage(named: "back")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        self.backButton!.setImage(image, for: UIControlState())
+        self.backButton!.tintColor = UIColor.blue
+        self.backButton!.clipsToBounds = true
+        self.backButton!.layer.cornerRadius = 30.0
+        self.backButton!.layer.borderColor = UIColor.black.cgColor
+        self.backButton!.layer.borderWidth = 1.0
+        self.backButton!.backgroundColor = UIColor.white
+        self.backButton.center = CGPoint(x: 65, y: parentController.view.bounds.height - 66)
+        self.backButton!.addTarget(self, action: #selector(Camera.goBack(_:)), for: UIControlEvents.touchUpInside)
+    }
 }

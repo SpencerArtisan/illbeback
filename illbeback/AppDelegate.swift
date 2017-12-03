@@ -58,6 +58,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             application.registerForRemoteNotifications()
         #endif
         
+        Camera.prepare { error in
+            if let error = error {
+                print("ERROR SETTING UP CAMERA")
+                print(error)
+            }
+        }
+        
 //        if launchOptions != nil {
 //            let url = launchOptions![UIApplicationLaunchOptionsURLKey] as? NSURL
 //            if url != nil {
