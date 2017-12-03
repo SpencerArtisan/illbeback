@@ -29,7 +29,6 @@
 		973F252E1C0BA6F50034A235 /* Invitee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F252D1C0BA6F50034A235 /* Invitee.swift */; };
 		973F25311C0BA8D60034A235 /* InviteeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973F25301C0BA8D60034A235 /* InviteeState.swift */; };
 		97420BBE1A92A0320076E561 /* AddFlagController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97420BBD1A92A0320076E561 /* AddFlagController.swift */; };
-		9744E4F11FD3283A008DEF21 /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9744E4F01FD3283A008DEF21 /* VideoPreviewView.swift */; };
 		9749EE451BF749E300C1606B /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9749EE441BF749E300C1606B /* Global.swift */; };
 		9759BF6C1A802AD300B945CB /* illbebackinfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9759BF6B1A802AD300B945CB /* illbebackinfo.plist */; };
 		9759BF6E1A802C4100B945CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759BF6D1A802C4100B945CB /* CoreLocation.framework */; };
@@ -45,10 +44,6 @@
 		97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97767D591B91B3D800B6A827 /* ShapeCornerView.swift */; };
 		97767D5C1B91DE2200B6A827 /* ShapeOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97767D5B1B91DE2200B6A827 /* ShapeOptions.xib */; };
 		9779D93C1E2131D6002A30B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9779D93B1E2131D6002A30B0 /* GoogleService-Info.plist */; };
-		9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */; };
-		9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */; };
-		9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */; };
-		9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */; };
 		979F850B1AA11B8600A11F7F /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979F850A1AA11B8600A11F7F /* Camera.swift */; };
 		97A353491A800B9500973CAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A353481A800B9500973CAC /* AppDelegate.swift */; };
 		97A3534B1A800B9500973CAC /* RememberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3534A1A800B9500973CAC /* RememberController.swift */; };
@@ -142,7 +137,6 @@
 		973F25301C0BA8D60034A235 /* InviteeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeState.swift; sourceTree = "<group>"; };
 		973F25331C0BA9610034A235 /* InviteeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeTest.swift; sourceTree = "<group>"; };
 		97420BBD1A92A0320076E561 /* AddFlagController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFlagController.swift; sourceTree = "<group>"; };
-		9744E4F01FD3283A008DEF21 /* VideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewView.swift; sourceTree = "<group>"; };
 		9749EE441BF749E300C1606B /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		9759BF6B1A802AD300B945CB /* illbebackinfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = illbebackinfo.plist; sourceTree = "<group>"; };
 		9759BF6D1A802C4100B945CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -198,10 +192,6 @@
 		97FA33461BF7E3A400248F67 /* Event.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Event.xib; sourceTree = "<group>"; };
 		97FA33481BF7E52600248F67 /* EventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		97FA73F41C135D5A00E9A57A /* InBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InBox.swift; sourceTree = "<group>"; };
-		97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
-		97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
-		97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
-		97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		97FC86661C00EEB600C30C56 /* FlagView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlagView.xib; sourceTree = "<group>"; };
 		97FC86681C00EED400C30C56 /* FlagsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlagsView.xib; sourceTree = "<group>"; };
 		97FC866A1C00F44D00C30C56 /* FlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
@@ -329,7 +319,6 @@
 				97B05E251BC4746100B24BEC /* ZoomPageControl.xib */,
 				97002F0D1BC91679002BF217 /* Photo.swift */,
 				97EA40021AFEB74C005507BF /* shutter.mp3 */,
-				9744E4F01FD3283A008DEF21 /* VideoPreviewView.swift */,
 			);
 			name = Photo;
 			sourceTree = "<group>";
@@ -370,7 +359,6 @@
 				9725CD3B1A98D2950081C1B3 /* libc++.dylib */,
 				9725CD391A98D26E0081C1B3 /* libicucore.dylib */,
 				976696EA1A8A992D004CB60D /* QuartzCore.framework */,
-				97FC73291A840B8D00676F16 /* LLSimpleCamera */,
 				9759BF6F1A80318300B945CB /* ImageIO.framework */,
 				9759BF6D1A802C4100B945CB /* CoreLocation.framework */,
 				97A3536C1A801CFA00973CAC /* MapKit.framework */,
@@ -451,17 +439,6 @@
 				97FA33481BF7E52600248F67 /* EventView.swift */,
 			);
 			name = EventList;
-			sourceTree = "<group>";
-		};
-		97FC73291A840B8D00676F16 /* LLSimpleCamera */ = {
-			isa = PBXGroup;
-			children = (
-				97FC732B1A840B8D00676F16 /* LLSimpleCamera.h */,
-				97FC732C1A840B8D00676F16 /* LLSimpleCamera.m */,
-				97FC732D1A840B8D00676F16 /* UIImage+FixOrientation.h */,
-				97FC732E1A840B8D00676F16 /* UIImage+FixOrientation.m */,
-			);
-			path = LLSimpleCamera;
 			sourceTree = "<group>";
 		};
 		97FC86651C00EE6300C30C56 /* NewFlagList */ = {
@@ -665,7 +642,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9793DB621A8414EB007324F2 /* LLSimpleCamera.h in Sources */,
 				971DF36A1C26B5190051D47F /* Backup.swift in Sources */,
 				97FA33451BF7E18800248F67 /* EventController.swift in Sources */,
 				97D34AB71C126C9100118819 /* FlagRenderer.swift in Sources */,
@@ -676,22 +652,18 @@
 				97767D581B91B2BD00B6A827 /* ShapeCorner.swift in Sources */,
 				973F25221C0B7A2D0034A235 /* Flag.swift in Sources */,
 				97D34AB11C12472A00118819 /* FlagRepository.swift in Sources */,
-				9744E4F11FD3283A008DEF21 /* VideoPreviewView.swift in Sources */,
 				9717D3EF1B9254D3006455D8 /* ShareController.swift in Sources */,
 				97B05E221BC468FB00B24BEC /* ZoomSwipeController.swift in Sources */,
 				973F25311C0BA8D60034A235 /* InviteeState.swift in Sources */,
 				97767D5A1B91B3D800B6A827 /* ShapeCornerView.swift in Sources */,
 				97D34AB91C127C1D00118819 /* Extensions.swift in Sources */,
 				971DF3721C28AC4B0051D47F /* Preferences.swift in Sources */,
-				9793DB631A8414EB007324F2 /* LLSimpleCamera.m in Sources */,
 				97FA33491BF7E52600248F67 /* EventView.swift in Sources */,
 				973F252B1C0B8F1E0034A235 /* StateMachineError.swift in Sources */,
 				97FA73F51C135D5A00E9A57A /* InBox.swift in Sources */,
-				9793DB641A8414EB007324F2 /* UIImage+FixOrientation.h in Sources */,
 				9749EE451BF749E300C1606B /* Global.swift in Sources */,
 				97FE667E1A99FC220007FC2C /* Modal.swift in Sources */,
 				97FC866D1C00F45D00C30C56 /* FlagController.swift in Sources */,
-				9793DB651A8414EB007324F2 /* UIImage+FixOrientation.m in Sources */,
 				971DD8531C29ADA800CEFDDD /* FlagCallout.swift in Sources */,
 				979F850B1AA11B8600A11F7F /* Camera.swift in Sources */,
 				97D34ABB1C12F5BB00118819 /* OutBox.swift in Sources */,

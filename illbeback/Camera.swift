@@ -134,7 +134,6 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     
     func takePhoto(_ sender : UIButton!) {
         self.captureImage {(image, error, orientation) in
-            self.takePhotoEffects()
             self.snapButton.removeFromSuperview()
             self.libraryButton.removeFromSuperview()
             self.callback(self.navigationController, image!, orientation!)
@@ -147,28 +146,25 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         self.photoCaptureCompletionBlock = completion
 
         let connection = Camera.photoOutput!.connection(withMediaType: AVMediaTypeVideo)
-            switch UIDevice.current.orientation {
-            case .portrait, .portraitUpsideDown:
-                connection!.videoOrientation = .portrait
-            case .landscapeRight:
-                connection!.videoOrientation = .landscapeLeft
-            case .landscapeLeft:
-                connection!.videoOrientation = .landscapeRight
-            default:
-                connection!.videoOrientation = .portrait
-            }
+        switch UIDevice.current.orientation {
+        case .portrait, .portraitUpsideDown:
+            connection!.videoOrientation = .portrait
+        case .landscapeRight:
+            connection!.videoOrientation = .landscapeLeft
+        case .landscapeLeft:
+            connection!.videoOrientation = .landscapeRight
+        default:
+            connection!.videoOrientation = .portrait
+        }
         
-//        Camera.photoOutput.conn
-        
-//        if (connection?.isVideoOrientationSupported)! {
-//            connection?.videoOrientation = currentVideoOrientation()
-//        }
-//
         Camera.photoOutput?.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
     }
     
     public func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?,
                         resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Swift.Error?) {
+        
+        self.takePhotoEffects()
+        
         if let error = error {
             self.photoCaptureCompletionBlock?(nil, error, nil)
         } else if let buffer = photoSampleBuffer,
@@ -176,13 +172,6 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
                         let image = UIImage(data: data) {
             
             let orientation = UIDevice.current.orientation
-            
-//                    var modifiedImage = image
-//                    if (orientation == UIDeviceOrientation.landscapeRight) {
-//                        modifiedImage = image.rotateImage(image, onDegrees: 90)
-//                    } else if (orientation == UIDeviceOrientation.landscapeLeft) {
-//                        modifiedImage = image.rotateImage(image, onDegrees: -90)
-//                    }
             self.photoCaptureCompletionBlock?(image, nil, orientation)
         } else {
             self.photoCaptureCompletionBlock?(nil, CameraControllerError.unknown, nil)
@@ -237,9 +226,56 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
             }
             
             let devOrient = imageToDeviceOrientation(pickedImage)
-            let correctedImage = pickedImage.fixOrientation()
-            self.callback(navigationController, correctedImage!, devOrient)
+            let correctedImage = self.fixOrientation(pickedImage)
+            self.callback(navigationController, correctedImage, devOrient)
         }
+    }
+    
+    //  The converted code is limited by 1 KB.
+    //  Please Sign Up (Free!) to remove this limitation.
+    
+    //  Converted with Swiftify v1.0.6472 - https://objectivec2swift.com/
+
+    func fixOrientation(_ image: UIImage) -> UIImage {
+            // No-op if the orientation is already correct
+            if image.imageOrientation == .up {
+                return image
+            }
+            // We need to calculate the proper transformation to make the image upright.
+            // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+            var transform: CGAffineTransform = CGAffineTransform.identity
+            switch image.imageOrientation {
+            case .down, .downMirrored:
+                transform = transform.translatedBy(x: image.size.width, y: image.size.height)
+                transform = transform.rotated(by: .pi)
+            case .left, .leftMirrored:
+                transform = transform.translatedBy(x: image.size.width, y: 0)
+                transform = transform.rotated(by: .pi / 2.0)
+            case .right, .rightMirrored:
+                transform = transform.translatedBy(x: 0, y: image.size.height)
+                transform = transform.rotated(by: -.pi / 2.0)
+            case .up, .upMirrored:
+                break
+            }
+    
+        let ctx = CGContext(data: nil, width: Int(image.size.width), height: Int(image.size.height),
+                            bitsPerComponent: image.cgImage!.bitsPerComponent,
+                            bytesPerRow: 0, space: image.cgImage!.colorSpace!,
+                            bitmapInfo: image.cgImage!.bitmapInfo.rawValue)
+        ctx?.concatenate(transform)
+        switch image.imageOrientation {
+        case .left, .leftMirrored, .right, .rightMirrored:
+            // Grr...
+            ctx!.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: image.size.height, height: image.size.width))
+        default:
+            ctx!.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+        }
+
+        // And now we just create a new UIImage from the drawing context
+        let cgimg: CGImage = ctx!.makeImage()!
+        let img = UIImage(cgImage: cgimg)
+    
+        return img
     }
     
     func toDeviceOrientation(_ image: UIImage) -> UIDeviceOrientation {

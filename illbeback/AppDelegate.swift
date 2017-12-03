@@ -41,10 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         utilityConfiguration.isAccelerateModeEnabled = true
         AWSS3TransferUtility.register(with: configuration!, transferUtilityConfiguration: utilityConfiguration, forKey: "x")
         
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-        } catch {
-        }
+//        do {
+//            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+//        } catch {
+//        }
         
         #if (arch(i386) || arch(x86_64)) && os(iOS)
             print("SIMULATOR")

@@ -194,6 +194,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "Camera.capture(_:didFinishProcessingPhotoSampleBuffer:previewPhotoSampleBuffer:resolvedSettings:bracketSettings:error:):Camera.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "image.size">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #3 in Camera.takePhoto(_:):Camera.swift">
          <PersistentStrings>
             <PersistentString

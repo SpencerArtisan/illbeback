@@ -51,6 +51,9 @@ class ZoomController: UIViewController, UINavigationControllerDelegate, UIScroll
         let width = self.photo!.image!.size.width
         let height = self.photo!.image!.size.height
         
+        let h = self.photo.bounds.height
+        let w = self.photo.bounds.width
+
         var transform = CGAffineTransform.identity
         if orient == UIDeviceOrientation.landscapeLeft {
             transform = CGAffineTransform(scaleX: width/height, y: width/height)
