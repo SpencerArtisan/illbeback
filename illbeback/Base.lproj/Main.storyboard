@@ -26,19 +26,37 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fqQ-IS-FI5">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pigeon" translatesAutoresizingMaskIntoConstraints="NO" id="egM-WL-ln4">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mzn-d2-ec5">
+                                        <rect key="frame" x="-1" y="0.0" width="375" height="812"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="Pigeon" translatesAutoresizingMaskIntoConstraints="NO" id="egM-WL-ln4">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="egM-WL-ln4" firstAttribute="top" secondItem="Mzn-d2-ec5" secondAttribute="top" id="Cgi-JU-coF"/>
+                                            <constraint firstItem="egM-WL-ln4" firstAttribute="leading" secondItem="Mzn-d2-ec5" secondAttribute="leading" id="sms-iw-C4v"/>
+                                            <constraint firstItem="egM-WL-ln4" firstAttribute="height" secondItem="Mzn-d2-ec5" secondAttribute="height" id="x0t-sE-3X5"/>
+                                            <constraint firstItem="egM-WL-ln4" firstAttribute="width" secondItem="Mzn-d2-ec5" secondAttribute="width" id="xR2-PT-3aP"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="egM-WL-ln4" secondAttribute="trailing" id="BPw-vb-1Xp"/>
-                                    <constraint firstItem="egM-WL-ln4" firstAttribute="centerY" secondItem="fqQ-IS-FI5" secondAttribute="centerY" id="Xtb-CE-BqX"/>
-                                    <constraint firstItem="egM-WL-ln4" firstAttribute="leading" secondItem="fqQ-IS-FI5" secondAttribute="leading" id="bvK-SY-jbD"/>
-                                    <constraint firstAttribute="bottom" secondItem="egM-WL-ln4" secondAttribute="bottom" id="dHe-tm-sqR"/>
-                                    <constraint firstItem="egM-WL-ln4" firstAttribute="centerX" secondItem="fqQ-IS-FI5" secondAttribute="centerX" id="tTk-kD-sdG"/>
-                                    <constraint firstItem="egM-WL-ln4" firstAttribute="top" secondItem="fqQ-IS-FI5" secondAttribute="top" id="vEj-2p-BYi"/>
+                                    <constraint firstAttribute="bottom" secondItem="Mzn-d2-ec5" secondAttribute="bottom" constant="-44" id="6ST-e5-eEr"/>
+                                    <constraint firstItem="Mzn-d2-ec5" firstAttribute="top" secondItem="fqQ-IS-FI5" secondAttribute="top" id="NBc-hE-jE0"/>
+                                    <constraint firstItem="Mzn-d2-ec5" firstAttribute="width" secondItem="fqQ-IS-FI5" secondAttribute="width" id="Nnv-H2-jGQ"/>
+                                    <constraint firstItem="Mzn-d2-ec5" firstAttribute="leading" secondItem="fqQ-IS-FI5" secondAttribute="leading" constant="-1" id="iir-It-7DI"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mzn-d2-ec5" secondAttribute="trailing" id="kyd-hG-OpF"/>
+                                    <constraint firstItem="Mzn-d2-ec5" firstAttribute="width" secondItem="fqQ-IS-FI5" secondAttribute="width" id="vJH-aC-RFL"/>
+                                    <constraint firstItem="Mzn-d2-ec5" firstAttribute="height" secondItem="fqQ-IS-FI5" secondAttribute="height" id="w59-jz-uYA"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Nnv-H2-jGQ"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="Gaz-V1-mFp" id="hFo-Cq-9Z6"/>
                                 </connections>
@@ -48,8 +66,8 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="fqQ-IS-FI5" secondAttribute="trailing" id="UFk-Is-Ovn"/>
                             <constraint firstItem="fqQ-IS-FI5" firstAttribute="leading" secondItem="REs-7Y-bDO" secondAttribute="leading" id="kdl-Q0-1aa"/>
+                            <constraint firstAttribute="bottom" secondItem="fqQ-IS-FI5" secondAttribute="bottom" id="pNA-wM-kt5"/>
                             <constraint firstItem="fqQ-IS-FI5" firstAttribute="top" secondItem="REs-7Y-bDO" secondAttribute="top" id="uyy-k2-bvC"/>
-                            <constraint firstAttribute="bottom" secondItem="fqQ-IS-FI5" secondAttribute="bottom" id="zqN-OO-KLN"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -58,11 +76,12 @@
                     <connections>
                         <outlet property="photo" destination="egM-WL-ln4" id="jnj-bs-NBL"/>
                         <outlet property="scrollView" destination="fqQ-IS-FI5" id="WPq-h8-hfe"/>
+                        <outlet property="tranformView" destination="Mzn-d2-ec5" id="48N-Xj-WBF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UK8-Jy-YeX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="-1060"/>
+            <point key="canvasLocation" x="749.60000000000002" y="-1060.344827586207"/>
         </scene>
         <!--Remember-->
         <scene sceneID="hNz-n2-bh7">

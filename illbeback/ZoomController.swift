@@ -14,6 +14,7 @@ import MapKit
 class ZoomController: UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate {
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var tranformView: UIView!
     
     var image: UIImage?
     var index: Int = 0
@@ -50,25 +51,50 @@ class ZoomController: UIViewController, UINavigationControllerDelegate, UIScroll
     func rotate(_ orient: UIDeviceOrientation) {
         let width = self.photo!.image!.size.width
         let height = self.photo!.image!.size.height
-        
-        let h = self.photo.bounds.height
-        let w = self.photo.bounds.width
-
+      
         var transform = CGAffineTransform.identity
         if orient == UIDeviceOrientation.landscapeLeft {
             transform = CGAffineTransform(scaleX: width/height, y: width/height)
-            transform = transform.rotated(by: 3.14159/2);
+            transform = stretchWidthIfAlmostFullScreen(transform).rotated(by: 3.14159/2);
         } else if orient == UIDeviceOrientation.landscapeRight {
             transform = CGAffineTransform(scaleX: width/height, y: width/height)
-            transform = transform.rotated(by: -3.14159/2);
+            transform = stretchWidthIfAlmostFullScreen(transform).rotated(by: -3.14159/2);
         } else if orient == UIDeviceOrientation.portraitUpsideDown {
-            transform = transform.rotated(by: 3.14159);
+            transform = stretchHeightIfAlmostFullScreen(transform).rotated(by: 3.14159)
+        } else if orient == UIDeviceOrientation.portrait {
+            transform = stretchHeightIfAlmostFullScreen(transform)
         }
         
         self.photo?.transform = transform
     }
     
+    func stretchHeightIfAlmostFullScreen(_ transform: CGAffineTransform) -> CGAffineTransform {
+        let width = self.photo!.image!.size.width
+        let height = self.photo!.image!.size.height
+        let h = self.photo.bounds.height
+        let w = self.photo.bounds.width
+        let heightAdjust = (width/height) / (w/h)
+
+        if abs(heightAdjust - 1.0) < 0.3 {
+            return transform.scaledBy(x: 1, y: heightAdjust)
+        }
+        return transform
+    }
+    
+    func stretchWidthIfAlmostFullScreen(_ transform: CGAffineTransform) -> CGAffineTransform {
+        let width = self.photo!.image!.size.width
+        let height = self.photo!.image!.size.height
+        let h = self.photo.bounds.height
+        let w = self.photo.bounds.width
+        let heightAdjust =  (h/w) / (width/height)
+        
+        if abs(heightAdjust - 1.0) < 0.3 {
+            return transform.scaledBy(x: heightAdjust, y: heightAdjust)
+        }
+        return transform
+    }
+    
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return photo
+        return tranformView
     }
 }
