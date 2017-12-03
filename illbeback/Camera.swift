@@ -17,7 +17,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     static var rearCameraInput: AVCaptureDeviceInput?
     
     var previewLayer: AVCaptureVideoPreviewLayer?
-    var photoCaptureCompletionBlock: ((UIImage?, Error?) -> Void)?
+    var photoCaptureCompletionBlock: ((UIImage?, Error?, UIDeviceOrientation?) -> Void)?
     
     var backButton: UIButton!
     var snapButton: UIButton!
@@ -133,54 +133,69 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     }
     
     func takePhoto(_ sender : UIButton!) {
-        self.captureImage {(image, error) in
-//            self.takePhotoEffects()
-            let orientation = UIDeviceOrientation.faceUp
+        self.captureImage {(image, error, orientation) in
+            self.takePhotoEffects()
             self.snapButton.removeFromSuperview()
             self.libraryButton.removeFromSuperview()
-            self.callback(self.navigationController, image!, orientation)
+            self.callback(self.navigationController, image!, orientation!)
             Camera.captureSession!.stopRunning()
         }
-//            var modifiedImage = image
-//            if (orientation == UIDeviceOrientation.landscapeRight) {
-//                modifiedImage = image?.rotateImage(image, onDegrees: 90)
-//            } else if (orientation == UIDeviceOrientation.landscapeLeft) {
-//                modifiedImage = image?.rotateImage(image, onDegrees: -90)
-//            }
+
     }
     
-    func captureImage( completion: @escaping (UIImage?, Error?) -> Void) {
+    func captureImage( completion: @escaping (UIImage?, Error?, UIDeviceOrientation?) -> Void) {
         self.photoCaptureCompletionBlock = completion
-        let videoPreviewLayerOrientation = previewLayer!.connection.videoOrientation
+
+        let connection = Camera.photoOutput!.connection(withMediaType: AVMediaTypeVideo)
+            switch UIDevice.current.orientation {
+            case .portrait, .portraitUpsideDown:
+                connection!.videoOrientation = .portrait
+            case .landscapeRight:
+                connection!.videoOrientation = .landscapeLeft
+            case .landscapeLeft:
+                connection!.videoOrientation = .landscapeRight
+            default:
+                connection!.videoOrientation = .portrait
+            }
         
-        // Update the photo output's connection to match the video orientation of the video preview layer.
-        if let photoOutputConnection = Camera.photoOutput!.connection(withMediaType: AVMediaTypeVideo) {
-            photoOutputConnection.videoOrientation = videoPreviewLayerOrientation
-        }
+//        Camera.photoOutput.conn
         
+//        if (connection?.isVideoOrientationSupported)! {
+//            connection?.videoOrientation = currentVideoOrientation()
+//        }
+//
         Camera.photoOutput?.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
     }
     
     public func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?,
                         resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Swift.Error?) {
         if let error = error {
-            self.photoCaptureCompletionBlock?(nil, error)
+            self.photoCaptureCompletionBlock?(nil, error, nil)
         } else if let buffer = photoSampleBuffer,
                     let data = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: buffer, previewPhotoSampleBuffer: nil),
-                    let image = UIImage(data: data) {
-            self.photoCaptureCompletionBlock?(image, nil)
+                        let image = UIImage(data: data) {
+            
+            let orientation = UIDevice.current.orientation
+            
+//                    var modifiedImage = image
+//                    if (orientation == UIDeviceOrientation.landscapeRight) {
+//                        modifiedImage = image.rotateImage(image, onDegrees: 90)
+//                    } else if (orientation == UIDeviceOrientation.landscapeLeft) {
+//                        modifiedImage = image.rotateImage(image, onDegrees: -90)
+//                    }
+            self.photoCaptureCompletionBlock?(image, nil, orientation)
         } else {
-            self.photoCaptureCompletionBlock?(nil, CameraControllerError.unknown)
+            self.photoCaptureCompletionBlock?(nil, CameraControllerError.unknown, nil)
         }
     }
     
     func takePhotoEffects() {
         let blackView = blackout()
         
-        UIView.animate(withDuration: 0.15, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.1, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             blackView.layer.opacity = 1
         }, completion: {_ in
-            UIView.animate(withDuration: 0.15, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.1, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 blackView.layer.opacity = 0
             }, completion: {_ in
                 blackView.removeFromSuperview()
