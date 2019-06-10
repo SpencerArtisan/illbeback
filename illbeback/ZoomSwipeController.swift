@@ -176,7 +176,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         self.deleteButton!.addTarget(self, action: #selector(ZoomSwipeController.deletePhoto(_:)), for: UIControlEvents.touchUpInside)
     }
 
-    func deletePhoto(_ sender : UIButton!) {
+    @objc func deletePhoto(_ sender : UIButton!) {
         photos[index].deletePhoto()
         photos.remove(at: index)
         if photos.count > 0 {
@@ -186,7 +186,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         }
     }
 
-    func photo(_ sender : UIButton!) {
+    @objc func photo(_ sender : UIButton!) {
         if (self.navigationController?.topViewController != self.mapController!.rephotoController) {
             self.mapController!.rephotoController.pinToRephoto = pinToRephoto
             self.navigationController?.isNavigationBarHidden = true
@@ -194,7 +194,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         }
     }
     
-    func goBack(_ sender : UIButton!) {
+    @objc func goBack(_ sender : UIButton!) {
         pinToRephoto!.refresh()
         self.navigationController!.popViewController(animated: false)
     }

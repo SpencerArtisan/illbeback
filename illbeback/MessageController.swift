@@ -37,47 +37,47 @@ class MessageController : NSObject {
         Utils.addObserver(self, selector: #selector(MessageController.onBackupFailed), event: "BackupFailed")
     }
     
-    func onFlagSending(_ note: Notification) {
+    @objc func onFlagSending(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let to = note.userInfo!["to"] as! String
         let message = "Sending \(flag.type()) to \(to)"
         preMessage(message, key: flag.id()+to, flag: flag)
     }
     
-    func onFlagSendSuccess(_ note: Notification) {
+    @objc func onFlagSendSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let to = note.userInfo!["to"] as! String
         let message = "Sent \(flag.type()) to \(to)"
         postMessage(message, key:  flag.id()+to, flag: flag, success: true)
     }
     
-    func onFlagSendFailed(_ note: Notification) {
+    @objc func onFlagSendFailed(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let to = note.userInfo!["to"] as! String
         let message = "Failed sending \(flag.type()) to \(to)"
         postMessage(message, key:  flag.id()+to, flag: flag, success: false)
     }
     
-    func onFlagReceiving(_ note: Notification) {
+    @objc func onFlagReceiving(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let message = "Downloading \(flag.type())"
         preMessage(message, key: flag.id(), flag: flag)
     }
     
-    func onFlagReceiveSuccess(_ note: Notification) {
+    @objc func onFlagReceiveSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let from = note.userInfo!["from"] as! String
         let message = "Downloaded \(flag.type()) from \(from)"
         postMessage(message, key:  flag.id(), flag: flag, success: true)
     }
     
-    func onFlagReceiveFailed(_ note: Notification) {
+    @objc func onFlagReceiveFailed(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         let message = "Failed downloading \(flag.type())"
         postMessage(message, key:  flag.id(), flag: flag, success: false)
     }
     
-    func onAccepting(_ note: Notification) {
+    @objc func onAccepting(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Sending accept for \(flag.type())"
@@ -85,7 +85,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onAcceptSuccess(_ note: Notification) {
+    @objc func onAcceptSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Sent accept"
@@ -93,7 +93,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onAcceptFailed(_ note: Notification) {
+    @objc func onAcceptFailed(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Failed sending accept"
@@ -101,7 +101,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onDeclining(_ note: Notification) {
+    @objc func onDeclining(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Sending decline for \(flag.type())"
@@ -109,7 +109,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onDeclineSuccess(_ note: Notification) {
+    @objc func onDeclineSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Sent decline"
@@ -117,7 +117,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onDeclineFailed(_ note: Notification) {
+    @objc func onDeclineFailed(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let message = "Failed sending decline"
@@ -125,7 +125,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onAckReceiveSuccess(_ note: Notification) {
+    @objc func onAckReceiveSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isEvent() {
             let from = note.userInfo!["from"] as! String
@@ -136,7 +136,7 @@ class MessageController : NSObject {
         }
     }
 
-    func onNameTaken(_ note: Notification) {
+    @objc func onNameTaken(_ note: Notification) {
         Utils.runOnUiThread {
             let takenName = note.userInfo!["name"]
             self.showMessage("Sharing name \(takenName!) taken!", color: UIColor.red, fontColor: UIColor.white, time: 3.0)
@@ -144,7 +144,7 @@ class MessageController : NSObject {
         }
     }
     
-    func onNameAccepted(_ note: Notification) {
+    @objc func onNameAccepted(_ note: Notification) {
         Utils.runOnUiThread {
             let name = note.userInfo!["name"]
             self.showMessage("Welcome to Breadcrumbs \(name!)", color: UIColor.green, fontColor: UIColor.black, time: 3.0)
@@ -155,25 +155,25 @@ class MessageController : NSObject {
         }
     }
     
-    func onEventListChange(_ note: Notification) {
+    @objc func onEventListChange(_ note: Notification) {
         Utils.runOnUiThread {
             let enable = note.userInfo!["enable"] as! Bool
             self.mapController.alarmButton.isHidden = !enable
         }
     }
     
-    func onBackupPreparing(_ note: Notification) {
+    @objc func onBackupPreparing(_ note: Notification) {
         let message = "Preparing backup"
         preMessage(message, key: "backup", color: UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.8))
     }
     
-    func onBackupPrepared(_ note: Notification) {
+    @objc func onBackupPrepared(_ note: Notification) {
         Utils.runOnUiThread {
             self.dismissMessage("backup")
         }
     }
     
-    func onBackupFailed(_ note: Notification) {
+    @objc func onBackupFailed(_ note: Notification) {
         Utils.runOnUiThread {
             self.dismissMessage("backup")
         }

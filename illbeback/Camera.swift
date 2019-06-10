@@ -53,8 +53,8 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         }
         func configureCaptureDevices() throws {
             //1
-            let session = AVCaptureDeviceDiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaTypeVideo, position: .unspecified)
-            guard let cameras = (session?.devices.flatMap { $0 }), !cameras.isEmpty else { throw CameraControllerError.noCamerasAvailable }
+            let session = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .unspecified)
+            let cameras = (session.devices.compactMap { $0 })
             
             //2
             for camera in cameras {
@@ -79,12 +79,13 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
                 
             else { throw CameraControllerError.noCamerasAvailable }
         }
+        
         func configurePhotoOutput() throws {
             self.photoOutput = AVCapturePhotoOutput()
             self.photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecJPEG])], completionHandler: nil)
             
-            if self.captureSession!.canAddOutput(self.photoOutput) {
-                self.captureSession!.addOutput(self.photoOutput)
+            if self.captureSession!.canAddOutput(self.photoOutput!) {
+                self.captureSession!.addOutput(self.photoOutput!)
             }
         }
         
@@ -111,8 +112,8 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     }
     
     func displayPreview(on view: UIView) throws {
-        self.previewLayer = AVCaptureVideoPreviewLayer(session: Camera.captureSession)
-        self.previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        self.previewLayer = AVCaptureVideoPreviewLayer(session: Camera.captureSession!)
+        self.previewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.previewLayer?.connection?.videoOrientation = .portrait
         
         view.layer.insertSublayer(self.previewLayer!, at: 0)
@@ -132,7 +133,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     func stop() {
     }
     
-    func takePhoto(_ sender : UIButton!) {
+    @objc func takePhoto(_ sender : UIButton!) {
         self.captureImage {(image, error, orientation) in
             self.snapButton.removeFromSuperview()
             self.libraryButton.removeFromSuperview()
@@ -145,7 +146,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     func captureImage( completion: @escaping (UIImage?, Error?, UIDeviceOrientation?) -> Void) {
         self.photoCaptureCompletionBlock = completion
 
-        let connection = Camera.photoOutput!.connection(withMediaType: AVMediaTypeVideo)
+        let connection = Camera.photoOutput!.connection(with: AVMediaType.video)
         switch UIDevice.current.orientation {
         case .portrait, .portraitUpsideDown:
             connection!.videoOrientation = .portrait
@@ -160,7 +161,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         Camera.photoOutput?.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
     }
     
-    public func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?,
+    public func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
                         resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Swift.Error?) {
         
         self.takePhotoEffects()
@@ -201,7 +202,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         return blackView!
     }
 
-    func library(_ sender : UIButton!) {
+    @objc func library(_ sender : UIButton!) {
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
@@ -209,7 +210,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         parentController.present(imagePicker, animated: false, completion: nil)
     }
     
-    func goBack(_ sender : UIButton!) {
+    @objc func goBack(_ sender : UIButton!) {
         self.navigationController.popViewController(animated: false)
     }
 

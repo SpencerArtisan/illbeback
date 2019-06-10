@@ -51,12 +51,12 @@ class FlagRenderer: NSObject {
         return nil
     }
 
-    func onAcceptSuccess(_ note: Notification) {
+    @objc func onAcceptSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refreshImage(flag)
     }
     
-    func onDeclineSuccess(_ note: Notification) {
+    @objc func onDeclineSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         if flag.isDead() {
             remove(flag)
@@ -65,32 +65,32 @@ class FlagRenderer: NSObject {
         }
     }
     
-    func onFlagChanged(_ note: Notification) {
+    @objc func onFlagChanged(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
     }
     
-    func onFlagAdded(_ note: Notification) {
+    @objc func onFlagAdded(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         add(flag)
     }
 
-    func onFlagRemoved(_ note: Notification) {
+    @objc func onFlagRemoved(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         remove(flag)
     }
     
-    func onFlagSent(_ note: Notification) {
+    @objc func onFlagSent(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
     }
     
-    func onFlagReceiveSuccess(_ note: Notification) {
+    @objc func onFlagReceiveSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
     }
     
-    func onAckReceiveSuccess(_ note: Notification) {
+    @objc func onAckReceiveSuccess(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         refresh(flag)
     }

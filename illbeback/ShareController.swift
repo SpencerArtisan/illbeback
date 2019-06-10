@@ -134,11 +134,11 @@ class ShareController : UIViewController {
         shareModal?.slideInFromLeft(mapController.view)
     }
     
-    func shareWithNewFriend(_ sender: AnyObject?) {
+    @objc func shareWithNewFriend(_ sender: AnyObject?) {
         newFriend(sender, cancelAction: #selector(ShareController.shareNewFriendCancelled(_:)))
     }
     
-    func createNewFriend(_ sender: AnyObject?) {
+    @objc func createNewFriend(_ sender: AnyObject?) {
         newFriend(sender, cancelAction: #selector(ShareController.createNewFriendCancelled(_:)))
     }
     
@@ -159,33 +159,33 @@ class ShareController : UIViewController {
             deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
     }
     
-    func shareMemoryConfirmed(_ sender: AnyObject?) {
+    @objc func shareMemoryConfirmed(_ sender: AnyObject?) {
         let friend = (sender as! UIButton).titleLabel?.text!.trimmingCharacters(in: CharacterSet.whitespaces)
         shareWith(friend!)
         hideShareModal(sender)
     }
     
-    func shareMemoryCancelled(_ sender: AnyObject?) {
+    @objc func shareMemoryCancelled(_ sender: AnyObject?) {
         pinsToShare = []
         shareModal?.slideInFromLeft(mapController.view)
         ((sender) as! UIButton).removeTarget(self, action: #selector(ShareController.shareMemoryCancelled(_:)), for: .touchUpInside)
     }
     
-    func shareNewFriendCancelled(_ sender: AnyObject?) {
+    @objc func shareNewFriendCancelled(_ sender: AnyObject?) {
         mapController.newUserText.resignFirstResponder()
         pinsToShare = []
         mapController.newUserModal?.slideInFromRight(mapController.view)
         ((sender) as! UIButton).removeTarget(self, action: #selector(ShareController.shareNewFriendCancelled(_:)), for: .touchUpInside)
     }
     
-    func deleteFriendConfirmed(_ sender: AnyObject?) {
+    @objc func deleteFriendConfirmed(_ sender: AnyObject?) {
         let friend = (sender as! UIButton).titleLabel?.text!.trimmingCharacters(in: CharacterSet.whitespaces)
         Global.getUser().removeFriend(friend!)
         Preferences.user(Global.getUser())
         showEditFriends()
     }
     
-    func createNewFriendCancelled(_ sender: AnyObject?) {
+    @objc func createNewFriendCancelled(_ sender: AnyObject?) {
         mapController.newUserText.resignFirstResponder()
         pinsToShare = []
         mapController.newUserModal?.slideInFromRight(mapController.view)

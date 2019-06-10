@@ -19,7 +19,7 @@ class FlagRepository : NSObject {
         Utils.addObserver(self, selector: #selector(FlagRepository.onFlagChanged), event: "InviteeChanged")
     }
     
-    func onFlagChanged(_ note: Notification) {
+    @objc func onFlagChanged(_ note: Notification) {
         print("Flag change")
         let flag = note.userInfo!["flag"] as! Flag
         save(flag)

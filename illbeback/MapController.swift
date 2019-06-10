@@ -168,20 +168,20 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         backup!.importFromURL(url)
     }
     
-    func onFlagReceiveSuccess(_ note: Notification) {
+    @objc func onFlagReceiveSuccess(_ note: Notification) {
         updateButtonStates()
     }
     
-    func onAcceptSuccess(_ note: Notification) {
+    @objc func onAcceptSuccess(_ note: Notification) {
         updateButtonStates()
         
     }
     
-    func onDeclineSuccess(_ note: Notification) {
+    @objc func onDeclineSuccess(_ note: Notification) {
         updateButtonStates()
     }
     
-    func onDeclining(_ note: Notification) {
+    @objc func onDeclining(_ note: Notification) {
         updateButtonStates()
     }
     
@@ -278,7 +278,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     }
     
     // User clicked on map - Add a flag there
-    func foundTap(_ recognizer: UITapGestureRecognizer) {
+    @objc func foundTap(_ recognizer: UITapGestureRecognizer) {
         if recognizer.state == UIGestureRecognizerState.began {
             let point = recognizer.location(in: self.map)
             let tapPoint = self.map.convert(point, toCoordinateFrom: self.view)

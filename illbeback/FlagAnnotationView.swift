@@ -125,9 +125,9 @@ class FlagAnnotationView : MKAnnotationView {
             let daysToGo: NSString = " \(flag!.daysToGo()) " as NSString
             let col = flag!.daysToGo() < 6 ? UIColor.red : UIColor.gray
             daysToGo.draw(in: CGRect(x: 0,y: finalSize.height-14,width: 100,height: 30), withAttributes: [
-                NSForegroundColorAttributeName: UIColor.white,
-                NSBackgroundColorAttributeName: col,
-                NSFontAttributeName: UIFont(name: "Arial-BoldMT", size: 12)!
+                NSAttributedStringKey.foregroundColor: UIColor.white,
+                NSAttributedStringKey.backgroundColor: col,
+                NSAttributedStringKey.font: UIFont(name: "Arial-BoldMT", size: 12)!
                 ])
         }
         

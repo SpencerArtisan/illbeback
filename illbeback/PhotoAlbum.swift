@@ -21,18 +21,18 @@ open class PhotoAlbum : NSObject {
         Utils.addObserver(self, selector: #selector(PhotoAlbum.onDeclined), event: "DeclineSuccess")
     }
     
-    func onFlagRemoved(_ note: Notification) {
+    @objc func onFlagRemoved(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         delete(getRecentImagePaths(flag.id()))
         delete(getImagePaths(flag.id()))
     }
     
-    func onDeclined(_ note: Notification) {
+    @objc func onDeclined(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         delete(getRecentImagePaths(flag.id()))
     }
     
-    func onAccepted(_ note: Notification) {
+    @objc func onAccepted(_ note: Notification) {
         let flag = note.userInfo!["flag"] as! Flag
         delete(getImagePaths(flag.id()))
         
