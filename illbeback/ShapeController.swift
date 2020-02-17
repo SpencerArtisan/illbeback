@@ -27,7 +27,7 @@ class ShapeController : UIViewController {
     
     func clear() {
         if polyline != nil {
-            self.map.remove(polyline!)
+            self.map.removeOverlay(polyline!)
         }
         for corner in corners {
             map!.removeAnnotation(corner)
@@ -44,9 +44,9 @@ class ShapeController : UIViewController {
         
         let mRect = self.map.visibleMapRect
         
-        let maxX = MKMapRectGetMaxX(mRect)
+        let maxX = mRect.maxX
         let minX = mRect.origin.x
-        let maxY = MKMapRectGetMaxY(mRect)
+        let maxY = mRect.maxY
         let minY = mRect.origin.y
         let width = maxX - minX
         let height = maxY - minY
@@ -79,14 +79,14 @@ class ShapeController : UIViewController {
     func drawShape() {
         var points = shape()
         if (polyline != nil) {
-            self.map.remove(polyline!)
+            self.map.removeOverlay(polyline!)
         }
         polyline = MKPolyline(coordinates: &points, count: points.count)
-        self.map.add(polyline!)
+        self.map.addOverlay(polyline!)
     }
     
     func pointAt(_ x: Double, y: Double) -> CLLocationCoordinate2D {
-        return MKCoordinateForMapPoint(MKMapPointMake(x, y))
+        return MKMapPoint(x: x, y: y).coordinate
     }
     
     func shape() -> [CLLocationCoordinate2D] {
@@ -101,7 +101,7 @@ class ShapeController : UIViewController {
             return false //or if first point = test -> return true
         }
 
-        var polygon = shape()
+        let polygon = shape()
         
         let p = UIBezierPath()
         let firstPoint = toPoint(polygon[0]) as CGPoint

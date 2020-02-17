@@ -66,7 +66,7 @@ open class PhotoAlbum : NSObject {
     
     func saveFlagImage(_ image: UIImage?, flagId: String) {
         let imagePath = getNewImagePath(flagId)
-        let imageData: Data = UIImageJPEGRepresentation(image!, 0.25)!
+        let imageData: Data = image!.jpegData(compressionQuality: 0.25)!
         fileManager.createFile(atPath: imagePath, contents: imageData, attributes: nil)
     }
     
@@ -101,7 +101,7 @@ open class PhotoAlbum : NSObject {
     func addFlagImage(_ image: UIImage?, flag: Flag) {
         let imagePath = getNewImagePath(flag.id())
         print("Saving image \(imagePath)")
-        let imageData: Data = UIImageJPEGRepresentation(image!, 0.25)!
+        let imageData: Data = image!.jpegData(compressionQuality: 0.25)!
         fileManager.createFile(atPath: imagePath, contents: imageData, attributes: nil)
         Utils.notifyObservers("FlagChanged", properties: ["flag": flag])
     }

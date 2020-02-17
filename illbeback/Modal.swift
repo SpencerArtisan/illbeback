@@ -60,10 +60,10 @@ class Modal {
     }
     
     func blurBackground() {
-        if !UIAccessibilityIsReduceTransparencyEnabled() {
+        if !UIAccessibility.isReduceTransparencyEnabled {
             view.backgroundColor = UIColor.clear
             
-            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             blurEffectView.frame = self.view.bounds
             blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -89,7 +89,7 @@ class Modal {
         }
         self.view.frame.origin.x = start
         
-        UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
             var sliderFrame = self.view.frame
             sliderFrame.origin.x = end
             self.view.frame = sliderFrame
@@ -103,7 +103,7 @@ class Modal {
         }
         self.view.frame.origin.y = start
         
-        UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
             var sliderFrame = self.view.frame
             sliderFrame.origin.y = end + parentView.layoutMargins.top - 40
             self.view.frame = sliderFrame

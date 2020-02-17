@@ -215,8 +215,8 @@ class MessageController : NSObject {
         let messageModal = Modal(viewName: "MessageView", owner: mapController)
         let message = messageModal.findElementByTag(1) as! UIButton
         message.backgroundColor = color.withAlphaComponent(1)
-        message.setTitleColor(fontColor, for: UIControlState())
-        message.setTitle(text, for: UIControlState())
+        message.setTitleColor(fontColor, for: UIControl.State())
+        message.setTitle(text, for: UIControl.State())
         messageModal.slideDownFromTop(self.mapController.view)
         
         if time != nil {

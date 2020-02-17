@@ -31,7 +31,7 @@ class ZoomController: UIViewController, UINavigationControllerDelegate, UIScroll
         self.scrollView.maximumZoomScale = 6.0
         
         //using an inline closure
-        nc.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: dev, queue: OperationQueue.main, using: {
+        nc.addObserver(forName: UIDevice.orientationDidChangeNotification, object: dev, queue: OperationQueue.main, using: {
             note in if let object: UIDevice = note.object as? UIDevice {
                 let orient = object.orientation
                 self.rotate(orient)

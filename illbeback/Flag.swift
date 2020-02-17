@@ -143,7 +143,7 @@ open class Flag {
             return type()
         } else {
             let withoutReturns = description().replacingOccurrences(of: "\r\n", with: " ")
-            return (withoutReturns as NSString).substring(to: min(withoutReturns.characters.count, 30))
+            return (withoutReturns as NSString).substring(to: min(withoutReturns.count, 30))
         }
     }
     

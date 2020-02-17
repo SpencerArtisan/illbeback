@@ -39,7 +39,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
             pageViewController!.setViewControllers(viewControllers as? [UIViewController], direction: .forward, animated: false, completion: nil)
             pageViewController!.view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height + 37);
         
-            addChildViewController(pageViewController!)
+            addChild(pageViewController!)
             view.addSubview(pageViewController!.view)
 
             createBackButton()
@@ -49,7 +49,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
             view.addSubview(self.deleteButton!)
             view.addSubview(self.photoButton!)
         
-            pageViewController!.didMove(toParentViewController: self)
+            pageViewController!.didMove(toParent: self)
         }
         drawDots(0)
     }
@@ -121,7 +121,7 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         if (photos.count > 1) {
             let left = view.frame.width / 2 - (CGFloat(photos.count-1)) * 8
             for i in 0...photos.count-1 {
-                let image = UIImage(named: "dot")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                let image = UIImage(named: "dot")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
                 let dot = UIImageView(image: image)
                 dot.frame = CGRect(x: left + 16 * CGFloat(i), y: 45, width: 10, height: 10)
                 dots.append(dot)
@@ -137,8 +137,8 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
     
     func createBackButton() {
         self.backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        let image = UIImage(named: "back")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        self.backButton!.setImage(image, for: UIControlState())
+        let image = UIImage(named: "back")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        self.backButton!.setImage(image, for: UIControl.State())
         self.backButton!.tintColor = UIColor.blue
         self.backButton!.clipsToBounds = true
         self.backButton!.layer.cornerRadius = 30.0
@@ -146,13 +146,13 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         self.backButton!.layer.borderWidth = 1.0
         self.backButton!.backgroundColor = UIColor.white
         self.backButton!.center = CGPoint(x: 65, y: view.bounds.height - 60)
-        self.backButton!.addTarget(self, action: #selector(ZoomSwipeController.goBack(_:)), for: UIControlEvents.touchUpInside)
+        self.backButton!.addTarget(self, action: #selector(ZoomSwipeController.goBack(_:)), for: UIControl.Event.touchUpInside)
     }
     
     func createPhotoButton() {
         self.photoButton = UIButton(frame: CGRect(x: 0, y: 0, width: 90, height: 90))
-        let image = UIImage(named: "camerablue")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        self.photoButton!.setImage(image, for: UIControlState())
+        let image = UIImage(named: "camerablue")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        self.photoButton!.setImage(image, for: UIControl.State())
         self.photoButton!.tintColor = UIColor.blue
         self.photoButton!.clipsToBounds = true
         self.photoButton!.layer.cornerRadius = 45.0
@@ -160,20 +160,20 @@ class ZoomSwipeController: UIViewController, UINavigationControllerDelegate, UIP
         self.photoButton!.layer.borderWidth = 1.0
         self.photoButton!.backgroundColor = UIColor.white
         self.photoButton!.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height - 60)
-        self.photoButton!.addTarget(self, action: #selector(ZoomSwipeController.photo(_:)), for: UIControlEvents.touchUpInside)
+        self.photoButton!.addTarget(self, action: #selector(ZoomSwipeController.photo(_:)), for: UIControl.Event.touchUpInside)
     }
     
     func createDeleteButton() {
         self.deleteButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         let image = UIImage(named: "trash")
-        self.deleteButton!.setImage(image, for: UIControlState())
+        self.deleteButton!.setImage(image, for: UIControl.State())
         self.deleteButton!.clipsToBounds = true
         self.deleteButton!.layer.cornerRadius = 30.0
         self.deleteButton!.layer.borderColor = UIColor.black.cgColor
         self.deleteButton!.layer.borderWidth = 1.0
         self.deleteButton!.backgroundColor = UIColor.white
         self.deleteButton!.center = CGPoint(x: view.bounds.width - 65, y: view.bounds.height - 60)
-        self.deleteButton!.addTarget(self, action: #selector(ZoomSwipeController.deletePhoto(_:)), for: UIControlEvents.touchUpInside)
+        self.deleteButton!.addTarget(self, action: #selector(ZoomSwipeController.deletePhoto(_:)), for: UIControl.Event.touchUpInside)
     }
 
     @objc func deletePhoto(_ sender : UIButton!) {

@@ -38,13 +38,13 @@ class ShareController : UIViewController {
         for friend in friends {
             let shareButton = shareModal?.findElementByTag(tag) as! UIButton
             tag = tag + 1
-            shareButton.setTitle(" " + friend, for: UIControlState())
+            shareButton.setTitle(" " + friend, for: UIControl.State())
             shareButton.isHidden = false
             shareButton.removeTarget(self, action: nil, for: .touchUpInside)
             shareButton.addTarget(self, action: #selector(ShareController.deleteFriendConfirmed(_:)), for: .touchUpInside)
-            shareButton.setTitleColor(UIColor.black, for: UIControlState())
+            shareButton.setTitleColor(UIColor.black, for: UIControl.State())
             shareButton.isEnabled = true
-            shareButton.setImage(deleteImage, for: UIControlState())
+            shareButton.setImage(deleteImage, for: UIControl.State())
         }
         while (tag <= 15) {
             let shareButton = shareModal?.findElementByTag(tag) as! UIButton
@@ -60,7 +60,7 @@ class ShareController : UIViewController {
             newFriendButton.removeTarget(self, action: nil, for: .touchUpInside)
             newFriendButton.addTarget(self, action: #selector(ShareController.createNewFriend(_:)), for: .touchUpInside)
             newFriendButton.isEnabled = true
-            newFriendButton.setImage(nil, for: UIControlState())
+            newFriendButton.setImage(nil, for: UIControl.State())
         }
         
         let cancelButton = shareModal?.findElementByTag(99) as! UIButton
@@ -82,13 +82,13 @@ class ShareController : UIViewController {
         for friend in friends {
             let shareButton = shareModal?.findElementByTag(tag) as! UIButton
             tag = tag + 1
-            shareButton.setTitle(" " + friend, for: UIControlState())
+            shareButton.setTitle(" " + friend, for: UIControl.State())
             shareButton.isHidden = false
             shareButton.removeTarget(self, action: nil, for: .touchUpInside)
             shareButton.addTarget(self, action: #selector(ShareController.shareMemoryConfirmed(_:)), for: .touchUpInside)
-            shareButton.setTitleColor(UIColor.black, for: UIControlState())
+            shareButton.setTitleColor(UIColor.black, for: UIControl.State())
             shareButton.isEnabled = false
-            shareButton.setImage(shareImage, for: UIControlState())
+            shareButton.setImage(shareImage, for: UIControl.State())
             delay(0.5) { shareButton.isEnabled = true }
         }
         while (tag <= 15) {
@@ -105,7 +105,7 @@ class ShareController : UIViewController {
             newFriendButton.removeTarget(self, action: nil, for: .touchUpInside)
             newFriendButton.addTarget(self, action: #selector(ShareController.shareWithNewFriend(_:)), for: .touchUpInside)
             newFriendButton.isEnabled = false
-            newFriendButton.setImage(shareImage, for: UIControlState())
+            newFriendButton.setImage(shareImage, for: UIControl.State())
             delay(0.5) { newFriendButton.isEnabled = true }
         }
         

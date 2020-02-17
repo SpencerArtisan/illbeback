@@ -115,8 +115,10 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         self.inBox = InBox(flagRepository: flagRepository, photoAlbum: photoAlbum)
         self.backup = Backup(mapController: self, flagRepository: flagRepository, photoAlbum: photoAlbum)
 
-        self.newUserLabel = newUserModal!.findElementByTag(1) as! UILabel!
-        self.newUserText = newUserModal!.findElementByTag(2) as! UITextView!
+        let element1 = newUserModal!.findElementByTag(1)
+        self.newUserLabel = element1 as! UILabel?
+        let element2 = newUserModal!.findElementByTag(2)
+        self.newUserText = element2 as! UITextView?
         self.newUserText.delegate = self
         self.searchText.delegate = self
   
@@ -279,7 +281,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
     
     // User clicked on map - Add a flag there
     @objc func foundTap(_ recognizer: UITapGestureRecognizer) {
-        if recognizer.state == UIGestureRecognizerState.began {
+        if recognizer.state == UIGestureRecognizer.State.began {
             let point = recognizer.location(in: self.map)
             let tapPoint = self.map.convert(point, toCoordinateFrom: self.view)
             self.addFlag.add(self, location: tapPoint)
@@ -359,11 +361,11 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         return flagRenderer.render(mapView, viewForAnnotation: annotation)
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-        if newState == MKAnnotationViewDragState.starting {
-            view.dragState = MKAnnotationViewDragState.dragging
-        } else if newState == MKAnnotationViewDragState.ending || newState == MKAnnotationViewDragState.canceling {
-            view.dragState = MKAnnotationViewDragState.none;
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
+        if newState == MKAnnotationView.DragState.starting {
+            view.dragState = MKAnnotationView.DragState.dragging
+        } else if newState == MKAnnotationView.DragState.ending || newState == MKAnnotationView.DragState.canceling {
+            view.dragState = MKAnnotationView.DragState.none;
             if view.annotation is FlagAnnotation {
                 let pinData = view.annotation as! FlagAnnotation
                 pinData.setCoordinate2(pinData.coordinate)
@@ -411,12 +413,12 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
         textView.text = textView.text.trimmingCharacters(in: CharacterSet.newlines)
         
         if textView == self.newUserText && text != "\n" {
-            if textView.text.characters.count + text.characters.count > 14 { return false }
+            if textView.text.count + text.count > 14 { return false }
         }
         
         if text == "\n" && !textView.text.isEmpty {
             if textView == self.searchText {
-                print("SEARCH TEXT \(textView.text)")
+                print("SEARCH TEXT \(String(describing: textView.text))")
                 searchModal?.slideInFromLeft(self.view)
                 searchText.resignFirstResponder()
                 
@@ -429,7 +431,7 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
                     }
                 }
             } else {
-                print("NEW USER TEXT \(textView.text)")
+                print("NEW USER TEXT \(String(describing: textView.text))")
                 
                 newUserModal?.slideInFromRight(self.view)
                 

@@ -81,7 +81,7 @@ class EventView: UIView {
     }
     
     fileprivate func loadXib() {
-        containerView = Bundle.main.loadNibNamed("Event", owner: self, options: nil)?[0] as! UIView
+        containerView = (Bundle.main.loadNibNamed("Event", owner: self, options: nil)?[0] as! UIView)
         
         self.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false

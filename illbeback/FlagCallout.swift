@@ -177,7 +177,7 @@ class FlagCallout: UIView {
         let x = photoView == nil ? labelArea!.width - 35 : labelArea!.width - 65
         deleteButton = UIButton(frame: CGRect(x: x, y: labelArea!.height - 39 - whenHeight, width: 40, height: 40))
         let image = UIImage(named: "trash")
-        deleteButton!.setImage(image, for: UIControlState())
+        deleteButton!.setImage(image, for: UIControl.State())
     }
     
     func createShareButton() {
@@ -185,15 +185,15 @@ class FlagCallout: UIView {
             let x = photoView == nil ? CGFloat(0) : CGFloat(30)
             shareButton = UIButton(frame: CGRect(x: x, y: labelArea!.height - 40 - whenHeight, width: 40, height: 40))
             let image = UIImage(named: "share")
-            shareButton!.setImage(image, for: UIControlState())
+            shareButton!.setImage(image, for: UIControl.State())
         }
     }
     
     func createPhotoButton() {
         if photoView == nil && !flag!.isBlank() {
             photoButton = UIButton(frame: CGRect(x: labelArea!.width / 2 - 17, y: labelArea!.height - 38 - whenHeight, width: 40, height: 40))
-            let image = UIImage(named: "camera")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-            photoButton!.setImage(image, for: UIControlState())
+            let image = UIImage(named: "camera")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+            photoButton!.setImage(image, for: UIControl.State())
             photoButton?.tintColor = UIColor.blue
         } else {
             photoButton = nil
@@ -206,7 +206,7 @@ class FlagCallout: UIView {
         if count > 1 {
             let left = photoView!.frame.width / 2 - (CGFloat(count-1)) * 6
             for i in 0...count-1 {
-                let image = UIImage(named: "dot")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                let image = UIImage(named: "dot")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
                 let dot = UIImageView(image: image)
                 dot.tintColor = UIColor.lightGray
                 dot.frame = CGRect(x: left + 12 * CGFloat(i), y: 20, width: 8, height: 8)
@@ -351,7 +351,7 @@ class FlagCallout: UIView {
         let viewPoint = superview?.convert(point, to: self) ?? point
         let duplicate = lastHitTestPoint != nil && lastHitTestPoint! == point
         
-        if !duplicate && event!.type == UIEventType.touches {
+        if !duplicate && event!.type == UIEvent.EventType.touches {
             lastHitTestPoint = point
             if hitButton(point, button: acceptButton) {
                 accept()

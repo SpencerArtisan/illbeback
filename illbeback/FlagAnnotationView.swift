@@ -48,7 +48,7 @@ class FlagAnnotationView : MKAnnotationView {
             Utils.delay(0.1) { if self.annotation != nil { self.mapController?.map.selectAnnotation(self.annotation!, animated: false) } }
         }
         
-        self.superview?.bringSubview(toFront: self)
+        self.superview?.bringSubviewToFront(self)
         if self.isSelected { showCallout() }
         if !self.isSelected { hideCallout() }
     }
@@ -125,9 +125,9 @@ class FlagAnnotationView : MKAnnotationView {
             let daysToGo: NSString = " \(flag!.daysToGo()) " as NSString
             let col = flag!.daysToGo() < 6 ? UIColor.red : UIColor.gray
             daysToGo.draw(in: CGRect(x: 0,y: finalSize.height-14,width: 100,height: 30), withAttributes: [
-                NSAttributedStringKey.foregroundColor: UIColor.white,
-                NSAttributedStringKey.backgroundColor: col,
-                NSAttributedStringKey.font: UIFont(name: "Arial-BoldMT", size: 12)!
+                NSAttributedString.Key.foregroundColor: UIColor.white,
+                NSAttributedString.Key.backgroundColor: col,
+                NSAttributedString.Key.font: UIFont(name: "Arial-BoldMT", size: 12)!
                 ])
         }
         

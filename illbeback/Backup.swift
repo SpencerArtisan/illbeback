@@ -61,7 +61,7 @@ class Backup: NSObject, MFMailComposeViewControllerDelegate {
         imageFiles.forEach {imageFile in
             let image = UIImage(contentsOfFile: imageFile)
             if image != nil {
-                let imageData = UIImageJPEGRepresentation(image!, 0.25)!
+                let imageData = image!.jpegData(compressionQuality: 0.25)!
                 let key = URL(fileURLWithPath: imageFile).lastPathComponent
                 print("Encoding image with key \(key)")
                 archiver.encode(imageData, forKey: key)
