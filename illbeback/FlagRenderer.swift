@@ -31,9 +31,8 @@ class FlagRenderer: NSObject {
         if annotation is FlagAnnotation {
             let pinData = annotation as! FlagAnnotation
             var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: "pin")
-                
             
-            if pinView != nil && pinView as? FlagAnnotationView != nil {
+            if pinView == nil {
                 pinView = FlagAnnotationView(mapController: mapController, flag: pinData.flag)
             }
             
@@ -41,7 +40,7 @@ class FlagRenderer: NSObject {
         } else if annotation is ShapeCorner {
             var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: "corner")
             
-            if pinView != nil && pinView as? ShapeCornerView != nil {
+            if pinView == nil {
                 pinView = ShapeCornerView(mapController: mapController)
             }
             

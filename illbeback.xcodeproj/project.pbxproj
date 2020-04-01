@@ -863,6 +863,7 @@
 				CODE_SIGN_ENTITLEMENTS = "illbeback/I'll Be Back.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = YWXKS4E5M8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -876,6 +877,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
+				MARKETING_VERSION = 2.9;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Artisan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "I'll Be Back";
@@ -893,6 +895,7 @@
 				CODE_SIGN_ENTITLEMENTS = "illbeback/I'll Be Back.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = YWXKS4E5M8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -906,6 +909,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
+				MARKETING_VERSION = 2.9;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Artisan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "I'll Be Back";

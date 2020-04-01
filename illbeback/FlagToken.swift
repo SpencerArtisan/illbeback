@@ -36,7 +36,7 @@ class FlagToken {
     }
     
     init(token: String) {
-        var parts = token.components(separatedBy: ":")
+        let parts = token.components(separatedBy: ":")
         self._id = parts[4]
         
         self._type = parts[0]

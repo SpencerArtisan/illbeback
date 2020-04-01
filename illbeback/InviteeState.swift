@@ -25,7 +25,12 @@ enum InviteeState: String {
         case "W":
             return InviteeState.Invited
         default:
-            return InviteeState(rawValue: code)!
+            if let state = InviteeState(rawValue: code) {
+                return state
+            } else {
+                print("WARN - Unknown state <" + code + ">")
+                return Accepted
+            }
         }
     }
 
