@@ -37,11 +37,11 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        camera!.start()
+        self.camera!.start()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        camera!.stop()
+        self.camera!.stop()
     }
     
     func addPhoto(_ image: UIImage, orientation: UIDeviceOrientation) {
@@ -49,5 +49,10 @@ class RephotoController: UIViewController, UINavigationControllerDelegate {
         photoAlbum!.addFlagImage(image, flag: pinToRephoto!.flag!)
         navigationController?.popViewController(animated: false)
         pinToRephoto!.refresh()
+    }
+    
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
     }
 }

@@ -31,13 +31,11 @@ class RememberController: UIViewController, UINavigationControllerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        delay(0.01) {
-            self.camera!.start()
-        }
+        self.camera!.start()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        camera!.stop()
+        self.camera!.stop()
         addFlag?.viewWillDisappear(animated)
     }
     

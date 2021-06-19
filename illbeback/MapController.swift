@@ -227,7 +227,6 @@ class MapController: UIViewController, CLLocationManagerDelegate, MKMapViewDeleg
             zoomController.pinToRephoto = pin
             rephotoController.pinToRephoto = pin
             self.navigationController?.isNavigationBarHidden = true
-            self.navigationController?.pushViewController(zoomController, animated: false)
             self.navigationController?.pushViewController(rephotoController!, animated: false)
         }
     }

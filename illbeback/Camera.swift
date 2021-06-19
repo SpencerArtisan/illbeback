@@ -44,7 +44,7 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
         createSnapButton()
         createLibraryButton()
         createBackButton()
-        try? self.displayPreview(on: self.parentController.view)
+//        try? self.displayPreview(on: self.parentController.view)
    }
     
     static func prepare(completionHandler: @escaping (Error?) -> Void) {
@@ -89,14 +89,39 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
             }
         }
         
+//        func configureErrorHandler() {
+//            NotificationCenter.default.addObserver(self,
+//                                                   selector: #selector(sessionRuntimeError),
+//                                                   name: .AVCaptureSessionRuntimeError,
+//                                                   object: captureSession)
+//        }
+//
+//        func sessionRuntimeError() {
+//            if error.code == .mediaServicesWereReset {
+//                sessionQueue.async {
+//                    if self.isSessionRunning {
+//                        self.session.startRunning()
+//                        self.isSessionRunning = self.session.isRunning
+//                    } else {
+//                        DispatchQueue.main.async {
+//                            self.resumeButton.isHidden = false
+//                        }
+//                    }
+//                }
+//            } else {
+//                resumeButton.isHidden = false
+//            }
+//        }
+        
         DispatchQueue(label: "prepare").async {
             do {
                 createCaptureSession()
                 try configureCaptureDevices()
                 try configureDeviceInputs()
                 try configurePhotoOutput()
-            }
+//              configureErrorHandler()
                 
+            }
             catch {
                 DispatchQueue.main.async {
                     completionHandler(error)
@@ -112,29 +137,55 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
     }
     
     func displayPreview(on view: UIView) throws {
+        let oldPreview = self.previewLayer
         self.previewLayer = AVCaptureVideoPreviewLayer(session: Camera.captureSession!)
         self.previewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.previewLayer?.connection?.videoOrientation = .portrait
         
-        view.layer.insertSublayer(self.previewLayer!, at: 0)
+        if oldPreview == nil {
+            view.layer.insertSublayer(self.previewLayer!, at: 0)
+        } else {
+            view.layer.replaceSublayer(oldPreview!, with: self.previewLayer!)
+        }
         self.previewLayer?.frame = view.frame
+    }
+    
+    func hidePreview(on view: UIView) throws {
+//        self.previewLayer = AVCaptureVideoPreviewLayer(session: Camera.captureSession!)
+//        self.previewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+//        self.previewLayer?.connection?.videoOrientation = .portrait
+//
+//        view.layer.reminsertSublayer(self.previewLayer!, at: 0)
+//        self.previewLayer?.frame = view.frame
     }
 
     func start() {
         Utils.runOnUiThread {
+            print("Starting camera")
             Camera.captureSession!.startRunning()
+            print("Started")
         }
             
         self.parentController.view.addSubview(self.snapButton)
         self.parentController.view.addSubview(self.libraryButton)
         self.parentController.view.addSubview(self.backButton)
+        try? displayPreview(on: self.parentController.view)
     }
     
     func stop() {
+        Utils.runOnUiThread {
+            print("Stopping camera")
+            Camera.captureSession!.stopRunning()
+            print("Stopped")
+        }
+        try? hidePreview(on: self.parentController.view)
     }
     
     @objc func takePhoto(_ sender : UIButton!) {
         self.captureImage {(image, error, orientation) in
+            if error != nil {
+                let a = 1
+            }
             self.snapButton.removeFromSuperview()
             self.libraryButton.removeFromSuperview()
             self.callback(self.navigationController, image!, orientation!)
@@ -231,11 +282,6 @@ class Camera : NSObject, UIImagePickerControllerDelegate, UINavigationController
             self.callback(navigationController, correctedImage, devOrient)
         }
     }
-    
-    //  The converted code is limited by 1 KB.
-    //  Please Sign Up (Free!) to remove this limitation.
-    
-    //  Converted with Swiftify v1.0.6472 - https://objectivec2swift.com/
 
     func fixOrientation(_ image: UIImage) -> UIImage {
             // No-op if the orientation is already correct

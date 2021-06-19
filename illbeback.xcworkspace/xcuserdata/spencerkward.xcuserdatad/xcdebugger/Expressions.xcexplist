@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "Camera.start():Camera.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "view.layer.sublayers">
+            </PersistentString>
+            <PersistentString
+               value = "self.parentController.view.layer.sublayers">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Invitee.init(code:):Invitee.swift">
+      </ContextState>
+      <ContextState
+         contextName = "static FlagToken.replaceSecond(str:of:with:):FlagToken.swift">
+      </ContextState>
+      <ContextState
+         contextName = "FlagToken.init(token:):FlagToken.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "&quot;ddd,&quot;.range(of: #&quot;\d*$&quot;#, options: .regularExpression)">
+            </PersistentString>
+            <PersistentString
+               value = "Float(String(&quot;1.23,&quot;.prefix(&quot;hello&quot;.count-1)))">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Camera.displayPreview(on:):Camera.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "view.layer.sublayers">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in ZoomController.viewWillAppear(_:):ZoomController.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

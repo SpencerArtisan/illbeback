@@ -36,7 +36,14 @@ class FlagToken {
     }
     
     init(token: String) {
-        let parts = token.components(separatedBy: ":")
+        var token2 = token
+        var parts = token2.components(separatedBy: ":")
+        
+        while (!FlagToken.isCoord(str: parts[2])) {
+            token2 = FlagToken.replaceSecond(str: token2, of: ":", with: " ")
+            parts = token2.components(separatedBy: ":")
+        }
+        
         self._id = parts[4]
         
         self._type = parts[0]
@@ -75,7 +82,30 @@ class FlagToken {
             }
         }
     }
+    
+    static func isCoord(str: String) -> Bool {
+        return Float(String(str.prefix(str.count-1))) != nil
+    }
 
+
+    static func replaceSecond(str: String,
+                             of pattern:String,
+                             with replacement:String) -> String {
+        let str1 = replaceFirst(str: str, of: pattern, with: "}")
+        let str2 = replaceFirst(str: str1, of: pattern, with: replacement)
+        let str3 = replaceFirst(str: str2, of: "}", with: pattern)
+        return str3
+    }
+
+    static func replaceFirst(str: String,
+                             of pattern:String,
+                             with replacement:String) -> String {
+      if let range = str.range(of: pattern){
+        return str.replacingCharacters(in: range, with: replacement)
+      }else{
+        return str
+      }
+    }
     
     func pendingUpdate(_ token: FlagToken) {
         _descriptionUpdate = token.description()

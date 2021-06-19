@@ -17,7 +17,7 @@ class HintController : NSObject {
         self.mapController = mapController
         self.hintModal = Modal(viewName: "Hint", owner: mapController, preserveHeight: true)
         let cancelHint = hintModal!.findElementByTag(2) as! UIButton
-        cancelHint.addTarget(self, action: "onClickHint:", for: UIControl.Event.touchUpInside)
+        cancelHint.addTarget(self, action: #selector(onClickHint), for: UIControl.Event.touchUpInside)
     }
     
     func backupRestoringHint() {
@@ -67,7 +67,7 @@ class HintController : NSObject {
         hintModal!.slideOutFromLeft(mapController.view)
     }
     
-    func onClickHint(_ sender : UIButton!) {
+    @objc func onClickHint(_ sender : UIButton!) {
         dismissHint()
     }
 
