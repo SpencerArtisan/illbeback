@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddFlagController" customModule="I_ll_Be_Back" customModuleProvider="target">
@@ -12,37 +14,35 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="99" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4l-K7-sSB" userLabel="cancel">
+                <button opaque="NO" tag="99" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4l-K7-sSB" userLabel="cancel">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <animations/>
                     <connections>
                         <action selector="cancelDescription:" destination="-1" eventType="touchUpInside" id="LMM-A8-RwU"/>
                     </connections>
                 </button>
                 <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.84999999999999998" tag="3" contentMode="scaleToFill" restorationIdentifier="description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="R7H-Px-uXL">
-                    <rect key="frame" x="85" y="80" width="290" height="150"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="124" y="80" width="290" height="150"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="290" id="E4g-bw-7Qk"/>
                         <constraint firstAttribute="height" constant="150" id="xHY-vd-IjM"/>
                     </constraints>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RrK-Gk-QJN">
-                    <rect key="frame" x="85" y="40" width="290" height="40"/>
-                    <animations/>
-                    <color key="backgroundColor" red="0.75695591575960042" green="0.83684790859501379" blue="0.90092378854751587" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="124" y="40" width="290" height="40"/>
+                    <color key="backgroundColor" red="0.75695591575960042" green="0.83684790859501379" blue="0.90092378854751587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="F2f-5n-xow"/>
                         <constraint firstAttribute="width" constant="260" id="gjx-Pm-nv3"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
                         <mask key="constraints">
@@ -52,8 +52,7 @@
                 </label>
                 <datePicker tag="2" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="when" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="def-HW-APc">
                     <rect key="frame" x="85" y="250" width="290" height="140"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="140" id="3Yj-w9-Jd6"/>
                         <constraint firstAttribute="width" constant="290" id="Yt9-7n-aCF"/>
@@ -69,7 +68,6 @@
                     </variation>
                 </datePicker>
             </subviews>
-            <animations/>
             <constraints>
                 <constraint firstAttribute="trailingMargin" secondItem="t4l-K7-sSB" secondAttribute="trailing" id="0Oe-aC-cJC"/>
                 <constraint firstItem="def-HW-APc" firstAttribute="width" secondItem="R7H-Px-uXL" secondAttribute="width" id="11h-pr-q6L"/>
@@ -97,7 +95,6 @@
                 <constraint firstItem="t4l-K7-sSB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="taI-QW-cJ7"/>
                 <constraint firstItem="RrK-Gk-QJN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="40" id="vve-Ee-UF8"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="339-zV-zdZ"/>

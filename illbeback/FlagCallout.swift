@@ -342,6 +342,7 @@ class FlagCallout: UIView {
         label.font = italic ? UIFont.italicSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
         label.text = text
         label.backgroundColor = color
+        label.textColor = UIColor.black
         label.layer.borderWidth = 0.5
         label.layer.borderColor = UIColor.lightGray.cgColor
         return label
